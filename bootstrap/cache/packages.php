@@ -8,13 +8,13 @@
   ),
   'laravel/socialite' => 
   array (
-    'aliases' => 
-    array (
-      'Socialite' => 'Laravel\\Socialite\\Facades\\Socialite',
-    ),
     'providers' => 
     array (
       0 => 'Laravel\\Socialite\\SocialiteServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Socialite' => 'Laravel\\Socialite\\Facades\\Socialite',
     ),
   ),
   'laravel/tinker' => 
@@ -33,13 +33,13 @@
   ),
   'mckenziearts/laravel-notify' => 
   array (
-    'aliases' => 
-    array (
-      'Notify' => 'Mckenziearts\\Notify\\Facades\\LaravelNotify',
-    ),
     'providers' => 
     array (
       0 => 'Mckenziearts\\Notify\\LaravelNotifyServiceProvider',
+    ),
+    'aliases' => 
+    array (
+      'Notify' => 'Mckenziearts\\Notify\\Facades\\LaravelNotify',
     ),
   ),
   'nesbot/carbon' => 

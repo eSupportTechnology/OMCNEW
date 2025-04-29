@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('Online Marketing Complex', 'Laravel'),
+    'name' => env('OMC', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
