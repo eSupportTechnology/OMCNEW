@@ -1,5 +1,5 @@
-@extends('layouts.app')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+@extends('layouts.aff-master')
+
 
 
 @section('content')
@@ -51,7 +51,7 @@
                             <div class="navbar-brand">
                                 <img src="/assets/images/logo.png" height="70" width="40" alt="Logo"/>
                             </div>
-                            <img src="/assets/images/brand_name.png" height="30" width="320" alt="brand"/>
+                            <img src="/assets/images/brand_name.png" style="height:27px; width:320;" alt="brand"/>
                         </a>
                     </div>
 

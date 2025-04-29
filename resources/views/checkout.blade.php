@@ -35,127 +35,157 @@
     <form id="orderForm" action="{{ route('order.store') }}" method="POST" novalidate>
       <div class="row checkout-summary-container">
         
-        <!-- Checkout -->
-        <div class="col-md-8 mb-4">
-          <div class="card shadow-0 border checkout-card">
-            @csrf
-            <div class="p-4">
-              <h5 class="card-title mb-3" style="color:red">Billing Details</h5>
-              <div class="row">
-                <div class="col-6 mb-3">
-                  <p class="mb-0">First name</p>
-                  <div class="form-outline">
-                    <input type="text" name="first_name" id="firstName" placeholder="" class="form-control" required/>
-                    <span class="error-message" id="firstNameError"></span>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <p class="mb-0">Last name</p>
-                  <div class="form-outline">
-                    <input type="text" name="last_name" id="lastName" placeholder="" class="form-control" required/>
-                    <span class="error-message" id="lastNameError"></span>
-                  </div>
+       <!-- Checkout -->
+<div class="col-md-8 mb-4">
+    <div class="card shadow-0 border checkout-card">
+        @csrf
+        <div class="p-4">
+            <h5 class="card-title mb-3" style="color:red">Billing Details</h5>
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <p class="mb-0">Full name</p>
+                    <div class="form-outline">
+                        <input type="text" name="first_name" id="firstName" placeholder="" class="form-control" 
+                              value="{{ old('first_name', optional($defaultAddress)->full_name ?? optional($user)->name) }}" required />
+                        <span class="error-message" id="firstNameError"></span>
+                    </div>
                 </div>
                 <div class="col-6 mb-3">
-                  <p class="mb-0">Phone</p>
-                  <div class="form-outline">
-                    <input type="tel" name="phone" id="phone" class="form-control" required />
-                    <span class="error-message" id="phoneError"></span>
-                  </div>
+                    <p class="mb-0">Phone</p>
+                    <div class="form-outline">
+                        <input type="tel" name="phone" id="phone" class="form-control" 
+                              value="{{ old('phone', optional($defaultAddress)->phone_num ?? optional($user)->phone_num) }}" required />
+                        <span class="error-message" id="phoneError"></span>
+                    </div>
                 </div>
                 <div class="col-6 mb-3">
-                  <p class="mb-0">Email</p>
-                  <div class="form-outline">
-                    <input type="email" name="email" id="billingEmail" placeholder="" class="form-control" required/>
-                    <span class="error-message" id="billingEmailError"></span>
-                  </div>
+                    <p class="mb-0">Email</p>
+                    <div class="form-outline">
+                        <input type="email" name="email" id="billingEmail" placeholder="" class="form-control" 
+                              value="{{ old('email', optional($defaultAddress)->email ?? optional($user)->email) }}" required />
+                        <span class="error-message" id="billingEmailError"></span>
+                    </div>
                 </div>
-              </div>
-              <div class="row">
+            </div>
+            <div class="row">
                 <div class="col-sm-12 mb-3">
-                  <p class="mb-0">Company Name (Optional)</p>
-                  <div class="form-outline">
-                    <input type="text" name="company_name" id="companyName" placeholder="" class="form-control" />
-                  </div>
+                    <p class="mb-0">Company Name (Optional)</p>
+                    <div class="form-outline">
+                        <input type="text" name="company_name" id="companyName" placeholder="" class="form-control" 
+                              value="{{ old('company_name', optional($defaultAddress)->company_name ?? '') }}" />
+                    </div>
                 </div>
-              </div>
-              <div class="col-sm-12 mb-3">
+            </div>
+            <div class="col-sm-12 mb-3">
                 <p class="mb-0">Street Address</p>
                 <div class="form-outline">
-                  <input type="text" name="address" id="address" placeholder="" class="form-control" required/>
-                  <span class="error-message" id="addressError"></span>
+                    <input type="text" name="address" id="address" placeholder="" class="form-control" 
+                          value="{{ old('address', optional($defaultAddress)->address ?? '') }}" required />
+                    <span class="error-message" id="addressError"></span>
                 </div>
-              </div>
-              <div class="row">
+            </div>
+            <div class="row">
                 <div class="col-sm-12 mb-3">
-                  <p class="mb-0">Apartment, Suite, unit etc.(Optional)</p>
-                  <div class="form-outline">
-                    <input type="text" name="apartment" id="apartment" placeholder="" class="form-control" />
-                  </div>
+                    <p class="mb-0">Apartment, Suite, unit etc.(Optional)</p>
+                    <div class="form-outline">
+                        <input type="text" name="apartment" id="apartment" placeholder="" class="form-control" 
+                              value="{{ old('apartment', optional($defaultAddress)->apartment ?? '') }}" />
+                    </div>
                 </div>
                 <div class="col-sm-6 mb-3">
-                  <p class="mb-0">City</p>
-                  <div class="form-outline">
-                    <input type="text" name="city" id="city" placeholder="" class="form-control" required/>
-                    <span class="error-message" id="cityError"></span>
-                  </div>
+                    <p class="mb-0">City</p>
+                    <div class="form-outline">
+                        <input type="text" name="city" id="city" placeholder="" class="form-control" 
+                              value="{{ old('city', optional($defaultAddress)->city ?? '') }}" required />
+                        <span class="error-message" id="cityError"></span>
+                    </div>
                 </div>
-                <div class="col-sm-6 col-6 mb-3">
-                  <p class="mb-0">Postal code</p>
-                  <div class="form-outline">
-                    <input type="text" name="postal_code" id="postalCode" class="form-control" required/>
-                    <span class="error-message" id="postalCodeError"></span>
-                  </div>
+                <div class="col-sm-6 mb-3">
+                    <p class="mb-0">Postal code</p>
+                    <div class="form-outline">
+                        <input type="text" name="postal_code" id="postalCode" class="form-control" 
+                              value="{{ old('postal_code', optional($defaultAddress)->postal_code ?? '') }}" required />
+                        <span class="error-message" id="postalCodeError"></span>
+                    </div>
                 </div>
-              </div>
-              <hr class="my-4" />
-              <h5 class="card-title mb-3" style="color:red">Shipping Details</h5>
-              <div class="form-check mb-3">
+            </div>
+            <hr class="my-4" />
+            <h5 class="card-title mb-3" style="color:red">Shipping Details</h5>
+            <div class="form-check mb-3">
                 <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" />
                 <label class="form-check-label" for="flexCheckDefault1">Ship to a different address ?</label>
-              </div>
-              <div class="mb-3">
+            </div>
+            <div class="mb-3">
                 <p class="mb-0">Order notes (optional)</p>
                 <div class="form-outline">
-                  <textarea class="form-control" name="order_notes" id="textAreaExample1" rows="2"></textarea>
+                    <textarea class="form-control" name="order_notes" id="textAreaExample1" rows="2"></textarea>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
+    </div>
+</div>
 
-        <!-- Summary -->
-        <div class="col-md-4">
-            <div class="card shadow-0 border summary-card">
-                <div class="p-4">
-                    <h5 class="mb-3">Your Order</h5>
-                    @forelse ($cart as $item)
+
+
+         <!-- Summary -->
+            <div class="col-md-4">
+                <div class="card shadow-0 border summary-card">
+                    <div class="p-4">
+                        <h5 class="mb-3">Your Order</h5>
+                        @forelse ($cart as $item)
+                            <div class="d-flex justify-content-between">
+                                <p class="mb-2">{{ $item->product->product_name }} x {{ $item->quantity ?? 1 }}</p>
+                                <p class="mb-2">
+                                    @php
+                                        $price = $item->product->sale && $item->product->sale->status === 'active' 
+                                            ? $item->product->sale->sale_price 
+                                            : ($item->product->specialOffer && $item->product->specialOffer->status === 'active'
+                                                ? $item->product->specialOffer->offer_price
+                                                : $item->product->normal_price);
+                                    @endphp
+                                    Rs. {{ number_format($price * ($item->quantity ?? 1), 2) }}
+                                </p>
+                            </div>
+                        @empty
+                            <p>No items in the cart</p>
+                        @endforelse
+                        <hr />
                         <div class="d-flex justify-content-between">
-                            <p class="mb-2">{{ $item->title }} x {{ $item->quantity ?? 1 }}</p>
-                            <p class="mb-2">Rs. {{ ($item->price ?? 0) * ($item->quantity ?? 1) }}</p>
+                            <p class="mb-2">Subtotal:</p>
+                            <p class="mb-2">
+                                Rs. {{ number_format($cart->sum(function($item) {
+                                    return ($item->product->sale && $item->product->sale->status === 'active' 
+                                            ? $item->product->sale->sale_price 
+                                            : ($item->product->specialOffer && $item->product->specialOffer->status === 'active'
+                                                ? $item->product->specialOffer->offer_price
+                                                : $item->product->normal_price)) 
+                                        * ($item->quantity ?? 1);
+                                }), 2) }}
+                            </p>
                         </div>
-                    @empty
-                        <p>No items in the cart</p>
-                    @endforelse
-                    <hr />
-                    <div class="d-flex justify-content-between">
-                        <p class="mb-2">Subtotal:</p>
-                        <p class="mb-2">Rs. {{ $cart->sum(fn($item) => $item->price * $item->quantity) }}</p>
+                        <div class="d-flex justify-content-between">
+                            <p class="mb-2">Delivery Fee:</p>
+                            <p class="mb-2">Rs. 300.00</p>
+                        </div>
+                        <hr />
+                        <div class="d-flex justify-content-between">
+                            <h5 class="mb-2">Total:</h5>
+                            <h5 class="mb-2 fw-bold">
+                                Rs. {{ number_format($cart->sum(function($item) {
+                                    return ($item->product->sale && $item->product->sale->status === 'active' 
+                                            ? $item->product->sale->sale_price 
+                                            : ($item->product->specialOffer && $item->product->specialOffer->status === 'active'
+                                                ? $item->product->specialOffer->offer_price
+                                                : $item->product->normal_price)) 
+                                        * ($item->quantity ?? 1);
+                                }) + 300, 2) }}
+                            </h5>
+                        </div>
+                        <button type="submit" class="btn w-100" style="background-color:#4A2FF4; color:white;">Proceed to Pay</button>
                     </div>
-                    <div class="d-flex justify-content-between">
-                        <p class="mb-2">Shipping:</p>
-                        <p class="mb-2">Rs. 250</p>
-                    </div>
-                    <hr />
-                    <div class="d-flex justify-content-between">
-                        <h5 class="mb-2">Total:</h5>
-                        <h5 class="mb-2 fw-bold">Rs. {{ $cart->sum(fn($item) => $item->price * $item->quantity) + 250 }}</h5>
-                    </div>
-                    <button type="button" class="btn w-100" data-bs-toggle="modal" data-bs-target="#confirmModal" 
-                    style="background-color:#4A2FF4; color:white;">Place Order</button>
                 </div>
             </div>
-        </div>
+
       </div>
     </form>
   </section>
@@ -167,26 +197,23 @@
   @endif
 </div>
 
-<!-- Confirmation Modal -->
+<!-- Confirmation Modal 
 <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="confirmModalLabel">Order Confirmation</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body">
                 Are you sure you want to place this order?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" id="confirmButton">Yes, Order</button>
+                 <button type="button" class="btn btn-success" id="confirmButton">Yes, Order</button>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
