@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="zxx">
+
     <head>
-        
+
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -24,20 +25,21 @@
         <title>OMC - Online Marketing Complex</title>
 
         <link rel="icon" type="image/png" href="assets/images/logo1.png" style="">
-       
+
     </head>
+
     <body>
-        
-       
+
+
         @include('frontend.navbar-new')
-       
+
 
         @yield('content')
         @include('frontend.footer-new')
 
-       
-          <!-- Start Sidebar Modal -->
-          <div class="modal right fade sidebarModal" id="sidebarModal" tabindex="-1" role="dialog">
+
+        <!-- Start Sidebar Modal -->
+        <div class="modal right fade sidebarModal" id="sidebarModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -49,21 +51,31 @@
                             <h3>About The Store</h3>
 
                             <div class="about-the-store">
-                                <p>One of the most popular on the web is shopping. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                                
+                                <p>One of the most popular on the web is shopping. Lorem ipsum dolor sit amet,
+                                    consectetur adipiscing elit.</p>
+
                                 <ul class="sidebar-contact-info">
-                                    <li><i class='bx bx-map'></i> <a href="#" target="_blank"> No 425/2, Parakum Place, Kaduruwela, Polannaruwa.</a></li>
-                                    <li><i class='bx bx-phone-call'></i> <a href="tel:075 833 7141">075 833 7141</a></li>
-                                    <li><i class='bx bx-envelope'></i> <a href="mailto:omarketingcomplex@gmail.com">omarketingcomplex@gmail.com</a></li>
+                                    <li><i class='bx bx-map'></i> <a href="#" target="_blank"> No 425/2, Parakum
+                                            Place, Kaduruwela, Polannaruwa.</a></li>
+                                    <li><i class='bx bx-phone-call'></i> <a href="tel:075 833 7141">075 833 7141</a>
+                                    </li>
+                                    <li><i class='bx bx-envelope'></i> <a
+                                            href="mailto:omarketingcomplex@gmail.com">omarketingcomplex@gmail.com</a>
+                                    </li>
                                 </ul>
                             </div>
 
                             <ul class="social-link">
-                                <li><a href="https://www.facebook.com/" class="d-block" target="_blank"><i class='bx bxl-facebook'></i></a></li>
-                                <li><a href="https://twitter.com/login" class="d-block" target="_blank"><i class='bx bxl-twitter'></i></a></li>
-                                <li><a href="https://www.instagram.com/" class="d-block" target="_blank"><i class='bx bxl-instagram'></i></a></li>
-                                <li><a href="https://www.linkedin.com/login" class="d-block" target="_blank"><i class='bx bxl-linkedin'></i></a></li>
-                                <li><a href="https://www.pinterest.com/" class="d-block" target="_blank"><i class='bx bxl-pinterest-alt'></i></a></li>
+                                <li><a href="https://www.facebook.com/" class="d-block" target="_blank"><i
+                                            class='bx bxl-facebook'></i></a></li>
+                                <li><a href="https://twitter.com/login" class="d-block" target="_blank"><i
+                                            class='bx bxl-twitter'></i></a></li>
+                                <li><a href="https://www.instagram.com/" class="d-block" target="_blank"><i
+                                            class='bx bxl-instagram'></i></a></li>
+                                <li><a href="https://www.linkedin.com/login" class="d-block" target="_blank"><i
+                                            class='bx bxl-linkedin'></i></a></li>
+                                <li><a href="https://www.pinterest.com/" class="d-block" target="_blank"><i
+                                            class='bx bxl-pinterest-alt'></i></a></li>
                             </ul>
                         </div>
 
@@ -72,19 +84,23 @@
 
                             <ul class="products-list">
                                 <li>
-                                    <a href="#"><img src="frontend/assets/img/products/img1.jpg" alt="image"></a>
+                                    <a href="#"><img src="frontend/assets/img/products/img1.jpg"
+                                            alt="image"></a>
                                 </li>
 
                                 <li>
-                                    <a href="#"><img src="frontend/assets/img/products/img2.jpg" alt="image"></a>
+                                    <a href="#"><img src="frontend/assets/img/products/img2.jpg"
+                                            alt="image"></a>
                                 </li>
 
                                 <li>
-                                    <a href="#"><img src="frontend/assets/img/products/img3.jpg" alt="image"></a>
+                                    <a href="#"><img src="frontend/assets/img/products/img3.jpg"
+                                            alt="image"></a>
                                 </li>
 
                                 <li>
-                                    <a href="#"><img src="frontend/assets/img/products/img4.jpg" alt="image"></a>
+                                    <a href="#"><img src="frontend/assets/img/products/img4.jpg"
+                                            alt="image"></a>
                                 </li>
                             </ul>
 
@@ -98,7 +114,8 @@
         <!-- End Sidebar Modal -->
 
         <!-- Start QuickView Modal Area -->
-        <div class="modal fade productsQuickView" id="productsQuickView" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade productsQuickView" id="productsQuickView" tabindex="-1" role="dialog"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -136,18 +153,24 @@
                                     <li><span>Vendor:</span> <a href="#">Lereve</a></li>
                                     <li><span>Availability:</span> <a href="#">In stock (7 items)</a></li>
                                     <li><span>Products Type:</span> <a href="#">T-Shirt</a></li>
-                                    <li><span>Products Description:</span> <a href="#">This is new meterial</a></li>
+                                    <li><span>Products Description:</span> <a href="#">This is new meterial</a>
+                                    </li>
                                 </ul>
 
                                 <div class="products-color-switch">
                                     <h4>Color:</h4>
 
                                     <ul>
-                                        <li><a href="#" data-bs-toggle="tooltip" data-placement="top" title="Black" class="color-black"></a></li>
-                                        <li><a href="#" data-bs-toggle="tooltip" data-placement="top" title="White" class="color-white"></a></li>
-                                        <li><a href="#" data-bs-toggle="tooltip" data-placement="top" title="Green" class="color-green"></a></li>
-                                        <li><a href="#" data-bs-toggle="tooltip" data-placement="top" title="Yellow Green" class="color-yellowgreen"></a></li>
-                                        <li><a href="#" data-bs-toggle="tooltip" data-placement="top" title="Teal" class="color-teal"></a></li>
+                                        <li><a href="#" data-bs-toggle="tooltip" data-placement="top"
+                                                title="Black" class="color-black"></a></li>
+                                        <li><a href="#" data-bs-toggle="tooltip" data-placement="top"
+                                                title="White" class="color-white"></a></li>
+                                        <li><a href="#" data-bs-toggle="tooltip" data-placement="top"
+                                                title="Green" class="color-green"></a></li>
+                                        <li><a href="#" data-bs-toggle="tooltip" data-placement="top"
+                                                title="Yellow Green" class="color-yellowgreen"></a></li>
+                                        <li><a href="#" data-bs-toggle="tooltip" data-placement="top"
+                                                title="Teal" class="color-teal"></a></li>
                                     </ul>
                                 </div>
 
@@ -196,7 +219,8 @@
                         <div class="products-cart-content">
                             <div class="products-cart">
                                 <div class="products-image">
-                                    <a href="#"><img src="frontend/assets/img/products/img1.jpg" alt="image"></a>
+                                    <a href="#"><img src="frontend/assets/img/products/img1.jpg"
+                                            alt="image"></a>
                                 </div>
 
                                 <div class="products-content">
@@ -213,7 +237,8 @@
 
                             <div class="products-cart">
                                 <div class="products-image">
-                                    <a href="#"><img src="frontend/assets/img/products/img2.jpg" alt="image"></a>
+                                    <a href="#"><img src="frontend/assets/img/products/img2.jpg"
+                                            alt="image"></a>
                                 </div>
 
                                 <div class="products-content">
@@ -230,7 +255,8 @@
 
                             <div class="products-cart">
                                 <div class="products-image">
-                                    <a href="#"><img src="frontend/assets/img/products/img3.jpg" alt="image"></a>
+                                    <a href="#"><img src="frontend/assets/img/products/img3.jpg"
+                                            alt="image"></a>
                                 </div>
 
                                 <div class="products-content">
@@ -263,7 +289,8 @@
         <!-- End Shopping Cart Modal -->
 
         <!-- Start Wishlist Modal -->
-        <div class="modal right fade shoppingWishlistModal" id="shoppingWishlistModal" tabindex="-1" role="dialog">
+        <div class="modal right fade shoppingWishlistModal" id="shoppingWishlistModal" tabindex="-1"
+            role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -273,40 +300,45 @@
                     <div class="modal-body">
                         <h3>My Wish List ({{ $wishlistCount }})</h3>
 
-                        @if(auth()->check()) 
-                        @forelse($wishlistItems as $item)
-                        <div class="products-cart-content">
-                            <div class="products-cart">
-                                <div class="products-image">
-                                    <a href="{{ route('product-description', ['product_id' => $item->product_id]) }}">
-                                        <img src="{{ asset('storage/' . $item->product->images->first()->image_path) }}" alt="image" style="width:50px">
-                                    </a>
-                                </div>
+                        @if (auth()->check())
+                            @forelse($wishlistItems as $item)
+                                <div class="products-cart-content">
+                                    <div class="products-cart">
+                                        <div class="products-image">
+                                            <a
+                                                href="{{ route('product-description', ['product_id' => $item->product_id]) }}">
+                                                <img src="{{ asset('storage/' . $item->product->images->first()->image_path) }}"
+                                                    alt="image" style="width:50px">
+                                            </a>
+                                        </div>
 
-                                <div class="products-content">
-                                    <h3><a href="{{ route('product-description', ['product_id' => $item->product_id]) }}">
-                                    {{ $item->product->product_name }}</a></h3>
-                                    <div class="products-price">
-                                        <span class="price">Rs {{ number_format($item->product->sale->sale_price ?? $item->product->specialOffer->offer_price ?? $item->product->normal_price, 2) }}
-                                        </span>
+                                        <div class="products-content">
+                                            <h3><a
+                                                    href="{{ route('product-description', ['product_id' => $item->product_id]) }}">
+                                                    {{ $item->product->product_name }}</a></h3>
+                                            <div class="products-price">
+                                                <span class="price">Rs
+                                                    {{ number_format($item->product->sale->sale_price ?? ($item->product->specialOffer->offer_price ?? $item->product->normal_price), 2) }}
+                                                </span>
+                                            </div>
+                                            <form action="{{ route('wishlist.remove', $item->id) }}" method="POST"
+                                                style="display: inline; border:none">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="remove-btn" style="border:none">
+                                                    <i class='bx bx-trash'></i>
+                                                </button>
+                                            </form>
+
+                                        </div>
                                     </div>
-                                    <form action="{{ route('wishlist.remove', $item->id) }}" method="POST" style="display: inline; border:none">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="remove-btn" style="border:none">
-                                            <i class='bx bx-trash'></i>
-                                        </button>
-                                    </form>
-
-                                </div>
-                            </div>
-                            @empty
-                                <p>Your wishlist is empty.</p>
+                                @empty
+                                    <p>Your wishlist is empty.</p>
                             @endforelse
                         @else
                             <p>Please <a href="{{ route('login') }}">login</a> to view your wishlist.</p>
                         @endif
-                        
+
 
                         <div class="products-cart-btn">
                             <a href="/cart" class="optional-btn">View Shopping Cart</a>
@@ -318,7 +350,8 @@
         <!-- End Wishlist Modal -->
 
         <!-- Start Size Guide Modal Area -->
-        <div class="modal fade sizeGuideModal" id="sizeGuideModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade sizeGuideModal" id="sizeGuideModal" tabindex="-1" role="dialog"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -466,7 +499,8 @@
         <!-- End Size Guide Modal Area -->
 
         <!-- Start Shipping Modal Area -->
-        <div class="modal fade productsShippingModal" id="productsShippingModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade productsShippingModal" id="productsShippingModal" tabindex="-1" role="dialog"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
@@ -479,7 +513,8 @@
                             <li>Complimentary ground shipping within 1 to 7 business days</li>
                             <li>In-store collection available within 1 to 7 business days</li>
                             <li>Next-day and Express delivery options also available</li>
-                            <li>Purchases are delivered in an orange box tied with a Bolduc ribbon, with the exception of certain items</li>
+                            <li>Purchases are delivered in an orange box tied with a Bolduc ribbon, with the exception
+                                of certain items</li>
                             <li>See the delivery FAQs for details on shipping methods, costs and delivery times</li>
                         </ul>
 
@@ -494,11 +529,11 @@
         </div>
         <!-- End Shipping Modal Area -->
 
-        
-        
-        
 
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+
+
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="{{ asset('frontend/assets/js/jquery.min.js') }}"></script>
         <script src="{{ asset('frontend/assets/js/popper.min.js') }}"></script>
         <script src="{{ asset('frontend/assets/js/bootstrap.bundle.min.js') }}"></script>
@@ -519,25 +554,26 @@
 
 
 
-<!-- Include Toastr.js after jQuery -->
+        <!-- Include Toastr.js after jQuery -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-       <script>
-        $(document).ready(function() {
-            console.log("Fetching cart count from: {{ route('cart.count') }}");
-            
-            $.get("{{ route('cart.count') }}", function(data) {
-                // Update both cart count elements
-                $('#cart-count-header').text(data.cart_count);
-                $('#cart-count-navbar').text(data.cart_count);
-            });
-
+        <script>
             $(document).ready(function() {
-                console.log("jQuery is working!");
-            });
-        });
-    </script>
+                console.log("Fetching cart count from: {{ route('cart.count') }}");
 
-  </body>
+                $.get("{{ route('cart.count') }}", function(data) {
+                    // Update both cart count elements
+                    $('#cart-count-header').text(data.cart_count);
+                    $('#cart-count-navbar').text(data.cart_count);
+                });
+
+                $(document).ready(function() {
+                    console.log("jQuery is working!");
+                });
+            });
+        </script>
+
+    </body>
+
 </html>
