@@ -7,26 +7,184 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('frontend/assets/css/animate.min.css') }}">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        {{-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> --}}
+
+        {{-- <link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap.min.css') }}"> --}}
+        {{-- <link rel="stylesheet" href="{{ asset('frontend/assets/css/animate.min.css') }}"> --}}
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/boxicons.min.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/flaticon.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/magnific-popup.min.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/nice-select.min.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/slick.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('frontend/assets/css/owl.carousel.min.css') }}">
+        {{-- <link rel="stylesheet" href="{{ asset('frontend/assets/css/owl.carousel.min.css') }}"> --}}
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/meanmenu.min.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/rangeSlider.min.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}">
         <!-- <link rel="stylesheet" href="{{ asset('frontend/assets/css/dark.css') }}">-->
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/responsive.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+
+
+        {{-- new --}}
+
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="{{ asset('frontend/assets/images/web-app-manifest-192x192.png') }}">
+
+        <!-- Bootstrap -->
+        {{-- <link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap.min.css') }}"> --}}
+        <!-- select 2 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css">
+        <!-- Slick -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css">
+        <!-- Jquery Ui -->
+        <link rel="stylesheet" href="{{ asset('frontend/assets/css/jquery-ui.css') }}">
+        <!-- animate -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+        <!-- AOS Animation -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/3.0.0-beta.6/aos.css">
+        <!-- Main css -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/log4javascript/1.4.9/main.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+
+
+
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap-grid.min.css"
+            integrity="sha512-i1b/nzkVo97VN5WbEtaPebBG8REvjWeqNclJ6AItj7msdVcaveKrlIIByDpvjk5nwHjXkIqGZscVxOrTb9tsMA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap-grid.rtl.min.css"
+            integrity="sha512-V7mESobi1wvYdh9ghD/BDbehOyEDUwB4c4IVp97uL0QSka0OXjBrFrQVAHii6PNt/Zc1LwX6ISWhgw1jbxQqGg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap-reboot.min.css"
+            integrity="sha512-HJaQ4y3YcUGCWikWDn8bFeGTy3Z/3IbxFYQ9G3UAWx16PyTL6Nu5P/BDDV9s0WhK3Sq27Wtbk/6IcwGmGSMXYg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"
+            integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
+            integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <link rel="stylesheet" href="{{ asset('frontend/newstyle/all.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('frontend/newstyle/mobile-nav.css') }}">
+        <link rel="stylesheet" href="{{ asset('frontend/newstyle/mainmin.css') }}">
+        <link rel="stylesheet" href="{{ asset('frontend/newstyle/responsivemin.css') }}">
+
+
+
+        <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap"
+            rel="stylesheet">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+            integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <link rel="icon" sizes="16x16" href="frontend/newstyle/assets/images/icon/abans_favicon.webp" />
+
+        <!-- <link rel="stylesheet" href="assets/libs/owl-carousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/libs/owl-carousel/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="assets/libs/owl-carousel/owl.carousel.js">
+    <link rel="stylesheet" href="assets/libs/owl-carousel/owl.carousel.min.js"> -->
+
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"
+            integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+            integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>OMC - Online Marketing Complex</title>
 
         <link rel="icon" type="image/png" href="assets/images/logo1.png" style="">
 
+
     </head>
+
+    <style>
+        .item-hover-two:hover .item-hover__text {
+            color: #0035ff !important;
+        }
+
+
+        .bg-main-two-50 {
+            background-color: rgba(10, 67, 255, 0.36) !important;
+        }
+
+        .text-main-600 {
+            color: rgb(0, 0, 0) !important;
+        }
+
+
+        .bg-main-600 {
+            background-color: #001ed4 !important;
+        }
+
+
+        .pagination .page-item.active .page-link {
+            background-color: #001ed4 !important;
+            border-color: #001ed4 !important;
+            color: #ffffff !important;
+        }
+
+        .hover-bg-main-600:hover {
+            background-color: #001ed4 !important;
+        }
+
+        .hover-border-main-600:hover {
+            border-color: #001ed4 !important;
+        }
+
+
+        .text-gray-900:hover {
+            color: #001ed4 !important;
+        }
+
+        .border:hover {
+            border: color: #001ed4 !important;
+        }
+
+        .text-neutral-600:hover {
+            color: color: #001ed4 !important;
+        }
+
+        .btn-main {
+            background-color: color: #001ed4 !important;
+            border-color: color: #001ed4 !important;
+        }
+
+        .btn-main:hover {
+            background-color: #001ed4 !important;
+            border-color: #001ed4 !important;
+        }
+
+        .products-btn-set:hover {
+            background-color: #001ed4 !important;
+        }
+
+        .home-buynow:hover {
+            background-color: #001ed4 !important;
+        }
+
+        .bg-main-50 {
+            background-color: rgba(10, 67, 255, 0.36) !important;
+        }
+    </style>
 
     <body>
 
@@ -55,7 +213,8 @@
                                     consectetur adipiscing elit.</p>
 
                                 <ul class="sidebar-contact-info">
-                                    <li><i class='bx bx-map'></i> <a href="#" target="_blank"> No 425/2, Parakum
+                                    <li><i class='bx bx-map'></i> <a href="#" target="_blank"> No 425/2,
+                                            Parakum
                                             Place, Kaduruwela, Polannaruwa.</a></li>
                                     <li><i class='bx bx-phone-call'></i> <a href="tel:075 833 7141">075 833 7141</a>
                                     </li>
@@ -535,7 +694,12 @@
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="{{ asset('frontend/assets/js/jquery.min.js') }}"></script>
-        <script src="{{ asset('frontend/assets/js/popper.min.js') }}"></script>
+        {{-- <script src="{{ asset('frontend/assets/js/popper.min.js') }}"></script> --}}
+        <!-- Development version -->
+        <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+
+        <!-- Production version -->
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
         <script src="{{ asset('frontend/assets/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('frontend/assets/js/owl.carousel.min.js') }}"></script>
         <script src="{{ asset('frontend/assets/js/magnific-popup.min.js') }}"></script>
@@ -573,6 +737,79 @@
                 });
             });
         </script>
+
+
+        <script>
+            function closeMenuMobi() {
+                //alert(2);
+                document.body.classList.remove("mmenu-active");
+                document.querySelector(".mobile-menu-wrapper").style.visibility = "hidden";
+            }
+
+            function openMenuMobi() {
+                //alert(1);
+                document.body.classList.add("mmenu-active");
+                document.querySelector(".mobile-menu-wrapper").style.visibility = "visible";
+            }
+
+
+            function openSubmenus(clickedSpan) {
+                let $dropdown = $(clickedSpan).next(".dropdown");
+                // Toggle the visibility of the clicked dropdown instantly (no animation)
+                $dropdown.toggle();
+                $(clickedSpan).toggleClass("rotate"); // Rotate the toggle button for effect
+            }
+
+            $(document).ready(function() {
+
+                $(".toggle-btn-dest").on("click", function() {
+                    let $widget = $(this).closest(".widget"); // Get the parent widget
+                    let $title = $widget.find(".widget-title"); // Get the widget title
+                    let $body = $widget.find(".widget-body"); // Get the widget body
+
+                    // Toggle collapsed class on widget title
+                    $title.toggleClass("collapsed");
+
+                    // Use CSS instead of slideToggle() for instant effect
+                    $body.toggleClass("hidden");
+                });
+
+                $(".toggle-btn-mobi").on("click", function() {
+                    let $widget = $(this).closest(".widget"); // Get the parent widget
+                    let $title = $widget.find(".widget-title"); // Get the widget title
+                    let $body = $widget.find(".widget-body"); // Get the widget body
+
+                    // Toggle collapsed class on widget title
+                    $title.toggleClass("collapsed");
+
+                    // Use CSS instead of slideToggle() for instant effect
+                    $body.toggleClass("hidden");
+                });
+
+            });
+        </script>
+
+        <script src="{{ asset('/frontend/newstyle/rocket-loader.min.js') }}" data-cf-settings="a071cb3ff60724c4b8f55cf9-|49"
+            defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+            integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"
+            integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
+            integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+            integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"
+            integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
+            integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
     </body>
 

@@ -1,169 +1,434 @@
-   <!-- Start Facility Area -->
-   <section class="facility-area pb-70">
-       <div class="container">
-           <div class="facility-slides owl-carousel owl-theme">
-               <div class="single-facility-box">
-                   <div class="icon">
-                       <i class='flaticon-tracking'></i>
-                   </div>
-                   <h3>Free Shipping Worldwide</h3>
-               </div>
-
-               <div class="single-facility-box">
-                   <div class="icon">
-                       <i class='flaticon-return'></i>
-                   </div>
-                   <h3>Easy Return Policy</h3>
-               </div>
-
-               <div class="single-facility-box">
-                   <div class="icon">
-                       <i class='flaticon-shuffle'></i>
-                   </div>
-                   <h3>7 Day Exchange Policy</h3>
-               </div>
-
-               <div class="single-facility-box">
-                   <div class="icon">
-                       <i class='flaticon-sale'></i>
-                   </div>
-                   <h3>Weekend Discount Coupon</h3>
-               </div>
-
-               <div class="single-facility-box">
-                   <div class="icon">
-                       <i class='flaticon-credit-card'></i>
-                   </div>
-                   <h3>Secure Payment Methods</h3>
-               </div>
-
-               <div class="single-facility-box">
-                   <div class="icon">
-                       <i class='flaticon-location'></i>
-                   </div>
-                   <h3>Track Your Package</h3>
-               </div>
-
-               <div class="single-facility-box">
-                   <div class="icon">
-                       <i class='flaticon-customer-service'></i>
-                   </div>
-                   <h3>24/7 Customer Support</h3>
-               </div>
-           </div>
-       </div>
-   </section>
-   <!-- End Facility Area -->
+<div class="mobile-footer-con">
 
 
+    <div class="footer ft-destop">
+        <div class="row bg-purple m-0">
+            <div class="col-6 mobi-purple-div">
+                <div class="footer-icon">
+                    <a href="#">
+                        <img src="{{ asset('frontend/newstyle/assets/images/icon/Page-1.webp') }}">
 
-   <!-- Start Footer Area -->
-   <footer class="footer-area">
-       <div class="container">
-           <div class="row justify-content-center">
-               <div class="col-lg-3 col-md-6 col-sm-6">
-                   <div class="single-footer-widget">
-                       <h3>About The Store</h3>
+                    </a>
+                </div>
+                <div class="footer-details">
+                    <p>Customer Support</p>
+                    <span>8am - 5pm</span>
+                </div>
+            </div>
+            <div class="col-6 mobi-purple-div">
+                <div class="footer-icon">
+                    <a href="#">
+                        <img src="{{ asset('frontend/newstyle/assets/images/icon/sri-lanka.webp') }}">
 
-                       <div class="about-the-store">
-                           <p>One of the most popular on the web is shopping.</p>
-                           <ul class="footer-contact-info">
-                               <li><i class='bx bx-map'></i> <a href="#" target="_blank"> No 425/2, Parakum Place,
-                                       Kaduruwela, Polannaruwa.</a></li>
-                               <li><i class='bx bx-phone-call'></i> <a href="tel:075 833 7141">075 833 7141</a></li>
-                               <li><i class='bx bx-envelope'></i> <a
-                                       href="mailto:omarketingcomplex@gmail.com">omarketingcomplex@gmail.com</a></li>
-                           </ul>
-                       </div>
+                    </a>
+                </div>
+                <div class="footer-details">
+                    <p>Island-wide Delivery</p>
+                </div>
+            </div>
 
-                       <ul class="social-link">
-                           <li><a href="https://www.facebook.com/" class="d-block" target="_blank"><i
-                                       class='bx bxl-facebook'></i></a></li>
-                           <li><a href="https://twitter.com/login" class="d-block" target="_blank"><i
-                                       class='bx bxl-twitter'></i></a></li>
-                           <li><a href="https://www.instagram.com/" class="d-block" target="_blank"><i
-                                       class='bx bxl-instagram'></i></a></li>
-                           <li><a href="https://www.linkedin.com/login" class="d-block" target="_blank"><i
-                                       class='bx bxl-linkedin'></i></a></li>
-                           <li><a href="https://www.pinterest.com/" class="d-block" target="_blank"><i
-                                       class='bx bxl-pinterest-alt'></i></a></li>
-                       </ul>
-                   </div>
-               </div>
+            <div class="col-6 mobi-purple-div">
+                <div class="footer-icon">
+                    <a href="#">
+                        <img src="{{ asset('frontend/newstyle/assets/images/icon/stopwatch.webp') }}">
 
-               <div class="col-lg-3 col-md-6 col-sm-6">
-                   <div class="single-footer-widget pl-4">
-                       <h3>Quick Links</h3>
+                    </a>
+                </div>
+                <div class="footer-details">
+                    <p>Express Delivery</p>
+                </div>
+            </div>
 
-                       <ul class="quick-links">
-                           <li><a href="/About-us">About Us</a></li>
-                           <li><a href="/all-items">Shop Now</a></li>
-                           <li><a href="/privacy_policy">Privacy Policy</a></li>
-                           <li><a href="/faq">FAQ's</a></li>
-                           <li><a href="/contact">Contact Us</a></li>
-                           <li><a href="/customer-service">Customer Services</a></li>
-                       </ul>
-                   </div>
-               </div>
+            <div class="col-6 mobi-purple-div">
+                <div class="footer-icon">
+                    <a href="#">
+                        <img src="{{ asset('frontend/newstyle/assets/images/icon/technical-support.webp') }}">
 
-               <div class="col-lg-3 col-md-6 col-sm-6">
-                   <div class="single-footer-widget">
-                       <h3>Customer Support</h3>
+                    </a>
+                </div>
+                <div class="footer-details">
+                    <p>100+ Service Centers</p>
+                </div>
+            </div>
+        </div>
 
-                       <ul class="customer-support">
-                           <li><a href="/login">My Account</a></li>
-                           <li><a href="/cart">Cart</a></li>
-                           <li><a href="/aff_home">Affiliate program</a></li>
-                           <li><a href="/track-order">Order Tracking</a></li>
-                           <li><a href="/contact">Help & Support</a></li>
-                       </ul>
-                   </div>
-               </div>
+        <div class="row footer-mobi-details text-center m-0">
+            <div class="col-12 mobi-footer-link">
+                <ul>
+                    <li><a href="#" target="_blank"><img
+                                src="{{ asset('frontend/newstyle/assets/images/footer/facebook.webp') }}"></a></li>
+                    <li><a href="#" target="_blank"><img
+                                src="{{ asset('frontend/newstyle/assets/images/footer/twitter.webp') }}"></a></li>
+                    <li><a href="#" target="_blank"><img
+                                src="{{ asset('frontend/newstyle/assets/images/footer/instagram.webp') }}"></a></li>
+                    <li><a href="#" target="_blank"><img
+                                src="{{ asset('frontend/newstyle/assets/images/footer/linkedin-in.webp') }}"></a></li>
+                    <li><a href="#" target="_blank"><img
+                                src="{{ asset('frontend/newstyle/assets/images/footer/youtube.webp') }}"></a></li>
 
-               <div class="col-lg-3 col-md-6 col-sm-6">
-                   <div class="single-footer-widget">
-                       <h3>Newsletter</h3>
+                </ul>
+            </div>
 
-                       <div class="footer-newsletter-box">
-                           <p>To get the latest news and latest updates from us.</p>
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            About
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li class="footer-nav"><a href="#">About Us</a></li>
+                                <li class="footer-nav"><a href="#">Careers</a></li>
+                                <li class="footer-nav"><a href="#">Contact Us</a></li>
 
-                           <form class="newsletter-form" data-bs-toggle="validator">
-                               <label>Your E-mail Address:</label>
-                               <input type="email" class="input-newsletter" placeholder="Enter your email"
-                                   name="EMAIL" required autocomplete="off">
-                               <button type="submit">Subscribe</button>
-                               <div id="validator-newsletter" class="form-result"></div>
-                           </form>
-                       </div>
-                   </div>
-               </div>
-           </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                            Help
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li class="footer-nav"><a href="#">Frequently Asked Questions</a></li>
+                                <li class="footer-nav"><a href="#">How To Buy</a></li>
+                                <li class="footer-nav"><a href="#">Shipping &amp; Delivery</a></li>
+                                <li class="footer-nav"><a href="#">Warranty Information</a></li>
+                                <li class="footer-nav"><a href="#">Return Products</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseThree" aria-expanded="false"
+                            aria-controls="flush-collapseThree">
+                            Policies
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                        aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <ul>
+                                <li class="footer-nav"><a href="#">Privacy Policy</a></li>
+                                <li class="footer-nav"><a href="#">Return and Refund Policy</a></li>
+                                <li class="footer-nav"><a href="#">Terms and Conditions</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
-           <div class="footer-bottom-area">
-               <div class="row align-items-center justify-content-center">
-                   <div class="col-lg-6 col-md-6">
-                       <p>OMC eCommerce © 2024. All Rights Reserved Powered by <a href=""
-                               target="_blank">eSupport Technologies</a></p>
-                   </div>
 
-                   <div class="col-lg-6 col-md-6">
-                       <ul class="payment-types">
-                           <li><a href="#" target="_blank"><img src="frontend/assets/img/payment/visa.png"
-                                       alt="image"></a></li>
-                           <li><a href="#" target="_blank"><img
-                                       src="frontend/assets/img/payment/mastercard.png" alt="image"></a></li>
-                           <li><a href="#" target="_blank"><img
-                                       src="frontend/assets/img/payment/mastercard2.png" alt="image"></a></li>
-                           <li><a href="#" target="_blank"><img src="frontend/assets/img/payment/visa2.png"
-                                       alt="image"></a></li>
-                           <li><a href="#" target="_blank"><img
-                                       src="frontend/assets/img/payment/expresscard.png" alt="image"></a></li>
-                       </ul>
-                   </div>
-               </div>
-           </div>
-       </div>
-   </footer>
-   <!-- End Footer Area -->
 
-   <div class="go-top"><i class='bx bx-up-arrow-alt'></i></div>
+            </div>
+
+            <div class="d-flex flex-wrap text-center mobi-payment-icon-set">
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/VISA1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/MASTER1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/AMEX1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/COMBANK1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/FRIMI.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/HSBC.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/PB1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/DFCC.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/SAMPATH1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/NDB1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/NTB1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/PAB.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/BOC1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/AMANA1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/CARGILLS1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/CDB1.webp') }}"></div>
+                <div class="bank-image"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/KOKO.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/HNB1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/LOLC1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/NSB1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/SC1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/SEY1.webp') }}"></div>
+                <div class="bank-image-mobi"><img class="lazy"
+                        src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/UB1.webp') }}"></div>
+
+            </div>
+
+            <div class="copyright"><small>Copyright © 2025 Buyabans. All Rights Reserved.</small></div>
+        </div>
+
+        <!-- <div class="flex-wrap mobi-stickey-footer d-flex">
+            <div class="al-m">
+                <a href="https://buyabans.com">
+                    <img data-cfsrc="frontend/newstyle/assets/images/latest-icon/home.png" src="frontend/newstyle/assets/images/latest-icon/home.png">
+                </a>
+                <p>Home</p>
+            </div>
+
+            <div class="al-m footer-mobile-menu-toggle footer-cat" onclick="if (!window.__cfRLUnblockHandlers) return false; openMenuMobicat()">
+                <img data-cfsrc="frontend/newstyle/assets/images/latest-icon/menu-mobi.png" src="frontend/newstyle/assets/images/latest-icon/menu-mobi.png">
+                <p>Category</p>
+            </div>
+
+            <div class="al-m todays-offer-mobi">
+                <a href="javascript:void(0);"><img class="t-offer" data-cfsrc="frontend/newstyle/assets/images/icon/todayOFFERS.png" src="frontend/newstyle/assets/images/icon/todayOFFERS.png"></a>
+            </div>
+
+            <div class="al-m footer-mobile-search mobi-brand-new" onclick="if (!window.__cfRLUnblockHandlers) return false; openbrand()">
+                <a href="javascript:void(0);"><img data-cfsrc="frontend/newstyle/assets/images/latest-icon/brands-new.png" src="frontend/newstyle/assets/images/latest-icon/brands-new.png"></a>
+                <p>Brands</p>
+            </div>
+
+            <div class="cart-popup al-m">
+                <div class="item-count-foot" id="cart_item_count">0</div>
+                <img data-cfsrc="frontend/newstyle/assets/images/new-icon/shopping-cart.png" src="frontend/newstyle/assets/images/new-icon/shopping-cart.png">
+                <p>Cart</p>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+
+
+
+
+
+
+<!--
+============================================================================================================================ -->
+
+
+<!-- footer for mobile begin-->
+<!-- Begin of cart popup-->
+<div class="mini-cart d-none">
+    <div class="mini-cart-overlay"></div>
+    <div class="cart-white">
+        <div class="close-minicart"><i class="fa-solid fa-xmark"></i></div>
+        <div class="cart-logo">
+            <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.png') }}">
+
+        </div>
+        <h4>My Cart </h4>
+        <div id="mini-cart-data"></div>
+    </div>
+</div>
+<!-- footer for mobile end -->
+
+<!-- footer for destop begin -->
+<div class="destop-footer-con">
+    <div class="footer ft-destop">
+        <div class="purple-div">
+            <div class="footer-box">
+                <div class="footer-icon"><img src="{{ asset('frontend/newstyle/assets/images/icon/Page-1.webp') }}">
+                </div>
+                <div class="footer-details">
+                    <p>Customer Support</p>
+                    <span>8am - 5pm</span>
+                </div>
+            </div>
+            <div class="footer-box">
+                <div class="footer-icon"><img
+                        src="{{ asset('frontend/newstyle/assets/images/icon/sri-lanka.webp') }}">
+                </div>
+                <div class="footer-details">
+                    <p>Island-wide Delivery</p>
+                </div>
+            </div>
+            <div class="footer-box">
+                <div class="footer-icon"><img
+                        src="{{ asset('frontend/newstyle/assets/images/icon/stopwatch.webp') }}">
+                </div>
+                <div class="footer-details">
+                    <p>Express Delivery</p>
+                </div>
+            </div>
+            <div class="footer-box">
+                <div class="footer-icon"><img
+                        src="{{ asset('frontend/newstyle/assets/images/icon/technical-support.webp') }}">
+                </div>
+                <div class="footer-details">
+                    <p>100+ Service Centers</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container footer-padding">
+            <div class="row align-items-start">
+                <div class="col-md-3 address-info">
+                    <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.webp') }}">
+
+                    <div class="address">
+                        <p>No. 38, 2nd Lane,</p>
+                        <p>Rubber Watte Road,</p>
+                        <p>Gangodawila, Nugegoda, Sri Lanka.</p>
+                    </div>
+                    <div class="hotline">
+                        <p>HOTLINE</p>
+                        <a class="tel-no" href="#">+94 112 251 202 </a>
+                    </div>
+                    <div class="social-media">
+                        <ul>
+                            <li><a href="#" target="_blank"><img
+                                        src="{{ asset('frontend/newstyle/assets/images/footer/facebook.webp') }}"></a>
+                            </li>
+                            <li><a href="#" target="_blank"><img
+                                        src="{{ asset('frontend/newstyle/assets/images/footer/twitter.webp') }}"></a>
+                            </li>
+                            <li><a href="#" target="_blank"><img
+                                        src="{{ asset('frontend/newstyle/assets/images/footer/instagram.webp') }}"></a>
+                            </li>
+                            <li><a href="#" target="_blank"><img
+                                        src="{{ asset('frontend/newstyle/assets/images/footer/linkedin-in.webp') }}"></a>
+                            </li>
+                            <li><a href="#" target="_blank"><img
+                                        src="{{ asset('frontend/newstyle/assets/images/footer/youtube.webp') }}"></a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- <div class="col-md-3 mt-1">
+                    <p class="footer-title">&nbsp;</p>
+                    <div class="footer-img-div"><a href="#"><img src="frontend/newstyle/assets/images/icon/shop.png">Showroom Locator</a></div>
+                    <div class="footer-img-div"><a href="#"><img src="frontend/newstyle/assets/images/icon/shop.png">Showroom Login</a></div>
+                    <div class="footer-img-div"><a href="#" target="_blank"><img src="frontend/newstyle/assets/images/icon/repair-tool-new.png">Service Center Locator</a></div>
+                    <div class="footer-img-div"><a href="#" target="_blank"><img src="frontend/newstyle/assets/images/icon/order-tracking.png">Track your Order</a></div>
+                </div> -->
+
+                <div class="col-md-3">
+                    <div class="footer-links-set">
+                        <p class="footer-title">About</p>
+                        <ul>
+                            <li><a class="footer-link" href="#">About Us</a></li>
+                            <li><a class="footer-link" href="#">Careers</a></li>
+                            <li><a class="footer-link" href="#">Contact Us</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="footer-links-set">
+                        <p class="footer-title">Help</p>
+                        <ul>
+                            <li><a class="footer-link" href="#">Frequently Asked Questions</a></li>
+                            <li><a class="footer-link" href="#">How To Buy</a></li>
+                            <li><a class="footer-link" href="#">Shipping &amp; Delivery</a></li>
+                            <li><a class="footer-link" href="#">Warranty Information</a></li>
+                            <li><a class="footer-link" href="#">Return Products</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="footer-links-set">
+                        <p class="footer-title">Policies</p>
+                        <ul>
+                            <li><a class="footer-link" href="#">Privacy Policy</a></li>
+                            <li><a class="footer-link" href="#">Return and Refund Policy</a></li>
+                            <li><a class="footer-link" href="#">Terms and Conditions</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white-con">
+            <div class="container">
+                <div class="footer-payment-methods d-flex">
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/VISA1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/MASTER1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/AMEX1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/COMBANK1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/FRIMI.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/HSBC.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/PB1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/DFCC.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/SAMPATH1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/NDB1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/NTB1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/PAB.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/BOC1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/AMANA1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/CARGILLS1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/CDB1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/KOKO.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/CARGILLS1.webp') }}"></div>
+                    <!-- (duplicate CARGILLS) -->
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/HNB1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/LOLC1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/NSB1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/SC1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/SEY1.webp') }}"></div>
+                    <div class="bank-image"><img
+                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/UB1.webp') }}"></div>
+
+                </div>
+                <div class="copyright"><small>Copyright © 2025 CROWN ELECTRONICS. All Rights Reserved.</small></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer for destop end -->
+
+
+
+
+
+<overlay-loader :is-open="show_loader"></overlay-loader>
+
+
+</div>
