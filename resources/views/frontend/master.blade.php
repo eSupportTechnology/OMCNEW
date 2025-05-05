@@ -33,7 +33,7 @@
         <link rel="shortcut icon" href="{{ asset('frontend/assets/images/web-app-manifest-192x192.png') }}">
 
         <!-- Bootstrap -->
-        {{-- <link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap.min.css') }}"> --}}
+        <link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap.min.css') }}">
         <!-- select 2 -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css">
         <!-- Slick -->
@@ -100,7 +100,8 @@
     <link rel="stylesheet" href="assets/libs/owl-carousel/owl.carousel.min.js"> -->
 
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"
             integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet"

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Carousel;
 use Illuminate\Http\Request;
 use App\Models\Category;
@@ -92,6 +93,10 @@ class HomeController extends Controller
         // Fetching Carousel
         $carousels = Carousel::where('is_active', '1')->get();
 
+        $leftBanner = Banner::where('position', 'left')->where('is_active', '1')->first();
+        $rightBanner = Banner::where('position', 'right')->where('is_active', '1')->first();
+        $bottomBanner = Banner::where('position', 'bottom')->where('is_active', '1')->first();
+
         // Returning to the view
         return view('frontend.home', [
             'categories' => $categories,
@@ -100,6 +105,9 @@ class HomeController extends Controller
             'flashSales' => $flashSales,
             'recentProducts' => $recentProducts,
             'orderedProducts' => $orderedProducts,
+            'leftBanner' => $leftBanner,
+            'rightBanner' => $rightBanner,
+            'bottomBanner' => $bottomBanner,
         ]);
     }
 }

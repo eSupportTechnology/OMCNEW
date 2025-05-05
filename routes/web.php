@@ -230,6 +230,7 @@ Route::post('/affiliate/dashboard/payment/realtime_tracking', [AffiliateReportCo
 //admin dashboard
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\Auth\AdminLoginController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Middleware\AdminAuth;
@@ -320,6 +321,12 @@ Route::post('/admin/carousel/add', [CarouselController::class, 'store'])->name('
 Route::delete('/admin/carousel/{id}', [CarouselController::class, 'destroy'])->name('carousel.destroy');
 Route::get('carousel/edit/{id}', [CarouselController::class, 'edit'])->name('edit_carousel');
 Route::put('carousel/update/{id}', [CarouselController::class, 'update'])->name('update_carousel');
+
+Route::get('/admin/banner', [BannerController::class, 'showBanners'])->name('banner');
+Route::post('/admin/banner/add', [BannerController::class, 'store'])->name('banner_add');
+Route::delete('/admin/banner/{id}', [BannerController::class, 'destroy'])->name('banner.destroy');
+Route::get('banner/edit/{id}', [BannerController::class, 'edit'])->name('edit_banner');
+Route::put('banner/update/{id}', [BannerController::class, 'update'])->name('update_banner');
 
 Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders');
 Route::get('/admin/order-details', [OrderController::class, 'show'])->name('customerorder_details');

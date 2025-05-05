@@ -2,14 +2,14 @@
 
 @section('content')
     <!--
-                                                                                                                                                                        ==============================================================================================================================================================
+                                                                                                                                                                    ==============================================================================================================================================================
 
 
-                                                                                                                                                                        home page
+                                                                                                                                                                    home page
 
 
-                                                                                                                                                                        ===============================================================================================================================================================
-                                                                                                                                                                        -->
+                                                                                                                                                                    ===============================================================================================================================================================
+                                                                                                                                                                    -->
 
 
 
@@ -119,9 +119,9 @@
 
     <!-- Carousel Section -->
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" ">
-                                                                                                                                                                                                <div class="carousel-inner">
+                                                                                                                                                                                            <div class="carousel-inner">
 
-                                                         @foreach ($carousels as $index=>
+                                                    @foreach ($carousels as $index=>
         $carousel)
         <div class="carousel-item {{ $index === 0 ? 'active' : '' }}"
             style="background-image: url('{{ asset('storage/carousel_images/' . $carousel->image_path) }}');">
@@ -138,14 +138,9 @@
             </div> --}}
     </div>
     <div class="carousel-indicators">
-		@foreach ($carousels as $index => $carousel)
-            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="{{ $index }}"
-                class="{{ $index === 0 ? 'active' : '' }}" aria-current="{{ $index === 0 ? 'true' : 'false' }}"
-                aria-label="Slide {{ $index + 1 }}"></button>
-        @endforeach
-        {{-- <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></button>
         <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"></button> --}}
+        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"></button>
     </div>
     </div>
 
@@ -242,7 +237,7 @@
 
     <!-- Include Owl Carousel CSS -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/frontend/newstyle/assets/owl.carousel.min.css">
-                                                                                                                                                                                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css"> -->
+                                                                                                                                                                                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css"> -->
 
     <!-- Include Owl Carousel JS -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script> -->
@@ -462,24 +457,31 @@
         <div class="row m-0">
             <!-- First Banner Image (Left Side) -->
             <div class="col-12 col-sm-6 custom-4-banner">
-                <img src="https://buyabans.com/cdn-cgi/imagedelivery/OgVIyabXh1YHxwM0lBwqgA/home_banner_images/fFf1mBa7KiYTuodxN4vb4U2I3VhH6fhM2fI1HjYq.webp/public"
-                    class="img-fluid" alt="Banner 1">
+                 @if ($leftBanner)
+                <img src="{{ asset('storage/banner_images/' . $leftBanner->image_path) }}"
+                     class="img-fluid" alt="Banner Left">
+            @endif
             </div>
 
             <!-- Second Banner Image (Right Side) -->
             <div class="col-12 col-sm-6 custom-4-banner">
-                <img src="https://buyabans.com/cdn-cgi/imagedelivery/OgVIyabXh1YHxwM0lBwqgA/home_banner_images/uMCmKMfFueAmgMbp5oOQH3cNlKvCU7OEZgDMeltq.webp/public"
-                    class="img-fluid" alt="Banner 2">
+                @if ($rightBanner)
+                <img src="{{ asset('storage/banner_images/' . $rightBanner->image_path) }}"
+                     class="img-fluid" alt="Banner Right">
+            @endif
             </div>
         </div>
 
         <!-- Single Banner Image (Full Width) -->
-        <a href="https://buyabans.com/kitchen-appliance/blenders-mixers">
+        <!-- Bottom Banner with Optional Link -->
+    @if ($bottomBanner)
+        <a href="{{ $bottomBanner->link ?? '#' }}">
             <div class="col-12 col-sm-12 single-banner-m">
-                <img src="https://buyabans.com/cdn-cgi/imagedelivery/OgVIyabXh1YHxwM0lBwqgA/home_banner_images/xS47eoY0DBO7b1nahDL2aDyLpJShrPkV2tnsbhFY.webp/public"
-                    class="img-fluid" alt="Blenders and Mixers Banner">
+                <img src="{{ asset('storage/banner_images/' . $bottomBanner->image_path) }}"
+                     class="img-fluid" alt="Bottom Banner">
             </div>
         </a>
+    @endif
     </div>
 
 
@@ -548,10 +550,10 @@
 
     <!--
 
-                                                                                                                                                                                        =====================================================================================================================================================
-                                                                                                                                                                                                                             Home page end
+                                                                                                                                                                                    =====================================================================================================================================================
+                                                                                                                                                                                                                         Home page end
 
-                                                                                                                                                                                        ===================================================================================================================================================== -->
+                                                                                                                                                                                    ===================================================================================================================================================== -->
 
 
 
