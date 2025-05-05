@@ -34,10 +34,20 @@
                                     </a>
                                 </div>
 
-                                <div class="mobi-logo"><a href="/"><img
-                                            src="{{ asset('frontend/newstyle/assets/images/buyabanslogo-new.png') }}"
-                                            alt="logo" />
-                                    </a>
+                                <div class="mobi-logo">
+                                    @if ($siteLogo && $siteLogo->image_path)
+                                        <a href="{{ url('/') }}">
+                                            <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}"
+                                                alt="Site Logo" class="img-fluid" style="max-height: 60px;">
+                                        </a>
+                                    @else
+                                        <a href="/"><img
+                                                src="{{ asset('frontend/newstyle/assets/images/buyabanslogo-new.png') }}"
+                                                alt="logo" />
+                                        </a>
+                                    @endif
+
+
                                 </div>
 
                             </div>
@@ -254,9 +264,17 @@
                     <div class="site-common-con header-search">
                         <div class="destop-main-header">
                             <div class="des-logo">
-                                <a href="/"><img
-                                        src="{{ asset('frontend/newstyle/assets/images/buyabanslogo-new.png') }}">
-                                </a>
+                                @if ($siteLogo && $siteLogo->image_path)
+                                    <a href="{{ url('/') }}">
+                                        <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}"
+                                            alt="Site Logo" class="img-fluid">
+                                    </a>
+                                @else
+                                    <a href="/"><img
+                                            src="{{ asset('frontend/newstyle/assets/images/buyabanslogo-new.png') }}">
+                                    </a>
+                                @endif
+
                             </div>
 
                             <div class="search-con">

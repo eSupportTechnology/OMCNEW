@@ -234,7 +234,13 @@
     <div class="cart-white">
         <div class="close-minicart"><i class="fa-solid fa-xmark"></i></div>
         <div class="cart-logo">
-            <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.png') }}">
+            @if ($siteLogo && $siteLogo->image_path)
+                <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}" alt="Site Logo"
+                    class="img-fluid">
+            @else
+                <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.png') }}">
+            @endif
+
 
         </div>
         <h4>My Cart </h4>
@@ -284,8 +290,13 @@
         <div class="container footer-padding">
             <div class="row align-items-start">
                 <div class="col-md-3 address-info">
-                    <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.webp') }}">
 
+                    @if ($siteLogo && $siteLogo->image_path)
+                        <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}" alt="Site Logo"
+                            class="img-fluid">
+                    @else
+                        <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.webp') }}">
+                    @endif
                     <div class="address">
                         <p>No. 38, 2nd Lane,</p>
                         <p>Rubber Watte Road,</p>

@@ -233,6 +233,7 @@ use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\ContactFormController;
+use App\Http\Controllers\LogoController;
 use App\Http\Middleware\AdminAuth;
 
 
@@ -327,6 +328,9 @@ Route::post('/admin/banner/add', [BannerController::class, 'store'])->name('bann
 Route::delete('/admin/banner/{id}', [BannerController::class, 'destroy'])->name('banner.destroy');
 Route::get('banner/edit/{id}', [BannerController::class, 'edit'])->name('edit_banner');
 Route::put('banner/update/{id}', [BannerController::class, 'update'])->name('update_banner');
+
+Route::get('/admin/logo', [LogoController::class, 'showLogo'])->name('logo');
+Route::put('admin/logo', [LogoController::class, 'insertOrUpdateLogo'])->name('insert_or_update_logo');
 
 Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders');
 Route::get('/admin/order-details', [OrderController::class, 'show'])->name('customerorder_details');

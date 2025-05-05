@@ -34,10 +34,20 @@
                                     </a>
                                 </div>
 
-                                <div class="mobi-logo"><a href="/"><img
-                                            src="<?php echo e(asset('frontend/newstyle/assets/images/buyabanslogo-new.png')); ?>"
-                                            alt="logo" />
-                                    </a>
+                                <div class="mobi-logo">
+                                    <?php if($siteLogo && $siteLogo->image_path): ?>
+                                        <a href="<?php echo e(url('/')); ?>">
+                                            <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>"
+                                                alt="Site Logo" class="img-fluid" style="max-height: 60px;">
+                                        </a>
+                                    <?php else: ?>
+                                        <a href="/"><img
+                                                src="<?php echo e(asset('frontend/newstyle/assets/images/buyabanslogo-new.png')); ?>"
+                                                alt="logo" />
+                                        </a>
+                                    <?php endif; ?>
+
+
                                 </div>
 
                             </div>
@@ -255,9 +265,17 @@
                     <div class="site-common-con header-search">
                         <div class="destop-main-header">
                             <div class="des-logo">
-                                <a href="/"><img
-                                        src="<?php echo e(asset('frontend/newstyle/assets/images/buyabanslogo-new.png')); ?>">
-                                </a>
+                                <?php if($siteLogo && $siteLogo->image_path): ?>
+                                    <a href="<?php echo e(url('/')); ?>">
+                                        <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>"
+                                            alt="Site Logo" class="img-fluid">
+                                    </a>
+                                <?php else: ?>
+                                    <a href="/"><img
+                                            src="<?php echo e(asset('frontend/newstyle/assets/images/buyabanslogo-new.png')); ?>">
+                                    </a>
+                                <?php endif; ?>
+
                             </div>
 
                             <div class="search-con">
