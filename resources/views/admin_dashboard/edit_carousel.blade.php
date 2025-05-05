@@ -51,6 +51,15 @@
                             </div>
 
 
+                            <div class="mb-3">
+                                <label for="carouselIsActive" class="form-label text-black">Status</label>
+                                <select class="form-select" id="carouselIsActive" name="is_active">
+                                    <option value="1" {{ $carousel->is_active == 1 ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{ $carousel->is_active == 0 ? 'selected' : '' }}>Inactive
+                                    </option>
+                                </select>
+                            </div>
+
 
                             <button type="submit" class="btn btn-success mt-3">Update</button>
                         </form>

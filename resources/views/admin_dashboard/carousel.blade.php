@@ -24,6 +24,7 @@
                                     <th>#</th>
                                     <th>Title</th>
                                     <th>Image</th>
+                                    <th>Status</th>
                                     <th style="width:20%">Actions</th>
                                 </tr>
                             </thead>
@@ -32,6 +33,7 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $carousel->title }}</td>
+
                                         <td>
                                             @if ($carousel->image_path)
                                                 <img src="{{ asset('storage/carousel_images/' . basename($carousel->image_path)) }}"
@@ -40,6 +42,12 @@
                                                 No Image
                                             @endif
                                         </td>
+
+                                        @if ($carousel->is_active)
+                                            <td><span class="badge bg-success">Active</span></td>
+                                        @else
+                                            <td><span class="badge bg-danger">Inactive</span></td>
+                                        @endif
 
                                         <td>
                                             <div class="category-actions">

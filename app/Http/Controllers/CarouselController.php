@@ -66,6 +66,7 @@ class CarouselController extends Controller
         $request->validate([
             'title' => 'nullable|string|max:255',
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'is_active' => 'nullable|boolean',
         ]);
 
         $carousel = Carousel::findOrFail($id);
@@ -85,6 +86,7 @@ class CarouselController extends Controller
         $carousel->update([
             'title' => $request->input('title'),
             'image_path' => $imageName,
+            'is_active' => $request->input('is_active', 1),
         ]);
 
 

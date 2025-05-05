@@ -22,6 +22,7 @@
                                     <th>#</th>
                                     <th>Title</th>
                                     <th>Image</th>
+                                    <th>Status</th>
                                     <th style="width:20%">Actions</th>
                                 </tr>
                             </thead>
@@ -30,6 +31,7 @@
                                     <tr>
                                         <td><?php echo e($loop->iteration); ?></td>
                                         <td><?php echo e($carousel->title); ?></td>
+
                                         <td>
                                             <?php if($carousel->image_path): ?>
                                                 <img src="<?php echo e(asset('storage/carousel_images/' . basename($carousel->image_path))); ?>"
@@ -38,6 +40,12 @@
                                                 No Image
                                             <?php endif; ?>
                                         </td>
+
+                                        <?php if($carousel->is_active): ?>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                        <?php else: ?>
+                                            <td><span class="badge bg-danger">Inactive</span></td>
+                                        <?php endif; ?>
 
                                         <td>
                                             <div class="category-actions">
