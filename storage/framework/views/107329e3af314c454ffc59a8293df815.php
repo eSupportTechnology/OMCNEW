@@ -1,13 +1,13 @@
 <?php $__env->startSection('content'); ?>
     <!--
-                                                                                                                            ==============================================================================================================================================================
+                                                                                                                                                                        ==============================================================================================================================================================
 
 
-                                                                                                                            home page
+                                                                                                                                                                        home page
 
 
-                                                                                                                            ===============================================================================================================================================================
-                                                                                                                            -->
+                                                                                                                                                                        ===============================================================================================================================================================
+                                                                                                                                                                        -->
 
 
 
@@ -117,95 +117,109 @@
 
     <!-- Carousel Section -->
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" ">
-                                                                                                                                                    <div class="carousel-inner">
-                                                                                                                                                        <div class="carousel-item active">
-                                                                                                                                                            <!-- First banner image -->
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="carousel-item">
-                                                                                                                                                            <!-- Second banner image -->
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="carousel-item">
-                                                                                                                                                            <!-- Third banner image -->
-                                                                                                                                                        </div>
-                                                                                                                                                    </div>
-                                                                                                                                                    <div class="carousel-indicators">
-                                                                                                                                                        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></button>
-                                                                                                                                                        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"></button>
-                                                                                                                                                        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"></button>
-                                                                                                                                                    </div>
-                                                                                                                                                </div>
+                                                                                                                                                                                                <div class="carousel-inner">
 
-                                                                                                                                                <div class="site-common-con">
-                                                                                                                                                    <div class="home-product d-flex">
-                                                                                                                                                        <div class="home-product-title exclusive">
-                                                                                                                                                            <p class="home-page-product-title">Online Exclusive</p>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="view-all-txt">
-                                                                                                                                                            <a class="view-all-link" href="#">VIEW ALL</a>
-                                                                                                                                                        </div>
-                                                                                                                                                    </div>
+                                                         <?php $__currentLoopData = $carousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index=>
+        $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <div class="carousel-item <?php echo e($index === 0 ? 'active' : ''); ?>"
+            style="background-image: url('<?php echo e(asset('storage/carousel_images/' . $carousel->image_path)); ?>');">
+        </div>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        
+    </div>
+    <div class="carousel-indicators">
+		<?php $__currentLoopData = $carousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="<?php echo e($index); ?>"
+                class="<?php echo e($index === 0 ? 'active' : ''); ?>" aria-current="<?php echo e($index === 0 ? 'true' : 'false'); ?>"
+                aria-label="Slide <?php echo e($index + 1); ?>"></button>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+        
+    </div>
+    </div>
 
-                                                                                                                                                    <div id="category_products_list_28" class="products-grid row">
-                                                                                                                                                        <div class="home-product-list owl-carousel owl-theme owl-loaded owl-drag">
-                                                                                                                                                            <div class="owl-stage-outer">
-                                                                                                                                                                <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all; width: 2600px;">
+    <div class="site-common-con">
+        <div class="home-product d-flex">
+            <div class="home-product-title exclusive">
+                <p class="home-page-product-title">Online Exclusive</p>
+            </div>
+            <div class="view-all-txt">
+                <a class="view-all-link" href="#">VIEW ALL</a>
+            </div>
+        </div>
+
+        <div id="category_products_list_28" class="products-grid row">
+            <div class="home-product-list owl-carousel owl-theme owl-loaded owl-drag">
+                <div class="owl-stage-outer">
+                    <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all; width: 2600px;">
 
 
-                                 <?php $__currentLoopData = $specialOffers->slice(0, 10); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <div class="owl-item active" style="width: 216.638px;">
-            <div class="item items-28">
-                <div class="grid-product-wapper">
-                    <!-- Discount Tag -->
-                    <?php if($product->product->specialOffer && $product->product->specialOffer->status === 'active'): ?>
-                        <div class="normal-pro-promo-tags">
-                            <div class="discout-tag">
-                                <span class="discount-amount"><?php echo e($product->product->specialOffer->offer_rate); ?>%</span>
-                                <span class="off-txt">OFF</span>
+                        <?php $__currentLoopData = $specialOffers->slice(0, 10); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="owl-item active" style="width: 216.638px;">
+                                <div class="item items-28">
+                                    <div class="grid-product-wapper">
+                                        <!-- Discount Tag -->
+                                        <?php if($product->product->specialOffer && $product->product->specialOffer->status === 'active'): ?>
+                                            <div class="normal-pro-promo-tags">
+                                                <div class="discout-tag">
+                                                    <span
+                                                        class="discount-amount"><?php echo e($product->product->specialOffer->offer_rate); ?>%</span>
+                                                    <span class="off-txt">OFF</span>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <!-- Product Image -->
+                                        <div class="product-image">
+                                            <a
+                                                href="<?php echo e(route('product-description', ['id' => $product->product->product_id])); ?>">
+
+                                                <?php if($product->images->isEmpty()): ?>
+                                                    <img src="<?php echo e(asset('frontend/newstyle/assets/images/loader.gif')); ?>"
+                                                        alt="<?php echo e($product->product_name); ?>" class="grid-product-img"
+                                                        loading="eager" width="178" height="178">
+                                                <?php else: ?>
+                                                    <img src="<?php echo e(asset('storage/' . $product->images->first()->image_path)); ?>"
+                                                        alt="<?php echo e($product->product_name); ?>" class="grid-product-img"
+                                                        loading="eager" width="178" height="178">
+                                                <?php endif; ?>
+                                            </a>
+                                            <div class="products-btn-set">
+                                                <a href="<?php echo e(route('product-description', $product->product_id)); ?>"
+                                                    class="home-buynow">BUY
+                                                    NOW</a>
+                                            </div>
+                                        </div>
+
+                                        <!-- Product Title & Prices -->
+                                        <div class="grid-pro-drtail-con">
+                                            <div class="col-md-12 grid-product-title">
+                                                <div class="pro-name-compact" title="<?php echo e($product->product->product_name); ?>">
+                                                    <?php echo e($product->product->product_name); ?>
+
+                                                </div>
+                                            </div>
+                                            <div class="u">
+                                                <?php if($product->product->specialOffer && $product->product->specialOffer->status === 'active'): ?>
+                                                    <span class="market-price">Rs.
+                                                        <?php echo e(number_format($product->normal_price, 2)); ?></span>
+                                                    <span class="selling-price">Rs.
+                                                        <?php echo e(number_format($product->product->specialOffer->offer_price, 2)); ?></span>
+                                                <?php else: ?>
+                                                    <span class="market-price">Rs.
+                                                        <?php echo e(number_format($product->normal_price, 2)); ?></span>
+                                                <?php endif; ?>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    <?php endif; ?>
-
-                    <!-- Product Image -->
-                    <div class="product-image">
-                        <a href="<?php echo e(route('product-description', ['id' => $product->product->product_id])); ?>">
-                            <img src="<?php echo e(asset('storage/' . $product->product->images->first()->image_path)); ?>"
-                                alt="<?php echo e($product->product->product_name); ?>" class="grid-product-img" loading="eager"
-                                width="178" height="178">
-                        </a>
-                        <div class="products-btn-set">
-                            <a href="<?php echo e(route('product-description', $product->product_id)); ?>" class="home-buynow">BUY
-                                NOW</a>
-                        </div>
-                    </div>
-
-                    <!-- Product Title & Prices -->
-                    <div class="grid-pro-drtail-con">
-                        <div class="col-md-12 grid-product-title">
-                            <div class="pro-name-compact" title="<?php echo e($product->product->product_name); ?>">
-                                <?php echo e($product->product->product_name); ?>
-
-                            </div>
-                        </div>
-                        <div class="u">
-                            <?php if($product->product->specialOffer && $product->product->specialOffer->status === 'active'): ?>
-                                <span class="market-price">Rs. <?php echo e(number_format($product->normal_price, 2)); ?></span>
-                                <span class="selling-price">Rs.
-                                    <?php echo e(number_format($product->product->specialOffer->offer_price, 2)); ?></span>
-                            <?php else: ?>
-                                <span class="market-price">Rs. <?php echo e(number_format($product->normal_price, 2)); ?></span>
-                            <?php endif; ?>
-
-
-                        </div>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 </div>
             </div>
         </div>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-    </div>
-    </div>
-    </div>
-    </div>
 
     </div>
 
@@ -217,7 +231,7 @@
 
     <!-- Include Owl Carousel CSS -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/frontend/newstyle/assets/owl.carousel.min.css">
-                                                                                                                                            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css"> -->
+                                                                                                                                                                                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css"> -->
 
     <!-- Include Owl Carousel JS -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script> -->
@@ -297,9 +311,16 @@
                                         <!-- Product Image -->
                                         <div class="product-image">
                                             <a href="<?php echo e(route('product-description', $product->product_id)); ?>">
-                                                <img src="<?php echo e(asset('storage/' . $product->images->first()->image_path)); ?>"
-                                                    alt="<?php echo e($product->product_name); ?>" class="grid-product-img"
-                                                    loading="eager" width="178" height="178">
+
+                                                <?php if($product->images->isEmpty()): ?>
+                                                    <img src="<?php echo e(asset('frontend/newstyle/assets/images/loader.gif')); ?>"
+                                                        alt="<?php echo e($product->product_name); ?>" class="grid-product-img"
+                                                        loading="eager" width="178" height="178">
+                                                <?php else: ?>
+                                                    <img src="<?php echo e(asset('storage/' . $product->images->first()->image_path)); ?>"
+                                                        alt="<?php echo e($product->product_name); ?>" class="grid-product-img"
+                                                        loading="eager" width="178" height="178">
+                                                <?php endif; ?>
                                             </a>
                                             <div class="products-btn-set">
                                                 <a href="<?php echo e(route('product-description', $product->product_id)); ?>"
@@ -376,9 +397,15 @@
                                         <!-- Product Image -->
                                         <div class="product-image">
                                             <a href="<?php echo e(route('product-description', $product->product_id)); ?>">
-                                                <img src="<?php echo e(asset('storage/' . $product->images->first()->image_path)); ?>"
-                                                    alt="<?php echo e($product->product_name); ?>" class="grid-product-img"
-                                                    loading="eager" width="178" height="178">
+                                                <?php if($product->images->isEmpty()): ?>
+                                                    <img src="<?php echo e(asset('frontend/newstyle/assets/images/loader.gif')); ?>"
+                                                        alt="<?php echo e($product->product_name); ?>" class="grid-product-img"
+                                                        loading="eager" width="178" height="178">
+                                                <?php else: ?>
+                                                    <img src="<?php echo e(asset('storage/' . $product->images->first()->image_path)); ?>"
+                                                        alt="<?php echo e($product->product_name); ?>" class="grid-product-img"
+                                                        loading="eager" width="178" height="178">
+                                                <?php endif; ?>
                                             </a>
                                             <div class="products-btn-set">
                                                 <a href="<?php echo e(route('product-description', $product->product_id)); ?>"
@@ -512,10 +539,10 @@
 
     <!--
 
-                                                                                                                                            =====================================================================================================================================================
-                                                                                                                                                                                 Home page end
+                                                                                                                                                                                        =====================================================================================================================================================
+                                                                                                                                                                                                                             Home page end
 
-                                                                                                                                            ===================================================================================================================================================== -->
+                                                                                                                                                                                        ===================================================================================================================================================== -->
 
 
 

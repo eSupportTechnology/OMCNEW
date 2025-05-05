@@ -1,0 +1,1 @@
+<?php /**PATH D:\Manulas Doc\Project\Intern\Project\omcnew project\OMCNEW\resources\views/includes/navbar.blade.php ENDPATH**/ ?>

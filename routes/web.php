@@ -66,7 +66,7 @@ Route::get('/best-sellers', [SpecialOffersController::class, 'bestSellers'])->na
 Route::view('/home/affiliate/all', 'aff_all')->name('aff_all');
 Route::view('/home/affiliate/single', 'aff_single')->name('aff_single');
 
-Route::post('/inquiry', [InquiryController::class, 'store'])->name('inquiry.store');//inquiry
+Route::post('/inquiry', [InquiryController::class, 'store'])->name('inquiry.store'); //inquiry
 Route::get('/admin/customer_inquiries', [InquiryController::class, 'showCustomerInquiries'])->name('customer_inquiries');
 
 Route::get('/search-results', [ProductController::class, 'showSearchResults'])->name('searchResults');
@@ -117,7 +117,7 @@ Route::get('home/My-Account/change-password', function () {
 
 
 //new return button
-Route::get('home/My-Account/returns', function () { 
+Route::get('home/My-Account/returns', function () {
     return view('member_dashboard.returns');
 })->name('returns');
 
@@ -221,8 +221,8 @@ Route::put('/raffletickets/{id}/setDefault', [AffiliateTrackingController::class
 Route::delete('/raffletickets/{id}', [AffiliateTrackingController::class, 'destroy'])->name('raffletickets.destroy');
 
 Route::get('/raffletickets/{id}/report', [AffiliateReportController::class, 'report'])->name('raffletickets.report');
-Route::get('/affiliate/dashboard/reports/traffic_report',[AffiliateReportController::class, 'trafficreport'] )->name('traffic_report');
-Route::get('/affiliate/dashboard/payment/withdrawals', [AffiliateReportController::class, 'withdrawals'] )->name('withdrawals');
+Route::get('/affiliate/dashboard/reports/traffic_report', [AffiliateReportController::class, 'trafficreport'])->name('traffic_report');
+Route::get('/affiliate/dashboard/payment/withdrawals', [AffiliateReportController::class, 'withdrawals'])->name('withdrawals');
 Route::get('/affiliate/dashboard/payment/payment_info', [AffiliateReportController::class, 'showPaymentInfo'])->name('payment_info');
 Route::post('/affiliate/dashboard/payment/realtime_tracking', [AffiliateReportController::class, 'realtimereport'])->name('realtime_tracking');
 
@@ -230,6 +230,7 @@ Route::post('/affiliate/dashboard/payment/realtime_tracking', [AffiliateReportCo
 //admin dashboard
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\Auth\AdminLoginController;
+use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Middleware\AdminAuth;
 
@@ -314,6 +315,12 @@ Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->n
 Route::get('category/edit/{id}', [CategoryController::class, 'edit'])->name('edit_category');
 Route::put('category/update/{id}', [CategoryController::class, 'update'])->name('update_category');
 
+Route::get('/admin/carousel', [CarouselController::class, 'showCarousels'])->name('carousel');
+Route::post('/admin/carousel/add', [CarouselController::class, 'store'])->name('carousel_add');
+Route::delete('/admin/carousel/{id}', [CarouselController::class, 'destroy'])->name('carousel.destroy');
+Route::get('carousel/edit/{id}', [CarouselController::class, 'edit'])->name('edit_carousel');
+Route::put('carousel/update/{id}', [CarouselController::class, 'update'])->name('update_carousel');
+
 Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders');
 Route::get('/admin/order-details', [OrderController::class, 'show'])->name('customerorder_details');
 Route::post('/set-order-code', [OrderController::class, 'setOrderCode'])->name('set-order-code');
@@ -367,7 +374,7 @@ Route::get('/customer-inquiry', function () {
 
 
 
-Route::get('/main',[FrontendTemplateController::class, 'main'])->name('main');
+Route::get('/main', [FrontendTemplateController::class, 'main'])->name('main');
 
 
 Route::get('/About-us', function () {
@@ -429,5 +436,3 @@ Route::post('/wishlist/check-multiple', [WishListController::class, 'checkMultip
 Route::post('/buynow_checkout', [CheckoutController::class, 'buyNowCheckout'])->name('buynow.checkout');
 Route::get('/checkout', [CheckoutController::class, 'showCheckoutPage'])->name('buynow.checkout.page');
 Route::post('/buynoworder', [CustomerOrderController::class, 'buynowstore'])->name('buynoworder.store');
-
-

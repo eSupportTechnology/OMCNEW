@@ -2,14 +2,14 @@
 
 @section('content')
     <!--
-                                                                                                                            ==============================================================================================================================================================
+                                                                                                                                                                        ==============================================================================================================================================================
 
 
-                                                                                                                            home page
+                                                                                                                                                                        home page
 
 
-                                                                                                                            ===============================================================================================================================================================
-                                                                                                                            -->
+                                                                                                                                                                        ===============================================================================================================================================================
+                                                                                                                                                                        -->
 
 
 
@@ -119,94 +119,118 @@
 
     <!-- Carousel Section -->
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" ">
-                                                                                                                                                    <div class="carousel-inner">
-                                                                                                                                                        <div class="carousel-item active">
-                                                                                                                                                            <!-- First banner image -->
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="carousel-item">
-                                                                                                                                                            <!-- Second banner image -->
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="carousel-item">
-                                                                                                                                                            <!-- Third banner image -->
-                                                                                                                                                        </div>
-                                                                                                                                                    </div>
-                                                                                                                                                    <div class="carousel-indicators">
-                                                                                                                                                        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></button>
-                                                                                                                                                        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"></button>
-                                                                                                                                                        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"></button>
-                                                                                                                                                    </div>
-                                                                                                                                                </div>
+                                                                                                                                                                                                <div class="carousel-inner">
 
-                                                                                                                                                <div class="site-common-con">
-                                                                                                                                                    <div class="home-product d-flex">
-                                                                                                                                                        <div class="home-product-title exclusive">
-                                                                                                                                                            <p class="home-page-product-title">Online Exclusive</p>
-                                                                                                                                                        </div>
-                                                                                                                                                        <div class="view-all-txt">
-                                                                                                                                                            <a class="view-all-link" href="#">VIEW ALL</a>
-                                                                                                                                                        </div>
-                                                                                                                                                    </div>
+                                                         @foreach ($carousels as $index=>
+        $carousel)
+        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}"
+            style="background-image: url('{{ asset('storage/carousel_images/' . $carousel->image_path) }}');">
+        </div>
+        @endforeach
+        {{-- <div class="carousel-item active">
+                <!-- First banner image -->
+            </div>
+            <div class="carousel-item">
+                <!-- Second banner image -->
+            </div>
+            <div class="carousel-item">
+                <!-- Third banner image -->
+            </div> --}}
+    </div>
+    <div class="carousel-indicators">
+		@foreach ($carousels as $index => $carousel)
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="{{ $index }}"
+                class="{{ $index === 0 ? 'active' : '' }}" aria-current="{{ $index === 0 ? 'true' : 'false' }}"
+                aria-label="Slide {{ $index + 1 }}"></button>
+        @endforeach
+        {{-- <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"></button> --}}
+    </div>
+    </div>
 
-                                                                                                                                                    <div id="category_products_list_28" class="products-grid row">
-                                                                                                                                                        <div class="home-product-list owl-carousel owl-theme owl-loaded owl-drag">
-                                                                                                                                                            <div class="owl-stage-outer">
-                                                                                                                                                                <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all; width: 2600px;">
+    <div class="site-common-con">
+        <div class="home-product d-flex">
+            <div class="home-product-title exclusive">
+                <p class="home-page-product-title">Online Exclusive</p>
+            </div>
+            <div class="view-all-txt">
+                <a class="view-all-link" href="#">VIEW ALL</a>
+            </div>
+        </div>
+
+        <div id="category_products_list_28" class="products-grid row">
+            <div class="home-product-list owl-carousel owl-theme owl-loaded owl-drag">
+                <div class="owl-stage-outer">
+                    <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all; width: 2600px;">
 
 
-                                 @foreach ($specialOffers->slice(0, 10) as $product)
-        <div class="owl-item active" style="width: 216.638px;">
-            <div class="item items-28">
-                <div class="grid-product-wapper">
-                    <!-- Discount Tag -->
-                    @if ($product->product->specialOffer && $product->product->specialOffer->status === 'active')
-                        <div class="normal-pro-promo-tags">
-                            <div class="discout-tag">
-                                <span class="discount-amount">{{ $product->product->specialOffer->offer_rate }}%</span>
-                                <span class="off-txt">OFF</span>
+                        @foreach ($specialOffers->slice(0, 10) as $product)
+                            <div class="owl-item active" style="width: 216.638px;">
+                                <div class="item items-28">
+                                    <div class="grid-product-wapper">
+                                        <!-- Discount Tag -->
+                                        @if ($product->product->specialOffer && $product->product->specialOffer->status === 'active')
+                                            <div class="normal-pro-promo-tags">
+                                                <div class="discout-tag">
+                                                    <span
+                                                        class="discount-amount">{{ $product->product->specialOffer->offer_rate }}%</span>
+                                                    <span class="off-txt">OFF</span>
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                        <!-- Product Image -->
+                                        <div class="product-image">
+                                            <a
+                                                href="{{ route('product-description', ['id' => $product->product->product_id]) }}">
+
+                                                @if ($product->images->isEmpty())
+                                                    <img src="{{ asset('frontend/newstyle/assets/images/loader.gif') }}"
+                                                        alt="{{ $product->product_name }}" class="grid-product-img"
+                                                        loading="eager" width="178" height="178">
+                                                @else
+                                                    <img src="{{ asset('storage/' . $product->images->first()->image_path) }}"
+                                                        alt="{{ $product->product_name }}" class="grid-product-img"
+                                                        loading="eager" width="178" height="178">
+                                                @endif
+                                            </a>
+                                            <div class="products-btn-set">
+                                                <a href="{{ route('product-description', $product->product_id) }}"
+                                                    class="home-buynow">BUY
+                                                    NOW</a>
+                                            </div>
+                                        </div>
+
+                                        <!-- Product Title & Prices -->
+                                        <div class="grid-pro-drtail-con">
+                                            <div class="col-md-12 grid-product-title">
+                                                <div class="pro-name-compact" title="{{ $product->product->product_name }}">
+                                                    {{ $product->product->product_name }}
+                                                </div>
+                                            </div>
+                                            <div class="u">
+                                                @if ($product->product->specialOffer && $product->product->specialOffer->status === 'active')
+                                                    <span class="market-price">Rs.
+                                                        {{ number_format($product->normal_price, 2) }}</span>
+                                                    <span class="selling-price">Rs.
+                                                        {{ number_format($product->product->specialOffer->offer_price, 2) }}</span>
+                                                @else
+                                                    <span class="market-price">Rs.
+                                                        {{ number_format($product->normal_price, 2) }}</span>
+                                                @endif
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    @endif
-
-                    <!-- Product Image -->
-                    <div class="product-image">
-                        <a href="{{ route('product-description', ['id' => $product->product->product_id]) }}">
-                            <img src="{{ asset('storage/' . $product->product->images->first()->image_path) }}"
-                                alt="{{ $product->product->product_name }}" class="grid-product-img" loading="eager"
-                                width="178" height="178">
-                        </a>
-                        <div class="products-btn-set">
-                            <a href="{{ route('product-description', $product->product_id) }}" class="home-buynow">BUY
-                                NOW</a>
-                        </div>
-                    </div>
-
-                    <!-- Product Title & Prices -->
-                    <div class="grid-pro-drtail-con">
-                        <div class="col-md-12 grid-product-title">
-                            <div class="pro-name-compact" title="{{ $product->product->product_name }}">
-                                {{ $product->product->product_name }}
-                            </div>
-                        </div>
-                        <div class="u">
-                            @if ($product->product->specialOffer && $product->product->specialOffer->status === 'active')
-                                <span class="market-price">Rs. {{ number_format($product->normal_price, 2) }}</span>
-                                <span class="selling-price">Rs.
-                                    {{ number_format($product->product->specialOffer->offer_price, 2) }}</span>
-                            @else
-                                <span class="market-price">Rs. {{ number_format($product->normal_price, 2) }}</span>
-                            @endif
-
-
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
-        @endforeach
-    </div>
-    </div>
-    </div>
-    </div>
 
     </div>
 
@@ -218,7 +242,7 @@
 
     <!-- Include Owl Carousel CSS -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/frontend/newstyle/assets/owl.carousel.min.css">
-                                                                                                                                            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css"> -->
+                                                                                                                                                                                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css"> -->
 
     <!-- Include Owl Carousel JS -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script> -->
@@ -298,9 +322,16 @@
                                         <!-- Product Image -->
                                         <div class="product-image">
                                             <a href="{{ route('product-description', $product->product_id) }}">
-                                                <img src="{{ asset('storage/' . $product->images->first()->image_path) }}"
-                                                    alt="{{ $product->product_name }}" class="grid-product-img"
-                                                    loading="eager" width="178" height="178">
+
+                                                @if ($product->images->isEmpty())
+                                                    <img src="{{ asset('frontend/newstyle/assets/images/loader.gif') }}"
+                                                        alt="{{ $product->product_name }}" class="grid-product-img"
+                                                        loading="eager" width="178" height="178">
+                                                @else
+                                                    <img src="{{ asset('storage/' . $product->images->first()->image_path) }}"
+                                                        alt="{{ $product->product_name }}" class="grid-product-img"
+                                                        loading="eager" width="178" height="178">
+                                                @endif
                                             </a>
                                             <div class="products-btn-set">
                                                 <a href="{{ route('product-description', $product->product_id) }}"
@@ -376,9 +407,15 @@
                                         <!-- Product Image -->
                                         <div class="product-image">
                                             <a href="{{ route('product-description', $product->product_id) }}">
-                                                <img src="{{ asset('storage/' . $product->images->first()->image_path) }}"
-                                                    alt="{{ $product->product_name }}" class="grid-product-img"
-                                                    loading="eager" width="178" height="178">
+                                                @if ($product->images->isEmpty())
+                                                    <img src="{{ asset('frontend/newstyle/assets/images/loader.gif') }}"
+                                                        alt="{{ $product->product_name }}" class="grid-product-img"
+                                                        loading="eager" width="178" height="178">
+                                                @else
+                                                    <img src="{{ asset('storage/' . $product->images->first()->image_path) }}"
+                                                        alt="{{ $product->product_name }}" class="grid-product-img"
+                                                        loading="eager" width="178" height="178">
+                                                @endif
                                             </a>
                                             <div class="products-btn-set">
                                                 <a href="{{ route('product-description', $product->product_id) }}"
@@ -511,10 +548,10 @@
 
     <!--
 
-                                                                                                                                            =====================================================================================================================================================
-                                                                                                                                                                                 Home page end
+                                                                                                                                                                                        =====================================================================================================================================================
+                                                                                                                                                                                                                             Home page end
 
-                                                                                                                                            ===================================================================================================================================================== -->
+                                                                                                                                                                                        ===================================================================================================================================================== -->
 
 
 
