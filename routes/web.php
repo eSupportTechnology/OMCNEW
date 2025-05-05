@@ -367,8 +367,12 @@ Route::get('/about-us', function () {
 
 
 //contac
+// Route::get('/contact-us', function () {
+//     return view('contac');
+// })->name('contac');
+
 Route::get('/contact-us', function () {
-    return view('contac');
+    return view('frontend.contact-us');
 })->name('contac');
 
 

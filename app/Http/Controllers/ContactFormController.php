@@ -9,7 +9,8 @@ use App\Mail\ContactFormMail;
 
 class ContactFormController extends Controller
 {
-    public function send_contact_mail(Request $request) {
+    public function send_contact_mail(Request $request)
+    {
         // Validate the form data
         $request->validate([
             'name' => 'required|string|max:255',
@@ -25,7 +26,7 @@ class ContactFormController extends Controller
         ]);
 
         // Send the email
-        Mail::to(env('MAIL_FROM_ADDRESS'))->send(new ContactFormMail($request));
+        // Mail::to(env('MAIL_FROM_ADDRESS'))->send(new ContactFormMail($request));
 
         return back()->with('success', 'Thank you for contacting us!');
     }
