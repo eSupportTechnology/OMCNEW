@@ -128,9 +128,11 @@
         
     </div>
     <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"></button>
+       <?php $__currentLoopData = $carousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="<?php echo e($index); ?>"
+                class="<?php echo e($index === 0 ? 'active' : ''); ?>" aria-current="<?php echo e($index === 0 ? 'true' : 'false'); ?>"
+                aria-label="Slide <?php echo e($index + 1); ?>"></button>
+        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </div>
     </div>
 

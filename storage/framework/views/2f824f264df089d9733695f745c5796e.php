@@ -340,7 +340,7 @@
                     <div class="footer-links-set">
                         <p class="footer-title">About</p>
                         <ul>
-                            <li><a class="footer-link" href="#">About Us</a></li>
+                            <li><a class="footer-link" href="<?php echo e(route('about')); ?>">About Us</a></li>
                             <li><a class="footer-link" href="#">Careers</a></li>
                             <li><a class="footer-link" href="#">Contact Us</a></li>
 

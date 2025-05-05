@@ -1,161 +1,231 @@
 <?php $__env->startSection('content'); ?>
-<style>
-    .feature-description {
-        display: none;
-        text-align: justify;
-        /* Hide descriptions by default */
-        color: #6c757d;
-        /* Bootstrap's muted text color */
-    }
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    .feature-title:hover {
-        font-weight: 600;
-    }
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
 
-    .feature-item:hover .feature-description {
-        display: block;
-        /* font-weight: 600; */
-        /* Show description on hover */
-    }
-</style>
-<!-- Start Page Title -->
-<div class="page-title-area">
-    <div class="container">
-        <div class="page-title-content">
-            <h2>About Us</h2>
-            <ul>
-                <li><a href="<?php echo e(route('home')); ?>">Home</a></li>
-                <li>About Us</li>
-            </ul>
+        .site-common-con {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Navigation Styles */
+        .nav-ash {
+            background-color: #f1f1f1;
+            padding: 10px 0;
+        }
+
+        .breadcrumb {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+
+        .breadcrumb-item {
+            font-size: 14px;
+        }
+
+        .breadcrumb-item a {
+            color: #6a1b9a;
+            text-decoration: none;
+        }
+
+        .breadcrumb-item.active {
+            color: #777;
+        }
+
+        .breadcrumb-item+.breadcrumb-item:before {
+            content: "/";
+            padding: 0 8px;
+            color: #777;
+        }
+
+        /* Content Styles */
+        .mt-5 {
+            margin-top: 3rem;
+        }
+
+        .mt-3 {
+            margin-top: 2rem;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -15px;
+        }
+
+        .col-12,
+        .col-xl-6,
+        .col-xl-12,
+        .col-sm-12 {
+            padding: 0 15px;
+            width: 100%;
+        }
+
+        @media (min-width: 1200px) {
+            .col-xl-6 {
+                width: 50%;
+            }
+        }
+
+        .page-title-wrap {
+            color: #6a1b9a;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .about-sub-head {
+            color: #6a1b9a;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .common-p {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .about-img {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Fact Check Section */
+        .about-img-set {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .about-box {
+            flex: 1;
+            padding: 20px;
+            min-width: 240px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .about-box:hover {
+            transform: translateY(-10px);
+        }
+
+        .about-box img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 991px) {
+            .about-img-set {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .about-box {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+
+    <div class="nav-ash">
+        <div class="site-common-con">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">About Us</li>
+                </ol>
+            </nav>
         </div>
-
     </div>
-</div>
-<!-- End Page Title -->
 
-<!-- Start About Area -->
-<section class="about-area ptb-100">
-    <div class="container">
-        <div class="row align-items-center justify-content-center" style="margin-bottom: 4vh;">
-            <div class="col-lg-6 col-md-12">
-                <div class="about-image">
-                    <img src="frontend/assets/img/about-img.png" class="shadow" alt="image">
-                    <img src="frontend/assets/img/about-img-2.png" class="shadow" alt="image">
-
-                </div>
+    <div class="site-common-con mt-5">
+        <div class="row">
+            <div class="col-12 col-xl-6">
+                <h1 class="page-title-wrap">About Us</h1>
+                <h3 class="about-sub-head">We, at Buyabans.com, offer you the convenience of browsing, purchasing, and
+                    reserving products & services from across the Abans Group of Companies.</h3>
+                <p class="common-p">Our virtual store boasts an endless array of globally recognizable brands and includes
+                    only authentic products. We guarantee that our discounts are genuine, and your payments are secured. Our
+                    delivery teams cover the entirety of Sri Lanka, and our friendly staff are always ready to provide you
+                    after-sales support through extensive network of over a hundred Abans service centers.</p>
+                <p class="common-p">Established in March 2007, Buyabans.com operates from Abans headquarters in Colombo, Sri
+                    Lanka, and also serves customers purchasing from UK, Australia, USA, Italy, etc., for their loved ones
+                    in Sri Lanka. Echoing our parent company Abans PLC's values of reliability, value-for-money, and honesty
+                    in service, with the best online shopping experience with access to the best products at the best prices
+                    to suit all your needs.</p>
             </div>
-
-            <div class="col-lg-6 col-md-12">
-                <div class="about-content">
-                    <span class="sub-title">About Us</span>
-                    <h2>Discover OMC – Your Ultimate Online Shopping Destination</h2>
-                    <h6>Shop smarter. Shop OMC.</h6>
-                    <p>Shop effortlessly at the Online Marketing Complex (OMC)! Explore a wide selection of high-quality products, including fashion, accessories, home goods, electronics, and more. We’re committed to delivering a secure, seamless, and enjoyable shopping experience with fast shipping, personalized recommendations, and exceptional customer service.
-                    </p>
-
-                    <div class="features-text">
-                        <p>From trending styles to everyday essentials, OMC is your go-to platform for convenient online shopping, trusted by customers worldwide.</p>
-                    </div>
-                </div>
+            <div class="col-12 col-xl-6">
+                <img class="about-img" src="https://buyabans.com/themes/buyabans/assets/images/about-page.webp"
+                    alt="Abans Building">
             </div>
         </div>
 
-       
-
-        <div class="about-inner-area">
-            <div class="row justify-content-center">
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="about-text">
-                        <h3>Our Services</h3>
-                        <p>OMC offers a comprehensive range of services</p>
-
-                        <ul class="features-list list-unstyled">
-                            <li class="feature-item">
-                                <div class="d-flex align-items-start">
-                                    <i class="bx bx-check me-2"></i>
-                                    <span class="feature-title">Social Media Management</span>
-                                </div>
-                                <p class="feature-description mt-2">Comprehensive management of social media accounts, including content creation, scheduling, and analytics to enhance brand presence and engagement.</p>
-                            </li>
-                            <li class="feature-item">
-                                <div class="d-flex align-items-start">
-                                    <i class="bx bx-check me-2"></i>
-                                    <span class="feature-title">SEO Optimization</span>
-                                </div>
-                                <p class="feature-description mt-2">Strategies to improve website visibility and ranking on search engines, including keyword research, on-page optimization, and link-building services.</p>
-                            </li>
-                            <li class="feature-item">
-                                <div class="d-flex align-items-start">
-                                    <i class="bx bx-check me-2"></i>
-                                    <span class="feature-title">Content Creation</span>
-                                </div>
-                                <p class="feature-description mt-2">Professional writing and multimedia services, including blog posts, articles, infographics, and videos, tailored to attract and engage target audiences.</p>
-                            </li>
-                            <li class="feature-item">
-                                <div class="d-flex align-items-start">
-                                    <i class="bx bx-check me-2"></i>
-                                    <span class="feature-title">Email Marketing Campaigns</span>
-                                </div>
-                                <p class="feature-description mt-2">Design and execution of targeted email campaigns to nurture leads, increase customer retention, and promote products or services effectively.</p>
-                            </li>
-                            <li class="feature-item">
-                                <div class="d-flex align-items-start">
-                                    <i class="bx bx-check me-2"></i>
-                                    <span class="feature-title">Branding and Identity Development</span>
-                                </div>
-                                <p class="feature-description mt-2">Services focused on creating and enhancing brand identity, including logo design, brand guidelines, and messaging strategies to ensure a cohesive brand image.</p>
-                            </li>
-                            <li class="feature-item">
-                                <div class="d-flex align-items-start">
-                                    <i class="bx bx-check me-2"></i>
-                                    <span class="feature-title">Digital Advertising</span>
-                                </div>
-                                <p class="feature-description mt-2">Management of online advertising campaigns across various platforms, such as Google Ads and social media, aimed at driving traffic and conversions through targeted ads.</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="about-text">
-                        <h3>Our Values</h3>
-                        <p>The best of both worlds. Store and web.</p>
-
-                        <ul class="features-list">
-                            <li><i class='bx bx-check'></i> Always in style!</li>
-                            <li><i class='bx bx-check'></i> Discover your favorite shopping</li>
-                            <li><i class='bx bx-check'></i> Find yourself</li>
-                            <li><i class='bx bx-check'></i> Feel-good shopping</li>
-                        </ul>
-                    </div>
-                </div> -->
-
-                <div class="col-lg-4 col-md-6 col-sm-6   ">
-                    <div class="about-text">
-                        <h3>Our Vision & Mission</h3>
-
-                        <ul class="features-list list-unstyled">
-                            <li class="feature-item">
-                                <div class="d-flex align-items-start">
-                                    <i class="bx bx-check me-2"></i>
-                                    <span class="feature-title">Vision</span>
-                                </div>
-                                <p class="feature-description mt-2">"To be the global leader in innovative marketing solutions, empowering businesses and individuals to thrive in the digital age. We envision a future where online marketing is accessible, impactful, and transformative, enabling our clients to turn their ambitions into lasting success through creativity, strategy, and innovation."</p>
-                            </li>
-                            <li class="feature-item">
-                                <div class="d-flex align-items-start">
-                                    <i class="bx bx-check me-2"></i>
-                                    <span class="feature-title">Mission</span>
-                                </div>
-                                <p class="feature-description mt-2">"At the Online Marketing Complex (OMC),our mission is to empower businesses and individuals by providing comprehensive marketing solutions that drive success in the digital world. We are dedicated to offering top-tier services in branding, digital media, content creation, and strategic marketing, enabling our clients to achieve their full potential. With a focus on innovation, creativity, and customer satisfaction, OMC strives to make online marketing accessible and effective for all, transforming ideas into impactful realities."</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="row mt-3">
+            <div class="col-xl-12">
+                <h2 class="page-title-wrap text-center">Abans Fact Check</h2>
             </div>
         </div>
+
+        <div class="about-img-set">
+            <div class="about-box">
+                <img class="img-fluid" src="https://buyabans.com/themes/buyabans/assets/images/diverse-sectors.webp"
+                    alt="5 Diverse Sectors">
+            </div>
+            <div class="about-box">
+                <img class="img-fluid" src="https://buyabans.com/themes/buyabans/assets/images/31.webp"
+                    alt="40+ Renowned Brands">
+            </div>
+            <div class="about-box">
+                <img class="img-fluid" src="https://buyabans.com/themes/buyabans/assets/images/32.webp" alt="400+ Showrooms"
+                    style="width:80%;">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <p class="common-p text-center">We continuously strive to innovate, improving the range of products and
+                    services
+                    available online for our customers and we ensure that product information is as up-to-date and accurate
+                    as possible. We continue to drive our efforts towards the goal of becoming the leading online platform
+                    in Sri Lanka for customers to purchase products and services from anywhere in the world.</p>
+            </div>
+
+        </div>
+        <br>
     </div>
-</section>
-<!-- End About Area -->
+
+    </section>
+    <!-- End About Area -->
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('frontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Manulas Doc\Project\Intern\Project\omcnew project\OMCNEW\resources\views/frontend/About-us.blade.php ENDPATH**/ ?>

@@ -138,9 +138,11 @@
             </div> --}}
     </div>
     <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2"></button>
+       @foreach ($carousels as $index => $carousel)
+            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="{{ $index }}"
+                class="{{ $index === 0 ? 'active' : '' }}" aria-current="{{ $index === 0 ? 'true' : 'false' }}"
+                aria-label="Slide {{ $index + 1 }}"></button>
+        @endforeach
     </div>
     </div>
 
