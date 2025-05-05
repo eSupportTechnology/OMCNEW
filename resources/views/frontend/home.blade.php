@@ -180,14 +180,14 @@
                                         <!-- Product Image -->
                                         <div class="product-image">
                                             <a
-                                                href="{{ route('product-description', ['id' => $product->product->product_id]) }}">
+                                                href="{{ route('product-description', $product->product_id) }}">
 
-                                                @if ($product->images->isEmpty())
+                                                @if ($product->product->images->isEmpty())
                                                     <img src="{{ asset('frontend/newstyle/assets/images/loader.gif') }}"
                                                         alt="{{ $product->product_name }}" class="grid-product-img"
                                                         loading="eager" width="178" height="178">
                                                 @else
-                                                    <img src="{{ asset('storage/' . $product->images->first()->image_path) }}"
+                                                    <img src="{{ asset('storage/' . $product->product->images->first()->image_path) }}"
                                                         alt="{{ $product->product_name }}" class="grid-product-img"
                                                         loading="eager" width="178" height="178">
                                                 @endif

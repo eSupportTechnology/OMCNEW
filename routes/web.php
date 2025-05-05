@@ -396,6 +396,14 @@ Route::get('/About-us', function () {
     return view('frontend.About-us');
 })->name('About-us');
 
+Route::get('/buy', function () {
+    return view('frontend.how-to-buy');
+})->name('buy');
+
+Route::get('/newsletter-subscription', function () {
+    return view('frontend.Subscribe-Newsletter');
+})->name('Subscribe_Newsletter');
+
 
 Route::get('/compare', function () {
     return view('frontend.compare');

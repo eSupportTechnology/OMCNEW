@@ -170,14 +170,14 @@
                                         <!-- Product Image -->
                                         <div class="product-image">
                                             <a
-                                                href="<?php echo e(route('product-description', ['id' => $product->product->product_id])); ?>">
+                                                href="<?php echo e(route('product-description', $product->product_id)); ?>">
 
-                                                <?php if($product->images->isEmpty()): ?>
+                                                <?php if($product->product->images->isEmpty()): ?>
                                                     <img src="<?php echo e(asset('frontend/newstyle/assets/images/loader.gif')); ?>"
                                                         alt="<?php echo e($product->product_name); ?>" class="grid-product-img"
                                                         loading="eager" width="178" height="178">
                                                 <?php else: ?>
-                                                    <img src="<?php echo e(asset('storage/' . $product->images->first()->image_path)); ?>"
+                                                    <img src="<?php echo e(asset('storage/' . $product->product->images->first()->image_path)); ?>"
                                                         alt="<?php echo e($product->product_name); ?>" class="grid-product-img"
                                                         loading="eager" width="178" height="178">
                                                 <?php endif; ?>

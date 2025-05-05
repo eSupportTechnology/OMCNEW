@@ -343,6 +343,8 @@
                             <li><a class="footer-link" href="<?php echo e(route('about')); ?>">About Us</a></li>
                             <li><a class="footer-link" href="#">Careers</a></li>
                             <li><a class="footer-link" href="#">Contact Us</a></li>
+                            <li><a class="footer-link" href="<?php echo e(route('Subscribe_Newsletter')); ?>">Subscribe
+                                    Newsletter</a></li>
 
                         </ul>
                     </div>
@@ -352,7 +354,7 @@
                     <div class="footer-links-set">
                         <p class="footer-title">Help</p>
                         <ul>
-                            <li><a class="footer-link" href="#">Frequently Asked Questions</a></li>
+                            <li><a class="footer-link" href="<?php echo e(route('faq')); ?>">Frequently Asked Questions</a></li>
                             <li><a class="footer-link" href="#">How To Buy</a></li>
                             <li><a class="footer-link" href="#">Shipping &amp; Delivery</a></li>
                             <li><a class="footer-link" href="#">Warranty Information</a></li>

@@ -12,16 +12,21 @@
 
         
         
+
         <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/boxicons.min.css')); ?>">
         <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/flaticon.css')); ?>">
         <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/magnific-popup.min.css')); ?>">
         <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/nice-select.min.css')); ?>">
         <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/slick.min.css')); ?>">
+
         
+
         <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/meanmenu.min.css')); ?>">
         <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/rangeSlider.min.css')); ?>">
         <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/style.css')); ?>">
+
         <!-- <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/dark.css')); ?>">-->
+
         <link rel="stylesheet" href="<?php echo e(asset('frontend/assets/css/responsive.css')); ?>">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
@@ -46,7 +51,12 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/3.0.0-beta.6/aos.css">
         <!-- Main css -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/log4javascript/1.4.9/main.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+        <link rel='stylesheet' href="themes/buyabans/assets/libs/sweetalerts/sweetalert2.min.css">
+
+        <link rel="stylesheet" href="themes/buyabans/assets/css/main.min6674.css?t=1744723685" />
+        <link rel="stylesheet" href="themes/buyabans/assets/css/responsive.min6674.css?t=1744723685" />
+
+
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
