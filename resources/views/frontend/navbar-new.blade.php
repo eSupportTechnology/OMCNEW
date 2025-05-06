@@ -460,36 +460,38 @@
                                             <div class="inner">
                                                 <div class="scroll-height"></div>
                                                 <div class="scroll-cat-set">
+
+
                                                     <!-- Check if the category has subcategories -->
                                                     @if ($category->subcategories->isNotEmpty())
-                                                        <ul>
-                                                            @foreach ($category->subcategories as $subcategory)
-                                                                <li class="fly main-link">
+                                                        @foreach ($category->subcategories as $subcategory)
+                                                            <div class="one-third">
+                                                                <div class="cat-title">
                                                                     <a
                                                                         href="/all-items?subcategory={{ urlencode($subcategory->subcategory) }}">
                                                                         {{ $subcategory->subcategory }}
                                                                     </a>
-
-                                                                    {{-- @if ($category->subcategories->isNotEmpty())
-                                                                        <ul>
-                                                                            @foreach ($subcategory->subSubcategories as $subSubcategory)
-                                                                                <li class="fly main-link">
-                                                                                    <a
-                                                                                        href="/all-items?subsubcategory={{ urlencode($subSubcategory->sub_subcategory) }}">
-                                                                                        {{ $subSubcategory->sub_subcategory }}
-                                                                                    </a>
-
-
-                                                                                </li>
-                                                                            @endforeach
-                                                                        </ul>
-                                                                    @endif --}}
+                                                                </div>
+                                                                <ul>
+                                                                    @if ($category->subcategories->isNotEmpty())
+                                                                        @foreach ($subcategory->subSubcategories as $subSubcategory)
+                                                                            <li class="fly main-link">
+                                                                                <a
+                                                                                    href="/all-items?subsubcategory={{ urlencode($subSubcategory->sub_subcategory) }}">
+                                                                                    {{ $subSubcategory->sub_subcategory }}
+                                                                                </a>
 
 
-                                                                </li>
-                                                            @endforeach
-                                                        </ul>
+                                                                            </li>
+                                                                        @endforeach
+                                                                    @endif
+
+                                                                </ul>
+
+                                                            </div>
+                                                        @endforeach
                                                     @endif
+
                                                 </div>
                                             </div>
                                         </div>

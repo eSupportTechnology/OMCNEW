@@ -463,24 +463,40 @@
                                             <div class="inner">
                                                 <div class="scroll-height"></div>
                                                 <div class="scroll-cat-set">
+
+
                                                     <!-- Check if the category has subcategories -->
                                                     <?php if($category->subcategories->isNotEmpty()): ?>
-                                                        <ul>
-                                                            <?php $__currentLoopData = $category->subcategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                                <li class="fly main-link">
+                                                        <?php $__currentLoopData = $category->subcategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                            <div class="one-third">
+                                                                <div class="cat-title">
                                                                     <a
                                                                         href="/all-items?subcategory=<?php echo e(urlencode($subcategory->subcategory)); ?>">
                                                                         <?php echo e($subcategory->subcategory); ?>
 
                                                                     </a>
+                                                                </div>
+                                                                <ul>
+                                                                    <?php if($category->subcategories->isNotEmpty()): ?>
+                                                                        <?php $__currentLoopData = $subcategory->subSubcategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subSubcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                            <li class="fly main-link">
+                                                                                <a
+                                                                                    href="/all-items?subsubcategory=<?php echo e(urlencode($subSubcategory->sub_subcategory)); ?>">
+                                                                                    <?php echo e($subSubcategory->sub_subcategory); ?>
 
-                                                                    
+                                                                                </a>
 
 
-                                                                </li>
-                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                        </ul>
+                                                                            </li>
+                                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                                    <?php endif; ?>
+
+                                                                </ul>
+
+                                                            </div>
+                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                     <?php endif; ?>
+
                                                 </div>
                                             </div>
                                         </div>
