@@ -445,3 +445,97 @@
 
 
 </div>
+
+
+</body>
+
+
+<script>
+    function closeMenuMobi() {
+        //alert(2);
+        document.body.classList.remove("mmenu-active");
+        document.querySelector(".mobile-menu-wrapper").style.visibility = "hidden";
+    }
+
+    function openMenuMobi() {
+        //alert(1);
+        document.body.classList.add("mmenu-active");
+        document.querySelector(".mobile-menu-wrapper").style.visibility = "visible";
+    }
+
+
+    function openSubmenus(clickedSpan) {
+        let $dropdown = $(clickedSpan).next(".dropdown");
+        // Toggle the visibility of the clicked dropdown instantly (no animation)
+        $dropdown.toggle();
+        $(clickedSpan).toggleClass("rotate"); // Rotate the toggle button for effect
+    }
+
+    $(document).ready(function() {
+
+        $(".toggle-btn-dest").on("click", function() {
+            let $widget = $(this).closest(".widget"); // Get the parent widget
+            let $title = $widget.find(".widget-title"); // Get the widget title
+            let $body = $widget.find(".widget-body"); // Get the widget body
+
+            // Toggle collapsed class on widget title
+            $title.toggleClass("collapsed");
+
+            // Use CSS instead of slideToggle() for instant effect
+            $body.toggleClass("hidden");
+        });
+
+        $(".toggle-btn-mobi").on("click", function() {
+            let $widget = $(this).closest(".widget"); // Get the parent widget
+            let $title = $widget.find(".widget-title"); // Get the widget title
+            let $body = $widget.find(".widget-body"); // Get the widget body
+
+            // Toggle collapsed class on widget title
+            $title.toggleClass("collapsed");
+
+            // Use CSS instead of slideToggle() for instant effect
+            $body.toggleClass("hidden");
+        });
+
+    });
+
+
+    $(".cart-popup").click(function() {
+        $('.mini-cart').removeClass('d-none');
+        $('.mini-cart').addClass('d-block');
+    });
+    $(".close-minicart, .mini-cart-overlay").click(function() {
+        $('.mini-cart').addClass('d-none');
+        $('.mini-cart').removeClass('d-block');
+    });
+</script>
+
+
+
+<script src="{{ asset('/frontend/newstyle/rocket-loader.min.js') }}" data-cf-settings="a071cb3ff60724c4b8f55cf9-|49"
+    defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+    integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"
+    integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
+    integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+    integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"
+    integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
+    integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+
+
+
+</html>

@@ -400,6 +400,10 @@ Route::get('/buy', function () {
     return view('frontend.how-to-buy');
 })->name('buy');
 
+Route::get('/privacy-policy', function () {
+    return view('frontend.PrivacyPolicy');
+})->name('PrivacyPolicy');
+
 Route::get('/newsletter-subscription', function () {
     return view('frontend.Subscribe-Newsletter');
 })->name('Subscribe_Newsletter');

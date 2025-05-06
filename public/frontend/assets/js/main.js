@@ -1,669 +1,1260 @@
-(function($){
-	"use strict";
+(function ($) {
+  "use strict";
+  
+  // ==========================================
+  //      Start Document Ready function
+  // ==========================================
+  $(document).ready(function () {
     
-    // Search Popup JS
-    $(".others-option .search-btn").on("click", function(){
-        $(".search-overlay").toggleClass("search-overlay-active");
-    });
-    $(".search-overlay-close").on("click", function(){
-        $(".search-overlay").removeClass("search-overlay-active");
-    });
-    $(".header-top-others-option .search-btn").on("click", function(){
-        $(".search-overlay").toggleClass("search-overlay-active");
-    });
+  // ============== Mobile Menu Sidebar & Offcanvas Js Start ========
+  $('.toggle-mobileMenu').on('click', function () {
+    $('.mobile-menu').addClass('active');
+    $('.side-overlay').addClass('show');
+    $('body').addClass('scroll-hide-sm');
+  }); 
+
+  $('.close-button, .side-overlay').on('click', function () {
+    $('.mobile-menu').removeClass('active');
+    $('.side-overlay').removeClass('show');
+    $('body').removeClass('scroll-hide-sm');
+  }); 
+  // ============== Mobile Menu Sidebar & Offcanvas Js End ========
+  
+  // ============== Mobile Nav Menu Dropdown Js Start =======================
+  var windowWidth = $(window).width(); 
+  
+  $('.has-submenu').on('click', function () {
+    var thisItem = $(this); 
     
-    // Mean Menu
-    $('.mean-menu').meanmenu({
-        meanScreenWidth: "991"
-    });
-
-    // Header Sticky
-    $(window).on('scroll',function() {
-        if ($(this).scrollTop() > 130){  
-            $('.header-sticky').addClass("is-sticky");
-        }
-        else{
-            $('.header-sticky').removeClass("is-sticky");
-        }
-    });
-    var c, currentScrollTop = 0,
-    navbar = $('.header-sticky');
-    $(window).scroll(function () {
-        var a = $(window).scrollTop();
-        var b = navbar.height();
-        currentScrollTop = a;
-        if (c < currentScrollTop && a > b + b) {
-            navbar.addClass("scrollUp");
-        } else if (c > currentScrollTop && !(a <= b)) {
-            navbar.removeClass("scrollUp");
-        }
-        c = currentScrollTop;
-    });
-
-    // Home Slides
-    $('.home-slides').owlCarousel({
-        loop: true,
-        nav: true,
-        dots: true,
-        autoplayHoverPause: true,
-        autoplay: true,
-        smartSpeed: 500,
-        autoHeight: true,
-        items: 1,
-        navText: [
-            "<i class='flaticon-left'></i>",
-            "<i class='flaticon-right-arrow'></i>"
-        ],
-    });
-    $(".home-slides").on("translate.owl.carousel", function(){
-        $(".main-banner-content .sub-title").removeClass("animate__animated animate__fadeInUp").css("opacity", "0");
-        $(".main-banner-content h1").removeClass("animate__animated animate__fadeInUp").css("opacity", "0");
-        $(".main-banner-content p").removeClass("animate__animated animate__fadeInUp").css("opacity", "0");
-        $(".main-banner-content .btn-box").removeClass("animate__animated animate__fadeInUp").css("opacity", "0");
-    });
-    $(".home-slides").on("translated.owl.carousel", function(){
-        $(".main-banner-content .sub-title").addClass("animate__animated animate__fadeInUp").css("opacity", "1");
-        $(".main-banner-content h1").addClass("animate__animated animate__fadeInUp").css("opacity", "1");
-        $(".main-banner-content p").addClass("animate__animated animate__fadeInUp").css("opacity", "1");
-        $(".main-banner-content .btn-box").addClass("animate__animated animate__fadeInUp").css("opacity", "1");
-    });
-    
-    // Home Slides Two
-    $('.home-slides-two').owlCarousel({
-        loop: true,
-        nav: true,
-        dots: false,
-        autoplayHoverPause: true,
-        autoplay: true,
-        autoHeight: true,
-        animateOut: 'animate__animated animate__slideOutUp',
-        items: 1,
-        navText: [
-            "<i class='flaticon-left'></i>",
-            "<i class='flaticon-right-arrow'></i>"
-        ],
-    });
-
-    // Home Slides Three
-    $('.home-slides-three').owlCarousel({
-        loop: true,
-        nav: false,
-        dots: true,
-        autoplayHoverPause: true,
-        items: 1,
-        smartSpeed: 750,
-        autoplay: true,
-        navText: [
-            "<i class='flaticon-left'></i>",
-            "<i class='flaticon-right-arrow'></i>"
-        ],
-    });
-    $(".home-slides-three").on("translate.owl.carousel", function(){
-        $(".main-banner-content .sub-title").removeClass("animate__animated animate__fadeInUp").css("opacity", "0");
-        $(".main-banner-content h1").removeClass("animate__animated animate__fadeInUp").css("opacity", "0");
-        $(".main-banner-content p").removeClass("animate__animated animate__fadeInUp").css("opacity", "0");
-        $(".main-banner-content .btn-box").removeClass("animate__animated animate__fadeInUp").css("opacity", "0");
-        $(".banner-image img").removeClass("animate__animated animate__fadeInUp").css("opacity", "0");
-        $(".banner-image .circle").removeClass("animate__animated animate__zoomIn").css("opacity", "0");
-    });
-    $(".home-slides-three").on("translated.owl.carousel", function(){
-        $(".main-banner-content .sub-title").addClass("animate__animated animate__fadeInUp").css("opacity", "1");
-        $(".main-banner-content h1").addClass("animate__animated animate__fadeInUp").css("opacity", "1");
-        $(".main-banner-content p").addClass("animate__animated animate__fadeInUp").css("opacity", "1");
-        $(".main-banner-content .btn-box").addClass("animate__animated animate__fadeInUp").css("opacity", "1");
-        $(".banner-image img").addClass("animate__animated animate__fadeInUp").css("opacity", "1");
-        $(".banner-image .circle").addClass("animate__animated animate__zoomIn").css("opacity", "1");
-    });
-    
-    // Tooltip JS
-    $(function () {
-        $('[data-bs-toggle="tooltip"]').tooltip();
-    });
-
-    // Facility Slides
-    $('.facility-slides').owlCarousel({
-        loop: true,
-        nav: true,
-        dots: false,
-        autoplayHoverPause: true,
-        autoplay: true,
-        margin: 30,
-        navText: [
-            "<i class='flaticon-left'></i>",
-            "<i class='flaticon-right-arrow'></i>"
-        ],
-        responsive: {
-            0: {
-                items: 1,
-            },
-            576: {
-                items: 2,
-            },
-            768: {
-                items: 3,
-            },
-            1200: {
-                items: 4,
-            }
-        }
-    });
-    
-    // Products Slides
-    $('.products-slides').owlCarousel({
-        loop: true,
-        nav: true,
-        dots: false,
-        autoplayHoverPause: true,
-        autoplay: true,
-        margin: 30,
-        navText: [
-            "<i class='flaticon-left'></i>",
-            "<i class='flaticon-right-arrow'></i>"
-        ],
-        responsive: {
-            0: {
-                items: 1,
-            },
-            576: {
-                items: 2,
-            },
-            768: {
-                items: 3,
-            },
-            1200: {
-                items: 4,
-            }
-        }
-    });
-
-    // Instagram Slides
-    $('.instagram-slides').owlCarousel({
-        loop: true,
-        nav: false,
-        dots: false,
-        autoplayHoverPause: true,
-        autoplay: true,
-        navText: [
-            "<i class='flaticon-left'></i>",
-            "<i class='flaticon-right-arrow'></i>"
-        ],
-        responsive: {
-            0: {
-                items: 1,
-            },
-            576: {
-                items: 2,
-            },
-            768: {
-                items: 3,
-            },
-            1200: {
-                items: 6,
-            }
-        }
-    });
-    
-    // Partner Slides
-    $('.partner-slides').owlCarousel({
-        loop: true,
-        nav: false,
-        dots: false,
-        autoplayHoverPause: true,
-        autoplay: true,
-        navText: [
-            "<i class='flaticon-left'></i>",
-            "<i class='flaticon-right-arrow'></i>"
-        ],
-        responsive: {
-            0: {
-                items: 2,
-            },
-            576: {
-                items: 4,
-            },
-            768: {
-                items: 4,
-            },
-            1200: {
-                items: 7,
-            }
-        }
-    });
-
-    // Offer Products Slides
-    $('.offer-products-slides').owlCarousel({
-        loop: true,
-        nav: false,
-        dots: true,
-        autoplayHoverPause: true,
-        autoplay: true,
-        animateOut: 'fadeOut',
-        mouseDrag: false,
-        items: 1,
-        navText: [
-            "<i class='flaticon-left'></i>",
-            "<i class='flaticon-right-arrow'></i>"
-        ],
-    });
-
-    // Brand Slides
-    $('.brand-slides').owlCarousel({
-        loop: true,
-        nav: false,
-        dots: false,
-        autoplayHoverPause: true,
-        autoplay: true,
-        navText: [
-            "<i class='flaticon-left'></i>",
-            "<i class='flaticon-right-arrow'></i>"
-        ],
-        responsive: {
-            0: {
-                items: 2,
-            },
-            576: {
-                items: 3,
-            },
-            768: {
-                items: 4,
-            },
-            1200: {
-                items: 7,
-            }
-        }
-    });
-
-    // Price Range Slider JS
-    $(".js-range-of-price").ionRangeSlider({
-        type: "double",
-        drag_interval: true,
-        min_interval: null,
-        max_interval: null,
-    });
-
-    // Input Plus & Minus Number JS
-    $('.input-counter').each(function() {
-        var spinner = jQuery(this),
-        input = spinner.find('input[type="text"]'),
-        btnUp = spinner.find('.plus-btn'),
-        btnDown = spinner.find('.minus-btn'),
-        min = input.attr('min'),
-        max = input.attr('max');
-        
-        btnUp.on('click', function() {
-            var oldValue = parseFloat(input.val());
-            if (oldValue >= max) {
-                var newVal = oldValue;
-            } else {
-                var newVal = oldValue + 1;
-            }
-            spinner.find("input").val(newVal);
-            spinner.find("input").trigger("change");
-        });
-        btnDown.on('click', function() {
-            var oldValue = parseFloat(input.val());
-            if (oldValue <= min) {
-                var newVal = oldValue;
-            } else {
-                var newVal = oldValue - 1;
-            }
-            spinner.find("input").val(newVal);
-            spinner.find("input").trigger("change");
-        });
-    });
-
-    // Testimonials Slides
-    $('.testimonials-slides').owlCarousel({
-        loop: true,
-        nav: false,
-        dots: true,
-        margin: 30,
-        autoplayHoverPause: true,
-        autoplay: true,
-        center: true,
-        navText: [
-            "<i class='flaticon-left'></i>",
-            "<i class='flaticon-right-arrow'></i>"
-        ],
-        responsive: {
-            0: {
-                items: 1,
-            },
-            576: {
-                items: 2,
-            },
-            768: {
-                items: 2,
-            },
-            1200: {
-                items: 3,
-            }
-        }
-    });
-
-    // Tabs
-    (function ($) {
-        $('.tab ul.tabs').addClass('active').find('> li:eq(0)').addClass('current');
-        $('.tab ul.tabs li a').on('click', function (g) {
-            var tab = $(this).closest('.tab'), 
-            index = $(this).closest('li').index();
-            tab.find('ul.tabs > li').removeClass('current');
-            $(this).closest('li').addClass('current');
-            tab.find('.tab-content').find('div.tabs-item').not('div.tabs-item:eq(' + index + ')').slideUp();
-            tab.find('.tab-content').find('div.tabs-item:eq(' + index + ')').slideDown();
-            g.preventDefault();
-        });
-    })(jQuery);
-
-    // FAQ Accordion
-    $(function() {
-        $('.accordion').find('.accordion-title').on('click', function(){
-            // Adds Active Class
-            $(this).toggleClass('active');
-            // Expand or Collapse This Panel
-            $(this).next().slideToggle('fast');
-            // Hide The Other Panels
-            $('.accordion-content').not($(this).next()).slideUp('fast');
-            // Removes Active Class From Other Titles
-            $('.accordion-title').not($(this)).removeClass('active');		
-        });
-    });
-
-    // Products Filter Options
-    $(function(){
-        $(".icon-view-one").on("click", function(e){
-            e.preventDefault();
-            document.getElementById("products-collections-filter").classList.add('products-col-one')
-            document.getElementById("products-collections-filter").classList.remove('products-col-two', 'products-col-three', 'products-col-four', 'products-row-view');
-        });
-        $(".icon-view-two").on("click", function(e){
-            e.preventDefault();
-            document.getElementById("products-collections-filter").classList.add('products-col-two')
-            document.getElementById("products-collections-filter").classList.remove('products-col-one', 'products-col-three', 'products-col-four', 'products-row-view');
-        });
-        $(".icon-view-three").on("click", function(e){
-            e.preventDefault();
-            document.getElementById("products-collections-filter").classList.add('products-col-three')
-            document.getElementById("products-collections-filter").classList.remove('products-col-one', 'products-col-two', 'products-col-four', 'products-row-view');
-        });
-        $(".icon-view-four").on("click", function(e){
-            e.preventDefault();
-            document.getElementById("products-collections-filter").classList.add('products-col-four')
-            document.getElementById("products-collections-filter").classList.remove('products-col-one', 'products-col-two', 'products-col-three', 'products-row-view');
-        });
-        $(".view-grid-switch").on("click", function(e){
-            e.preventDefault();
-            document.getElementById("products-collections-filter").classList.add('products-row-view')
-            document.getElementById("products-collections-filter").classList.remove('products-col-one', 'products-col-two', 'products-col-three', 'products-col-four');
-        });
-        $(".icon-view-six").on("click", function(e){
-            e.preventDefault();
-            document.getElementById("products-collections-filter").classList.add('products-col-six')
-            document.getElementById("products-collections-filter").classList.remove('products-col-one', 'products-col-two', 'products-col-three', 'products-col-four', 'products-row-view');
-        });
-    });
-    $('.products-filter-options .view-column a').on('click', function(){
-        $('.view-column a').removeClass("active");
-        $(this).addClass("active");
-    });
-    
-    // Nice Select JS
-    $('select').niceSelect();
-
-    // Blog Slides
-    $('.blog-slides').owlCarousel({
-        loop: true,
-        nav: false,
-        dots: true,
-        autoplayHoverPause: true,
-        autoplay: true,
-        margin: 30,
-        navText: [
-            "<i class='flaticon-left'></i>",
-            "<i class='flaticon-right-arrow'></i>"
-        ],
-        responsive: {
-            0: {
-                items: 1,
-            },
-            768: {
-                items: 2,
-            },
-            1200: {
-                items: 3,
-            }
-        }
-    });
-
-    // Subscribe form
-    $(".newsletter-form").validator().on("submit", function (event) {
-        if (event.isDefaultPrevented()) {
-        // handle the invalid form...
-            formErrorSub();
-            submitMSGSub(false, "Please enter your email correctly.");
-        } else {
-            // everything looks good!
-            event.preventDefault();
-        }
-    });
-    function callbackFunction (resp) {
-        if (resp.result === "success") {
-            formSuccessSub();
-        }
-        else {
-            formErrorSub();
-        }
+    if(windowWidth < 992) {
+      if(thisItem.hasClass('active')) {
+        thisItem.removeClass('active')
+      } else {
+        $('.has-submenu').removeClass('active')
+        $(thisItem).addClass('active')
+      }
+      
+      var submenu = thisItem.find('.nav-submenu');
+      
+      $('.nav-submenu').not(submenu).slideUp(300);
+      submenu.slideToggle(300);
     }
-    function formSuccessSub(){
-        $(".newsletter-form")[0].reset();
-        submitMSGSub(true, "Thank you for subscribing!");
-        setTimeout(function() {
-            $("#validator-newsletter").addClass('hide');
-        }, 4000)
-    }
-    function formErrorSub(){
-        $(".newsletter-form").addClass("animate__animated animate__shake");
-        setTimeout(function() {
-            $(".newsletter-form").removeClass("animate__animated animate__shake");
-        }, 1000)
-    }
-    function submitMSGSub(valid, msg){
-        if(valid){
-            var msgClasses = "validation-success";
-        } else {
-            var msgClasses = "validation-danger";
-        }
-        $("#validator-newsletter").removeClass().addClass(msgClasses).text(msg);
-    }
-    // AJAX MailChimp
-    $(".newsletter-form").ajaxChimp({
-        url: "https://hibootstrap.us20.list-manage.com/subscribe/post?u=60e1ffe2e8a68ce1204cd39a5&amp;id=42d6d188d9", // Your url MailChimp
-        callback: callbackFunction
-    });
-
-    // Popup Image
-    $('.popup-btn').magnificPopup({
-        type: 'image',
-        removalDelay: 300,
-        gallery: {
-            enabled:true
-        },
-        callbacks: {
-            beforeOpen: function() {
-                this.st.image.markup = this.st.image.markup.replace('mfp-figure', 'mfp-figure animated ' + this.st.el.attr('data-effect'));
-            }
-        },
-    });
-
-    // Isotop Js
-    var $grid = $('.gallery-items, .blog-items, .lookbook-items').isotope({
-        itemSelector: '.grid-item',
-        percentPosition: true,
-        masonry: {
-            // Use outer width of grid-sizer for columnWidth
-            columnWidth: '.grid-item'
-        }
-    });
-
-    // Article Image Slides
-    $('.article-image-slides').owlCarousel({
-        loop: true,
-        nav: true,
-        dots: false,
-        autoplayHoverPause: true,
-        autoplay: true,
-        animateOut: 'fadeOut',
-        items: 1,
-        navText: [
-            "<i class='flaticon-left'></i>",
-            "<i class='flaticon-right-arrow'></i>"
-        ],
-    });
-
-    // Sidebar Sticky
-    $('.products-details-desc-sticky').stickySidebar({
-        topSpacing: 110,
-        bottomSpacing: 110
-    });
-
-    // Products Details Image Slides
-    $('.products-details-image-slides').slick({
-        dots: true,
-        speed: 500,
-        fade: false,
-        slide: 'li',
-        slidesToShow: 1,
-        autoplay: true,
-        autoplaySpeed: 4000,
-        prevArrow: false,
-        nextArrow: false,
-        responsive: [{
-            breakpoint: 800,
-            settings: {
-                arrows: false,
-                centerMode: false,
-                centerPadding: '40px',
-                variableWidth: false,
-                slidesToShow: 1,
-                dots: true
-            },
-            breakpoint: 1200,
-            settings: {
-                arrows: false,
-                centerMode: false,
-                centerPadding: '40px',
-                variableWidth: false,
-                slidesToShow: 1,
-                dots: true
-            }
-        }],
-        customPaging: function (slider, i) {
-            return '<button class="tab">' + $('.slick-thumbs li:nth-child(' + (i + 1) + ')').html() + '</button>';
-        }
-    });
-
-    // Products Details Image Slides Style 2
-    $('.products-details-image-slider').owlCarousel({
-        loop: true,
-        nav: true,
-        dots: false,
-        autoplayHoverPause: true,
-        autoplay: true,
-        margin: 30,
-        navText: [
-            "<i class='flaticon-left'></i>",
-            "<i class='flaticon-right-arrow'></i>"
-        ],
-        responsive: {
-            0: {
-                items: 1,
-            },
-            576: {
-                items: 2,
-            },
-            768: {
-                items: 2,
-            },
-            1200: {
-                items: 3,
-            }
-        }
-    });
-
-    // Count Time 
-    function makeTimer() {
-        var endTime = new Date("September 20, 2025 17:00:00 PDT");			
-        var endTime = (Date.parse(endTime)) / 1000;
-        var now = new Date();
-        var now = (Date.parse(now) / 1000);
-        var timeLeft = endTime - now;
-        var days = Math.floor(timeLeft / 86400); 
-        var hours = Math.floor((timeLeft - (days * 86400)) / 3600);
-        var minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600 )) / 60);
-        var seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
-        if (hours < "10") { hours = "0" + hours; }
-        if (minutes < "10") { minutes = "0" + minutes; }
-        if (seconds < "10") { seconds = "0" + seconds; }
-        $("#days").html(days + "<span>Days</span>");
-        $("#hours").html(hours + "<span>Hours</span>");
-        $("#minutes").html(minutes + "<span>Minutes</span>");
-        $("#seconds").html(seconds + "<span>Seconds</span>");
-    }
-    setInterval(function() { makeTimer(); }, 0);
-
-    // Go to Top
-    $(function(){
-        // Scroll Event
-        $(window).on('scroll', function(){
-            var scrolled = $(window).scrollTop();
-            if (scrolled > 300) $('.go-top').addClass('active');
-            if (scrolled < 300) $('.go-top').removeClass('active');
-        });  
-        // Click Event
-        $('.go-top').on('click', function() {
-            $("html, body").animate({ scrollTop: "0" },  500);
-        });
-    });
-
-	// WoW JS
-	$(window).on ('load', function (){
-        if ($(".wow").length) { 
-            var wow = new WOW ({
-                boxClass:     'wow',      // Animated element css class (default is wow)
-                animateClass: 'animated', // Animation css class (default is animated)
-                offset:       20,         // Distance to the element when triggering the animation (default is 0)
-                mobile:       true,       // Trigger animations on mobile devices (default is true)
-                live:         true,       // Act on asynchronously loaded content (default is true)
-            });
-            wow.init();
-        }
-    });
-
-    // Switch Btn
-	
-
-}(jQuery));
-
-// function to set a given theme/color-scheme
-function setTheme(themeName) {
-    localStorage.setItem('xton_theme', themeName);
-    document.documentElement.className = themeName;
-}
-// function to toggle between light and dark theme
-function toggleTheme() {
-    if (localStorage.getItem('xton_theme') === 'theme-dark') {
-        setTheme('theme-light');
+    
+  });
+  // ============== Mobile Nav Menu Dropdown Js End =======================
+    
+  // ===================== Scroll Back to Top Js Start ======================
+  var progressPath = document.querySelector('.progress-wrap path');
+  var pathLength = progressPath.getTotalLength();
+  progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
+  progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
+  progressPath.style.strokeDashoffset = pathLength;
+  progressPath.getBoundingClientRect();
+  progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
+  var updateProgress = function () {
+    var scroll = $(window).scrollTop();
+    var height = $(document).height() - $(window).height();
+    var progress = pathLength - (scroll * pathLength / height);
+    progressPath.style.strokeDashoffset = progress;
+  }
+  updateProgress();
+  $(window).scroll(updateProgress);
+  var offset = 50;
+  var duration = 550;
+  jQuery(window).on('scroll', function() {
+    if (jQuery(this).scrollTop() > offset) {
+      jQuery('.progress-wrap').addClass('active-progress');
     } else {
-        setTheme('theme-dark');
+      jQuery('.progress-wrap').removeClass('active-progress');
     }
-}
-// Immediately invoked function to set the theme on initial load
-(function () {
-    if (localStorage.getItem('xton_theme') === 'theme-dark') {
-        setTheme('theme-dark');
-        document.getElementById('slider').checked = false;
+  });
+  jQuery('.progress-wrap').on('click', function(event) {
+    event.preventDefault();
+    jQuery('html, body').animate({scrollTop: 0}, duration);
+    return false;
+  })
+  // ===================== Scroll Back to Top Js End ======================
+
+  // ========================== add active class to ul>li top Active current page Js Start =====================
+  function dynamicActiveMenuClass(selector) {
+    let FileName = window.location.pathname.split("/").reverse()[0];
+  
+    // If we are at the root path ("/" or no file name), keep the activePage class on the Home item
+    if (FileName === "" || FileName === "index.html") {
+      // Keep the activePage class on the Home link
+      selector.find("li.nav-menu__item.has-submenu").eq(0).addClass("activePage");
     } else {
-        setTheme('theme-light');
-    document.getElementById('slider').checked = true;
+      // Remove activePage class from all items first
+      selector.find("li").removeClass("activePage");
+  
+      // Add activePage class to the correct li based on the current URL
+      selector.find("li").each(function () {
+        let anchor = $(this).find("a");
+        if ($(anchor).attr("href") == FileName) {
+          $(this).addClass("activePage");
+        }
+      });
+  
+      // If any li has activePage element, add class to its parent li
+      selector.children("li").each(function () {
+        if ($(this).find(".activePage").length) {
+          $(this).addClass("activePage");
+        }
+      });
     }
-})();
+  }
+  
+  if ($('ul').length) {
+    dynamicActiveMenuClass($('ul'));
+  }
+  // ========================== add active class to ul>li top Active current page Js End =====================
+
+  
+  // ========================== Select2 Js Start =================================
+  $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+});
+  // ========================== Select2 Js End =================================
+
+  
+  // ========================== Select2 Js End =================================
+  $('.search-icon').on('click', function () {
+    $('.search-box').addClass('active'); 
+  }); 
+  $('.search-box__close').on('click', function () {
+    $('.search-box').removeClass('active'); 
+  }); 
+  // ========================== Select2 Js End =================================
+
+  
+  // ========================== Category Dropdown Responsive Js Start =================================
+  $('.responsive-dropdown .has-submenus-submenu').on('click', function () {
+
+    var windowWidth = $(window).width(); 
+    if(windowWidth < 992) { 
+      if ($(this).hasClass('active')) {
+        $(this).removeClass('active');
+        $(this).children('.submenus-submenu').slideUp();
+      } else {
+        $('.responsive-dropdown .has-submenus-submenu').removeClass('active');
+        $('.responsive-dropdown .has-submenus-submenu').children('.submenus-submenu').slideUp();
+  
+        $(this).addClass('active');
+        $(this).children('.submenus-submenu').slideDown();
+      }
+    }
+  });
+  // ========================== Category Dropdown Responsive Js End =================================
+
+  // ========================== On Click Category menu show Js Start =================================
+  $('.category__button').on('click', function () {    
+    $('.responsive-dropdown').addClass('active'); 
+    $('.side-overlay').addClass('show');
+    $('body').addClass('scroll-hide-sm');
+  }); 
+  $('.side-overlay, .close-responsive-dropdown').on('click', function () {    
+    $('.responsive-dropdown').removeClass('active'); 
+    $('.side-overlay').removeClass('show');
+    $('body').removeClass('scroll-hide-sm');
+  }); 
+  // ========================== On Click Category menu show Js End =================================
+
+  
+  // ========================== Set Language in dropdown Js Start =================================
+  $('.selectable-text-list li').each(function () {
+    var thisItem = $(this); 
+
+    thisItem.on('click', function () {
+      const listText = thisItem.text(); 
+      var item = thisItem.parent().parent().find('.selected-text').text(listText); 
+    }); 
+  }); 
+  // ========================== Set Language in dropdown Js End =================================
+
+  
+  // ========================= Banner Slider Js Start ==============
+  $('.banner-slider').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: false,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#banner-next',
+    prevArrow: '#banner-prev',
+  });  
+
+  $('.banner-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+    $('.wow').css('visibility', 'hidden').removeClass('animated'); 
+  });
+
+  $('.banner-slider').on('afterChange', function(event, slick, currentSlide) {
+    new WOW().init();
+    $('.wow').css('visibility', 'visible'); 
+  });
+
+  // ========================= Banner Slider Js End ===================
+  
+  // ========================= Banner Three Slider Js Start ==============
+  $('.banner-three-slider').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: false,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#banner-three-next',
+    prevArrow: '#banner-three-prev',
+  });  
+  
+  $('.banner-three-slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+    $('.wow').css('visibility', 'hidden').removeClass('animated'); 
+  });
+
+  $('.banner-three-slider').on('afterChange', function(event, slick, currentSlide) {
+    new WOW().init();
+    $('.wow').css('visibility', 'visible'); 
+  });
+  // ========================= Banner Three Slider Js End ===================
+
+   // ========================= hot deals Slider Js Start ==============
+   $('.feature-item-wrapper').slick({
+    slidesToShow: 10,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#feature-item-wrapper-next',
+    prevArrow: '#feature-item-wrapper-prev',
+    responsive: [
+      {
+        breakpoint: 1699,
+        settings: {
+          slidesToShow: 9,
+        }
+      },
+      {
+        breakpoint: 1599,
+        settings: {
+          slidesToShow: 8,
+        }
+      },
+      {
+        breakpoint: 1399,
+        settings: {
+          slidesToShow: 6,
+        }
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 5,
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 4,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 3,
+        }
+      },
+      {
+        breakpoint: 424,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 359,
+        settings: {
+          slidesToShow: 1,
+        }
+      },
+    ]
+  });  
+  // ========================= hot deals Slider Js End ===================
+
+   // ========================= hot deals Slider Js Start ==============
+   $('.feature-three-item-wrapper').slick({
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#feature-item-wrapper-next',
+    prevArrow: '#feature-item-wrapper-prev',
+    responsive: [
+      {
+        breakpoint: 1599,
+        settings: {
+          slidesToShow: 5,
+        }
+      },
+      {
+        breakpoint: 1399,
+        settings: {
+          slidesToShow: 4,
+        }
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 3,
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 3,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 424,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 359,
+        settings: {
+          slidesToShow: 1,
+        }
+      },
+    ]
+  });  
+  // ========================= hot deals Slider Js End ===================
+
+  
+  // ========================= Banner Slider Js Start ==============
+  $('.banner-item-two__slider').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: false,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: true,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#banner-next',
+    prevArrow: '#banner-prev',
+    responsive: [
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 1,
+        }
+      }
+    ]
+  });  
+  $('.banner-item-two__slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+    $('.wow').css('visibility', 'hidden').removeClass('animated'); 
+  });
+
+  $('.banner-item-two__slider').on('afterChange', function(event, slick, currentSlide) {
+    new WOW().init();
+    $('.wow').css('visibility', 'visible'); 
+  });
+  // ========================= Banner Slider Js End ===================
+
+  
+  // ========================= flash Sale Four Slider Js Start ==============
+  $('.flash-sales__slider').slick({
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#flash-next',
+    prevArrow: '#flash-prev',
+    responsive: [
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 1,
+          arrows: false,
+        }
+      }
+    ]
+  });  
+  // ========================= flash Sale Four Slider Js End ==================
+    
+  // ========================= hot deals Slider Js Start ==============
+  $('.hot-deals-slider').slick({
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#deals-next',
+    prevArrow: '#deals-prev',
+    responsive: [
+      {
+        breakpoint: 1399,
+        settings: {
+          slidesToShow: 3,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 2,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 1,
+          arrows: false,
+        }
+      },
+    ]
+  });  
+  // ========================= hot deals Slider Js End ===================
+    
+    
+  // ========================= hot deals Slider Js Start ==============
+  $('.deals-week-slider').slick({
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#deal-week-next',
+    prevArrow: '#deal-week-prev',
+    responsive: [
+      {
+        breakpoint: 1599,
+        settings: {
+          slidesToShow: 5,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 1399,
+        settings: {
+          slidesToShow: 3,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 2,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 1,
+          arrows: false,
+        }
+      },
+    ]
+  });  
+  // ========================= hot deals Slider Js End ===================
+    
+
+  // ========================= hot deals Slider Js Start ==============
+  $('.top-selling-product-slider').slick({
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#top-selling-next',
+    prevArrow: '#top-selling-prev',
+    responsive: [
+      {
+        breakpoint: 1399,
+        settings: {
+          slidesToShow: 3,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 2,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 1,
+          arrows: false,
+        }
+      },
+    ]
+  });  
+  // ========================= hot deals Slider Js End ===================
+
+  
+  // ========================= hot deals Slider Js Start ==============
+  $('.organic-food__slider').slick({
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#organic-next',
+    prevArrow: '#organic-prev',
+    responsive: [
+      {
+        breakpoint: 1599,
+        settings: {
+          slidesToShow: 6,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 1399,
+        settings: {
+          slidesToShow: 4,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 3,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 2,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 424,
+        settings: {
+          slidesToShow: 1,
+          arrows: false,
+        }
+      },
+    ]
+  });  
+  // ========================= hot deals Slider Js End ===================
+
+  
+  // ========================= New arrival Slider Js Start ==============
+  $('.new-arrival__slider').slick({
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    autoplay: false,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#new-arrival-next',
+    prevArrow: '#new-arrival-prev',
+    responsive: [
+      {
+        breakpoint: 1599,
+        settings: {
+          slidesToShow: 6,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 1399,
+        settings: {
+          slidesToShow: 4,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 3,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 2,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 424,
+        settings: {
+          slidesToShow: 1,
+          arrows: false,
+        }
+      },
+    ]
+  });  
+  // ========================= New arrival Slider Js End ===================
+
+  
+  // ========================= hot deals Slider Js Start ==============
+  $('.short-product-list').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    prevArrow: '<button type="button" class="slick-prev border border-gray-100 w-30 h-30 bg-transparent rounded-pill position-absolute hover-bg-main-600 hover-text-white hover-border-main-600 transition-1"><i class="ph ph-caret-left"></i></button>',
+    nextArrow: '<button type="button" class="slick-next border border-gray-100 w-30 h-30 bg-transparent rounded-pill position-absolute hover-bg-main-600 hover-text-white hover-border-main-600 transition-1"><i class="ph ph-caret-right"></i></button>',
+  });  
+  
+// ========================= hot deals Slider Js End ===================
+
+  
+  // ========================= hot deals Slider Js Start ==============
+  $('.brand-slider').slick({
+    slidesToShow: 8,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#brand-next',
+    prevArrow: '#brand-prev',
+    responsive: [
+      {
+        breakpoint: 1599,
+        settings: {
+          slidesToShow: 7,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 1399,
+        settings: {
+          slidesToShow: 6,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 5,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 4,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 424,
+        settings: {
+          slidesToShow: 3,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 359,
+        settings: {
+          slidesToShow: 2,
+          arrows: false,
+        }
+      },
+    ]
+  });  
+  // ========================= hot deals Slider Js End ===================
+
+  
+  // ========================= Category Dropdown Two Js Start ===============================
+  $('.category-two .category__button').on('click', function () {
+    $('.category-two .category__button').toggleClass('active')
+    $('.responsive-dropdown.style-two').addClass('active').slideToggle(400); 
+  }); 
+  // ========================= Category Dropdown Two Js End ===============================
+  
+  
+  // ========================= Featured Products Slider Js Start ==============
+  $('.featured-product-slider').slick({
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#featured-products-next',
+    prevArrow: '#featured-products-prev',
+    responsive: [
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 1,
+          arrows: false,
+        }
+      }
+    ]
+  });  
+  // ========================= Featured Products Slider Js End ==================
+
+  
+  // ========================= hot deals Slider Js Start ==============
+  $('.recommended-slider').slick({
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#recommended-next',
+    prevArrow: '#recommended-prev',
+    responsive: [
+      {
+        breakpoint: 1399,
+        settings: {
+          slidesToShow: 3,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 2,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 1,
+          arrows: false,
+        }
+      },
+    ]
+  });  
+  // ========================= hot deals Slider Js End ===================
+  
+  // ========================= hot deals Slider Js Start ==============
+  $('.vendor-card__list.style-two').slick({
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#vendor-next',
+    prevArrow: '#vendor-prev',
+  });  
+  // ========================= hot deals Slider Js End ===================
+  
+  
+  // ========================= hot deals Slider Js Start ==============
+  $('.top-brand__slider').slick({
+    slidesToShow: 8,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    rtl: $('html').attr('dir') === 'rtl' ? true : false,
+    speed: 900,
+    infinite: true,
+    nextArrow: '#topBrand-next',
+    prevArrow: '#topBrand-prev',
+    responsive: [
+      {
+        breakpoint: 1599,
+        settings: {
+          slidesToShow: 7,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 1399,
+        settings: {
+          slidesToShow: 6,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 5,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 4,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 424,
+        settings: {
+          slidesToShow: 3,
+          arrows: false,
+        }
+      },
+      {
+        breakpoint: 359,
+        settings: {
+          slidesToShow: 2,
+          arrows: false,
+        }
+      },
+    ]
+  });  
+  // ========================= hot deals Slider Js End ===================
+
+  
+  // ========================= Product Details Thumbs Slider Js Start ===================
+  $('.product-details__thumb-slider').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    fade: true,
+    asNavFor: '.product-details__images-slider'
+  });
+
+  $('.product-details__images-slider').slick({
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    asNavFor: '.product-details__thumb-slider',
+    dots: false,
+    arrows: false,
+    focusOnSelect: true
+  });
+  // ========================= Product Details Thumbs Slider Js End ===================
+
+  
+
+
+
+  
+  // ========================= Color List Js Start ===================
+  $('.color-list__button').on('click', function () {
+    $('.color-list__button').removeClass('border-gray-900'); 
+
+    if(!$(this).hasClass('border-gray-900')) {
+      $(this).addClass('border-gray-900');
+      $(this).removeClass('border-gray-50');
+    } else {
+      $(this).removeClass('border-gray-900');
+      $(this).addClass('border-gray-50');
+    };
+  }); 
+  // ========================= Color List Js End ===================
+
+  // ========================== Range Slider Js Start =====================
+ 
+  // ========================== Range Slider Js End =====================
+
+  
+  // ========================== List Grid Js Start ================================
+  $('.list-btn').on('click', function () {
+    $('.grid-btn').addClass('border-gray-100'); 
+    $('.grid-btn').removeClass('border-main-600 text-white bg-main-600'); 
+    $('.list-grid-wrapper').removeClass('list-view'); 
+    
+    $(this).removeClass('border-gray-100'); 
+    $(this).addClass('border-main-600 text-white bg-main-600'); 
+    $('.list-grid-wrapper').addClass('list-view'); 
+  }); 
+
+  $('.grid-btn').on('click', function () {
+    $('.list-btn').addClass('border-gray-100'); 
+    $('.list-btn').removeClass('border-main-600 text-white bg-main-600'); 
+    $('.list-grid-wrapper').removeClass('list-view'); 
+
+    $(this).removeClass('border-gray-100'); 
+    $(this).addClass('border-main-600 text-white bg-main-600'); 
+  }); 
+  // ========================== List Grid Js End ================================
+
+  
+  // ========================== Shop Sidebar Js Start ================================
+  $('.sidebar-btn').on('click', function () {
+    $(this).addClass('bg-main-600 text-white');
+    $('.shop-sidebar').addClass('active');
+    $('.side-overlay').addClass('show');
+    $('body').addClass('scroll-hide-sm'); 
+  }); 
+
+  $('.side-overlay, .shop-sidebar__close').on('click', function () {
+    $('.sidebar-btn').removeClass('bg-main-600 text-white');
+    $('.shop-sidebar').removeClass('active');
+    $('.side-overlay').removeClass('show');
+    $('body').removeClass('scroll-hide-sm');
+  }); 
+  // ========================== Shop Sidebar Js End ================================
+
+  
+  // ========================== Remove Tr Js Start ================================
+  $('.remove-tr-btn').on('click', function () {
+    $(this).closest('tr').addClass('d-none')
+  }); 
+  // ========================== Remove Tr Js End ================================
+
+  
+  // ========================== Checkout Payment Method Js Start ================================
+  $('.payment-item .form-check-input:checked').closest('.payment-item').find('.payment-item__content').show();
+
+  $('.payment-item .form-check-input').on('change', function () {
+      $('.payment-item__content').hide();
+      $(this).closest('.payment-item').find('.payment-item__content').show();
+  });
+  // ========================== Checkout Payment Method Js End ================================
+
+  // ================== Password Show Hide Js Start ==========
+  $(".toggle-password").on('click', function() {
+    $(this).toggleClass("active");
+    var input = $($(this).attr("id"));
+    if (input.attr("type") == "password") {
+      input.attr("type", "text");
+    } else {
+      input.attr("type", "password");
+    }
+  });
+  // ========================= Password Show Hide Js End ===========================
+
+  // ========================= Background Image Js Start ===================
+    $(".bg-img").css('background-image', function () {
+      var bg = 'url(' + $(this).data("background-image") + ')';
+      return bg;
+    });
+  // ========================= Background Image Js End ===================
+
+  // ========================== Text Slide Js Start =====================
+    $('.text-slider').marquee({
+      pauseOnHover: true,
+      allowCss3Support: true,
+      css3easing: 'linear',
+      easing: 'linear',
+      delayBeforeStart: 0,
+      duration: 7000,
+      gap: 20,
+      pauseOnCycle: false,
+      startVisible: true
+    });
+    // ========================== Text Slide Js End =====================
+
+
+    // ========================== Trending Products Js Strt =====================
+    $('.expand-btn').on('click', function () {
+      $(this).toggleClass('bg-main-two-600 text-white');
+      $(this).parent().find('.expand-icons').toggleClass('d-flex');
+
+      if($(this).children('i').hasClass('ph ph-plus')) {
+        $(this).children('i').removeClass('ph ph-plus')
+        $(this).children('i').addClass('ph ph-x')
+      } else {
+        $(this).children('i').removeClass('ph ph-x')
+        $(this).children('i').addClass('ph ph-plus')
+      }
+    });
+
+    $('.wishlist-btn').on('click', function () {
+      if($(this).children('i').hasClass('ph ph-heart')) {
+        $(this).children('i').removeClass('ph ph-heart')
+        $(this).children('i').addClass('ph-fill ph-heart text-main-two-600')
+      } else {
+        $(this).children('i').removeClass('ph-fill ph-heart text-main-two-600')
+        $(this).children('i').addClass('ph ph-heart')
+      }
+    });
+    // ========================== Trending Products Js End =====================
+
+    // ========================== Instagram Slider Js Start =====================
+    $('.instagram-slider').slick({
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      speed: 1500,
+      dots: false,
+      pauseOnHover: true,
+      arrows: true,
+      draggable: true,
+      rtl: $('html').attr('dir') === 'rtl' ? true : false,
+      speed: 900,
+      infinite: true,
+      nextArrow: '#instagram-next',
+      prevArrow: '#instagram-prev',
+      responsive: [
+        {
+          breakpoint: 1299,
+          settings: {
+            slidesToShow: 3,
+            arrows: false,
+          }
+        },
+        {
+          breakpoint: 992,
+          settings: {
+            slidesToShow: 3,
+            arrows: false,
+          }
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 2,
+            arrows: false,
+          }
+        },
+        {
+          breakpoint: 424,
+          settings: {
+            slidesToShow: 1,
+            arrows: false,
+          }
+        },
+      ]
+    });  
+    // ========================== Instagram Slider Js End =====================
+    
+
+    // ========================== Testimonials Thumbs Slider Js Start =====================
+    $('.testimonials-slider').slick({
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      asNavFor: '.testimonials-thumbs-slider',
+      dots: true,
+      centerMode: true,
+      focusOnSelect: true,
+      fade: true,
+      cssEase: 'linear',
+      dots: false,
+      arrows: false,
+    });
+
+    $('.testimonials-thumbs-slider').slick({
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      autoplay: false,
+      autoplaySpeed: 2000,
+      speed: 1500,
+      dots: false,
+      pauseOnHover: true,
+      arrows: true,
+      draggable: true,
+      rtl: $('html').attr('dir') === 'rtl' ? true : false,
+      speed: 900,
+      infinite: true,
+      nextArrow: '#testi-next',
+      prevArrow: '#testi-prev',
+      asNavFor: '.testimonials-slider',
+      responsive: [
+        {
+          breakpoint: 1299,
+          settings: {
+            slidesToShow: 3,
+            arrows: false,
+          }
+        },
+        {
+          breakpoint: 992,
+          settings: {
+            slidesToShow: 3,
+            arrows: false,
+          }
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 2,
+            arrows: false,
+          }
+        },
+        {
+          breakpoint: 424,
+          settings: {
+            slidesToShow: 2,
+            arrows: false,
+          }
+        },
+      ]
+    });  
+    // ========================== Testimonials Thumbs Slider Js End =====================
+    
+  // ========================= Wow Js Start ===================
+  new WOW().init();
+  // ========================= Wow Js End ===================
+
+  // ========================= AOS Animation Js Start ===================
+  AOS.init({
+    offset: 40,
+    duration: 1000,
+    // once: true,
+    easing: 'ease',
+  });
+  // ========================= AOS Animation Js End ===================
+
+  // ========================= Counter Up Js End ===================
+  const counterUp = window.counterUp.default;
+
+  const callback = (entries) => {
+    entries.forEach((entry) => {
+      const el = entry.target;
+      if (entry.isIntersecting && !el.classList.contains('is-visible')) {
+        counterUp(el, {
+          duration: 2000,
+          delay: 16,
+        });
+        el.classList.add('is-visible');
+      }
+    });
+  };
+
+  const IO = new IntersectionObserver(callback, { threshold: 1 });
+
+  // Counter Two for each
+  const counterNumbers = document.querySelectorAll('.counter');
+  if (counterNumbers.length > 0) {
+    counterNumbers.forEach((counterNumber) => {
+      IO.observe(counterNumber);
+    });
+  }
+
+
+  
+  });
+  // ==========================================
+  //      End Document Ready function
+  // ==========================================
+
+  // ========================= Preloader Js Start =====================
+    $(window).on("load", function(){
+      $('.preloader').fadeOut(); 
+    })
+    // ========================= Preloader Js End=====================
+
+    // ========================= Header Sticky Js Start ==============
+    $(window).on('scroll', function() {
+      if ($(window).scrollTop() >= 260) {
+        $('.header').addClass('fixed-header');
+      }
+      else {
+          $('.header').removeClass('fixed-header');
+      }
+    }); 
+    // ========================= Header Sticky Js End===================
+
+})(jQuery);

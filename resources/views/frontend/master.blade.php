@@ -3,60 +3,54 @@
 
     <head>
 
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+        <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        {{-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> --}}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        {{-- <link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap.min.css') }}"> --}}
-        {{-- <link rel="stylesheet" href="{{ asset('frontend/assets/css/animate.min.css') }}"> --}}
 
+        {{-- old --}}
+        <link rel="stylesheet" href="{{ asset('frontend/assets/css/animate.min.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/boxicons.min.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/flaticon.css') }}">
+
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/magnific-popup.min.css') }}">
+
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/nice-select.min.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/slick.min.css') }}">
-
-        {{-- <link rel="stylesheet" href="{{ asset('frontend/assets/css/owl.carousel.min.css') }}"> --}}
-
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/meanmenu.min.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/rangeSlider.min.css') }}">
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}">
-
-        <!-- <link rel="stylesheet" href="{{ asset('frontend/assets/css/dark.css') }}">-->
-
+        {{-- <link rel="stylesheet" href="{{ asset('frontend/assets/css/dark.css') }}"> --}}
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/responsive.css') }}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 
 
-        {{-- new --}}
+        <link rel="stylesheet" href="{{ asset('frontend/assets/css/owl.carousel.min.css') }}">
+
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+        {{-- new  --}}
 
         <!-- Favicon -->
-        <link rel="shortcut icon" href="{{ asset('frontend/assets/images/web-app-manifest-192x192.png') }}">
+        <link rel="shortcut icon" href="{{ asset('frontend/assets/images/logo.png') }}">
 
         <!-- Bootstrap -->
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/bootstrap.min.css') }}">
         <!-- select 2 -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css">
+        <link rel="stylesheet" href="{{ asset('frontend/assets/css/select2.min.css') }}">
         <!-- Slick -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css">
+        <link rel="stylesheet" href="{{ asset('frontend/assets/css/slick.css') }}">
         <!-- Jquery Ui -->
         <link rel="stylesheet" href="{{ asset('frontend/assets/css/jquery-ui.css') }}">
         <!-- animate -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+        <link rel="stylesheet" href="{{ asset('frontend/assets/css/animate.css') }}">
         <!-- AOS Animation -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/3.0.0-beta.6/aos.css">
+        <link rel="stylesheet" href="{{ asset('frontend/assets/css/aos.css') }}">
         <!-- Main css -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/log4javascript/1.4.9/main.css">
-        <link rel='stylesheet' href="themes/buyabans/assets/libs/sweetalerts/sweetalert2.min.css">
-
-        <link rel="stylesheet" href="themes/buyabans/assets/css/main.min6674.css?t=1744723685" />
-        <link rel="stylesheet" href="themes/buyabans/assets/css/responsive.min6674.css?t=1744723685" />
-
-
+        <link rel="stylesheet" href="{{ asset('frontend/assets/css/main.css') }}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
@@ -102,7 +96,7 @@
             integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        <link rel="icon" sizes="16x16" href="frontend/newstyle/assets/images/icon/abans_favicon.webp" />
+        <link rel="icon" sizes="16x16" href="{{ asset('frontend/assets/images/logo.png') }}" />
 
         <!-- <link rel="stylesheet" href="assets/libs/owl-carousel/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/libs/owl-carousel/assets/owl.theme.default.min.css">
@@ -119,10 +113,8 @@
             integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>OMC - Online Marketing Complex</title>
 
-        <link rel="icon" type="image/png" href="assets/images/logo1.png" style="">
+        <title>OMC - Online Marketing Complex</title>
 
 
     </head>
@@ -195,6 +187,22 @@
         .bg-main-50 {
             background-color: rgba(10, 67, 255, 0.36) !important;
         }
+
+
+
+        .btn-site-default:hover {
+            background: #001ed4;
+            color: #fff;
+            height: 36px;
+            border-radius: 0px;
+            font-size: 15px;
+            display: inline-flex;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            border-radius: 6px;
+            width: auto;
+        }
     </style>
 
     <body>
@@ -204,6 +212,8 @@
 
 
         @yield('content')
+
+
         @include('frontend.footer-new')
 
 
@@ -702,16 +712,12 @@
 
 
 
+        {{-- old  --}}
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="{{ asset('frontend/assets/js/jquery.min.js') }}"></script>
-        {{-- <script src="{{ asset('frontend/assets/js/popper.min.js') }}"></script> --}}
-        <!-- Development version -->
-        <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
 
-        <!-- Production version -->
-        <script src="https://unpkg.com/@popperjs/core@2"></script>
-        <script src="{{ asset('frontend/assets/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('frontend/assets/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('frontend/assets/js/popper.min.js') }}"></script>
         <script src="{{ asset('frontend/assets/js/owl.carousel.min.js') }}"></script>
         <script src="{{ asset('frontend/assets/js/magnific-popup.min.js') }}"></script>
         <script src="{{ asset('frontend/assets/js/parallax.min.js') }}"></script>
@@ -719,13 +725,10 @@
         <script src="{{ asset('frontend/assets/js/nice-select.min.js') }}"></script>
         <script src="{{ asset('frontend/assets/js/meanmenu.min.js') }}"></script>
         <script src="{{ asset('frontend/assets/js/isotope.pkgd.min.js') }}"></script>
-        <script src="{{ asset('frontend/assets/js/slick.min.js') }}"></script>
         <script src="{{ asset('frontend/assets/js/sticky-sidebar.min.js') }}"></script>
-        <script src="{{ asset('frontend/assets/js/wow.min.js') }}"></script>
         <script src="{{ asset('frontend/assets/js/form-validator.min.js') }}"></script>
         <script src="{{ asset('frontend/assets/js/contact-form-script.js') }}"></script>
         <script src="{{ asset('frontend/assets/js/ajaxchimp.min.js') }}"></script>
-        <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
 
 
 
@@ -749,79 +752,154 @@
             });
         </script>
 
+        {{-- oldend --}}
+
+
+        <!-- Jquery js -->
+        <script src="{{ asset('frontend/assets/js/jquery-3.7.1.min.js') }}"></script>
+        <!-- Bootstrap Bundle Js -->
+        <script src="{{ asset('frontend/assets/js/bootstrap.bundle.min.js') }}"></script>
+        <!-- Phosphor Icon -->
+        <script src="{{ asset('frontend/assets/js/phosphor-icon.js') }}"></script>
+        <!-- Select 2 -->
+        <script src="{{ asset('frontend/assets/js/select2.min.js') }}"></script>
+        <!-- Slick js -->
+        <script src="{{ asset('frontend/assets/js/slick.min.js') }}"></script>
+        <!-- Count Down js -->
+        <script src="{{ asset('frontend/assets/js/count-down.js') }}"></script>
+        <!-- jQuery UI js -->
+        <script src="{{ asset('frontend/assets/js/jquery-ui.js') }}"></script>
+        <!-- Wow js -->
+        <script src="{{ asset('frontend/assets/js/wow.min.js') }}"></script>
+        <!-- AOS Animation -->
+        <script src="{{ asset('frontend/assets/js/aos.js') }}"></script>
+        <!-- Marquee -->
+        <script src="{{ asset('frontend/assets/js/marque.min.js') }}"></script>
+        <!-- Vanilla Tilt -->
+        <script src="{{ asset('frontend/assets/js/vanilla-tilt.min.js') }}"></script>
+        <!-- Counter -->
+        <script src="{{ asset('frontend/assets/js/counter.min.js') }}"></script>
+        <!-- Main js -->
+        <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
-            function closeMenuMobi() {
-                //alert(2);
-                document.body.classList.remove("mmenu-active");
-                document.querySelector(".mobile-menu-wrapper").style.visibility = "hidden";
-            }
-
-            function openMenuMobi() {
-                //alert(1);
-                document.body.classList.add("mmenu-active");
-                document.querySelector(".mobile-menu-wrapper").style.visibility = "visible";
-            }
-
-
-            function openSubmenus(clickedSpan) {
-                let $dropdown = $(clickedSpan).next(".dropdown");
-                // Toggle the visibility of the clicked dropdown instantly (no animation)
-                $dropdown.toggle();
-                $(clickedSpan).toggleClass("rotate"); // Rotate the toggle button for effect
-            }
-
-            $(document).ready(function() {
-
-                $(".toggle-btn-dest").on("click", function() {
-                    let $widget = $(this).closest(".widget"); // Get the parent widget
-                    let $title = $widget.find(".widget-title"); // Get the widget title
-                    let $body = $widget.find(".widget-body"); // Get the widget body
-
-                    // Toggle collapsed class on widget title
-                    $title.toggleClass("collapsed");
-
-                    // Use CSS instead of slideToggle() for instant effect
-                    $body.toggleClass("hidden");
+            document.querySelectorAll('.has-sub-submenu').forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    const submenu = item.querySelector('.sub-submenu-column');
+                    submenu.style.visibility = 'visible';
+                    submenu.style.opacity = '1';
                 });
-
-                $(".toggle-btn-mobi").on("click", function() {
-                    let $widget = $(this).closest(".widget"); // Get the parent widget
-                    let $title = $widget.find(".widget-title"); // Get the widget title
-                    let $body = $widget.find(".widget-body"); // Get the widget body
-
-                    // Toggle collapsed class on widget title
-                    $title.toggleClass("collapsed");
-
-                    // Use CSS instead of slideToggle() for instant effect
-                    $body.toggleClass("hidden");
+                item.addEventListener('mouseleave', () => {
+                    const submenu = item.querySelector('.sub-submenu-column');
+                    submenu.style.visibility = 'hidden';
+                    submenu.style.opacity = '0';
+                });
+            });
+        </script>
+        <script>
+            $(document).ready(function() {
+                $.get("{{ route('cart.count') }}", function(data) {
+                    if (data.cart_count !== undefined) {
+                        $('#cart-count').text(data.cart_count);
+                    }
                 });
 
             });
         </script>
+        <script>
+            $(document).ready(function() {
+                $.get("{{ route('wishlist.count') }}", function(data) {
+                    if (data.wishlist_count !== undefined) {
+                        $('#wishlist-count').text(data.wishlist_count);
+                    }
+                });
+            });
+        </script>
 
-        <script src="{{ asset('/frontend/newstyle/rocket-loader.min.js') }}" data-cf-settings="a071cb3ff60724c4b8f55cf9-|49"
-            defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
-            integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"
-            integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
-            integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
-            integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"
-            integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
-            integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    </body>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+
+
+
+
+
+
+
+    <script src="rocket-loader.min.js" data-cf-settings="a071cb3ff60724c4b8f55cf9-|49" defer></script>
+
 
 
     </body>
+
+
+    <script>
+        function closeMenuMobi() {
+            //alert(2);
+            document.body.classList.remove("mmenu-active");
+            document.querySelector(".mobile-menu-wrapper").style.visibility = "hidden";
+        }
+
+        function openMenuMobi() {
+            //alert(1);
+            document.body.classList.add("mmenu-active");
+            document.querySelector(".mobile-menu-wrapper").style.visibility = "visible";
+        }
+
+
+        function openSubmenus(clickedSpan) {
+            let $dropdown = $(clickedSpan).next(".dropdown");
+            // Toggle the visibility of the clicked dropdown instantly (no animation)
+            $dropdown.toggle();
+            $(clickedSpan).toggleClass("rotate"); // Rotate the toggle button for effect
+        }
+
+        $(document).ready(function() {
+
+            $(".toggle-btn-dest").on("click", function() {
+                let $widget = $(this).closest(".widget"); // Get the parent widget
+                let $title = $widget.find(".widget-title"); // Get the widget title
+                let $body = $widget.find(".widget-body"); // Get the widget body
+
+                // Toggle collapsed class on widget title
+                $title.toggleClass("collapsed");
+
+                // Use CSS instead of slideToggle() for instant effect
+                $body.toggleClass("hidden");
+            });
+
+            $(".toggle-btn-mobi").on("click", function() {
+                let $widget = $(this).closest(".widget"); // Get the parent widget
+                let $title = $widget.find(".widget-title"); // Get the widget title
+                let $body = $widget.find(".widget-body"); // Get the widget body
+
+                // Toggle collapsed class on widget title
+                $title.toggleClass("collapsed");
+
+                // Use CSS instead of slideToggle() for instant effect
+                $body.toggleClass("hidden");
+            });
+
+        });
+    </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+        integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"
+        integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
+        integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
 </html>
