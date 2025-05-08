@@ -263,7 +263,7 @@
                 <p class="home-page-product-title">Online Exclusive</p>
             </div>
             <div class="view-all-txt">
-                <a class="view-all-link" href="#">VIEW ALL</a>
+                <a class="view-all-link" href="<?php echo e(route('special_offerproducts')); ?>">VIEW ALL</a>
             </div>
         </div>
 
@@ -426,7 +426,7 @@
                 <p class="home-page-product-title">Top Selling</p>
             </div>
             <div class="view-all-txt">
-                <a class="view-all-link" href="top-selling.html">VIEW ALL</a>
+                <a class="view-all-link" href="<?php echo e(route('sale_products')); ?>">VIEW ALL</a>
             </div>
         </div>
 
@@ -511,7 +511,7 @@
                 <p class="home-page-product-title">Most Recent</p>
             </div>
             <div class="view-all-txt">
-                <a class="view-all-link" href="top-selling.html">VIEW ALL</a>
+                <a class="view-all-link" href="<?php echo e(route('all-items')); ?>">VIEW ALL</a>
             </div>
         </div>
 
