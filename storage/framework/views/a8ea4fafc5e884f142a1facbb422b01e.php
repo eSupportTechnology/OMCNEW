@@ -795,11 +795,11 @@
                         <li> <a href="/" title="">Home</a> </li>
 
 
-                        <li class="column-1"><a href="/shop" title="">Shop</a></li>
+                        
 
-                        <li><a href="/about" title=""> About Us </a></li>
+                        <li><a href="<?php echo e(route('about')); ?>" title=""> About Us </a></li>
 
-                        <li><a href="/contact" title="">Contact Us </a></li>
+                        <li><a href="<?php echo e(route('contac')); ?>" title="">Contact Us </a></li>
 
                         
 
@@ -825,9 +825,9 @@
 
                                 <!-- Main Category and Toggle -->
                                 <div class="d-flex justify-content-between align-items-center ">
-                                    <a href="<?php echo e(url('/shop?category_id=' . $category->id)); ?>"
+                                    <a href="/all-items?category=<?php echo e(urlencode($category->parent_category)); ?>"
                                         class="text-dark text-decoration-none fw-semibold" style="line-height: 1.6;">
-                                        <?php echo e($category->name); ?>
+                                        <?php echo e($category->parent_category); ?>
 
                                     </a>
 
@@ -845,10 +845,10 @@
                                         class="dropdown subcategory-dropdown bg-light border mt-1 rounded shadow-sm d-none">
                                         <?php $__currentLoopData = $category->subcategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <li>
-                                                <a href="<?php echo e(url('/shop?subcategory_id=' . $subcategory->id)); ?>"
+                                                <a href="/all-items?subcategory=<?php echo e(urlencode($subcategory->subcategory)); ?>"
                                                     class="d-block px-4 py-2 text-dark text-decoration-none"
                                                     style="line-height: 1.6;">
-                                                    <?php echo e($subcategory->name); ?>
+                                                    <?php echo e($subcategory->subcategory); ?>
 
                                                 </a>
                                             </li>

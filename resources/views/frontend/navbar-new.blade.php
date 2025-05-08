@@ -793,11 +793,11 @@
                         <li> <a href="/" title="">Home</a> </li>
 
 
-                        <li class="column-1"><a href="/shop" title="">Shop</a></li>
+                        {{-- <li class="column-1"><a href="/shop" title="">Shop</a></li> --}}
 
-                        <li><a href="/about" title=""> About Us </a></li>
+                        <li><a href="{{ route('about') }}" title=""> About Us </a></li>
 
-                        <li><a href="/contact" title="">Contact Us </a></li>
+                        <li><a href="{{ route('contac') }}" title="">Contact Us </a></li>
 
                         {{-- <li><a href="{{ route('frontend.vendor') }}" title="">Vendors </a></li> --}}
 
@@ -823,9 +823,9 @@
 
                                 <!-- Main Category and Toggle -->
                                 <div class="d-flex justify-content-between align-items-center ">
-                                    <a href="{{ url('/shop?category_id=' . $category->id) }}"
+                                    <a href="/all-items?category={{ urlencode($category->parent_category) }}"
                                         class="text-dark text-decoration-none fw-semibold" style="line-height: 1.6;">
-                                        {{ $category->name }}
+                                        {{ $category->parent_category }}
                                     </a>
 
                                     @if ($category->subcategories->isNotEmpty())
@@ -842,10 +842,10 @@
                                         class="dropdown subcategory-dropdown bg-light border mt-1 rounded shadow-sm d-none">
                                         @foreach ($category->subcategories as $subcategory)
                                             <li>
-                                                <a href="{{ url('/shop?subcategory_id=' . $subcategory->id) }}"
+                                                <a href="/all-items?subcategory={{ urlencode($subcategory->subcategory) }}"
                                                     class="d-block px-4 py-2 text-dark text-decoration-none"
                                                     style="line-height: 1.6;">
-                                                    {{ $subcategory->name }}
+                                                    {{ $subcategory->subcategory }}
                                                 </a>
                                             </li>
                                         @endforeach
