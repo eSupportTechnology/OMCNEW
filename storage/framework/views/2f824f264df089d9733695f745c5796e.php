@@ -342,8 +342,8 @@
 
         <div class="container footer-padding">
             <div class="row align-items-start">
+                <!-- Company Info Column -->
                 <div class="col-md-3 address-info">
-
                     <?php if($siteLogo && $siteLogo->image_path): ?>
                         <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>" alt="Site Logo"
                             class="img-fluid">
@@ -351,13 +351,10 @@
                         <img src="<?php echo e(asset('frontend/newstyle/assets/images/buyabans-logo.webp')); ?>">
                     <?php endif; ?>
                     <div class="address">
-                        <p>No. 38, 2nd Lane,</p>
-                        <p>Rubber Watte Road,</p>
-                        <p>Gangodawila, Nugegoda, Sri Lanka.</p>
+                        <p>No. 38, 2nd Lane, Rubber Watte Road, Gangodawila, Nugegoda, Sri Lanka.</p>
                     </div>
                     <div class="hotline">
-                        <p>HOTLINE</p>
-                        <a class="tel-no" href="#">+94 112 251 202 </a>
+                        <p>HOTLINE: <a class="tel-no" href="tel:+94112251202">+94 112 251 202</a></p>
                     </div>
                     <div class="social-media">
                         <ul>
@@ -376,19 +373,11 @@
                             <li><a href="#" target="_blank"><img
                                         src="<?php echo e(asset('frontend/newstyle/assets/images/footer/youtube.webp')); ?>"></a>
                             </li>
-
                         </ul>
                     </div>
                 </div>
 
-                <!-- <div class="col-md-3 mt-1">
-                    <p class="footer-title">&nbsp;</p>
-                    <div class="footer-img-div"><a href="#"><img src="frontend/newstyle/assets/images/icon/shop.png">Showroom Locator</a></div>
-                    <div class="footer-img-div"><a href="#"><img src="frontend/newstyle/assets/images/icon/shop.png">Showroom Login</a></div>
-                    <div class="footer-img-div"><a href="#" target="_blank"><img src="frontend/newstyle/assets/images/icon/repair-tool-new.png">Service Center Locator</a></div>
-                    <div class="footer-img-div"><a href="#" target="_blank"><img src="frontend/newstyle/assets/images/icon/order-tracking.png">Track your Order</a></div>
-                </div> -->
-
+                <!-- About Links Column -->
                 <div class="col-md-3">
                     <div class="footer-links-set">
                         <p class="footer-title">About</p>
@@ -398,11 +387,11 @@
                             <li><a class="footer-link" href="<?php echo e(route('contac')); ?>">Contact Us</a></li>
                             <li><a class="footer-link" href="<?php echo e(route('Subscribe_Newsletter')); ?>">Subscribe
                                     Newsletter</a></li>
-
                         </ul>
                     </div>
                 </div>
 
+                <!-- Help Links Column -->
                 <div class="col-md-3">
                     <div class="footer-links-set">
                         <p class="footer-title">Help</p>
@@ -417,6 +406,7 @@
                     </div>
                 </div>
 
+                <!-- Policies Links Column -->
                 <div class="col-md-2">
                     <div class="footer-links-set">
                         <p class="footer-title">Policies</p>
