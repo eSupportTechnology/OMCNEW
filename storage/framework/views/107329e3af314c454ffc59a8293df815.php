@@ -191,6 +191,39 @@
             }
         }
 
+@media (max-width: 576px) {
+  .home-product-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .home-product-list .item {
+    width: 50%;
+    box-sizing: border-box;
+    padding: 5px;
+  }
+
+ .normal-pro-promo-tags {
+    top: 6px;       /* move badge closer to the corner */
+    left: 8px;
+  }
+.discout-tag {
+    width: 50px;    /* smaller circle */
+    height: 50px;
+    padding: 2px 6px;
+    transform: rotate(-5deg) scale(0.9);
+  }
+
+  .discount-amount {
+    font-size: 10px;     /* smaller text */
+    margin-right: 1px;
+  }
+
+  .off-txt {
+    display: none;       /* hide “OFF” text when it’s just “Sale!” */
+  }
+}
+
+
         /* Make sure the discount tag doesn't overlap with other UI elements */
         .owl-item .grid-product-wapper .normal-pro-promo-tags {
             z-index: 5;
@@ -348,6 +381,26 @@
         });
     </script>
 
+<script>
+ $(document).ready(function() {
+  var $carousel = $(".home-product-list.owl-carousel");
+
+  if ($(window).width() <= 576) {
+    // Properly destroy, but leave your HTML in place
+    $carousel.trigger('destroy.owl.carousel');
+
+    // Remove only Owl’s classes so your grid CSS kicks in
+    $carousel
+      .removeClass('owl-carousel owl-loaded')
+      .find('.owl-stage-outer, .owl-stage, .owl-item')
+      .removeAttr('style')
+      .removeClass('owl-stage-outer owl-stage owl-item active');
+
+    // Now your fallback CSS (the 2-column flex/grid) will display them
+  }
+});
+
+</script>
 
 
 
