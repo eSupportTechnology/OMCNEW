@@ -2,6 +2,19 @@
     .footer-white-color-css {
         color: #ffffff;
     }
+
+    .copyright {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    .copyright small {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        line-height: 1.4;
+    }
 </style>
 
 <div class="mobile-footer-con">
@@ -33,7 +46,7 @@
                 </div>
             </div>
 
-            <div class="col-6 mobi-purple-div">
+            <div class="col-6 mobi-purple-div" style="height: 65.87px">
                 <div class="footer-icon">
                     <a href="#">
                         <img src="{{ asset('frontend/newstyle/assets/images/icon/stopwatch.webp') }}">
@@ -45,7 +58,7 @@
                 </div>
             </div>
 
-            <div class="col-6 mobi-purple-div">
+            <div class="col-6 mobi-purple-div" style="height: 65.87px">
                 <div class="footer-icon">
                     <a href="#">
                         <img src="{{ asset('frontend/newstyle/assets/images/icon/technical-support.webp') }}">
@@ -87,9 +100,9 @@
                         data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li class="footer-nav"><a href="#">About Us</a></li>
+                                <li class="footer-nav"><a href="{{ route('about') }}">About Us</a></li>
                                 <li class="footer-nav"><a href="#">Careers</a></li>
-                                <li class="footer-nav"><a href="#">Contact Us</a></li>
+                                <li class="footer-nav"><a href="{{ route('contac') }}">Contact Us</a></li>
 
                             </ul>
                         </div>
@@ -106,8 +119,9 @@
                         data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li class="footer-nav"><a href="{{ route('faq') }}">Frequently Asked Questions</a></li>
-                                <li class="footer-nav"><a href="shipping-delivery">How To Buy</a></li>
+                                <li class="footer-nav"><a href="{{ route('faq') }}">Frequently Asked Questions</a>
+                                </li>
+                                <li class="footer-nav"><a href="{{ route('buy') }}">How To Buy</a></li>
                                 <li class="footer-nav"><a href="{{ route('shipping-delivery') }}">Shipping &amp;
                                         Delivery</a></li>
                                 <li class="footer-nav"><a href="{{ route('warranty') }}">Warranty Information</a></li>
@@ -193,7 +207,10 @@
 
             </div>
 
-            <div class="copyright"><small>Copyright © 2025 Buyabans. All Rights Reserved.</small></div>
+            <div class="copyright"><small>Copyright © 2025 ONLINE
+                    MARKETING
+                    COMPLEX. All Rights
+                    Reserved.</small></div>
         </div>
 
         <!-- <div class="flex-wrap mobi-stickey-footer d-flex">
@@ -376,7 +393,7 @@
                         <ul>
                             <li><a class="footer-link" href="{{ route('about') }}">About Us</a></li>
                             <li><a class="footer-link" href="#">Careers</a></li>
-                            <li><a class="footer-link" href="#">Contact Us</a></li>
+                            <li><a class="footer-link" href="{{ route('contac') }}">Contact Us</a></li>
                             <li><a class="footer-link" href="{{ route('Subscribe_Newsletter') }}">Subscribe
                                     Newsletter</a></li>
 
@@ -389,7 +406,7 @@
                         <p class="footer-title">Help</p>
                         <ul>
                             <li><a class="footer-link" href="{{ route('faq') }}">Frequently Asked Questions</a></li>
-                            <li><a class="footer-link" href="#">How To Buy</a></li>
+                            <li><a class="footer-link" href="{{ route('buy') }}">How To Buy</a></li>
                             <li><a class="footer-link" href="{{ route('shipping-delivery') }}">Shipping &amp;
                                     Delivery</a></li>
                             <li><a class="footer-link" href="{{ route('warranty') }}">Warranty Information</a></li>

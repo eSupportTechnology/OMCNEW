@@ -2,14 +2,14 @@
 
 @section('content')
     <!--
-                                                                                                                                                                    ==============================================================================================================================================================
+                                                                                                                                                                        ==============================================================================================================================================================
 
 
-                                                                                                                                                                    home page
+                                                                                                                                                                        home page
 
 
-                                                                                                                                                                    ===============================================================================================================================================================
-                                                                                                                                                                    -->
+                                                                                                                                                                        ===============================================================================================================================================================
+                                                                                                                                                                        -->
 
 
 
@@ -116,93 +116,100 @@
             object-fit: cover !important;
         }
 
-       /* Discount Tag Styling for Product Carousel */
-.normal-pro-promo-tags {
-    position: absolute;
-    top: 10px;
-    left: 20px;
-    z-index: 10;
-    pointer-events: none; /* Allows clicks to pass through to elements below */
-}
+        /* Discount Tag Styling for Product Carousel */
+        .normal-pro-promo-tags {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            z-index: 10;
+            pointer-events: none;
+            /* Allows clicks to pass through to elements below */
+        }
 
-.discout-tag {
-    display: inline-flex;
-    align-items: center;
-    background: linear-gradient(135deg, #ff6666, #cc0000);
-     width: 70px;
-     height: 70px;
-    color: white;
-    border-radius: 50px;
-    padding: 4px 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-    transform: rotate(-5deg);
-    transition: all 0.3s ease;
-}
+        .discout-tag {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #ff6666, #cc0000);
+            width: 70px;
+            height: 70px;
+            color: white;
+            border-radius: 50px;
+            padding: 4px 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            transform: rotate(-5deg);
+            transition: all 0.3s ease;
+        }
 
-.discount-amount {
-    font-size: 12px;
-    font-weight: 700;
-    margin-right: 2px;
-    letter-spacing: 0.5px;
-}
+        .discount-amount {
+            font-size: 12px;
+            font-weight: 700;
+            margin-right: 2px;
+            letter-spacing: 0.5px;
+        }
 
-.off-txt {
-    font-size: 15px;
-    font-weight: 600;
-    text-transform: uppercase;
-}
+        .off-txt {
+            font-size: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
 
-/* Make sure the grid-product-wapper has relative positioning */
-.grid-product-wapper {
-    position: relative;
-    overflow: hidden;
-}
+        /* Make sure the grid-product-wapper has relative positioning */
+        .grid-product-wapper {
+            position: relative;
+            overflow: hidden;
+        }
 
-/* Animation for the discount tag */
-@keyframes bounce-light {
-    0%, 100% { transform: rotate(-5deg); }
-    50% { transform: rotate(-3deg) scale(1.05); }
-}
+        /* Animation for the discount tag */
+        @keyframes bounce-light {
 
-/* Apply animation when hovering over the product */
-.grid-product-wapper:hover .discout-tag {
-    animation: bounce-light 2s infinite ease-in-out;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-}
+            0%,
+            100% {
+                transform: rotate(-5deg);
+            }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .discout-tag {
-        padding: 3px 6px;
-    }
-    
-    .discount-amount {
-        font-size: 12px;
-    }
-    
-    .off-txt {
-        font-size: 15px;
-    }
-}
+            50% {
+                transform: rotate(-3deg) scale(1.05);
+            }
+        }
 
-/* Make sure the discount tag doesn't overlap with other UI elements */
-.owl-item .grid-product-wapper .normal-pro-promo-tags {
-    z-index: 5;
-}
+        /* Apply animation when hovering over the product */
+        .grid-product-wapper:hover .discout-tag {
+            animation: bounce-light 2s infinite ease-in-out;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
 
-/* Special styling for higher discounts */
-.discout-tag .discount-amount[class*="discount-amount"]:not([class*="0%"]):not([class*="1%"]):not([class*="2%"]) {
-    font-weight: 800;
-    letter-spacing: 0.8px;
-}
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .discout-tag {
+                padding: 3px 6px;
+            }
 
+            .discount-amount {
+                font-size: 12px;
+            }
+
+            .off-txt {
+                font-size: 15px;
+            }
+        }
+
+        /* Make sure the discount tag doesn't overlap with other UI elements */
+        .owl-item .grid-product-wapper .normal-pro-promo-tags {
+            z-index: 5;
+        }
+
+        /* Special styling for higher discounts */
+        .discout-tag .discount-amount[class*="discount-amount"]:not([class*="0%"]):not([class*="1%"]):not([class*="2%"]) {
+            font-weight: 800;
+            letter-spacing: 0.8px;
+        }
     </style>
 
     <!-- Carousel Section -->
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" ">
-                                                                                                                                                                                            <div class="carousel-inner">
+                                                                                                                                                                                                <div class="carousel-inner">
 
-                                                    @foreach ($carousels as $index=>
+                                                         @foreach ($carousels as $index=>
         $carousel)
         <div class="carousel-item {{ $index === 0 ? 'active' : '' }}"
             style="background-image: url('{{ asset('storage/carousel_images/' . $carousel->image_path) }}');">
@@ -219,7 +226,7 @@
             </div> --}}
     </div>
     <div class="carousel-indicators">
-       @foreach ($carousels as $index => $carousel)
+        @foreach ($carousels as $index => $carousel)
             <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="{{ $index }}"
                 class="{{ $index === 0 ? 'active' : '' }}" aria-current="{{ $index === 0 ? 'true' : 'false' }}"
                 aria-label="Slide {{ $index + 1 }}"></button>
@@ -260,8 +267,7 @@
 
                                         <!-- Product Image -->
                                         <div class="product-image">
-                                            <a
-                                                href="{{ route('product-description', $product->product_id) }}">
+                                            <a href="{{ route('product-description', $product->product_id) }}">
 
                                                 @if ($product->product->images->isEmpty())
                                                     <img src="{{ asset('frontend/newstyle/assets/images/loader.gif') }}"
@@ -283,7 +289,8 @@
                                         <!-- Product Title & Prices -->
                                         <div class="grid-pro-drtail-con">
                                             <div class="col-md-12 grid-product-title">
-                                                <div class="pro-name-compact" title="{{ $product->product->product_name }}">
+                                                <div class="pro-name-compact"
+                                                    title="{{ $product->product->product_name }}">
                                                     {{ $product->product->product_name }}
                                                 </div>
                                             </div>
@@ -319,7 +326,7 @@
 
     <!-- Include Owl Carousel CSS -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/frontend/newstyle/assets/owl.carousel.min.css">
-                                                                                                                                                                                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css"> -->
+                                                                                                                                                                                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css"> -->
 
     <!-- Include Owl Carousel JS -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script> -->
@@ -539,31 +546,31 @@
         <div class="row m-0">
             <!-- First Banner Image (Left Side) -->
             <div class="col-12 col-sm-6 custom-4-banner">
-                 @if ($leftBanner)
-                <img src="{{ asset('storage/banner_images/' . $leftBanner->image_path) }}"
-                     class="img-fluid" alt="Banner Left">
-            @endif
+                @if ($leftBanner)
+                    <img src="{{ asset('storage/banner_images/' . $leftBanner->image_path) }}" class="img-fluid"
+                        alt="Banner Left">
+                @endif
             </div>
 
             <!-- Second Banner Image (Right Side) -->
             <div class="col-12 col-sm-6 custom-4-banner">
                 @if ($rightBanner)
-                <img src="{{ asset('storage/banner_images/' . $rightBanner->image_path) }}"
-                     class="img-fluid" alt="Banner Right">
-            @endif
+                    <img src="{{ asset('storage/banner_images/' . $rightBanner->image_path) }}" class="img-fluid"
+                        alt="Banner Right">
+                @endif
             </div>
         </div>
 
         <!-- Single Banner Image (Full Width) -->
         <!-- Bottom Banner with Optional Link -->
-    @if ($bottomBanner)
-        <a href="{{ $bottomBanner->link ?? '#' }}">
-            <div class="col-12 col-sm-12 single-banner-m">
-                <img src="{{ asset('storage/banner_images/' . $bottomBanner->image_path) }}"
-                     class="img-fluid" alt="Bottom Banner">
-            </div>
-        </a>
-    @endif
+        @if ($bottomBanner)
+            <a href="{{ $bottomBanner->link ?? '#' }}">
+                <div class="col-12 col-sm-12 single-banner-m">
+                    <img src="{{ asset('storage/banner_images/' . $bottomBanner->image_path) }}" class="img-fluid"
+                        alt="Bottom Banner">
+                </div>
+            </a>
+        @endif
     </div>
 
 
@@ -632,10 +639,10 @@
 
     <!--
 
-                                                                                                                                                                                    =====================================================================================================================================================
-                                                                                                                                                                                                                         Home page end
+                                                                                                                                                                                        =====================================================================================================================================================
+                                                                                                                                                                                                                             Home page end
 
-                                                                                                                                                                                    ===================================================================================================================================================== -->
+                                                                                                                                                                                        ===================================================================================================================================================== -->
 
 
 

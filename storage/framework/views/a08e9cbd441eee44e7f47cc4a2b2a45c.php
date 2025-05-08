@@ -855,12 +855,7 @@
                             </div>
 
 
-                            <a href="javascript:void(0)" class="wishlist-toggle"
-                                data-product-id="<?php echo e($product->product_id); ?>" id="wishlist-<?php echo e($product->product_id); ?>">
-                                <i
-                                    class="fa-solid fa-heart <?php echo e(in_array($product->product_id, $wishlistProductIds) ? 'filled' : ''); ?>"></i>
-                                Add to Wishlist
-                            </a>
+                            
                         </div>
                     </div>
                 </div>

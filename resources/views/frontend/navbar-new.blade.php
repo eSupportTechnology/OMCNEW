@@ -143,8 +143,10 @@
                                                 <div class="auth-container d-flex align-items-center">
                                                     <div class="loged-user d-inline-flex align-items-center gap-2">
                                                         <div class="log-user-img">
-                                                            <img
-                                                                src="https://buyabans.com/themes/buyabans/assets/images/icon/dummy-user.png">
+                                                            <a href="{{ route('dashboard') }}">
+                                                                <img
+                                                                    src="https://buyabans.com/themes/buyabans/assets/images/icon/dummy-user.png">
+                                                            </a>
                                                         </div>
                                                         <div class="log-user-data dropdown">
                                                             <div class="dropdown-box">
@@ -592,7 +594,7 @@
 
 
                                     <!-- /.column-1 -->
-                                    <li class="column-1"><a href="/shop" title="">Shop</a></li>
+                                    {{-- <li class="column-1"><a href="/shop" title="">Shop</a></li> --}}
                                     <!-- /.column-1 -->
 
 
@@ -607,7 +609,7 @@
 
 
                                     <li class="column-1">
-                                        <a href="/about" title="">
+                                        <a href="{{ route('about') }}" title="">
 
                                             About Us </a>
 
@@ -615,7 +617,7 @@
 
 
                                     <li class="column-1">
-                                        <a href="/contact" title="">
+                                        <a href="{{ route('contac') }}" title="">
 
                                             Contact Us </a>
 
@@ -640,8 +642,8 @@
 
                                     <div class="top-track">
 
-                                        <!-- <a href="#"><i
-                                                        class="fa-solid fa-location-dot me-2"></i>Track your order</a> -->
+                                        <a href="/home/My-Account/myorders"><i
+                                                class="fa-solid fa-location-dot me-2"></i>Track your order</a>
 
                                     </div>
                                     <div><a href="#" title="">

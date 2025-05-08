@@ -856,12 +856,12 @@
                             </div>
 
 
-                            <a href="javascript:void(0)" class="wishlist-toggle"
+                            {{-- <a href="javascript:void(0)" class="wishlist-toggle"
                                 data-product-id="{{ $product->product_id }}" id="wishlist-{{ $product->product_id }}">
                                 <i
                                     class="fa-solid fa-heart {{ in_array($product->product_id, $wishlistProductIds) ? 'filled' : '' }}"></i>
                                 Add to Wishlist
-                            </a>
+                            </a> --}}
                         </div>
                     </div>
                 </div>
