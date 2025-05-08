@@ -113,6 +113,87 @@
             height: auto !important;
             object-fit: cover !important;
         }
+
+       /* Discount Tag Styling for Product Carousel */
+.normal-pro-promo-tags {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    z-index: 10;
+    pointer-events: none; /* Allows clicks to pass through to elements below */
+}
+
+.discout-tag {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, #ff6666, #cc0000);
+     width: 70px;
+     height: 70px;
+    color: white;
+    border-radius: 50px;
+    padding: 4px 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    transform: rotate(-5deg);
+    transition: all 0.3s ease;
+}
+
+.discount-amount {
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 2px;
+    letter-spacing: 0.5px;
+}
+
+.off-txt {
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Make sure the grid-product-wapper has relative positioning */
+.grid-product-wapper {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animation for the discount tag */
+@keyframes bounce-light {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(-3deg) scale(1.05); }
+}
+
+/* Apply animation when hovering over the product */
+.grid-product-wapper:hover .discout-tag {
+    animation: bounce-light 2s infinite ease-in-out;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .discout-tag {
+        padding: 3px 6px;
+    }
+    
+    .discount-amount {
+        font-size: 12px;
+    }
+    
+    .off-txt {
+        font-size: 15px;
+    }
+}
+
+/* Make sure the discount tag doesn't overlap with other UI elements */
+.owl-item .grid-product-wapper .normal-pro-promo-tags {
+    z-index: 5;
+}
+
+/* Special styling for higher discounts */
+.discout-tag .discount-amount[class*="discount-amount"]:not([class*="0%"]):not([class*="1%"]):not([class*="2%"]) {
+    font-weight: 800;
+    letter-spacing: 0.8px;
+}
+
     </style>
 
     <!-- Carousel Section -->
@@ -219,7 +300,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 

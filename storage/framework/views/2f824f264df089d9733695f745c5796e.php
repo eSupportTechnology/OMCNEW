@@ -1,3 +1,9 @@
+<style>
+    .footer-white-color-css {
+        color: #ffffff;
+    }
+</style>
+
 <div class="mobile-footer-con">
 
 
@@ -11,7 +17,7 @@
                     </a>
                 </div>
                 <div class="footer-details">
-                    <p>Customer Support</p>
+                    <p class="footer-white-color-css">Customer Support</p>
                     <span>8am - 5pm</span>
                 </div>
             </div>
@@ -23,7 +29,7 @@
                     </a>
                 </div>
                 <div class="footer-details">
-                    <p>Island-wide Delivery</p>
+                    <p class="footer-white-color-css">Island-wide Delivery</p>
                 </div>
             </div>
 
@@ -35,7 +41,7 @@
                     </a>
                 </div>
                 <div class="footer-details">
-                    <p>Express Delivery</p>
+                    <p class="footer-white-color-css">Express Delivery</p>
                 </div>
             </div>
 
@@ -47,7 +53,7 @@
                     </a>
                 </div>
                 <div class="footer-details">
-                    <p>100+ Service Centers</p>
+                    <p class="footer-white-color-css">100+ Service Centers</p>
                 </div>
             </div>
         </div>
@@ -100,11 +106,12 @@
                         data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li class="footer-nav"><a href="#">Frequently Asked Questions</a></li>
-                                <li class="footer-nav"><a href="#">How To Buy</a></li>
-                                <li class="footer-nav"><a href="#">Shipping &amp; Delivery</a></li>
-                                <li class="footer-nav"><a href="#">Warranty Information</a></li>
-                                <li class="footer-nav"><a href="#">Return Products</a></li>
+                                <li class="footer-nav"><a href="<?php echo e(route('faq')); ?>">Frequently Asked Questions</a></li>
+                                <li class="footer-nav"><a href="shipping-delivery">How To Buy</a></li>
+                                <li class="footer-nav"><a href="<?php echo e(route('shipping-delivery')); ?>">Shipping &amp;
+                                        Delivery</a></li>
+                                <li class="footer-nav"><a href="<?php echo e(route('warranty')); ?>">Warranty Information</a></li>
+                                <li class="footer-nav"><a href="<?php echo e(route('return-product')); ?>">Return Products</a></li>
                             </ul>
                         </div>
                     </div>
@@ -121,9 +128,12 @@
                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li class="footer-nav"><a href="#">Privacy Policy</a></li>
-                                <li class="footer-nav"><a href="#">Return and Refund Policy</a></li>
-                                <li class="footer-nav"><a href="#">Terms and Conditions</a></li>
+                                <li class="footer-nav"><a href="<?php echo e(route('PrivacyPolicy')); ?> ">Privacy Policy</a>
+                                </li>
+                                <li class="footer-nav"><a href="<?php echo e(route('return-refund')); ?>">Return and Refund
+                                        Policy</a></li>
+                                <li class="footer-nav"><a href="<?php echo e(route('terms-condition')); ?>">Terms and
+                                        Conditions</a></li>
                             </ul>
                         </div>
                     </div>
@@ -244,7 +254,31 @@
 
         </div>
         <h4>My Cart </h4>
-        <div id="mini-cart-data"></div>
+        <div id="mini-cart-data">
+            <div>
+                <div class="subtotal">
+                    <div class="toatal-div-main">
+                        <div class="sub-total-label">Cart Subtotal</div>
+                        <div class="pro-amount">
+                            <span id= "cart-count-4">0</span> Items Added
+                        </div>
+                    </div>
+                    <div class="sub-total" id="cart-subtotal-1">Rs. 0</div>
+                </div>
+
+                <div class="cart-added">
+                    <p class="cart-include">Cart Include</p>
+
+                    
+                    <?php echo $__env->make('frontend.partials.mini-cart', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                    
+
+                    <div>
+                        <a href="<?php echo e(route('cart')); ?>" class="btn btn-site-default w-100 mt-4">View Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <!-- footer for mobile end -->
@@ -257,7 +291,7 @@
                 <div class="footer-icon"><img src="<?php echo e(asset('frontend/newstyle/assets/images/icon/Page-1.webp')); ?>">
                 </div>
                 <div class="footer-details">
-                    <p>Customer Support</p>
+                    <p class="footer-white-color-css">Customer Support</p>
                     <span>8am - 5pm</span>
                 </div>
             </div>
@@ -266,7 +300,7 @@
                         src="<?php echo e(asset('frontend/newstyle/assets/images/icon/sri-lanka.webp')); ?>">
                 </div>
                 <div class="footer-details">
-                    <p>Island-wide Delivery</p>
+                    <p class="footer-white-color-css">Island-wide Delivery</p>
                 </div>
             </div>
             <div class="footer-box">
@@ -274,7 +308,7 @@
                         src="<?php echo e(asset('frontend/newstyle/assets/images/icon/stopwatch.webp')); ?>">
                 </div>
                 <div class="footer-details">
-                    <p>Express Delivery</p>
+                    <p class="footer-white-color-css">Express Delivery</p>
                 </div>
             </div>
             <div class="footer-box">
@@ -282,7 +316,7 @@
                         src="<?php echo e(asset('frontend/newstyle/assets/images/icon/technical-support.webp')); ?>">
                 </div>
                 <div class="footer-details">
-                    <p>100+ Service Centers</p>
+                    <p class="footer-white-color-css">100+ Service Centers</p>
                 </div>
             </div>
         </div>
@@ -356,9 +390,10 @@
                         <ul>
                             <li><a class="footer-link" href="<?php echo e(route('faq')); ?>">Frequently Asked Questions</a></li>
                             <li><a class="footer-link" href="#">How To Buy</a></li>
-                            <li><a class="footer-link" href="#">Shipping &amp; Delivery</a></li>
-                            <li><a class="footer-link" href="#">Warranty Information</a></li>
-                            <li><a class="footer-link" href="#">Return Products</a></li>
+                            <li><a class="footer-link" href="<?php echo e(route('shipping-delivery')); ?>">Shipping &amp;
+                                    Delivery</a></li>
+                            <li><a class="footer-link" href="<?php echo e(route('warranty')); ?>">Warranty Information</a></li>
+                            <li><a class="footer-link" href="<?php echo e(route('return-product')); ?>">Return Products</a></li>
                         </ul>
                     </div>
                 </div>
@@ -367,9 +402,11 @@
                     <div class="footer-links-set">
                         <p class="footer-title">Policies</p>
                         <ul>
-                            <li><a class="footer-link" href="#">Privacy Policy</a></li>
-                            <li><a class="footer-link" href="#">Return and Refund Policy</a></li>
-                            <li><a class="footer-link" href="#">Terms and Conditions</a></li>
+                            <li><a class="footer-link" href="<?php echo e(route('PrivacyPolicy')); ?>">Privacy Policy</a></li>
+                            <li><a class="footer-link" href="<?php echo e(route('return-refund')); ?>">Return and Refund
+                                    Policy</a></li>
+                            <li><a class="footer-link" href="<?php echo e(route('terms-condition')); ?>">Terms and Conditions</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -430,7 +467,8 @@
                             src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/UB1.webp')); ?>"></div>
 
                 </div>
-                <div class="copyright"><small>Copyright © 2025 CROWN ELECTRONICS. All Rights Reserved.</small></div>
+                <div class="copyright"><small>Copyright © 2025 ONLINE MARKETING COMPLEX. All Rights Reserved.</small>
+                </div>
             </div>
         </div>
     </div>
@@ -446,6 +484,24 @@
 
 </div>
 
+
+<script>
+    function updateSubTotal() {
+        fetch("<?php echo e(route('cart.subtotal')); ?>")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('cart-subtotal-1').textContent = "Rs. " + data.subtotal;
+            })
+            .catch(error => {
+                console.error('Error fetching cart subtotal:', error);
+            });
+    }
+
+    // Call on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateSubTotal();
+    });
+</script>
 
 </body>
 
@@ -532,8 +588,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
     integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
 
 
 

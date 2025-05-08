@@ -106,7 +106,7 @@
                                             class="mt-6 text-2xl text-white d-flex position-relative me-6 item-hover__text">
                                             <i class="ph ph-shopping-cart-simple"></i>
                                             <!-- Display the cart count dynamically -->
-                                            <span id="cart-count"
+                                            <span id="cart-count-1"
                                                 class="w-16 h-16 text-xs text-white flex-center rounded-circle bg-main-two-600 position-absolute top-n6 end-n4">
                                                 <?php echo e($cartCount ?? 0); ?>
 
@@ -135,64 +135,55 @@
 
                             <div class="col-2-5">
                                 <div class="header-right-con">
-                                    <div class="top-right-nav">
-
+                                    <div
+                                        class="top-right-nav d-flex align-items-center justify-content-end gap-3 flex-wrap">
 
                                         <!-- Profile Dropdown -->
                                         <div class="profile-dropdown">
-                                            <div class="profile-dropdown">
-                                                <?php if(auth()->guard()->check()): ?>
-
-                                                    <div class="auth-container">
-                                                        <div class="loged-user d-inline-flex">
-                                                            <div class="log-user-img"><img
-                                                                    src="https://buyabans.com/themes/buyabans/assets/images/icon/dummy-user.png">
-                                                            </div>
-                                                            <div class="log-user-data dropdown">
-                                                                <div class="user-name">Hi!
-                                                                    <?php echo e(auth()->user()->name); ?>
-
-                                                                </div>
-                                                                <div class="dropdown-box">
-
-                                                                    <ul class="log-popup-links">
-                                                                        <li>
-                                                                            <a href="<?php echo e(route('dashboard')); ?>">
-                                                                                <img
-                                                                                    src="https://buyabans.com/themes/buyabans/assets/images/icon/mini-profile/user.png">My
-                                                                                Account
-                                                                            </a>
-                                                                        </li>
-
-                                                                        <li>
-                                                                            <a>
-                                                                                <img
-                                                                                    src="https://buyabans.com/themes/buyabans/assets/images/icon/mini-profile/turn-off.png">
-                                                                                <form method="POST"
-                                                                                    action="<?php echo e(route('logout')); ?>">
-
-
-                                                                                    <?php echo csrf_field(); ?>
-                                                                                    <button type="submit"
-                                                                                        class="dropdown-item w-100">Logout</button>
-                                                                                </form>
-                                                                            </a>
-                                                                        </li>
-
-
-
-                                                                    </ul>
-                                                                </div>
+                                            <?php if(auth()->guard()->check()): ?>
+                                                <div class="auth-container d-flex align-items-center">
+                                                    <div class="loged-user d-inline-flex align-items-center gap-2">
+                                                        <div class="log-user-img">
+                                                            <img
+                                                                src="https://buyabans.com/themes/buyabans/assets/images/icon/dummy-user.png">
+                                                        </div>
+                                                        <div class="log-user-data dropdown">
+                                                            <div class="dropdown-box">
+                                                                <ul class="log-popup-links">
+                                                                    <li>
+                                                                        <a href="<?php echo e(route('dashboard')); ?>">
+                                                                            <img
+                                                                                src="https://buyabans.com/themes/buyabans/assets/images/icon/mini-profile/user.png">
+                                                                            My Account
+                                                                        </a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <a>
+                                                                            <img
+                                                                                src="https://buyabans.com/themes/buyabans/assets/images/icon/mini-profile/turn-off.png">
+                                                                            <form method="POST"
+                                                                                action="<?php echo e(route('logout')); ?>">
+                                                                                <?php echo csrf_field(); ?>
+                                                                                <button type="submit"
+                                                                                    class="dropdown-item w-100">Logout</button>
+                                                                            </form>
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                <?php else: ?>
-                                                    <!-- Default Profile Icon and Links for Guests -->
+                                                </div>
+                                            <?php else: ?>
+                                                <!-- Guest Login/Register -->
+                                                <div class="d-flex align-items-center gap-3 flex-wrap">
                                                     <div class="sign-up d-inline-flex">
-                                                        <div class= "mobhide">
-                                                            <a href="<?php echo e(route('login')); ?>" class="d-flex">
-                                                                <div class="dt-icon-div"><img
-                                                                        src=" <?php echo e(asset('frontend/newstyle/assets/images/account-icon.png')); ?> ">
+                                                        <div class="mobhide">
+                                                            <a href="<?php echo e(route('login')); ?>"
+                                                                class="d-flex align-items-center">
+                                                                <div class="dt-icon-div">
+                                                                    <img
+                                                                        src="<?php echo e(asset('frontend/newstyle/assets/images/account-icon.png')); ?>">
                                                                 </div>
                                                                 <div>Login</div>
                                                             </a>
@@ -200,63 +191,45 @@
 
                                                         <div class="boder-right"></div>
 
-                                                        <div class= "mobhide">
-                                                            <a class="sign-up-link" href="<?php echo e(route('signup')); ?>"><span>Sign
-                                                                    Up</span></a>
+                                                        <div class="mobhide">
+                                                            <a class="sign-up-link" href="<?php echo e(route('signup')); ?>">
+                                                                <span>Sign Up</span>
+                                                            </a>
                                                         </div>
                                                     </div>
 
-                                                    <div class= "mobshow">
-                                                        <a href="<?php echo e(route('login')); ?>" class="d-flex">
-                                                            <div class="dt-icon-div"><img
-                                                                    src=" <?php echo e(asset('frontend/newstyle/assets/images/account-icon.png')); ?> "
+                                                    <div class="mobshow">
+                                                        <a href="<?php echo e(route('login')); ?>" class="d-flex align-items-center">
+                                                            <div class="dt-icon-div">
+                                                                <img src="<?php echo e(asset('frontend/newstyle/assets/images/account-icon.png')); ?>"
                                                                     style="padding-bottom: 17px;">
                                                             </div>
-                                                            <div></div>
                                                         </a>
                                                     </div>
-
-
-
                                                 </div>
-
-
                                             <?php endif; ?>
                                         </div>
 
-
-
-
-                                        <div class="des-cart pos-relative cart-popup ">
+                                        <!-- Cart -->
+                                        <div class="des-cart pos-relative cart-popup">
                                             <a href="javascript:void(0)"
-                                                class="gap-8 ml-10 flex-align flex-column item-hover-two"
-                                                style="margin-right:30px;">
-                                                <span
-                                                    class="mt-6 text-2xl text-white2 d-flex position-relative me-6 item-hover__text">
+                                                class="d-flex align-items-center gap-2 item-hover-two">
+                                                <span class="text-2xl text-white2 position-relative">
                                                     <i class="ph ph-shopping-cart-simple"></i>
-                                                    <!-- Display the cart count dynamically -->
-                                                    <span id="cart-count"
+                                                    <span id="cart-count-2"
                                                         class="w-16 h-16 text-xs text-white flex-center rounded-circle bg-main-two-600 position-absolute top-n6 end-n4">
                                                         <?php echo e($cartCount ?? 0); ?>
 
-
                                                     </span>
                                                 </span>
-
-                                                <span
-                                                    class="text-white2 text-md item-hover__text d-none d-lg-flex">Cart</span>
+                                                <span class="text-white2 text-md d-none d-lg-flex">Cart</span>
                                             </a>
-
                                         </div>
-
-
-
 
                                     </div>
                                 </div>
-
-
                             </div>
+
                         </div>
 
 
@@ -362,7 +335,7 @@
                                             <a href="javascript:void(0)" class="d-flex">
 
                                                 <cart-item-count></cart-item-count>
-                                                <div class="dt-icon-div"><span id="cart-count"
+                                                <div class="dt-icon-div"><span id="cart-count-3"
                                                         class="w-16 h-16 text-xs text-white flex-center rounded-circle bg-main-two-600 position-absolute top-n6 ">
                                                         <?php echo e($cartCount ?? 0); ?>
 
@@ -1004,6 +977,26 @@
         });
     </script>
 
+    <script>
+        function updateCartCount() {
+            fetch("<?php echo e(route('cart.count')); ?>")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('cart-count-1').textContent = data.cart_count;
+                    document.getElementById('cart-count-2').textContent = data.cart_count;
+                    document.getElementById('cart-count-3').textContent = data.cart_count;
+                    document.getElementById('cart-count-4').textContent = data.cart_count;
+                })
+                .catch(error => {
+                    console.error('Error fetching cart count:', error);
+                });
+        }
+
+        // Call on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+    </script>
 
 
 

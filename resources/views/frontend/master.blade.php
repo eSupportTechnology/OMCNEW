@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en" class="color-two font-exo">
 
     <head>
 
@@ -54,6 +54,9 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
+
+        <link rel="stylesheet" href="{{ asset('themes/buyabans/assets/css/main.min27e9.css?t=1744680605') }}">
+        <link rel="stylesheet" href="{{ asset('themes/buyabans/assets/css/main.min27e9.css?t=1744680605') }}">
 
 
 
