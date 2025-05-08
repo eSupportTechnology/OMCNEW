@@ -103,6 +103,8 @@
                                 <li class="footer-nav"><a href="<?php echo e(route('about')); ?>">About Us</a></li>
                                 <li class="footer-nav"><a href="#">Careers</a></li>
                                 <li class="footer-nav"><a href="<?php echo e(route('contac')); ?>">Contact Us</a></li>
+                                <li class="footer-nav"><a href="<?php echo e(route('Subscribe_Newsletter')); ?>">Subscribe
+                                        Newsletter</a></li>
 
                             </ul>
                         </div>

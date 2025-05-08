@@ -103,6 +103,8 @@
                                 <li class="footer-nav"><a href="{{ route('about') }}">About Us</a></li>
                                 <li class="footer-nav"><a href="#">Careers</a></li>
                                 <li class="footer-nav"><a href="{{ route('contac') }}">Contact Us</a></li>
+                                <li class="footer-nav"><a href="{{ route('Subscribe_Newsletter') }}">Subscribe
+                                        Newsletter</a></li>
 
                             </ul>
                         </div>

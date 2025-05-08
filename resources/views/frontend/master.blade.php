@@ -57,6 +57,8 @@
 
         <link rel="stylesheet" href="{{ asset('themes/buyabans/assets/css/main.min27e9.css?t=1744680605') }}">
         <link rel="stylesheet" href="{{ asset('themes/buyabans/assets/css/main.min27e9.css?t=1744680605') }}">
+        <link rel="stylesheet" href="{{ asset('themes/buyabans/assets/libs/skeleton/avnSkeleton.css') }}" />
+        {{-- <link rel="stylesheet" href="{{ asset('themes/buyabans/assets/css/responsive.min4c08.css?t=1744723709') }}" /> --}}
 
 
 
