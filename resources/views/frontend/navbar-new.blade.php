@@ -43,7 +43,7 @@
             <div class="mobi-main-header fixed-header">
                 <div id="topupbar_banner_mobile"></div>
                 <header class="header mobile-header ">
-                    <div class="container mobile-header-container">
+                    <div class="container mobile-header-container mr-2 ">
                         <div class="mobi-full-row">
                             <div class="col-5-5">
                                 <div class="d-flex">
@@ -134,8 +134,7 @@
 
                             <div class="col-2-5">
                                 <div class="header-right-con">
-                                    <div
-                                        class="top-right-nav d-flex align-items-center justify-content-end gap-3 flex-wrap">
+                                    <div class="top-right-nav d-flex align-items-center justify-content-end flex-wrap">
 
                                         <!-- Profile Dropdown -->
                                         <div class="profile-dropdown">
@@ -177,7 +176,8 @@
                                                 </div>
                                             @else
                                                 <!-- Guest Login/Register -->
-                                                <div class="d-flex align-items-center gap-3 flex-wrap">
+                                                <div class="d-flex align-items-center gap-3 flex-wrap"
+                                                    style="padding-right: 30px;">
                                                     <div class="sign-up d-inline-flex">
                                                         <div class="mobhide">
                                                             <a href="{{ route('login') }}"
@@ -199,7 +199,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="mobshow">
+                                                    <div class="mobshow ">
                                                         <a href="{{ route('login') }}" class="d-flex align-items-center">
                                                             <div class="dt-icon-div">
                                                                 <img src="{{ asset('frontend/newstyle/assets/images/account-icon.png') }}"
@@ -212,7 +212,7 @@
                                         </div>
 
                                         <!-- Cart -->
-                                        <div class="des-cart pos-relative cart-popup">
+                                        <div class="des-cart pos-relative cart-popup mt-1 mr-2">
                                             <a href="javascript:void(0)"
                                                 class="d-flex align-items-center gap-2 item-hover-two">
                                                 <span class="text-2xl text-white2 position-relative">
