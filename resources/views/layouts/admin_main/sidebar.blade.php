@@ -135,7 +135,7 @@
             <a href="{{ route('logo') }}"
                 class="list-group-item list-group-item-action py-2 {{ request()->routeIs('logo') ? 'active' : '' }}"
                 data-mdb-ripple-init>
-                <i class="fas fa-ad text-muted"></i><span class="text-muted">Logo Management</span>
+                <i class="fas fa-image text-muted"></i><span class="text-muted">Logo Management</span>
             </a>
         </div>
     </div>
