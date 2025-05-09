@@ -121,32 +121,6 @@
                                     <span class="sub-title d-lg-none"><a href="#" data-bs-toggle="modal"
                                             data-bs-target="#productsFilterModal"><i class='fa-solid fa-filter '></i>
                                             Filter</a></span>
-
-                                    <!--<span class="sub-title d-none d-lg-block d-md-block">View:</span>
-
-                                                                                                                    <div class="view-list-row d-none d-lg-block d-md-block">
-                                                                                                                        <div class="view-column">
-                                                                                                                            <a href="#" class="icon-view-one">
-                                                                                                                                <span></span>
-                                                                                                                            </a>
-
-                                                                                                                            <a href="#" class="icon-view-two active">
-                                                                                                                                <span></span>
-                                                                                                                                <span></span>
-                                                                                                                            </a>
-
-                                                                                                                            <a href="#" class="icon-view-three">
-                                                                                                                                <span></span>
-                                                                                                                                <span></span>
-                                                                                                                                <span></span>
-                                                                                                                            </a>
-
-                                                                                                                            <a href="#" class="view-grid-switch">
-                                                                                                                                <span></span>
-                                                                                                                                <span></span>
-                                                                                                                            </a>
-                                                                                                                        </div>
-                                                                                                                    </div>-->
                                 </div>
                             </div>
 
@@ -183,24 +157,6 @@
                                                         alt="image">
                                                 @endif
                                             </a>
-
-                                            {{-- <div class="products-button">
-                                                <ul>
-                                                    <li>
-                                                        <div class="wishlist-btn">
-                                                            <a href="#" class="wishlist-toggle"
-                                                                data-product-id="{{ $product->product_id }}"
-                                                                id="wishlist-{{ $product->product_id }}">
-                                                                <i
-                                                                    class="fa-solid fa-heart {{ in_array($product->product_id, $wishlistProductIds) ? 'filled' : '' }}"></i>
-                                                                <span class="tooltip-label">Add to Wishlist</span>
-                                                            </a>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div> --}}
-
-
                                             @if (
                                                 ($product->sale && $product->sale->status === 'active') ||
                                                     ($product->specialOffer && $product->specialOffer->status === 'active'))
@@ -310,8 +266,8 @@
 
     <!-- cart modal-->
     @foreach ($products as $product)
-        <div class="modal fade" id="cartModal_{{ $product->product_id }}" tabindex="-1"
-            aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal fade" id="cartModal_{{ $product->product_id }}" tabindex="-1" aria-labelledby="cartModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered  modal-lg">
                 <div class="modal-content" style="border-radius: 0;">
                     <div class="modal-header">
@@ -516,7 +472,8 @@
                                         <a href="{{ route('all-items') }}?color={{ $color->value }}"
                                             style="background-color: {{ $color->hex_value }};"
                                             class="{{ request('color') === $color->value ? 'active' : '' }}"
-                                            title="{{ $color->value }}"></a>
+                                            title="{{ $color->value }}">
+                                        </a>
                                     </li>
                                 @endforeach
                             </ul>
@@ -532,41 +489,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
 
-
-    {{-- <script>
-        $(document).ready(function() {
-            // Handle the click event on the heart icon
-            $('.wishlist-toggle').on('click', function(e) {
-                e.preventDefault();
-
-                var productId = $(this).data('product-id');
-                var heartIcon = $(this).find('i');
-
-                $.ajax({
-                    url: '{{ route('wishlist.toggle') }}',
-                    method: 'POST',
-                    data: {
-                        product_id: productId,
-                        _token: $('meta[name="csrf-token"]').attr(
-                            'content'), // Ensure CSRF token is correct
-                    },
-                    success: function(response) {
-                        if (response.message === 'Product added to wishlist') {
-                            heartIcon.addClass('filled');
-                            alert(response.message);
-                        } else if (response.message === 'Product removed from wishlist') {
-                            heartIcon.removeClass('filled');
-                            alert(response.message);
-                        }
-                    },
-                    error: function() {
-                        alert('You must be logged in to add to wishlist');
-                    }
-                });
-
-            });
-        });
-    </script> --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.btn-cart').forEach(button => {

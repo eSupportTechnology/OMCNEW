@@ -3,6 +3,22 @@
 @section('content')
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .dt-icon-div {
+          font-size: 10px !important;
+          border-radius: 50% !important;
+          position: absolute;
+          top: -27px;
+          left: -40px;
+        }
+        .span-cart {
+          width: 36px !important;
+          position: absolute;
+          top: -25px;
+          left: -10px;
+        }
+
+        </style>
     <div class="bg-gray-100 py-4">
         <div class="container mx-auto px-4">
             <div class="flex flex-col items-center">

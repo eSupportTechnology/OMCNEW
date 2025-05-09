@@ -358,13 +358,17 @@
                                             <a href="javascript:void(0)" class="d-flex">
 
                                                 <cart-item-count></cart-item-count>
-                                                <div class="dt-icon-div"><span id="cart-count-3"
+                                                <div class="dt-icon-div">
+                                                    <span id="cart-count-3"
                                                         class="w-16 h-16 text-xs text-white flex-center rounded-circle bg-main-two-600 position-absolute top-n6 ">
                                                         {{ $cartCount ?? 0 }}
 
-                                                    </span> <img
+                                                    </span>
+                                                    <img
                                                         src=" {{ asset('frontend/newstyle/assets/images/cart-new.png') }}"
-                                                        class="cart-img"></div><span>Cart</span>
+                                                        class="cart-img">
+                                                </div>
+                                                    <span class="span-cart">Cart</span>
                                             </a>
                                         </div>
 
