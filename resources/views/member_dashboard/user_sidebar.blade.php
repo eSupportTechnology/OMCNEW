@@ -136,10 +136,11 @@
         <div class="row">
             <!-- Sidebar toggle for mobile -->
             <div class="col-12 sidebar-toggle">
-                <button class="btn btn-primary w-100" id="toggleSidebar">
-                    Toggle Menu
+                <button class="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2" id="toggleSidebar">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
                 </button>
             </div>
+
 
             <!-- Sidebar -->
             <div class="col-lg-3 col-md-4" id="dashboardSidebar">
@@ -197,14 +198,16 @@
             </div>
         </div>
     </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
         // Toggle sidebar visibility on mobile
         document.getElementById('toggleSidebar').addEventListener('click', function() {
-            const sidebar = document.getElementById('dashboardSidebar').querySelector('.dashboard-sidebar');
-            sidebar.classList.toggle('collapsed');
-        });
+    const sidebar = document.getElementById('dashboardSidebar').querySelector('.dashboard-sidebar');
+    sidebar.classList.toggle('collapsed');
+});
+
 
         // Automatically collapse sidebar on small screens initially
         function checkScreenSize() {
