@@ -252,12 +252,15 @@ $price =
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-12 col-sm-10 col-md-8 col-lg-6 pl-lg-5"> <!-- Added pl-lg-5 -->
-                            <div class="card p-4 text-center">
-                                <img src="assets/images/cart.png" class="mx-auto" style="width: 100px;">
-                                <h4 class="mt-3">Your cart is empty</h4>
-                                <p>Sign in to view your cart and start shopping.</p>
-                                <a href="{{ route('signup') }}" class="btn btn-dark w-50 mx-auto">SIGN UP</a>
+                            <div class="empty-cart-wrapper">
+                                <div class="card p-4 text-center">
+                                    <img src="assets/images/cart.png" class="mx-auto" style="width: 100px;">
+                                    <h4 class="mt-3">Your cart is empty</h4>
+                                    <p>Sign in to view your cart and start shopping.</p>
+                                    <a href="{{ route('signup') }}" class="btn btn-dark w-50 mx-auto">SIGN UP</a>
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -335,6 +338,25 @@ $price =
             justify-content: flex-end;
         }
 
+        .empty-cart-wrapper {
+            display: flex;
+            /* make it a flex container */
+            align-items: center;
+
+            /* vertical centering */
+            :contentReference[oaicite:0] {
+                index=0
+            }
+
+            justify-content: center;
+
+            /* horizontal centering */
+            :contentReference[oaicite:1] {
+                index=1
+            }
+        }
+
+
         /* Responsive adjustments */
         @media (max-width: 767px) {
             .cart-totals {
@@ -356,7 +378,7 @@ $price =
             // Ensure no duplicate event bindings
             $('.plus-btn, .minus-btn').off('click').on('click', function() {
                 const quantityInput = $(this).siblings(
-                '.quantity-input'); // Get the corresponding input field
+                    '.quantity-input'); // Get the corresponding input field
                 let currentValue = parseInt(quantityInput.val());
 
                 // Ensure the current value is a number
