@@ -31,7 +31,7 @@
                 </div>
                 <div class="footer-details">
                     <p class="footer-white-color-css">Customer Support</p>
-                    <span>8am - 5pm</span>
+                    <!-- <span>8am - 5pm</span> -->
                 </div>
             </div>
             <div class="col-6 mobi-purple-div">
@@ -46,7 +46,7 @@
                 </div>
             </div>
 
-            <div class="col-6 mobi-purple-div" style="height: 65.87px">
+            <div class="col-6 mobi-purple-div">
                 <div class="footer-icon">
                     <a href="#">
                         <img src="{{ asset('frontend/newstyle/assets/images/icon/stopwatch.webp') }}">
@@ -58,7 +58,7 @@
                 </div>
             </div>
 
-            <div class="col-6 mobi-purple-div" style="height: 65.87px">
+            <div class="col-6 mobi-purple-div">
                 <div class="footer-icon">
                     <a href="#">
                         <img src="{{ asset('frontend/newstyle/assets/images/icon/technical-support.webp') }}">
@@ -74,18 +74,18 @@
         <div class="row footer-mobi-details text-center m-0">
             <div class="col-12 mobi-footer-link">
                 <ul>
-                    <li><a href="#" target="_blank"><img
-                                src="{{ asset('frontend/newstyle/assets/images/footer/facebook.webp') }}"></a></li>
-                    <li><a href="#" target="_blank"><img
-                                src="{{ asset('frontend/newstyle/assets/images/footer/twitter.webp') }}"></a></li>
-                    <li><a href="#" target="_blank"><img
-                                src="{{ asset('frontend/newstyle/assets/images/footer/instagram.webp') }}"></a></li>
-                    <li><a href="#" target="_blank"><img
-                                src="{{ asset('frontend/newstyle/assets/images/footer/linkedin-in.webp') }}"></a></li>
-                    <li><a href="#" target="_blank"><img
-                                src="{{ asset('frontend/newstyle/assets/images/footer/youtube.webp') }}"></a></li>
-
+                    <li><a href="#" target="_blank"><i class="fab fa-facebook" fab fa-facebook
+                                style="color:#001ed4 ; font-size: 22px;"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fab fa-twitter" fab fa-facebook
+                                style="color:#001ed4 ; font-size: 22px;"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fab fa-instagram" fab fa-facebook
+                                style="color:#001ed4 ; font-size: 22px;"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fab fa-linkedin-in" fab fa-facebook
+                                style="color:#001ed4 ; font-size: 22px;"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fab fa-youtube" fab fa-facebook
+                                style="color:#001ed4 ; font-size: 22px;"></i></a></li>
                 </ul>
+
             </div>
 
             <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -100,11 +100,9 @@
                         data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li class="footer-nav"><a href="{{ route('about') }}">About Us</a></li>
+                                <li class="footer-nav"><a href="/about">About Us</a></li>
                                 <li class="footer-nav"><a href="#">Careers</a></li>
-                                <li class="footer-nav"><a href="{{ route('contac') }}">Contact Us</a></li>
-                                <li class="footer-nav"><a href="{{ route('Subscribe_Newsletter') }}">Subscribe
-                                        Newsletter</a></li>
+                                <li class="footer-nav"><a href="/contact">Contact Us</a></li>
 
                             </ul>
                         </div>
@@ -121,6 +119,12 @@
                         data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
+                                {{-- <li class="footer-nav"><a href="/faq">Frequently Asked Questions</a></li>
+                                <li class="footer-nav"><a href="/buy">How To Buy</a></li>
+                                <li class="footer-nav"><a href="#">Shipping &amp; Delivery</a></li>
+                                <li class="footer-nav"><a href="#">Warranty Information</a></li>
+                                <li class="footer-nav"><a href="#">Return Products</a></li> --}}
+
                                 <li class="footer-nav"><a href="{{ route('faq') }}">Frequently Asked Questions</a>
                                 </li>
                                 <li class="footer-nav"><a href="{{ route('buy') }}">How To Buy</a></li>
@@ -144,6 +148,10 @@
                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
+                                {{-- <li class="footer-nav"><a href="#">Privacy Policy</a></li>
+                                <li class="footer-nav"><a href="#">Return and Refund Policy</a></li>
+                                <li class="footer-nav"><a href="#">Terms and Conditions</a></li> --}}
+
                                 <li class="footer-nav"><a href="{{ route('PrivacyPolicy') }} ">Privacy Policy</a>
                                 </li>
                                 <li class="footer-nav"><a href="{{ route('return-refund') }}">Return and Refund
@@ -263,16 +271,15 @@
     <div class="cart-white">
         <div class="close-minicart"><i class="fa-solid fa-xmark"></i></div>
         <div class="cart-logo">
+            {{-- <img src="{{ asset('frontend/newstyle/assets/images/logo.png') }}"> --}}
             @if ($siteLogo && $siteLogo->image_path)
                 <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}" alt="Site Logo"
-                    class="img-fluid">
+                    style="width: 180px;">
             @else
-                <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.png') }}">
+                <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.png') }}" style="width: 180px;">
             @endif
-
-
         </div>
-        <h4>My Cart </h4>
+        <h4>My Cart</h4>
         <div id="mini-cart-data">
             <div>
                 <div class="subtotal">
@@ -292,6 +299,7 @@
                     @include('frontend.partials.mini-cart')
                     {{-- mini cart here end --}}
 
+
                     <div>
                         <a href="{{ route('cart') }}" class="btn btn-site-default w-100 mt-4">View Cart</a>
                     </div>
@@ -300,6 +308,7 @@
         </div>
     </div>
 </div>
+
 <!-- footer for mobile end -->
 
 <!-- footer for destop begin -->
@@ -307,11 +316,12 @@
     <div class="footer ft-destop">
         <div class="purple-div">
             <div class="footer-box">
-                <div class="footer-icon"><img src="{{ asset('frontend/newstyle/assets/images/icon/Page-1.webp') }}">
+                <div class="footer-icon">
+                    <img src="{{ asset('frontend/newstyle/assets/images/icon/Page-1.webp') }}">
                 </div>
                 <div class="footer-details">
                     <p class="footer-white-color-css">Customer Support</p>
-                    <span>8am - 5pm</span>
+                    {{-- <span>8am - 5pm</span> --}}
                 </div>
             </div>
             <div class="footer-box">
@@ -342,83 +352,121 @@
 
         <div class="container footer-padding">
             <div class="row align-items-start">
-                <!-- Company Info Column -->
-                <div class="col-md-3 address-info">
+                <div class="col-md-4 address-info">
+                    {{-- <img src="{{ asset('frontend/newstyle/assets/images/logo.png') }}" style="width: 180px;"> --}}
                     @if ($siteLogo && $siteLogo->image_path)
-                        <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}" alt="Site Logo"
-                            class="img-fluid">
+                        <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}" style="width: 180px;"
+                            alt="Site Logo">
                     @else
-                        <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.webp') }}">
+                        <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.webp') }}"
+                            style="width: 180px;">
                     @endif
-                    <div class="address">
-                        <p>No. 38, 2nd Lane, Rubber Watte Road, Gangodawila, Nugegoda, Sri Lanka.</p>
-                    </div>
+
                     <div class="hotline">
-                        <p>HOTLINE: <a class="tel-no" href="tel:+94112251202">+94 112 251 202</a></p>
+                        <p>HOTLINE</p>
+                        <a class="tel-no" href="#">+94 112 251 202 </a>
                     </div>
                     <div class="social-media">
                         <ul>
-                            <li><a href="#" target="_blank"><img
-                                        src="{{ asset('frontend/newstyle/assets/images/footer/facebook.webp') }}"></a>
-                            </li>
-                            <li><a href="#" target="_blank"><img
-                                        src="{{ asset('frontend/newstyle/assets/images/footer/twitter.webp') }}"></a>
-                            </li>
-                            <li><a href="#" target="_blank"><img
-                                        src="{{ asset('frontend/newstyle/assets/images/footer/instagram.webp') }}"></a>
-                            </li>
-                            <li><a href="#" target="_blank"><img
-                                        src="{{ asset('frontend/newstyle/assets/images/footer/linkedin-in.webp') }}"></a>
-                            </li>
-                            <li><a href="#" target="_blank"><img
-                                        src="{{ asset('frontend/newstyle/assets/images/footer/youtube.webp') }}"></a>
-                            </li>
+                            <li><a href="#" target="_blank"><i class="fab fa-facebook"
+                                        style="color:#001ed4 ; font-size: 22px;"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-twitter"
+                                        style="color:#001ed4 ; font-size: 22px;"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-instagram"
+                                        style="color:#001ed4 ; font-size: 22px;"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-linkedin-in"
+                                        style="color:#001ed4 ; font-size: 22px;"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-youtube"
+                                        style="color:#001ed4 ; font-size: 22px;"></i></a></li>
                         </ul>
+
                     </div>
                 </div>
 
-                <!-- About Links Column -->
-                <div class="col-md-3">
+                <!-- <div class="col-md-3 mt-1">
+                    <p class="footer-title">&nbsp;</p>
+                    <div class="footer-img-div"><a href="#"><img src="frontend/newstyle/assets/images/icon/shop.png">Showroom Locator</a></div>
+                    <div class="footer-img-div"><a href="#"><img src="frontend/newstyle/assets/images/icon/shop.png">Showroom Login</a></div>
+                    <div class="footer-img-div"><a href="#" target="_blank"><img src="frontend/newstyle/assets/images/icon/repair-tool-new.png">Service Center Locator</a></div>
+                    <div class="footer-img-div"><a href="#" target="_blank"><img src="frontend/newstyle/assets/images/icon/order-tracking.png">Track your Order</a></div>
+                </div> -->
+
+
+
+                <div class="col-md-2">
                     <div class="footer-links-set">
                         <p class="footer-title">About</p>
                         <ul>
-                            <li><a class="footer-link" href="{{ route('about') }}">About Us</a></li>
+                            {{-- <li><a class="footer-link" href="/about">About Us</a></li>
                             <li><a class="footer-link" href="#">Careers</a></li>
-                            <li><a class="footer-link" href="{{ route('contac') }}">Contact Us</a></li>
-                            <li><a class="footer-link" href="{{ route('Subscribe_Newsletter') }}">Subscribe
-                                    Newsletter</a></li>
+                            <li><a class="footer-link" href="/contact">Contact Us</a></li> --}}
+
+                            <li class="footer-link"><a href="{{ route('about') }}">About Us</a></li>
+                            <li class="footer-link"><a href="#">Careers</a></li>
+                            <li class="footer-link"><a href="{{ route('contac') }}">Contact Us</a></li>
+                            {{-- <li class="footer-link"><a href="{{ route('Subscribe_Newsletter') }}">Subscribe
+                                        Newsletter</a></li> --}}
+
                         </ul>
                     </div>
                 </div>
 
-                <!-- Help Links Column -->
-                <div class="col-md-3">
+
+
+
+
+                <div class="col-md-2">
                     <div class="footer-links-set">
                         <p class="footer-title">Help</p>
                         <ul>
-                            <li><a class="footer-link" href="{{ route('faq') }}">Frequently Asked Questions</a></li>
-                            <li><a class="footer-link" href="{{ route('buy') }}">How To Buy</a></li>
-                            <li><a class="footer-link" href="{{ route('shipping-delivery') }}">Shipping &amp;
+                            {{-- <li><a class="footer-link" href="/faq">F&Q</a></li>
+                            <li><a class="footer-link" href="/buy">How To Buy</a></li>
+                            <li><a class="footer-link" href="#">Shipping &amp; Delivery</a></li> --}}
+
+                            <li class="footer-link"><a href="{{ route('faq') }}">F&Q</a>
+                            </li>
+                            <li class="footer-link"><a href="{{ route('buy') }}">How To Buy</a></li>
+                            <li class="footer-link"><a href="{{ route('shipping-delivery') }}">Shipping &amp;
                                     Delivery</a></li>
-                            <li><a class="footer-link" href="{{ route('warranty') }}">Warranty Information</a></li>
-                            <li><a class="footer-link" href="{{ route('return-product') }}">Return Products</a></li>
+                            {{-- <li class="footer-link"><a href="{{ route('warranty') }}">Warranty Information</a></li>
+                            <li class="footer-link"><a href="{{ route('return-product') }}">Return Products</a></li> --}}
                         </ul>
                     </div>
                 </div>
 
-                <!-- Policies Links Column -->
+
+
+
                 <div class="col-md-2">
                     <div class="footer-links-set">
                         <p class="footer-title">Policies</p>
                         <ul>
-                            <li><a class="footer-link" href="{{ route('PrivacyPolicy') }}">Privacy Policy</a></li>
-                            <li><a class="footer-link" href="{{ route('return-refund') }}">Return and Refund
-                                    Policy</a></li>
-                            <li><a class="footer-link" href="{{ route('terms-condition') }}">Terms and Conditions</a>
+                            {{-- <li><a class="footer-link" href="#">Privacy Policy</a></li>
+                            <li><a class="footer-link" href="#">Return and Refund Policy</a></li>
+                            <li><a class="footer-link" href="#">Terms and Conditions</a></li> --}}
+
+                            <li class="footer-link"><a href="{{ route('PrivacyPolicy') }} ">Privacy Policy</a>
                             </li>
+                            <li class="footer-link"><a href="{{ route('return-refund') }}">Return and Refund
+                                    Policy</a></li>
+                            <li class="footer-link"><a href="{{ route('terms-condition') }}">Terms and
+                                    Conditions</a></li>
                         </ul>
                     </div>
                 </div>
+
+                <div class="col-md-2">
+                    <div class="footer-links-set">
+                        <p class="footer-title">Quick Links</p>
+                        <ul>
+                            <li><a class="footer-link" href="#">Brands</a></li>
+                            <li><a class="footer-link" href="#">Warranty Information</a></li>
+                            <li><a class="footer-link" href="#">Return Products</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -476,8 +524,10 @@
                             src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/UB1.webp') }}"></div>
 
                 </div>
-                <div class="copyright"><small>Copyright © 2025 ONLINE MARKETING COMPLEX. All Rights Reserved.</small>
-                </div>
+                <div class="copyright"><small>Copyright © 2025 ONLINE
+                        MARKETING
+                        COMPLEX. All Rights
+                        Reserved.</small></div>
             </div>
         </div>
     </div>
@@ -492,6 +542,7 @@
 
 
 </div>
+
 
 
 <script>
@@ -511,6 +562,20 @@
         updateSubTotal();
     });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 
@@ -597,6 +662,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"
     integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 
 
 
