@@ -124,29 +124,29 @@
 
                                     <!--<span class="sub-title d-none d-lg-block d-md-block">View:</span>
 
-                                                                                                                <div class="view-list-row d-none d-lg-block d-md-block">
-                                                                                                                    <div class="view-column">
-                                                                                                                        <a href="#" class="icon-view-one">
-                                                                                                                            <span></span>
-                                                                                                                        </a>
+                                                                                                                    <div class="view-list-row d-none d-lg-block d-md-block">
+                                                                                                                        <div class="view-column">
+                                                                                                                            <a href="#" class="icon-view-one">
+                                                                                                                                <span></span>
+                                                                                                                            </a>
 
-                                                                                                                        <a href="#" class="icon-view-two active">
-                                                                                                                            <span></span>
-                                                                                                                            <span></span>
-                                                                                                                        </a>
+                                                                                                                            <a href="#" class="icon-view-two active">
+                                                                                                                                <span></span>
+                                                                                                                                <span></span>
+                                                                                                                            </a>
 
-                                                                                                                        <a href="#" class="icon-view-three">
-                                                                                                                            <span></span>
-                                                                                                                            <span></span>
-                                                                                                                            <span></span>
-                                                                                                                        </a>
+                                                                                                                            <a href="#" class="icon-view-three">
+                                                                                                                                <span></span>
+                                                                                                                                <span></span>
+                                                                                                                                <span></span>
+                                                                                                                            </a>
 
-                                                                                                                        <a href="#" class="view-grid-switch">
-                                                                                                                            <span></span>
-                                                                                                                            <span></span>
-                                                                                                                        </a>
-                                                                                                                    </div>
-                                                                                                                </div>-->
+                                                                                                                            <a href="#" class="view-grid-switch">
+                                                                                                                                <span></span>
+                                                                                                                                <span></span>
+                                                                                                                            </a>
+                                                                                                                        </div>
+                                                                                                                    </div>-->
                                 </div>
                             </div>
 

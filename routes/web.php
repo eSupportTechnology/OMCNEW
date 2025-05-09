@@ -234,6 +234,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\LogoController;
+use App\Http\Controllers\SearchController;
 use App\Http\Middleware\AdminAuth;
 
 
@@ -484,3 +485,5 @@ Route::post('/wishlist/check-multiple', [WishListController::class, 'checkMultip
 Route::post('/buynow_checkout', [CheckoutController::class, 'buyNowCheckout'])->name('buynow.checkout');
 Route::get('/checkout', [CheckoutController::class, 'showCheckoutPage'])->name('buynow.checkout.page');
 Route::post('/buynoworder', [CustomerOrderController::class, 'buynowstore'])->name('buynoworder.store');
+
+Route::get('/search-suggestions', [SearchController::class, 'suggestions']);

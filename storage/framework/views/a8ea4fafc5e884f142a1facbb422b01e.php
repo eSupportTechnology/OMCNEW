@@ -1,4 +1,19 @@
 <style>
+    .search-container {
+        position: relative;
+    }
+
+    .suggestions-box {
+        position: absolute;
+        top: 100%;
+        /* Pushes it just below the input */
+        left: 0;
+        width: 100%;
+        z-index: 999;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
     /* Hide elements with the class .mobhide on screens smaller than or equal to 768px */
     @media (max-width: 768px) {
         .mobhide {
@@ -295,7 +310,7 @@
 
 
                                 <div class="search-con">
-                                    <div class="top-search ">
+                                    <div class="top-search search-container">
                                         <input type="text" class="form-control main-search top-search-suggestion"
                                             placeholder="Search for products, categories and more">
                                         <button type="button" class="btn btn-primary submit-search"><i
@@ -305,17 +320,22 @@
                                             <div class="left-suggestion-no-products" hidden>
                                                 <p>No results found.</p>
                                             </div>
+
                                             <div class="left-suggestion-main-con">
+                                                <!-- JS will inject products here -->
                                             </div>
 
                                             <div class="right-suggestion-main-con">
                                                 <div>
-                                                    <h4 class="headding search-category-title" hidden>Categories</h4>
-                                                    <ul>
+                                                    <h4 class="headding search-category-title">Categories</h4>
+                                                    <ul class="category-list">
+                                                        <!-- JS will inject categories here -->
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
+
+
                                     </div>
 
 
@@ -330,6 +350,9 @@
 
 
                                 </div>
+
+
+
                                 <div class="header-right-con">
                                     <div class="top-right-nav">
                                         <div class="des-cart pos-relative cart-popup ">
@@ -924,6 +947,63 @@
     <!-- End of Mobile Menu -->
     </div>
 
+    <script>
+        document.querySelector('.main-search').addEventListener('keyup', function() {
+            let query = this.value.trim();
+
+            if (query.length < 2) {
+                document.getElementById('suggestions-box-display').style.display = 'none';
+                return;
+            }
+
+            fetch(`/search-suggestions?q=${encodeURIComponent(query)}`)
+                .then(res => res.json())
+                .then(data => {
+                    const box = document.getElementById('suggestions-box-display');
+                    const productCon = box.querySelector('.left-suggestion-main-con');
+                    const categoryCon = box.querySelector('.category-list');
+                    const noResults = box.querySelector('.left-suggestion-no-products');
+
+                    productCon.innerHTML = '';
+                    categoryCon.innerHTML = '';
+
+                    if (data.products.length === 0 && data.categories.length === 0) {
+                        noResults.hidden = false;
+                        box.style.display = 'block';
+                        return;
+                    }
+
+                    noResults.hidden = true;
+
+                    // Add products
+                    data.products.forEach(product => {
+                        const productHTML = `
+                    <a class="search-product-element" href="${product.url}">
+                        <div class="suggestion-box">
+                            <div class="suggestion-product-img"><img class="img-fluid" alt="" src="${product.image ?? ''}"></div>
+                            <div class="suggestion-box-details">
+                                <div class="product-line product-name">${product.name}</div>
+                            </div>
+                        </div>
+                    </a>
+                `;
+                        productCon.innerHTML += productHTML;
+                    });
+
+                    // Add categories
+                    data.categories.forEach(category => {
+                        const categoryHTML =
+                            `<li><a class="search-category-name" href="${category.url}">${category.name}</a></li>`;
+                        categoryCon.innerHTML += categoryHTML;
+                    });
+
+                    box.style.display = 'block';
+                })
+                .catch(err => {
+                    console.error('Search error:', err);
+                });
+        });
+    </script>
 
     <script>
         document.querySelectorAll('.nav-link').forEach((tab) => {

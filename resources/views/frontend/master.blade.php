@@ -101,7 +101,12 @@
             integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        <link rel="icon" sizes="16x16" href="{{ asset('frontend/assets/images/logo.png') }}" />
+        @if ($siteLogo && $siteLogo->image_path)
+            <link rel="icon" sizes="16x16"
+                href="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}" />
+        @else
+            <link rel="icon" sizes="16x16" href="{{ asset('frontend/assets/images/logo.png') }}" />
+        @endif
 
         <!-- <link rel="stylesheet" href="assets/libs/owl-carousel/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/libs/owl-carousel/assets/owl.theme.default.min.css">
