@@ -505,7 +505,7 @@
 
     </div>
 
-    <div class="site-common-con">
+    <div class="site-common-con" style="margin-bottom: 30px;">
         <div class="home-product d-flex">
             <div class="home-product-title">
                 <p class="home-page-product-title">Most Recent</p>
