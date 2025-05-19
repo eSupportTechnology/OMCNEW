@@ -11,7 +11,7 @@
     .form-group {
         margin-bottom: 1rem;
         display: flex;
-         flex-direction: column; 
+         flex-direction: column;
     }
 
     .form-group label {
@@ -92,22 +92,22 @@
 
 
 .card1 {
-    border: 1px solid #ddd; 
-    box-shadow: none; 
+    border: 1px solid #ddd;
+    box-shadow: none;
 }
 
 
 .remove-btn {
-    border: 1px solid #b72626; 
-    color: #b72626; 
-    background-color: white; 
-    box-shadow: none; 
+    border: 1px solid #b72626;
+    color: #b72626;
+    background-color: white;
+    box-shadow: none;
 }
 
 
 .remove-btn:hover {
-    background-color: #b72626; 
-    color: white; 
+    background-color: #b72626;
+    color: white;
 }
 
 
@@ -138,13 +138,13 @@
                                     <label for="productName">Product Name <span class="text-danger">*</span></label>
                                     <input type="text" id="productName" name="productName" class="form-control" placeholder="Enter product name" required>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="productDesc">Product Description <span class="text-danger">*</span></label>
                                     <div id="productDesc" style="height: 200px;"></div>
                                     <textarea id="productDescInput" name="productDesc" style="display:none;"></textarea>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="productImages">Product Images <span class="text-danger">*</span></label>
                                     <div id="dropZone" class="drop-zone">
@@ -180,6 +180,16 @@
                                     <label for="subsubcategory">Sub-Subcategory</label>
                                     <select id="subsubcategory" name="subsubcategory" class="form-control">
                                         <option value="">Select Sub-Subcategory</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="subsubcategory">Brand</label>
+                                    <select name="brand_id" class="form-control" id="brandSelect">
+                                        <option value="">Select a brand</option>
+                                        <?php $__currentLoopData = $brands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $brand): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($brand->id); ?>"><?php echo e($brand->name); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
 
@@ -292,12 +302,12 @@
             $('#productDescInput').val(html);
         });
 
-        
+
     </script>
 
 
 <script>
-  
+
     document.addEventListener('DOMContentLoaded', function() {
         const affiliateCheckbox = document.getElementById('affiliateProduct');
         const affiliatePriceGroup = document.getElementById('affiliatePriceGroup');
@@ -309,8 +319,8 @@
 
         affiliateCheckbox.addEventListener('change', function() {
             if (affiliateCheckbox.checked) {
-                affiliatePriceGroup.style.display = 'flex'; 
-                commissionGroup.style.display = 'flex'; 
+                affiliatePriceGroup.style.display = 'flex';
+                commissionGroup.style.display = 'flex';
             } else {
                 affiliatePriceGroup.style.display = 'none';
                 commissionGroup.style.display = 'none';
@@ -385,7 +395,7 @@
                 img.style.maxWidth = '100px';
                 img.style.maxHeight = '100px';
                 img.style.margin = '5px';
-                
+
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = 'X';
                 deleteBtn.className = 'delete-btn';
@@ -462,7 +472,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    
+
 });
 
 </script>
@@ -478,7 +488,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const newRow = document.createElement('div');
         newRow.classList.add('variation-row', 'row', 'mb-3');
         newRow.setAttribute('data-index', variationIndex);
-        
+
         newRow.innerHTML = `
             <div class="col-md-3">
                 <select class="form-control variation-type" name="variation[${variationIndex}][type]" onchange="handleVariationChange(this)">
@@ -510,7 +520,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (selectElement.value === 'Color') {
             inputElement.type = 'color';
-            inputElement.value = '#000000'; 
+            inputElement.value = '#000000';
         } else {
             inputElement.type = 'text';
             inputElement.value = '';
