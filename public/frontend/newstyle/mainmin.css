@@ -28,7 +28,7 @@ body {
 }
 
 .showroom-name-onestop {
-    background: #001ed4;
+    background: #2B96C5;
     color: #fff;
     font-size: 14px;
     text-align: center;
@@ -45,7 +45,7 @@ body {
 }
 
 .new-home-slider .carousel-indicators [data-bs-target] {
-    background-color: #001ed4 !important
+    background-color: #2B96C5 !important
 }
 
 .carousel-indicators [data-bs-target] {
@@ -178,7 +178,7 @@ body {
 .page-title-wrap {
     font-size: 30px;
     font-weight: 600;
-    color: #001ed4
+    color: #2B96C5
 }
 
 .extra-main {
@@ -430,7 +430,7 @@ body {
 }
 
 .duty-head {
-    color: #001ed4;
+    color: #2B96C5;
     font-size: 17px;
     margin-bottom: 15px;
     font-weight: 600
@@ -451,7 +451,7 @@ body {
     font-size: 20px;
     font-weight: 600;
     text-align: center;
-    color: #001ed4
+    color: #2B96C5
 }
 
 .duty-table th {
@@ -477,7 +477,7 @@ body {
 }
 
 .duty-free-con h5 {
-    color: #001ed4;
+    color: #2B96C5;
     font-size: 15px;
     margin-bottom: 10px;
     font-weight: 500
@@ -486,13 +486,13 @@ body {
 .goback-mobile-ba {
     text-align: center;
     padding-top: 10px;
-    color: #001ed4;
+    color: #2B96C5;
     text-decoration: underline;
     display: none
 }
 
 .goback-mobile-ba a {
-    color: #001ed4
+    color: #2B96C5
 }
 
 .duty-free-con img {
@@ -517,7 +517,7 @@ body {
 }
 
 .customer-agree a {
-    color: #001ed4 !important;
+    color: #2B96C5 !important;
     text-decoration: underline
 }
 
@@ -623,7 +623,7 @@ p {
     margin-bottom: 5px;
     font-weight: 600;
     text-align: center;
-    color: #001ed4
+    color: #2B96C5
 }
 
 .popup .showroom-address {
@@ -684,7 +684,7 @@ p {
 }
 
 #progressbar .active {
-    color: #001ed4
+    color: #2B96C5
 }
 
 #progressbar li {
@@ -742,7 +742,7 @@ p {
 
 #progressbar li.active:before,
 #progressbar li.active:after {
-    background: #001ed4
+    background: #2B96C5
 }
 
 .progress {
@@ -750,7 +750,7 @@ p {
 }
 
 .progress-bar {
-    background-color: #001ed4
+    background-color: #2B96C5
 }
 
 .cart-white-box {
@@ -827,7 +827,7 @@ p {
 .map-header {
     font-family: "Roboto" !important;
     letter-spacing: 0;
-    color: #001ed4;
+    color: #2B96C5;
     font-size: 28px;
     margin-bottom: 30px;
     padding-top: 30px
@@ -835,7 +835,7 @@ p {
 
 .map-store-name {
     font-family: "Roboto" !important;
-    color: #001ed4;
+    color: #2B96C5;
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 5px
@@ -885,7 +885,7 @@ p {
 }
 
 .selected-discount {
-    border: 1px solid #001ed4
+    border: 1px solid #2B96C5
 }
 
 .dis-count-main:nth-child(2n) .toggle-discount-box {
@@ -942,8 +942,8 @@ p {
 }
 
 .product-detail-con .selected {
-    border: 2px solid #001ed4 !important;
-    background: #001ed4;
+    border: 2px solid #2B96C5 !important;
+    background: #2B96C5;
     color: #fff !important
 }
 
@@ -987,7 +987,7 @@ p {
 }
 
 .map-open-hours p {
-    color: #001ed4;
+    color: #2B96C5;
     font-size: 13px;
     margin-bottom: 10px
 }
@@ -1007,7 +1007,7 @@ p {
 }
 
 .spc-active {
-    color: #001ed4 !important;
+    color: #2B96C5 !important;
     font-weight: 600;
     font-size: 20px
 }
@@ -1078,7 +1078,7 @@ p {
 }
 
 input[type=checkbox] {
-    accent-color: #001ed4
+    accent-color: #2B96C5
 }
 
 input {
@@ -1121,8 +1121,8 @@ address a {
 }
 
 .btn-subscribe {
-    border: 1px solid #001ed4 !important;
-    color: #001ed4;
+    border: 1px solid #2B96C5 !important;
+    color: #2B96C5;
     float: right
 }
 
@@ -1168,7 +1168,7 @@ address a {
 
 .profile-block {
     margin-bottom: 15px;
-    color: #001ed4;
+    color: #2B96C5;
     font-size: 22px;
     font-weight: 500
 }
@@ -1263,7 +1263,7 @@ address a {
 }
 
 .mobi-hot-icon {
-    background: #001ed4;
+    background: #2B96C5;
     color: #fff;
     width: 45px;
     height: 43px;
@@ -1376,7 +1376,7 @@ address a {
 .cart-total {
     font-size: 16px;
     font-weight: 500;
-    color: #001ed4
+    color: #2B96C5
 }
 
 .cart-table td {
@@ -1391,7 +1391,7 @@ address a {
 }
 
 .thak-tot {
-    color: #001ed4 !important;
+    color: #2B96C5 !important;
     font-size: 18px !important;
     font-weight: 700 !important;
     border-top: 1px solid;
@@ -1421,7 +1421,7 @@ address a {
 }
 
 .forms-wizard .active .fw-span {
-    color: #001ed4 !important
+    color: #2B96C5 !important
 }
 
 .qty-container .qty-btn-minus,
@@ -1449,7 +1449,7 @@ address a {
 .picuplocation-cart .store-name {
     font-size: 16px;
     letter-spacing: 0;
-    color: #001ed4;
+    color: #2B96C5;
     margin-bottom: 10px
 }
 
@@ -1622,7 +1622,7 @@ address a {
 
 .store-distance i {
     margin-right: 6px;
-    color: #001ed4
+    color: #2B96C5
 }
 
 .ash-bg-cus-div {
@@ -1657,7 +1657,7 @@ address a {
 }
 
 .showroom-manger-div {
-    background: #001ed4;
+    background: #2B96C5;
     color: #fff;
     text-align: center
 }
@@ -1769,7 +1769,7 @@ address a {
 .auth-con .title {
     font-size: 30px;
     margin-bottom: 5px;
-    color: #001ed4
+    color: #2B96C5
 }
 
 .sign-with-social-link {
@@ -1867,8 +1867,8 @@ address a {
 }
 
 .active-auth {
-    background: #001ed4 !important;
-    border: 1px solid #001ed4 !important;
+    background: #2B96C5 !important;
+    border: 1px solid #2B96C5 !important;
     color: #fff !important
 }
 
@@ -2051,7 +2051,7 @@ address a {
 .btu-result p {
     font-size: 30px;
     font-weight: 600;
-    color: #001ed4
+    color: #2B96C5
 }
 
 main {
@@ -2065,12 +2065,12 @@ main {
 
 .mobi-search {
     font-size: 20px;
-    color: #001ed4;
+    color: #2B96C5;
     padding-left: 8px
 }
 
 .mobile-menu-toggle {
-    color: #001ed4
+    color: #2B96C5
 }
 
 .mobi-user-data-con img {
@@ -2101,7 +2101,7 @@ main {
 }
 
 .mobi-user-data-con .user-name p {
-    color: #001ed4;
+    color: #2B96C5;
     margin-bottom: 0px
 }
 
@@ -2140,7 +2140,7 @@ main {
 
 .new-mobile-toggle {
     font-size: 20px;
-    color: #001ed4 !important
+    color: #2B96C5 !important
 }
 
 .countdown {
@@ -2244,7 +2244,7 @@ main {
 }
 
 .owl-theme .owl-nav [class*=owl-]:hover {
-    background: #001ed4
+    background: #2B96C5
 }
 
 .toggle-password:hover {
@@ -2285,7 +2285,7 @@ main {
 }
 
 .check-out-accordion .active a {
-    color: #001ed4
+    color: #2B96C5
 }
 
 .main-delivey-method .radio {
@@ -2299,7 +2299,7 @@ main {
 }
 
 .btn-site-default {
-    background: #001ed4;
+    background: #2B96C5;
     color: #fff;
     height: 36px;
     border-radius: 0px;
@@ -2362,7 +2362,7 @@ main {
 .close-minicart {
     float: right;
     font-size: 15px;
-    background: #001ed4;
+    background: #2B96C5;
     color: #fff;
     border-radius: 50%;
     margin-left: auto;
@@ -2544,7 +2544,7 @@ main {
 }
 
 .error-container a {
-    background: #001ed4;
+    background: #2B96C5;
     padding: 10px;
     border-radius: 6px;
     color: #fff
@@ -2612,7 +2612,7 @@ main {
 
 .category-left .cat-title {
     font-size: 20px;
-    color: #001ed4;
+    color: #2B96C5;
     font-family: "Lato", sans-serif !important;
     margin-bottom: 10px;
     line-height: 24px
@@ -2628,7 +2628,7 @@ main {
 
 .mob-clear-filter {
     float: right;
-    color: #001ed4;
+    color: #2B96C5;
     text-align: right;
     padding: 0px 15px;
     text-decoration: underline
@@ -2690,7 +2690,7 @@ main {
 }
 
 .owl-theme .owl-nav [class*=owl-]:hover {
-    background: #001ed4
+    background: #2B96C5
 }
 
 .count-nav span {
@@ -2762,7 +2762,7 @@ main {
 .range-value {
     padding: 5px 4px;
     font-size: 14px;
-    color: #001ed4;
+    color: #2B96C5;
     display: inline-block;
     width: 100%;
     font-weight: 800
@@ -2818,7 +2818,7 @@ main {
 
 .product-list-item .products-btn-set {
     display: none;
-    background: #001ed4
+    background: #2B96C5
 }
 
 .product-list-item .home-buynow {
@@ -2829,7 +2829,7 @@ main {
     display: flex;
     width: 100%;
     justify-content: center;
-    background: #001ed4
+    background: #2B96C5
 }
 
 .product-list-item .btn-which-list {
@@ -3044,8 +3044,8 @@ main {
 }
 
 .exclusive {
-    background: #001ed4;
-    background: linear-gradient(29deg, rgb(52, 8, 211) 15%, #3e56dd 69%);
+    background: #2B96C5;
+    background: linear-gradient(29deg, rgb(43, 150, 197) 15%, #2B96C5 69%);
     padding: 5px 15px;
     border-radius: 6px
 }
@@ -3206,7 +3206,7 @@ main {
 
 .product-list-item .products-btn-set {
     display: none;
-    background: #001ed4
+    background: #2B96C5
 }
 
 .product-list-item .home-buynow {
@@ -3216,7 +3216,7 @@ main {
     display: flex;
     width: 100%;
     justify-content: center;
-    background: #001ed4;
+    background: #2B96C5;
     align-items: center
 }
 
@@ -3271,12 +3271,12 @@ main {
 }
 
 .product-list-item .selling-price {
-    color: #001ed4;
+    color: #2B96C5;
     font-weight: 600
 }
 
 .select-review {
-    border: 4px solid #001ed4
+    border: 4px solid #2B96C5
 }
 
 .rigt-btn-icon {
@@ -3329,7 +3329,7 @@ main {
 }
 
 .product-list-item .selling-price {
-    color: #001ed4
+    color: #2B96C5
 }
 
 .product-list-item .extra-save-value {
@@ -3395,7 +3395,7 @@ main {
 .whatsapp-no {
     margin-top: 8px;
     padding-left: 28px;
-    color: #001ed4
+    color: #2B96C5
 }
 
 .pro-name-compact {
@@ -3520,7 +3520,7 @@ main {
 
 .products-btn-set {
     display: none;
-    background: #001ed4
+    background: #2B96C5
 }
 
 .product-list-item:hover {
@@ -3542,7 +3542,7 @@ main {
     font-size: 14px;
     font-weight: 500;
     color: #fff;
-    background: #001ed4
+    background: #2B96C5
 }
 
 .owl-next,
@@ -3608,7 +3608,7 @@ main {
 
 .usd-back-btn {
     background: #fcfcfc;
-    border: 1px solid #001ed4;
+    border: 1px solid #2B96C5;
     color: #414143;
     height: 36px;
     font-size: 15px;
@@ -3692,7 +3692,7 @@ main {
 }
 
 .selling-price {
-    color: #001ed4;
+    color: #2B96C5;
     font-weight: 600
 }
 
@@ -3749,7 +3749,7 @@ main {
 }
 
 .view-all-link {
-    color: #001ed4 !important
+    color: #2B96C5 !important
 }
 
 .left-suggestion-main-con {
@@ -3863,7 +3863,7 @@ main {
 }
 
 .btn-select-showroom {
-    background: #001ed4;
+    background: #2B96C5;
     color: #fff;
     padding: 0px 10px;
     font-size: 13px;
@@ -3877,14 +3877,14 @@ main {
 }
 
 fieldset {
-    border: 1px solid #001ed4
+    border: 1px solid #2B96C5
 }
 
 legend {
     font-size: 16px;
     color: #fff;
     margin-top: -17px;
-    background: #001ed4;
+    background: #2B96C5;
     width: -moz-max-content;
     width: max-content;
     padding: 4px 20px;
@@ -3945,7 +3945,7 @@ legend {
 }
 
 .tbl-select-item .title-sel-value {
-    color: #001ed4
+    color: #2B96C5
 }
 
 .tbl-select-item tr {
@@ -4060,7 +4060,7 @@ legend {
     display: flex;
     width: 100%;
     justify-content: center;
-    background: #001ed4
+    background: #2B96C5
 }
 
 .review-discription {
@@ -4285,7 +4285,7 @@ legend {
 .horizontal-spc-menu .navbar-nav .nav-link.active,
 .horizontal-spc-menu .navbar-nav .nav-link.show {
     background: rgba(0, 0, 0, 0);
-    color: #001ed4;
+    color: #2B96C5;
     font-weight: 600;
     font-size: 20px
 }
@@ -4368,7 +4368,7 @@ legend {
 
 .bundal-modal-content,
 .free-modal-content {
-    background: #001ed4
+    background: #2B96C5
 }
 
 .free-gift-modal .modal-header,
@@ -4481,8 +4481,8 @@ legend {
 }
 
 .product-detail .bundal-item-main-con {
-    border: 3px solid #001ed4;
-    background: #001ed4;
+    border: 3px solid #2B96C5;
+    background: #2B96C5;
     border-radius: 12px;
     margin-bottom: 20px;
     display: inline-flex;
@@ -4721,7 +4721,7 @@ legend {
 
 .cart-step-title {
     font-size: 16px;
-    color: #001ed4;
+    color: #2B96C5;
     font-weight: 600;
     line-height: 16px
 }
@@ -4741,7 +4741,7 @@ legend {
 .cart-step-sm {
     width: 20px;
     height: 20px;
-    background: #001ed4;
+    background: #2B96C5;
     border-radius: 50%;
     color: #fff;
     text-align: center;
@@ -4788,7 +4788,7 @@ legend {
 }
 
 .check-out-accordion .active .cart-step {
-    background: #001ed4
+    background: #2B96C5
 }
 
 .warranty-select {
@@ -4797,7 +4797,7 @@ legend {
 }
 
 .product-detail .flash-txt {
-    color: #001ed4;
+    color: #2B96C5;
     font-size: 20px;
     font-weight: 600
 }
@@ -4839,16 +4839,16 @@ legend {
 .billing-title {
     margin-top: 10px;
     font-size: 20px;
-    color: #001ed4;
+    color: #2B96C5;
     font-weight: 600;
     margin-bottom: 25px;
-    border-bottom: 2px solid #001ed4;
+    border-bottom: 2px solid #2B96C5;
     padding-bottom: 8px
 }
 
 .billing-title-sub {
     font-size: 20px;
-    color: #001ed4;
+    color: #2B96C5;
     font-weight: 600;
     margin-top: 0px;
     padding-top: 10px
@@ -4885,7 +4885,7 @@ legend {
 }
 
 .i-purple {
-    color: #001ed4
+    color: #2B96C5
 }
 
 .link-change-address {
@@ -4897,7 +4897,7 @@ legend {
 }
 
 .link-change-address:hover {
-    color: #001ed4
+    color: #2B96C5
 }
 
 .head-bill {
@@ -4913,7 +4913,7 @@ legend {
 }
 
 .purple-hr {
-    border-bottom: 2px solid #001ed4;
+    border-bottom: 2px solid #2B96C5;
     opacity: .7
 }
 
@@ -5113,7 +5113,7 @@ legend {
 }
 
 .text-muted a {
-    color: #001ed4;
+    color: #2B96C5;
     text-decoration: underline
 }
 
@@ -5356,7 +5356,7 @@ legend {
 }
 
 .thank-head {
-    color: #001ed4;
+    color: #2B96C5;
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 15px
@@ -5474,7 +5474,7 @@ legend {
 }
 
 .myabans {
-    border: 1px solid #001ed4;
+    border: 1px solid #2B96C5;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px
 }
@@ -5491,7 +5491,7 @@ legend {
 }
 
 .product-detail .add-tocart {
-    background: #001ed4;
+    background: #2B96C5;
     color: #fff;
     font-size: 17px;
     width: 146px;
@@ -5505,7 +5505,7 @@ legend {
 }
 
 .payment-option:hover {
-    border: 1px solid #001ed4
+    border: 1px solid #2B96C5
 }
 
 .product-detail .buy-now:hover {
@@ -5623,7 +5623,7 @@ textarea.parsley-error {
     font-size: 14px;
     border: 0px;
     padding: 0px 8px;
-    background: #001ed4;
+    background: #2B96C5;
     color: #fff;
     margin-right: 5px;
     border-radius: 0px;
@@ -5842,7 +5842,7 @@ textarea.parsley-error {
 .offer-ends-main a {
     font-weight: 500;
     font-size: 11px;
-    color: #001ed4;
+    color: #2B96C5;
     text-decoration: underline;
     margin: 0px 2px;
     text-align: center
@@ -5889,7 +5889,7 @@ textarea.parsley-error {
 }
 
 .product-view .fa-eye {
-    color: #001ed4
+    color: #2B96C5
 }
 
 .payment-plans th {
@@ -5992,7 +5992,7 @@ input[type=number] {
     font-size: 22px;
     font-weight: bold;
     line-height: 27px;
-    color: #001ed4
+    color: #2B96C5
 }
 
 .top-brand {
@@ -6028,7 +6028,7 @@ input[type=number] {
 }
 
 .brand-name a:hover {
-    color: #001ed4
+    color: #2B96C5
 }
 
 .mobi-brand-img:nth-child(3) {
@@ -6188,11 +6188,11 @@ input[type=number] {
     margin: 7px 3px !important;
     border-radius: 3px !important;
     background: rgba(0, 0, 0, 0);
-    border: 1px solid #001ed4
+    border: 1px solid #2B96C5
 }
 
 .owl-dot.active span {
-    background: #001ed4 !important
+    background: #2B96C5 !important
 }
 
 .owl-theme .owl-nav.disabled+.owl-dots {
@@ -6319,7 +6319,7 @@ input[type=number] {
 }
 
 a:hover {
-    color: #001ed4;
+    color: #2B96C5;
     cursor: pointer
 }
 
@@ -6334,7 +6334,7 @@ a:hover {
 }
 
 .mobile-header-container .user-name {
-    color: #001ed4
+    color: #2B96C5
 }
 
 .log-popup-links li {
@@ -6507,11 +6507,11 @@ a:hover {
     margin-bottom: 0px;
     padding-left: 0px;
     font-weight: 500;
-    color: #001ed4
+    color: #2B96C5
 }
 
 .bg-purple {
-    background: #001ed4
+    background: #2B96C5
 }
 
 .site-common-con {
@@ -6534,7 +6534,7 @@ a:hover {
     font-size: 18px;
     text-transform: capitalize;
     margin: 0px;
-    color: #001ed4;
+    color: #2B96C5;
     padding: 0px
 }
 
@@ -6584,9 +6584,9 @@ a:hover {
 }
 
 .btn-limitied-bundle {
-    background: #001ed4;
+    background: #2B96C5;
     color: #fff;
-    border: 1px solid #001ed4
+    border: 1px solid #2B96C5
 }
 
 .btn-free-order {
@@ -6638,7 +6638,7 @@ a:hover {
 
 .mini-cart .sub-total-label {
     font-size: 18px;
-    color: #001ed4
+    color: #2B96C5
 }
 
 .mini-cart .toatal-div-main {
@@ -6656,7 +6656,7 @@ a:hover {
 }
 
 .mini-cart .product-price {
-    color: #001ed4;
+    color: #2B96C5;
     font-weight: 500
 }
 
@@ -6723,7 +6723,7 @@ a:hover {
 .mini-cart .sub-total {
     font-weight: 500;
     font-size: 18px;
-    color: #001ed4
+    color: #2B96C5
 }
 
 .mini-cart .pro-amount {
@@ -6895,7 +6895,7 @@ a:hover {
 }
 
 .payment-plans-logos .select-pay {
-    border: 2px solid #001ed4
+    border: 2px solid #2B96C5
 }
 
 .transparent {
@@ -6907,18 +6907,18 @@ a:hover {
 }
 
 .color-purple {
-    color: #001ed4 !important
+    color: #2B96C5 !important
 }
 
 .txt-lan {
     font-size: 12px;
-    color: #001ed4
+    color: #2B96C5
 }
 
 .txt-currency {
     font-size: 12px;
     font-weight: 700;
-    color: #001ed4
+    color: #2B96C5
 }
 
 .site-converters {
@@ -7067,8 +7067,8 @@ a:hover {
 }
 
 .product-spc-tab .nav-tabs .nav-item .nav-link.active {
-    background: #001ed4;
-    border: 1px solid #001ed4;
+    background: #2B96C5;
+    border: 1px solid #2B96C5;
     color: #fff
 }
 
@@ -7122,7 +7122,7 @@ a:hover {
 }
 
 .bundle-selling-price {
-    color: #001ed4;
+    color: #2B96C5;
     font-size: 16px;
     font-weight: 600;
     margin-right: 5px
@@ -7142,7 +7142,7 @@ a:hover {
 }
 
 .bundle-dis-selling-price {
-    color: #001ed4;
+    color: #2B96C5;
     font-size: 25px;
     font-weight: 600;
     display: flex;
@@ -7169,7 +7169,7 @@ a:hover {
 }
 
 .bundle-offer-headding {
-    color: #001ed4;
+    color: #2B96C5;
     margin-bottom: 15px
 }
 
@@ -7286,7 +7286,7 @@ a:hover {
 
 .top-right-nav a {
     font-size: 14px;
-    color: #001ed4;
+    color: #2B96C5;
     font-weight: 500;
     align-items: center
 }
@@ -7299,8 +7299,8 @@ a:hover {
 }
 
 .form-check-input:checked {
-    background-color: #001ed4;
-    border-color: #001ed4;
+    background-color: #2B96C5;
+    border-color: #2B96C5;
     width: 16px;
     height: 16px
 }
@@ -7380,7 +7380,7 @@ a:hover {
 
 .top-search input:focus {
     box-shadow: none;
-    border: 2px solid #001ed4
+    border: 2px solid #2B96C5
 }
 
 .top-search .fa-search {
@@ -7407,7 +7407,7 @@ a:hover {
     top: 0px;
     right: 0px;
     height: 35px;
-    background: #001ed4 !important;
+    background: #2B96C5 !important;
     border: 0px
 }
 
@@ -7566,7 +7566,7 @@ nav a:visited {
 }
 
 .header-top.style2 {
-    background-color: #001ed4;
+    background-color: #2B96C5;
     padding: 0px 0;
     border-bottom: none
 }
@@ -8070,7 +8070,7 @@ ul.flat-unstyled li>ul>li>a {
 }
 
 .header-bottom {
-    background-color: #001ed4
+    background-color: #2B96C5
 }
 
 .header-bottom>.container>.row {
@@ -8078,7 +8078,7 @@ ul.flat-unstyled li>ul>li>a {
 }
 
 .header-bottom.style2 {
-    background-color: #001ed4
+    background-color: #2B96C5
 }
 
 .header-bottom.style3 {
@@ -8122,13 +8122,13 @@ ul.flat-unstyled li>ul>li>a {
 .address {
     padding-left: 28px;
     padding-top: 16px;
-    color: #001ed4
+    color: #2B96C5
 }
 
 .hotline {
     margin-top: 20px;
     padding-left: 28px;
-    color: #001ed4
+    color: #2B96C5
 }
 
 ul {
@@ -8137,7 +8137,7 @@ ul {
 
 .hotline a,
 .whatsapp-no a {
-    color: #001ed4
+    color: #2B96C5
 }
 
 .footer-icon img {
@@ -8209,7 +8209,7 @@ ul {
 
 .search-title p {
     font-size: 16px;
-    color: #001ed4;
+    color: #2B96C5;
     margin-bottom: 0px;
     font-weight: 500;
     float: left
@@ -8225,7 +8225,7 @@ ul {
     background: rgba(0, 0, 0, 0);
     border: 0px;
     font-size: 16px;
-    color: #001ed4
+    color: #2B96C5
 }
 
 .mobi-full-search {
@@ -8251,7 +8251,7 @@ ul {
 }
 
 .purple-div {
-    background: #001ed4
+    background: #2B96C5
 }
 
 .footer-links-set {
@@ -8291,7 +8291,7 @@ ul {
 }
 
 .purple-div {
-    background: #001ed4;
+    background: #2B96C5;
     color: #fff;
     display: flex;
     padding: 20px 72px
@@ -8309,10 +8309,10 @@ ul {
 
 #mega-menu:hover .btn-mega {
     background: #f5f5f5;
-    color: #001ed4;
+    color: #2B96C5;
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
-    color: #001ed4
+    color: #2B96C5
 }
 
 #mega-menu .cat-arrow {
@@ -8334,11 +8334,11 @@ ul {
 }
 
 #mega-menu:hover .cat-icon span {
-    background-color: #001ed4
+    background-color: #2B96C5
 }
 
 #mega-menu>.btn-mega:hover {
-    color: #001ed4
+    color: #2B96C5
 }
 
 .myprofile-nav ul li .active {
@@ -8549,7 +8549,7 @@ ul {
 }
 
 #termsAndConditionModal .modal-body .title-terms {
-    color: #001ed4
+    color: #2B96C5
 }
 
 .section-title {
@@ -8920,7 +8920,7 @@ section hr {
 }
 
 #mainnav ul.menu>li:hover>a {
-    color: #001ed4;
+    color: #2B96C5;
     background-color: #fff
 }
 
@@ -9062,7 +9062,7 @@ ul.menu li.column-1 .submenu>li>a {
 }
 
 ul.menu li.column-1 .submenu>li>a:hover {
-    color: #001ed4
+    color: #2B96C5
 }
 
 ul.menu li.column-1 .submenu>li>a i {
@@ -11549,7 +11549,7 @@ ul.menu li.column-1 .submenu>li>a i {
 }
 
 .pickup-card h5 {
-    color: #001ed4;
+    color: #2B96C5;
     font-size: 14px;
     font-weight: 600
 }
@@ -11613,7 +11613,7 @@ ul.menu li.column-1 .submenu>li>a i {
 }
 
 .main-link .inner ul li a:hover {
-    color: #001ed4
+    color: #2B96C5
 }
 
 .fly {
@@ -11639,7 +11639,7 @@ ul.menu li.column-1 .submenu>li>a i {
 }
 
 .has-submenu .align-items-start a:hover {
-    color: #001ed4
+    color: #2B96C5
 }
 
 .scroll-cat-set {

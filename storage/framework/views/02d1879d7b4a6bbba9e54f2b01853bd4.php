@@ -131,7 +131,7 @@
 
     <style>
         .item-hover-two:hover .item-hover__text {
-            color: #0035ff !important;
+            color: #2B96C5 !important;
         }
 
 
@@ -145,53 +145,53 @@
 
 
         .bg-main-600 {
-            background-color: #001ed4 !important;
+            background-color: #2B96C5 !important;
         }
 
 
         .pagination .page-item.active .page-link {
-            background-color: #001ed4 !important;
-            border-color: #001ed4 !important;
+            background-color: #2B96C5 !important;
+            border-color: #2B96C5 !important;
             color: #ffffff !important;
         }
 
         .hover-bg-main-600:hover {
-            background-color: #001ed4 !important;
+            background-color: #2B96C5 !important;
         }
 
         .hover-border-main-600:hover {
-            border-color: #001ed4 !important;
+            border-color: #2B96C5 !important;
         }
 
 
         .text-gray-900:hover {
-            color: #001ed4 !important;
+            color: #2B96C5 !important;
         }
 
         .border:hover {
-            border: color: #001ed4 !important;
+            border: color: #2B96C5 !important;
         }
 
         .text-neutral-600:hover {
-            color: color: #001ed4 !important;
+            color: color: #2B96C5 !important;
         }
 
         .btn-main {
-            background-color: color: #001ed4 !important;
-            border-color: color: #001ed4 !important;
+            background-color: color: #2B96C5 !important;
+            border-color: color: #2B96C5 !important;
         }
 
         .btn-main:hover {
-            background-color: #001ed4 !important;
-            border-color: #001ed4 !important;
+            background-color: #2B96C5 !important;
+            border-color: #2B96C5 !important;
         }
 
         .products-btn-set:hover {
-            background-color: #001ed4 !important;
+            background-color: #2B96C5 !important;
         }
 
         .home-buynow:hover {
-            background-color: #001ed4 !important;
+            background-color: #2B96C5 !important;
         }
 
         .bg-main-50 {
@@ -201,7 +201,7 @@
 
 
         .btn-site-default:hover {
-            background: #001ed4;
+            background: #2B96C5;
             color: #fff;
             height: 36px;
             border-radius: 0px;
