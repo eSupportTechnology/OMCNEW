@@ -49,6 +49,10 @@ class BannerController extends Controller
             return response()->json(['status' => false, 'message' => 'Banner not found.'], 404);
         }
 
+        if ($parentCategory->image_path) {
+            \Storage::disk('public')->delete('banner_images/'.$parentCategory->image_path);
+        }
+
         $parentCategory->delete();
 
         return response()->json(['status' => true, 'message' => 'Banner deleted successfully.']);

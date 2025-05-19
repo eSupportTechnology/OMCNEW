@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('product_name');
             $table->text('product_description')->nullable();
             $table->string('product_category')->nullable();
+            $table->unsignedBigInteger('brand_id')->nullable();
             $table->string('subcategory')->nullable();
             $table->string('sub_subcategory')->nullable();
             $table->integer('quantity')->nullable();
@@ -27,6 +28,8 @@ return new class extends Migration
             $table->decimal('commission_percentage', 5, 2)->nullable();
             $table->decimal('total_price', 8, 2);
             $table->timestamps();
+
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null');
         });
     }
 

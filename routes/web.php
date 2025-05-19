@@ -231,6 +231,7 @@ Route::post('/affiliate/dashboard/payment/realtime_tracking', [AffiliateReportCo
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\LogoController;
@@ -317,6 +318,13 @@ Route::post('/admin/category/add', [CategoryController::class, 'store'])->name('
 Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
 Route::get('category/edit/{id}', [CategoryController::class, 'edit'])->name('edit_category');
 Route::put('category/update/{id}', [CategoryController::class, 'update'])->name('update_category');
+
+Route::get('/admin/brands_list', [BrandController::class, 'showbrands'])->name('brand_list');
+Route::post('/admin/brands_list', [BrandController::class, 'store'])->name('brands.store');
+Route::get('/admin/brands_list/{brand}/edit', [BrandController::class, 'edit'])->name('brands.edit');
+Route::delete('/admin/brands_list/{brand}', [BrandController::class, 'destroy'])->name('brands.destroy');
+Route::put('/admin/brands_list/{brand}', [BrandController::class, 'update'])->name('brands.update');
+
 
 Route::get('/admin/carousel', [CarouselController::class, 'showCarousels'])->name('carousel');
 Route::post('/admin/carousel/add', [CarouselController::class, 'store'])->name('carousel_add');
