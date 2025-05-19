@@ -22,11 +22,11 @@ return new class extends Migration
             $table->string('sub_subcategory')->nullable();
             $table->integer('quantity')->nullable();
             $table->string('tags')->nullable();
-            $table->decimal('normal_price', 8, 2);
+            $table->decimal('normal_price', 15, 2);
             $table->boolean('is_affiliate')->default(false);
-            $table->decimal('affiliate_price', 8, 2)->nullable();
+            $table->decimal('affiliate_price', 15, 2)->nullable();
             $table->decimal('commission_percentage', 5, 2)->nullable();
-            $table->decimal('total_price', 8, 2);
+            $table->decimal('total_price', 15, 2);
             $table->timestamps();
 
             $table->foreign('brand_id')->references('id')->on('brands')->onDelete('set null');

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Products;
+use App\Models\Variation;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
@@ -88,14 +90,25 @@ class BrandController extends Controller
         return response()->json($brands);
     }
 
-    public function showBrandProducts($slug)
+    public function showBrandProducts(Request $request, $slug)
     {
-        $brand = Brand::where('slug', $slug)->firstOrFail();
-        $products = $brand->products()->paginate(20);
 
-        $categories = Category::all();
+        $perPage = 15;
 
-        return view('frontend.brand-items', compact('brand', 'products', 'categories'));
+        // $query = Products::with('images', 'specialOffer', 'Sale');
+
+
+
+
+        $brandSlug = Brand::where('slug', $slug)->firstOrFail();
+        $products = $brandSlug->products()->with('images', 'specialOffer', 'Sale')->paginate($perPage)->through(function ($product) {
+            $product->average_rating = $product->reviews()->where('status', 'published')->avg('rating');
+            $product->rating_count = $product->reviews()->where('status', 'published')->count();
+            return $product;
+        });
+        $brands = Brand::all();
+
+        return view('frontend.brand-items', compact( 'brands', 'products', 'brandSlug' ));
     }
 
     public function ajaxBrandProducts(Request $request, $slug)

@@ -360,14 +360,18 @@
                                             <a href="javascript:void(0)" class="d-flex">
 
                                                 <cart-item-count></cart-item-count>
-                                                <div class="dt-icon-div"><span id="cart-count-3"
+                                                <div class="dt-icon-div">
+                                                    <span id="cart-count-3"
                                                         class="w-16 h-16 text-xs text-white flex-center rounded-circle bg-main-two-600 position-absolute top-n6 ">
                                                         <?php echo e($cartCount ?? 0); ?>
 
 
-                                                    </span> <img
+                                                    </span>
+                                                    <img
                                                         src=" <?php echo e(asset('frontend/newstyle/assets/images/cart-new.png')); ?>"
-                                                        class="cart-img"></div><span>Cart</span>
+                                                        class="cart-img">
+                                                </div>
+                                                    <span class="span-cart">Cart</span>
                                             </a>
                                         </div>
 
@@ -634,10 +638,24 @@
 
 
 
-                                    <li class="column-1">
-                                        <a href="#" title="">
+                                    <li class="has-mega-menu">
+                                        <a href="#" title="Brands">
 
                                             Brands </a>
+
+                                        <ul class="submenu" id="brand-submenu">
+                                            <div class="row align-items-start">
+                                                <div class="col-sm-6">
+                                                    <p class="brand-topic">Top Brands</p>
+                                                    <div id="top-brands" class="brand-logos-set row"></div>
+                                                </div>
+                                                <div class="col-sm-6 px-40">
+                                                    <p class="brand-topic">All Brands</p>
+                                                    <div id="all-brands" class="row align-items-start"></div>
+                                                </div>
+                                            </div>
+                                        </ul>
+
 
                                     </li>
 
@@ -821,6 +839,7 @@
 
 
                         <li> <a href="/" title="">Home</a> </li>
+                        <li class="column-1"><a href="#" title="">Brands</a></li>
 
 
                         
@@ -1085,7 +1104,105 @@
         });
     </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const brandsMenuItem = document.querySelector('li > a[title="Brands"]')?.parentElement;
+        const submenu = document.getElementById('brand-submenu');
 
+        let brandsLoaded = false;
+        let brandsFetching = false;
+        let hoverTimeout = null;
+
+        if (!brandsMenuItem || !submenu) return;
+
+        // Show submenu on hover
+        brandsMenuItem.addEventListener('mouseenter', () => {
+            // Clear any existing timeout to avoid flickering
+            if (hoverTimeout) clearTimeout(hoverTimeout);
+
+            submenu.style.display = 'block';
+
+            // Only fetch data if it hasn't been loaded or isn't currently fetching
+            if (!brandsLoaded && !brandsFetching) {
+                brandsFetching = true; // Lock to prevent multiple requests
+
+                console.log('Fetching brands data');
+
+                fetch('/brands-data')
+                    .then(res => {
+                        if (!res.ok) throw new Error('Network response was not ok');
+                        return res.json();
+                    })
+                    .then(data => {
+                        const topContainer = document.getElementById('top-brands');
+                        const allContainer = document.getElementById('all-brands');
+
+                        // Clear containers first to prevent duplicate content
+                        topContainer.innerHTML = '';
+                        allContainer.innerHTML = '';
+
+                        const allList = [
+                            [],
+                            [],
+                            [],
+                            []
+                        ];
+                        let col = 0;
+
+                        data.forEach(brand => {
+                            const imageUrl = brand.image ? brand.image :
+                            'default-image.png';
+
+                            const brandLink = `<a title="${brand.name}" href="/brand/${brand.slug}">
+                        <img src="/storage/${imageUrl}" alt="${brand.name}" style="height: 50px;">
+                    </a>`;
+
+                            if (brand.is_top_brand) {
+                                topContainer.insertAdjacentHTML('beforeend',
+                                    `<div class="brand-img col-sm-3">${brandLink}</div>`
+                                    );
+                            }
+
+                            allList[col].push(
+                                `<li><a href="/brand/${brand.slug}">${brand.name}</a></li>`
+                                );
+                            col = (col + 1) % 4;
+                        });
+
+                        allList.forEach(column => {
+                            allContainer.insertAdjacentHTML('beforeend',
+                                `<ul class="col-sm-3">${column.join('')}</ul>`);
+                        });
+
+                        brandsLoaded = true;
+                        console.log('Brands loaded successfully');
+                    })
+                    .catch(err => {
+                        console.error('Brand fetch failed:', err);
+                    })
+                    .finally(() => {
+                        brandsFetching = false;
+                    });
+            }
+        });
+
+        // Add event listeners to both menu item and submenu to prevent flickering
+        submenu.addEventListener('mouseenter', () => {
+            if (hoverTimeout) clearTimeout(hoverTimeout);
+            submenu.style.display = 'block';
+        });
+
+        // Hide submenu on mouse leave with slight delay to prevent flickering
+        const handleMouseLeave = () => {
+            hoverTimeout = setTimeout(() => {
+                submenu.style.display = 'none';
+            }, 200); // Small delay to prevent flickering when moving between menu and submenu
+        };
+
+        brandsMenuItem.addEventListener('mouseleave', handleMouseLeave);
+        submenu.addEventListener('mouseleave', handleMouseLeave);
+    });
+</script>
 
     </header>
 <?php /**PATH D:\Manulas Doc\Project\Intern\Project\omcnew project\OMCNEW\resources\views/frontend/navbar-new.blade.php ENDPATH**/ ?>

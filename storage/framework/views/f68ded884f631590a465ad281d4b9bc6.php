@@ -1,30 +1,30 @@
 <?php $__env->startSection('content'); ?>
 <style>
-   
+
 
     .btn-cart {
-        background-color: white; 
+        background-color: white;
         border: none;
         border-radius: 50%;
-        width: 40px; 
-        height: 40px; 
+        width: 40px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background-color 0.3s, color 0.3s; 
+        transition: background-color 0.3s, color 0.3s;
     }
 
     .btn-cart i {
-        font-size: 1.5rem; 
+        font-size: 1.5rem;
         color: black;
     }
 
     .btn-cart:hover {
-        background-color: black; 
+        background-color: black;
     }
 
     .btn-cart:hover i {
-        color: white; 
+        color: white;
     }
     .color-option.selected-color {
     border: 2px solid #007bff; /* Blue border for the selected color */
@@ -38,7 +38,7 @@
                 <div class="page-title-content">
                     <h2>Special Offers</h2>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="/">Home</a></li>
                         <li>Special Offers</li>
                     </ul>
                 </div>
@@ -53,9 +53,9 @@
                     <div class="col-lg-3 col-md-12">
                         <div class="woocommerce-widget-area">
                             <div class="woocommerce-widget filter-list-widget">
-                              
-                                    <a href="<?php echo e(route('special-offers')); ?>" class="delete-selected-filters"><i class='bx bx-trash'></i> <span>Clear All</span></a>
-                               
+
+                                    <a href="<?php echo e(route('special-offers')); ?>" class="delete-selected-filters"><i class='fa fa-trash'></i> <span>Clear All</span></a>
+
                             </div>
 
                             <div class="woocommerce-widget collections-list-widget">
@@ -64,7 +64,7 @@
                                 <ul class="collections-list-row">
                                 <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <li>
-                                        <a href="<?php echo e(route('special-offers')); ?>?category=<?php echo e($category->parent_category); ?>" 
+                                        <a href="<?php echo e(route('special-offers')); ?>?category=<?php echo e($category->parent_category); ?>"
                                         class="<?php echo e(request('category') === $category->parent_category ? 'active' : ''); ?>">
                                             <?php echo e($category->parent_category); ?>
 
@@ -80,19 +80,19 @@
                                 <ul class="size-list-row">
                                     <?php $__currentLoopData = $sizes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $size): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <li>
-                                            <a href="<?php echo e(route('special-offers')); ?>?size=<?php echo e($size->value); ?>" 
+                                            <a href="<?php echo e(route('special-offers')); ?>?size=<?php echo e($size->value); ?>"
                                             class="<?php echo e(request('size') === $size->value ? 'active' : ''); ?>">
                                                 <?php echo e($size->value); ?>
 
                                             </a>
                                         </li>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                       
+
                                 </ul>
-                              
+
                             </div>
 
-                            
+
 
                             <!-- Color Filter -->
                             <div class="woocommerce-widget color-list-widget">
@@ -100,15 +100,15 @@
                                 <ul class="color-list-row">
                                     <?php $__currentLoopData = $colors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $color): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <li>
-                                            <a href="<?php echo e(route('special-offers')); ?>?color=<?php echo e($color->value); ?>" 
-                                            style="background-color: <?php echo e($color->hex_value); ?>;" 
-                                            class="<?php echo e(request('color') === $color->value ? 'active' : ''); ?>" 
+                                            <a href="<?php echo e(route('special-offers')); ?>?color=<?php echo e($color->value); ?>"
+                                            style="background-color: <?php echo e($color->hex_value); ?>;"
+                                            class="<?php echo e(request('color') === $color->value ? 'active' : ''); ?>"
                                             title="<?php echo e($color->value); ?>"></a>
                                         </li>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </ul>
                             </div>
-                           
+
                         </div>
                     </div>
 
@@ -117,8 +117,8 @@
                             <div class="row align-items-center justify-content-center">
                                 <div class="col-lg-4 col-md-4">
                                     <div class="d-lg-flex d-md-flex align-items-center">
-                                        <span class="sub-title d-lg-none"><a href="#" data-bs-toggle="modal" data-bs-target="#productsFilterModal"><i class='bx bx-filter-alt'></i> Filter</a></span>
-                                        
+                                        <span class="sub-title d-lg-none"><a href="#" data-bs-toggle="modal" data-bs-target="#productsFilterModal"><i class='fa fa-filter-alt'></i> Filter</a></span>
+
                                         <!--<span class="sub-title d-none d-lg-block d-md-block">View:</span>
 
                                         <div class="view-list-row d-none d-lg-block d-md-block">
@@ -177,19 +177,8 @@
                                                 </a>
 
 
-                                                <div class="products-button">
-                                                        <ul>
-                                                            <li>
-                                                                <div class="wishlist-btn">
-                                                                    <a href="#" class="wishlist-toggle" data-product-id="<?php echo e($product->product_id); ?>" id="wishlist-<?php echo e($product->product_id); ?>">
-                                                                        <i class="bx bx-heart <?php echo e(in_array($product->product_id, $wishlistProductIds) ? 'filled' : ''); ?>"></i> 
-                                                                        <span class="tooltip-label">Add to Wishlist</span>
-                                                                    </a>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                               
+                                                
+
                                                 <?php if(($product->sale && $product->sale->status === 'active') || ($product->specialOffer && $product->specialOffer->status === 'active')): ?>
                                                     <div class="sale-tag">
                                                         <?php if($product->sale && $product->sale->status === 'active'): ?>
@@ -228,14 +217,14 @@
                                                         <?php if($i <= $product->average_rating): ?>
                                                             <i class='bx bxs-star'></i> <!-- Full star -->
                                                         <?php else: ?>
-                                                            <i class='bx bx-star'></i> <!-- Empty star -->
+                                                            <i class='fa fa-star'></i> <!-- Empty star -->
                                                         <?php endif; ?>
                                                     <?php endfor; ?>
                                                 </div>
 
                                                 <a href="/cart" class="add-to-cart"  data-bs-toggle="modal" data-bs-target="#cartModal_<?php echo e($product->product_id); ?>">Add to Cart</a>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -246,9 +235,9 @@
                         <div class="pagination-area text-center">
                             <!-- Previous Page Link -->
                             <?php if($products->onFirstPage()): ?>
-                                <span class="prev page-numbers disabled"><i class='bx bx-chevron-left'></i></span>
+                                <span class="prev page-numbers disabled"><i class='fa fa-chevron-left'></i></span>
                             <?php else: ?>
-                                <a href="<?php echo e($products->previousPageUrl()); ?>" class="prev page-numbers"><i class='bx bx-chevron-left'></i></a>
+                                <a href="<?php echo e($products->previousPageUrl()); ?>" class="prev page-numbers"><i class='fa fa-chevron-left'></i></a>
                             <?php endif; ?>
 
                             <!-- Page Numbers -->
@@ -262,9 +251,9 @@
 
                             <!-- Next Page Link -->
                             <?php if($products->hasMorePages()): ?>
-                                <a href="<?php echo e($products->nextPageUrl()); ?>" class="next page-numbers"><i class='bx bx-chevron-right'></i></a>
+                                <a href="<?php echo e($products->nextPageUrl()); ?>" class="next page-numbers"><i class='fa fa-chevron-right'></i></a>
                             <?php else: ?>
-                                <span class="next page-numbers disabled"><i class='bx bx-chevron-right'></i></span>
+                                <span class="next page-numbers disabled"><i class='fa fa-chevron-right'></i></span>
                             <?php endif; ?>
                         </div>
 
@@ -290,13 +279,13 @@
                             <?php if($product->images->first()): ?>
                                 <a class="rounded-4 main-image-link" href="<?php echo e(asset('storage/' . $product->images->first()->image_path)); ?>">
                                     <img id="mainImage" class="rounded-4 fit" style="width:280px; height:auto"
-                                        src="<?php echo e(asset('storage/' . $product->images->first()->image_path)); ?>" 
+                                        src="<?php echo e(asset('storage/' . $product->images->first()->image_path)); ?>"
                                     />
                                 </a>
                             <?php else: ?>
                                 <a class="rounded-4 main-image-link" href="<?php echo e(asset('images/default.jpg')); ?>">
-                                    <img id="mainImage" class="rounded-4 fit" 
-                                        src="<?php echo e(asset('images/default.jpg')); ?>" 
+                                    <img id="mainImage" class="rounded-4 fit"
+                                        src="<?php echo e(asset('images/default.jpg')); ?>"
                                     />
                                 </a>
                             <?php endif; ?>
@@ -316,25 +305,25 @@
                             <p class="description">
                                 <?php echo e((str_replace('&nbsp;', ' ', strip_tags($product->product_description)))); ?>
 
-                            </p>  
+                            </p>
                             <div class="d-flex flex-row my-3">
                                 <div class="text-warning mb-1 me-2">
                                     <?php for($i = 1; $i <= 5; $i++): ?>
-                                        <?php if($i <= floor($product->average_rating)): ?> 
-                                            <i class='bx bxs-star'></i> 
+                                        <?php if($i <= floor($product->average_rating)): ?>
+                                            <i class='bx bxs-star'></i>
                                         <?php elseif($i == ceil($product->average_rating) && fmod($product->average_rating, 1) >= 0.5): ?>
-                                            <i class='bx bxs-star-half'></i> 
+                                            <i class='bx bxs-star-half'></i>
                                         <?php else: ?>
-                                            <i class='bx bx-star'></i>
+                                            <i class='fa fa-star'></i>
                                         <?php endif; ?>
                                     <?php endfor; ?>
                                     <span class="ms-1"><?php echo e(number_format($product->average_rating, 1)); ?></span>
                                 </div>
                                 <span class="text-primary"><?php echo e($product->rating_count); ?> Ratings  </span>
-                               
+
                             </div>
                             <hr />
-                            
+
                             <div class="product-availability mt-3 mb-1">
                                 <span>Availability :</span>
                                 <?php if($product->quantity > 1): ?>
@@ -350,7 +339,7 @@
                                 <div class="mb-2">
                                     <span>Size: </span>
                                     <?php $__currentLoopData = $product->variations->where('type', 'Size'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $size): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <?php if($size->quantity > 0): ?>  
+                                        <?php if($size->quantity > 0): ?>
                                             <button class="btn btn-outline-secondary btn-sm me-1 size-option" style="height:28px;" data-size="<?php echo e($size->value); ?>">
                                                 <?php echo e($size->value); ?>
 
@@ -364,10 +353,10 @@
                                 <div class="mb-2">
                                     <span>Color: </span>
                                     <?php $__currentLoopData = $product->variations->where('type', 'Color'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $color): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <?php if($color->quantity > 0): ?>  
-                                            <button class="btn btn-outline-secondary btn-sm color-option" 
-                                                style="background-color: <?php echo e($color->hex_value); ?>; border-color: #e8ebec; height: 17px; width: 15px;" 
-                                                data-color="<?php echo e($color->hex_value); ?>" 
+                                        <?php if($color->quantity > 0): ?>
+                                            <button class="btn btn-outline-secondary btn-sm color-option"
+                                                style="background-color: <?php echo e($color->hex_value); ?>; border-color: #e8ebec; height: 17px; width: 15px;"
+                                                data-color="<?php echo e($color->hex_value); ?>"
                                                 data-color-name="<?php echo e($color->value); ?>">
                                             </button>
                                         <?php endif; ?>
@@ -394,7 +383,7 @@
                                     <i class="me-1 fa fa-shopping-basket"></i>Add to cart
                                 </a>
                             <?php else: ?>
-                                <a href="#" class="btn btn-custom-cart mb-3 add-to-cart-modal shadow-0 <?php echo e($product->quantity <= 1 ? 'btn-disabled' : ''); ?>" 
+                                <a href="#" class="btn btn-custom-cart mb-3 add-to-cart-modal shadow-0 <?php echo e($product->quantity <= 1 ? 'btn-disabled' : ''); ?>"
                                     data-product-id="<?php echo e($product->product_id); ?>" data-auth="false" style="width: 40%; background-color: #007bff; color: white;">
                                     <i class="me-1 fa fa-shopping-basket"></i>Add to cart
                                 </a>
@@ -419,15 +408,15 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"><i class='bx bx-x'></i> Close</span>
+                        <span aria-hidden="true"><i class='fa fa-x'></i> Close</span>
                     </button>
 
                     <div class="modal-body">
                     <div class="woocommerce-widget-area">
                             <div class="woocommerce-widget filter-list-widget">
-                              
-                                    <a href="<?php echo e(route('all-items')); ?>" class="delete-selected-filters"><i class='bx bx-trash'></i> <span>Clear All</span></a>
-                               
+
+                                    <a href="<?php echo e(route('all-items')); ?>" class="delete-selected-filters"><i class='fa fa-trash'></i> <span>Clear All</span></a>
+
                             </div>
 
                             <div class="woocommerce-widget collections-list-widget">
@@ -436,7 +425,7 @@
                                 <ul class="collections-list-row">
                                 <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <li>
-                                        <a href="<?php echo e(route('all-items')); ?>?category=<?php echo e($category->parent_category); ?>" 
+                                        <a href="<?php echo e(route('all-items')); ?>?category=<?php echo e($category->parent_category); ?>"
                                         class="<?php echo e(request('category') === $category->parent_category ? 'active' : ''); ?>">
                                             <?php echo e($category->parent_category); ?>
 
@@ -452,19 +441,19 @@
                                 <ul class="size-list-row">
                                     <?php $__currentLoopData = $sizes; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $size): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <li>
-                                            <a href="<?php echo e(route('all-items')); ?>?size=<?php echo e($size->value); ?>" 
+                                            <a href="<?php echo e(route('all-items')); ?>?size=<?php echo e($size->value); ?>"
                                             class="<?php echo e(request('size') === $size->value ? 'active' : ''); ?>">
                                                 <?php echo e($size->value); ?>
 
                                             </a>
                                         </li>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                       
+
                                 </ul>
-                              
+
                             </div>
 
-                            
+
 
                             <!-- Color Filter -->
                             <div class="woocommerce-widget color-list-widget">
@@ -472,15 +461,15 @@
                                 <ul class="color-list-row">
                                     <?php $__currentLoopData = $colors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $color): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <li>
-                                            <a href="<?php echo e(route('all-items')); ?>?color=<?php echo e($color->value); ?>" 
-                                            style="background-color: <?php echo e($color->hex_value); ?>;" 
-                                            class="<?php echo e(request('color') === $color->value ? 'active' : ''); ?>" 
+                                            <a href="<?php echo e(route('all-items')); ?>?color=<?php echo e($color->value); ?>"
+                                            style="background-color: <?php echo e($color->hex_value); ?>;"
+                                            class="<?php echo e(request('color') === $color->value ? 'active' : ''); ?>"
                                             title="<?php echo e($color->value); ?>"></a>
                                         </li>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </ul>
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -496,10 +485,10 @@
         $(document).ready(function() {
     // Handle the click event on the heart icon
     $('.wishlist-toggle').on('click', function(e) {
-        e.preventDefault(); 
+        e.preventDefault();
 
-        var productId = $(this).data('product-id'); 
-        var heartIcon = $(this).find('i'); 
+        var productId = $(this).data('product-id');
+        var heartIcon = $(this).find('i');
 
         $.ajax({
             url: '<?php echo e(route('wishlist.toggle')); ?>',
@@ -525,7 +514,7 @@
     });
 });
 
-</script>     
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.btn-cart').forEach(button => {
@@ -543,7 +532,7 @@
         button.addEventListener('click', function() {
             // Remove the selected class from all buttons
             colorButtons.forEach(btn => btn.classList.remove('selected-color'));
-            
+
             this.classList.add('selected-color');
 
             const selectedColor = this.getAttribute('data-color');
@@ -594,7 +583,7 @@ $(document).ready(function() {
         }
 
         // Check if the user is authenticated
-        if (isAuth === true || isAuth === "true") { 
+        if (isAuth === true || isAuth === "true") {
             $.ajax({
                 url: "<?php echo e(route('cart.add')); ?>",
                 method: 'POST',
@@ -665,5 +654,5 @@ $('.js-range-of-price').on('input', function() {
 
     </script>
 <?php $__env->stopSection(); ?>
-        
+
 <?php echo $__env->make('frontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Manulas Doc\Project\Intern\Project\omcnew project\OMCNEW\resources\views/frontend/special-offers.blade.php ENDPATH**/ ?>

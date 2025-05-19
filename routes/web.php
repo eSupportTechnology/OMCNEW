@@ -495,3 +495,7 @@ Route::get('/checkout', [CheckoutController::class, 'showCheckoutPage'])->name('
 Route::post('/buynoworder', [CustomerOrderController::class, 'buynowstore'])->name('buynoworder.store');
 
 Route::get('/search-suggestions', [SearchController::class, 'suggestions']);
+
+Route::get('/brands-data', [BrandController::class, 'getBrands']);
+
+Route::get('/brand/{slug}', [BrandController::class, 'showBrandProducts'])->name('brand.products');

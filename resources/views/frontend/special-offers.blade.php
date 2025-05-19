@@ -40,7 +40,7 @@
                 <div class="page-title-content">
                     <h2>Special Offers</h2>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="/">Home</a></li>
                         <li>Special Offers</li>
                     </ul>
                 </div>
@@ -177,7 +177,7 @@
                                                 </a>
 
 
-                                                <div class="products-button">
+                                                {{-- <div class="products-button">
                                                         <ul>
                                                             <li>
                                                                 <div class="wishlist-btn">
@@ -188,7 +188,7 @@
                                                                 </div>
                                                             </li>
                                                         </ul>
-                                                    </div>
+                                                    </div> --}}
 
                                                 @if(($product->sale && $product->sale->status === 'active') || ($product->specialOffer && $product->specialOffer->status === 'active'))
                                                     <div class="sale-tag">
