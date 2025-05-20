@@ -306,6 +306,7 @@
 <!-- footer for mobile end -->
 
 <!-- footer for destop begin -->
+<!--
 <div class="destop-footer-con">
     <div class="footer ft-destop">
         <div class="purple-div">
@@ -517,7 +518,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!-- footer for destop end -->
 
 

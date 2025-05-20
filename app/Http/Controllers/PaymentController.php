@@ -36,6 +36,39 @@ class PaymentController extends Controller
     //     return view('frontend.payment', compact('cart', 'order_code'));
     // }
 
+    // public function payment($order_code)
+    // {
+
+    //     $deliveryFee = 300;
+    //     $subtotal = 0;
+
+    //     if (Auth::check()) {
+    //         $cart = CartItem::with(['product.sale', 'product.specialOffer'])
+    //             ->where('user_id', Auth::id())->get();
+    //     } else {
+    //         $cartItems = session()->get('cart', []);
+    //         $cart = collect($cartItems)->map(function ($item) {
+    //             $product = Products::with(['sale', 'specialOffer'])->where('product_id', $item['product_id'])->first();
+    //             $item['product'] = $product;
+    //             return (object) $item;
+    //         });
+    //     }
+
+    //     foreach ($cart as $item) {
+    //         $price = $item->product->sale && $item->product->sale->status === 'active'
+    //             ? $item->product->sale->sale_price
+    //             : ($item->product->specialOffer && $item->product->specialOffer->status === 'active'
+    //                 ? $item->product->specialOffer->offer_price
+    //                 : $item->product->normal_price);
+
+    //         $subtotal += $price * ($item->quantity ?? 1);
+    //     }
+
+    //     $total = $subtotal + $deliveryFee;
+
+    //     return view('frontend.payment', compact('cart', 'order_code', 'subtotal', 'deliveryFee', 'total'));
+    // }
+
     public function payment($order_code)
     {
 
@@ -43,30 +76,26 @@ class PaymentController extends Controller
         $subtotal = 0;
 
         if (Auth::check()) {
-            $cart = CartItem::with(['product.sale', 'product.specialOffer'])
-                ->where('user_id', Auth::id())->get();
+            $customerOrder = CustomerOrder::where('order_code', $order_code)->first();
+            if ($customerOrder) {
+                $cart = $customerOrder->items()->with(['product.sale', 'product.specialOffer'])->get();
+            } else {
+                return redirect()->back()->with('error', 'Order not found.');
+            }
+
+            $total= $customerOrder->total_cost;
+            $subtotal = $customerOrder->items()
+                ->select(DB::raw('SUM(cost * quantity) as subtotal'))
+                ->value('subtotal');
+
+            $deliveryFee = $total - $subtotal;
         } else {
-            $cartItems = session()->get('cart', []);
-            $cart = collect($cartItems)->map(function ($item) {
-                $product = Products::with(['sale', 'specialOffer'])->where('product_id', $item['product_id'])->first();
-                $item['product'] = $product;
-                return (object) $item;
-            });
+            return redirect()->route('login');
         }
 
-        foreach ($cart as $item) {
-            $price = $item->product->sale && $item->product->sale->status === 'active'
-                ? $item->product->sale->sale_price
-                : ($item->product->specialOffer && $item->product->specialOffer->status === 'active'
-                    ? $item->product->specialOffer->offer_price
-                    : $item->product->normal_price);
 
-            $subtotal += $price * ($item->quantity ?? 1);
-        }
 
-        $total = $subtotal + $deliveryFee;
-
-        return view('frontend.payment', compact('cart', 'order_code', 'subtotal', 'deliveryFee', 'total'));
+        return view('frontend.payment', compact('customerOrder', 'order_code', 'subtotal', 'deliveryFee', 'total'));
     }
 
 
