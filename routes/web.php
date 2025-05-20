@@ -143,6 +143,7 @@ Route::get('/affiliate/dashboard/payment/bank_acc', function () {
 Route::get('/payment/{order_code}', [PaymentController::class, 'payment'])->name('payment');
 
 Route::post('/order/confirm-cod/{order_code}', [PaymentController::class, 'confirmCod'])->name('order.confirm.cod');
+Route::post('/confirm-card-order/{order_code}', [PaymentController::class, 'confirmcardOrder'])->name('confirm.card.order');
 
 Route::get('/order/order_received/{order_code}', [PaymentController::class, 'getOrderDetails'])->name('order.thankyou');
 

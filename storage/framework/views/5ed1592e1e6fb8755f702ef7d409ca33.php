@@ -1,6 +1,22 @@
 <?php $__env->startSection('content'); ?>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .dt-icon-div {
+          font-size: 10px !important;
+          border-radius: 50% !important;
+          position: absolute;
+          top: -27px;
+          left: -40px;
+        }
+        .span-cart {
+          width: 36px !important;
+          position: absolute;
+          top: -25px;
+          left: -10px;
+        }
+
+        </style>
     <div class="bg-gray-100 py-4">
         <div class="container mx-auto px-4">
             <div class="flex flex-col items-center">
@@ -132,7 +148,9 @@
                                         <li class="text-gray-600">Keep the exact amount ready to ensure smooth delivery</li>
                                     </ul>
                                 </div>
-                                <form id="codForm">
+                                
+                                    <form action="<?php echo e(route('order.confirm.cod', $order_code)); ?>" method="POST">
+                                        <?php echo csrf_field(); ?>
                                     <button type="submit"
                                         class="bg-blue-600 text-white py-3 px-6 rounded font-medium hover:bg-blue-700 transition-colors">
                                         Confirm Order with Cash on Delivery

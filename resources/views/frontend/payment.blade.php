@@ -150,7 +150,9 @@
                                         <li class="text-gray-600">Keep the exact amount ready to ensure smooth delivery</li>
                                     </ul>
                                 </div>
-                                <form id="codForm">
+                                {{-- <form id="codForm"> --}}
+                                    <form action="{{ route('order.confirm.cod', $order_code) }}" method="POST">
+                                        @csrf
                                     <button type="submit"
                                         class="bg-blue-600 text-white py-3 px-6 rounded font-medium hover:bg-blue-700 transition-colors">
                                         Confirm Order with Cash on Delivery
