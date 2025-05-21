@@ -81,7 +81,9 @@
                         <div class="bg-white rounded p-4 md:p-6 border border-gray-200">
                             <!-- Credit Card Form -->
                             <div id="creditCardContent" class="w-full md:w-2/3">
-                                <form id="cardPaymentForm">
+                                {{-- <form id="cardPaymentForm"> --}}
+                                    <form action="{{ route('confirm.card.order', $order_code) }}" method="POST">
+                                        @csrf
                                     <div class="mb-4">
                                         <label for="cardName" class="block text-gray-700 font-medium mb-2">
                                             <span class="text-red-500 mr-1">*</span>Name on Card

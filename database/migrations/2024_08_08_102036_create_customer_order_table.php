@@ -29,7 +29,8 @@ return new class extends Migration
             $table->string('payment_method')->nullable();
             $table->string('payment_status')->nullable();
             $table->decimal('discount', 15, 2)->nullable();
-            $table->timestamps();   
+            $table->string('transaction_id')->nullable();
+            $table->timestamps();
         });
     }
 

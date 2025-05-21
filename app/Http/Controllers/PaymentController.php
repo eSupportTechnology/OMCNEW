@@ -76,11 +76,11 @@ class PaymentController extends Controller
         $subtotal = 0;
 
         if (Auth::check()) {
-            $customerOrder = CustomerOrder::where('order_code', $order_code)->first();
+            $customerOrder = CustomerOrder::where('order_code', $order_code)->where('user_id', Auth::id())->first();
             if ($customerOrder) {
                 $cart = $customerOrder->items()->with(['product.sale', 'product.specialOffer'])->get();
             } else {
-                return redirect()->back()->with('error', 'Order not found.');
+                return redirect()->route('home');
             }
 
             $total= $customerOrder->total_cost;
