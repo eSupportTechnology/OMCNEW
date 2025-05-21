@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\OnepayHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Affiliate_User;
 use Carbon\Carbon;
 use App\Models\PaymentRequest;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 
 
@@ -127,24 +130,105 @@ class PaymentController extends Controller
             ->with('success', 'Order confirmed successfully with Cash on Delivery.');
     }
 
+    // public function confirmcardOrder($order_code)
+    // {
+    //     try {
+    //         $order = CustomerOrder::where('order_code', $order_code)->where('user_id', Auth::id())->firstOrFail();
+
+    //         // Update the payment method and payment status
+    //         $order->update([
+    //             'payment_method' => 'Card',
+    //             'payment_status' => 'Paid',
+    //         ]);
+
+    //         return redirect()->route('order.thankyou', ['order_code' => $order_code])
+    //             ->with('success', 'Order confirmed successfully!');
+    //     } catch (\Exception $e) {
+    //         return redirect()->back()->with('error', 'Failed to confirm order. Please try again.');
+    //     }
+    // }
+
     public function confirmcardOrder($order_code)
     {
         try {
-            $order = CustomerOrder::where('order_code', $order_code)->where('user_id', Auth::id())->firstOrFail();
+            // Load the order with its related user (eager load to avoid lazy call)
+            $order = CustomerOrder::with('user')
+                ->where('order_code', $order_code)
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
 
             // Update the payment method and payment status
             $order->update([
                 'payment_method' => 'Card',
-                'payment_status' => 'Paid',
+                'payment_status' => 'Pending',
             ]);
 
-            return redirect()->route('order.thankyou', ['order_code' => $order_code])
-                ->with('success', 'Order confirmed successfully!');
+            // Payment details
+            $amount   = $order->total_cost; // Amount in LKR
+            $currency = 'LKR';
+            $hash     = OnepayHelper::generateHash($currency, $amount);
+            $reference = 'DSA_' . uniqid();
+
+            Log::info('Initiating OnePay Payment', [
+                'amount'    => $amount,
+                'reference' => $reference,
+            ]);
+
+            // Make API request to OnePay
+            $response = Http::withHeaders([
+                'Authorization' => config('onepay.api_key'),
+            ])->post(config('onepay.base_url') . '/checkout/link/', [
+                'currency'                 => $currency,
+                'app_id'                   => config('onepay.app_id'),
+                'hash'                     => $hash,
+                'amount'                   => $amount,
+                'reference'                => $reference,
+                'customer_first_name'      => $order->customer_fname,
+                'customer_last_name'       => '',
+                'customer_phone_number'    => $order->phone,
+                'customer_email'           => $order->email,
+                'transaction_redirect_url' => route('order.thankyou', ['order_code' => $order_code]),
+                'additional_data'          => $reference,
+            ]);
+
+            Log::info('OnePay Payment Response', [
+                'status' => $response->status(),
+                'body'   => $response->json(),
+            ]);
+
+            if ($response->successful() && isset($response['data']['gateway']['redirect_url'])) {
+                $redirectUrl = $response['data']['gateway']['redirect_url'];
+
+                Log::info('Redirecting to OnePay', ['url' => $redirectUrl]);
+
+                // Save transaction ID
+                $order->update([
+                    'payment_method'  => 'Card',
+                    'payment_status'  => 'Pending',
+                    'transaction_id'  => $reference,
+                ]);
+
+                return redirect()->away($redirectUrl);
+            }
+
+            // Log unsuccessful response
+            Log::error('OnePay payment failed or missing redirect URL', [
+                'status' => $response->status(),
+                'body'   => $response->body(),
+            ]);
+
+            return redirect()->back()->with('error', 'Payment initiation failed. Please try again.');
         } catch (\Exception $e) {
+            // Log exception with detail
+            Log::error('Error in confirmcardOrder', [
+                'message' => $e->getMessage(),
+                'line'    => $e->getLine(),
+                'file'    => $e->getFile(),
+            ]);
+
             return redirect()->back()->with('error', 'Failed to confirm order. Please try again.');
         }
     }
-
 
 
     public function getOrderDetails($order_code)

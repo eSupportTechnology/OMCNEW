@@ -79,59 +79,17 @@
                         <div class="bg-white rounded p-4 md:p-6 border border-gray-200">
                             <!-- Credit Card Form -->
                             <div id="creditCardContent" class="w-full md:w-2/3">
-                                <form id="cardPaymentForm">
-                                    <div class="mb-4">
-                                        <label for="cardName" class="block text-gray-700 font-medium mb-2">
-                                            <span class="text-red-500 mr-1">*</span>Name on Card
-                                        </label>
-                                        <input type="text" id="cardName" name="card_name" placeholder="John Doe"
-                                            required
-                                            class="w-full p-3 border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all">
-                                    </div>
-
-                                    <div class="mb-4">
-                                        <label for="cardNumber" class="block text-gray-700 font-medium mb-2">
-                                            <span class="text-red-500 mr-1">*</span>Card Number
-                                        </label>
-                                        <div class="relative">
-                                            <input type="text" id="cardNumber" name="card_number"
-                                                placeholder="1234 5678 9012 3456" required
-                                                class="w-full p-3 border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all pr-10">
-                                            <i
-                                                class="fas fa-credit-card absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                
+                                    <form id="cardPaymentForm" action="<?php echo e(route('confirm.card.order', $order_code)); ?>" method="POST">
+                                        <?php echo csrf_field(); ?>
+                                        <div class="mt-6">
+                                            <button type="submit"
+                                                class="w-full bg-blue-600 text-white py-3 px-4 rounded font-medium hover:bg-blue-700 transition-colors">
+                                                Pay with Card via OnePay
+                                            </button>
                                         </div>
-                                    </div>
+                                    </form>
 
-                                    <div class="flex flex-wrap -mx-2 mb-4">
-                                        <div class="w-full md:w-1/2 px-2 mb-4 md:mb-0">
-                                            <label for="expiryDate" class="block text-gray-700 font-medium mb-2">
-                                                <span class="text-red-500 mr-1">*</span>Expiry Date
-                                            </label>
-                                            <input type="text" id="expiryDate" name="expiry_date" placeholder="MM/YY"
-                                                required
-                                                class="w-full p-3 border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all">
-                                        </div>
-                                        <div class="w-full md:w-1/2 px-2">
-                                            <label for="cvv" class="block text-gray-700 font-medium mb-2">
-                                                <span class="text-red-500 mr-1">*</span>CVV
-                                            </label>
-                                            <div class="relative">
-                                                <input type="text" id="cvv" name="cvv" placeholder="123"
-                                                    required
-                                                    class="w-full p-3 border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200 transition-all pr-10">
-                                                <i class="fas fa-question-circle absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                                                    title="3-digit code on back of card"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-6">
-                                        <button type="submit"
-                                            class="w-full bg-blue-600 text-white py-3 px-4 rounded font-medium hover:bg-blue-700 transition-colors">
-                                            Complete Payment
-                                        </button>
-                                    </div>
-                                </form>
                             </div>
 
                             <!-- Cash on Delivery Content -->
@@ -262,13 +220,13 @@
             });
 
             // Form submission
-            const cardPaymentForm = document.getElementById('cardPaymentForm');
-            cardPaymentForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                // In a real application, you would process the payment here
-                document.getElementById('successAlert').classList.remove('hidden');
-                window.scrollTo(0, 0); // Scroll to top to show the alert
-            });
+            // const cardPaymentForm = document.getElementById('cardPaymentForm');
+            // cardPaymentForm.addEventListener('submit', function(e) {
+            //     e.preventDefault();
+            //     // In a real application, you would process the payment here
+            //     document.getElementById('successAlert').classList.remove('hidden');
+            //     window.scrollTo(0, 0); // Scroll to top to show the alert
+            // });
 
             const codForm = document.getElementById('codForm');
             codForm.addEventListener('submit', function(e) {
