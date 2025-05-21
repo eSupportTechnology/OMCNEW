@@ -184,7 +184,7 @@ class PaymentController extends Controller
                 'amount'                   => $amount,
                 'reference'                => $reference,
                 'customer_first_name'      => $order->customer_fname,
-                'customer_last_name'       => '',
+                'customer_last_name'       => optional($order->user)->name ?? 'Unknown',
                 'customer_phone_number'    => $order->phone,
                 'customer_email'           => $order->email,
                 'transaction_redirect_url' => route('order.thankyou', ['order_code' => $order_code]),
