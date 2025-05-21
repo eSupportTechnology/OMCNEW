@@ -305,9 +305,10 @@
 
 <!-- footer for mobile end -->
 
+
 <!-- footer for destop begin -->
 <style>
-    /* Added and improved CSS for the footer */
+    /* Footer styling */
     .destop-footer-con {
         font-family: 'Roboto', sans-serif;
     }
@@ -316,12 +317,14 @@
         margin-bottom: 0;
     }
 
+    /* Top blue service bar */
     .purple-div {
         display: flex;
         justify-content: space-around;
         flex-wrap: wrap;
         padding: 20px 0;
         margin-bottom: 0;
+        background-color: #2B96C5; /* Keeping the original blue color */
     }
 
     .footer-box {
@@ -349,24 +352,24 @@
         font-size: 14px;
     }
 
+    /* Main footer content area */
     .footer-padding {
-        /* padding: 40px 15px; */
+        padding: 40px 0;
         margin-bottom: auto;
     }
 
+    /* Company info section */
     .address-info {
         display: flex;
         flex-direction: column;
     }
 
-    /* Improved logo styling */
     .address-info img {
-    width: 300px !important;
-    height: auto;
-    /* margin: 0 auto 20px; */
-    display: block;
-}
-
+        width: 300px !important;
+        height: auto;
+        display: block;
+        margin-bottom: 20px;
+    }
 
     .hotline {
         margin-top: 20px;
@@ -385,6 +388,7 @@
         text-decoration: none;
     }
 
+    /* Social media section */
     .social-media {
         margin-top: 20px;
         margin-bottom: auto;
@@ -400,6 +404,7 @@
         margin-right: 15px;
     }
 
+    /* Footer links styling */
     .footer-title {
         font-weight: bold;
         color: #333;
@@ -427,12 +432,10 @@
         color: #2B96C5;
     }
 
-    /* Removed gap between sections */
-    .bg-white-con {
-        background-color: #fff;
+    /* Payment methods section */
+    .payment-methods-container {
         padding: 20px 0;
         border-top: 1px solid #eee;
-        margin-top: 0;
     }
 
     .footer-payment-methods {
@@ -451,11 +454,10 @@
         width: auto;
     }
 
-    /* Enhanced copyright section */
+    /* Copyright section */
     .copyright {
         text-align: center;
         padding: 15px 0;
-        border-radius: 5px;
         margin-top: 10px;
     }
 
@@ -464,76 +466,78 @@
         color: #555;
         letter-spacing: 0.5px;
     }
-    </style>
+</style>
 
-    <div class="destop-footer-con">
-        <div class="footer ft-destop">
-            <div class="purple-div">
-                <div class="footer-box">
-                    <div class="footer-icon">
-                        <img src="<?php echo e(asset('frontend/newstyle/assets/images/icon/Page-1.webp')); ?>">
+<div class="destop-footer-con">
+    <!-- Top service bar with blue background -->
+    <div class="purple-div">
+        <div class="footer-box">
+            <div class="footer-icon">
+                <img src="<?php echo e(asset('frontend/newstyle/assets/images/icon/Page-1.webp')); ?>">
+            </div>
+            <div class="footer-details">
+                <p class="footer-white-color-css">Customer Support</p>
+            </div>
+        </div>
+        <div class="footer-box">
+            <div class="footer-icon">
+                <img src="<?php echo e(asset('frontend/newstyle/assets/images/icon/sri-lanka.webp')); ?>">
+            </div>
+            <div class="footer-details">
+                <p class="footer-white-color-css">Island-wide Delivery</p>
+            </div>
+        </div>
+        <div class="footer-box">
+            <div class="footer-icon">
+                <img src="<?php echo e(asset('frontend/newstyle/assets/images/icon/stopwatch.webp')); ?>">
+            </div>
+            <div class="footer-details">
+                <p class="footer-white-color-css">Express Delivery</p>
+            </div>
+        </div>
+        <div class="footer-box">
+            <div class="footer-icon">
+                <img src="<?php echo e(asset('frontend/newstyle/assets/images/icon/technical-support.webp')); ?>">
+            </div>
+            <div class="footer-details">
+                <p class="footer-white-color-css">100+ Service Centers</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main footer content -->
+    <div class="container footer-padding">
+        <div class="row">
+            <!-- Company info and social media -->
+            <div class="col-md-4">
+                <div class="address-info">
+                    <?php if($siteLogo && $siteLogo->image_path): ?>
+                        <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>" alt="Site Logo">
+                    <?php else: ?>
+                        <img src="<?php echo e(asset('frontend/newstyle/assets/images/buyabans-logo.webp')); ?>">
+                    <?php endif; ?>
+
+                    <div class="hotline">
+                        <p>HOTLINE</p>
+                        <a class="tel-no" href="#">+94 112 251 202</a>
                     </div>
-                    <div class="footer-details">
-                        <p class="footer-white-color-css">Customer Support</p>
-                        
-                    </div>
-                </div>
-                <div class="footer-box">
-                    <div class="footer-icon"><img
-                            src="<?php echo e(asset('frontend/newstyle/assets/images/icon/sri-lanka.webp')); ?>">
-                    </div>
-                    <div class="footer-details">
-                        <p class="footer-white-color-css">Island-wide Delivery</p>
-                    </div>
-                </div>
-                <div class="footer-box">
-                    <div class="footer-icon"><img
-                            src="<?php echo e(asset('frontend/newstyle/assets/images/icon/stopwatch.webp')); ?>">
-                    </div>
-                    <div class="footer-details">
-                        <p class="footer-white-color-css">Express Delivery</p>
-                    </div>
-                </div>
-                <div class="footer-box">
-                    <div class="footer-icon"><img
-                            src="<?php echo e(asset('frontend/newstyle/assets/images/icon/technical-support.webp')); ?>">
-                    </div>
-                    <div class="footer-details">
-                        <p class="footer-white-color-css">100+ Service Centers</p>
+                    <div class="social-media">
+                        <ul>
+                            <li><a href="#" target="_blank"><i class="fab fa-facebook" style="color:#2B96C5; font-size: 22px;"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-twitter" style="color:#2B96C5; font-size: 22px;"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-instagram" style="color:#2B96C5; font-size: 22px;"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-linkedin-in" style="color:#2B96C5; font-size: 22px;"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-youtube" style="color:#2B96C5; font-size: 22px;"></i></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            <div class="container footer-padding">
-                <div class="row align-items-start">
-                    <div class="col-md-4 address-info">
-                        <?php if($siteLogo && $siteLogo->image_path): ?>
-                            <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>" alt="Site Logo">
-                        <?php else: ?>
-                            <img src="<?php echo e(asset('frontend/newstyle/assets/images/buyabans-logo.webp')); ?>">
-                        <?php endif; ?>
-
-                        <div class="hotline">
-                            <p>HOTLINE</p>
-                            <a class="tel-no" href="#">+94 112 251 202</a>
-                        </div>
-                        <div class="social-media">
-                            <ul>
-                                <li><a href="#" target="_blank"><i class="fab fa-facebook"
-                                            style="color:#2B96C5 ; font-size: 22px;"></i></a></li>
-                                <li><a href="#" target="_blank"><i class="fab fa-twitter"
-                                            style="color:#2B96C5 ; font-size: 22px;"></i></a></li>
-                                <li><a href="#" target="_blank"><i class="fab fa-instagram"
-                                            style="color:#2B96C5 ; font-size: 22px;"></i></a></li>
-                                <li><a href="#" target="_blank"><i class="fab fa-linkedin-in"
-                                            style="color:#2B96C5 ; font-size: 22px;"></i></a></li>
-                                <li><a href="#" target="_blank"><i class="fab fa-youtube"
-                                            style="color:#2B96C5 ; font-size: 22px;"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2">
+            <!-- Footer navigation links -->
+            <div class="col-md-8">
+                <div class="row">
+                    <!-- About section -->
+                    <div class="col-md-3">
                         <div class="footer-links-set">
                             <p class="footer-title">About</p>
                             <ul>
@@ -544,7 +548,8 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <!-- Help section -->
+                    <div class="col-md-3">
                         <div class="footer-links-set">
                             <p class="footer-title">Help</p>
                             <ul>
@@ -555,7 +560,8 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <!-- Policies section -->
+                    <div class="col-md-3">
                         <div class="footer-links-set">
                             <p class="footer-title">Policies</p>
                             <ul>
@@ -566,7 +572,8 @@
                         </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <!-- Quick Links section -->
+                    <div class="col-md-3">
                         <div class="footer-links-set">
                             <p class="footer-title">Quick Links</p>
                             <ul>
@@ -578,44 +585,44 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="bg-white-con">
-                <div class="container">
-                    <div class="footer-payment-methods">
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/VISA1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/MASTER1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/AMEX1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/COMBANK1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/FRIMI.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/HSBC.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/PB1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/DFCC.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/SAMPATH1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/NDB1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/NTB1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/PAB.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/BOC1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/AMANA1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/CARGILLS1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/CDB1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/KOKO.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/HNB1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/LOLC1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/NSB1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/SC1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/SEY1.webp')); ?>"></div>
-                        <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/UB1.webp')); ?>"></div>
-                    </div>
-                    <div class="copyright">
-                        <small>Copyright © 2025 ONLINE MARKETING COMPLEX. All Rights Reserved.</small>
-                    </div>
-                </div>
+    <!-- Payment methods and copyright -->
+    <div class="payment-methods-container">
+        <div class="container">
+            <div class="footer-payment-methods">
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/VISA1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/MASTER1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/AMEX1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/COMBANK1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/FRIMI.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/HSBC.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/PB1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/DFCC.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/SAMPATH1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/NDB1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/NTB1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/PAB.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/BOC1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/AMANA1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/CARGILLS1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/CDB1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/KOKO.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/HNB1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/LOLC1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/NSB1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/SC1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/SEY1.webp')); ?>"></div>
+                <div class="bank-image"><img src="<?php echo e(asset('frontend/newstyle/assets/images/new-bank-logo/UB1.webp')); ?>"></div>
+            </div>
+            <div class="copyright">
+                <small>Copyright © 2025 ONLINE MARKETING COMPLEX. All Rights Reserved.</small>
             </div>
         </div>
     </div>
+</div>
 <!-- footer for destop end -->
-
-
 
 
 
