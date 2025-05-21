@@ -1,37 +1,155 @@
 <?php $__env->startSection('content'); ?>
-    <style>
-        .btn-cart {
-            background-color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s, color 0.3s;
+<style>
+    /* Improved Button Styles */
+    .btn-cart {
+        background-color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .btn-cart i {
+        font-size: 1.5rem;
+        color: black;
+        transition: color 0.3s ease;
+    }
+
+    .btn-cart:hover {
+        background-color: black;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .btn-cart:hover i {
+        color: white;
+    }
+
+    /* Color Selection Styles */
+    .color-option {
+        transition: all 0.2s ease;
+    }
+
+    .color-option.selected-color {
+        border: 2px solid #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+        transform: scale(1.1);
+    }
+
+    /* Product Card Enhancements */
+    .single-products-box {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .single-products-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .products-image {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hover-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .single-products-box:hover .hover-image {
+        opacity: 1;
+    }
+
+    .single-products-box:hover .main-image {
+        opacity: 0;
+    }
+
+    /* Price Styling */
+    .old-price {
+        text-decoration: line-through;
+        color: #999;
+        margin-right: 8px;
+    }
+
+    .new-price {
+        color: #f55b29;
+        font-weight: 600;
+    }
+
+    /* Filter Widget Styling */
+    .woocommerce-widget {
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .woocommerce-widget-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    /* Pagination Styling */
+    .pagination-area .page-numbers {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        margin: 0 5px;
+        border-radius: 50%;
+        background: #f5f5f5;
+        color: #333;
+        transition: all 0.3s ease;
+    }
+
+    .pagination-area .page-numbers:hover,
+    .pagination-area .page-numbers.current {
+        background: #007bff;
+        color: white;
+    }
+
+    /* Modal Enhancements */
+    .modal-content {
+        border: none;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .btn-custom-cart {
+        transition: all 0.3s ease;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+
+    .btn-custom-cart:hover {
+        background-color: #0069d9 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 767px) {
+        .products-col-item {
+            margin-bottom: 30px;
         }
 
-        .btn-cart i {
-            font-size: 1.5rem;
-            color: black;
+        .woocommerce-widget-area {
+            margin-bottom: 30px;
         }
-
-        .btn-cart:hover {
-            background-color: black;
-        }
-
-        .btn-cart:hover i {
-            color: white;
-        }
-
-        .color-option.selected-color {
-            border: 2px solid #007bff;
-            /* Blue border for the selected color */
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-            /* Optional: adds a glow effect */
-        }
-    </style>
+    }
+</style>
     <!-- Start Page Title -->
     <div class="page-title-area">
         <div class="container">
@@ -121,32 +239,6 @@
                                     <span class="sub-title d-lg-none"><a href="#" data-bs-toggle="modal"
                                             data-bs-target="#productsFilterModal"><i class='fa-solid fa-filter '></i>
                                             Filter</a></span>
-
-                                    <!--<span class="sub-title d-none d-lg-block d-md-block">View:</span>
-
-                                                                                                                    <div class="view-list-row d-none d-lg-block d-md-block">
-                                                                                                                        <div class="view-column">
-                                                                                                                            <a href="#" class="icon-view-one">
-                                                                                                                                <span></span>
-                                                                                                                            </a>
-
-                                                                                                                            <a href="#" class="icon-view-two active">
-                                                                                                                                <span></span>
-                                                                                                                                <span></span>
-                                                                                                                            </a>
-
-                                                                                                                            <a href="#" class="icon-view-three">
-                                                                                                                                <span></span>
-                                                                                                                                <span></span>
-                                                                                                                                <span></span>
-                                                                                                                            </a>
-
-                                                                                                                            <a href="#" class="view-grid-switch">
-                                                                                                                                <span></span>
-                                                                                                                                <span></span>
-                                                                                                                            </a>
-                                                                                                                        </div>
-                                                                                                                    </div>-->
                                 </div>
                             </div>
 
@@ -183,10 +275,6 @@
                                                         alt="image">
                                                 <?php endif; ?>
                                             </a>
-
-                                            
-
-
                                             <?php if(
                                                 ($product->sale && $product->sale->status === 'active') ||
                                                     ($product->specialOffer && $product->specialOffer->status === 'active')): ?>
@@ -296,8 +384,8 @@
 
     <!-- cart modal-->
     <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <div class="modal fade" id="cartModal_<?php echo e($product->product_id); ?>" tabindex="-1"
-            aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal fade" id="cartModal_<?php echo e($product->product_id); ?>" tabindex="-1" aria-labelledby="cartModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered  modal-lg">
                 <div class="modal-content" style="border-radius: 0;">
                     <div class="modal-header">
@@ -507,7 +595,8 @@
                                         <a href="<?php echo e(route('all-items')); ?>?color=<?php echo e($color->value); ?>"
                                             style="background-color: <?php echo e($color->hex_value); ?>;"
                                             class="<?php echo e(request('color') === $color->value ? 'active' : ''); ?>"
-                                            title="<?php echo e($color->value); ?>"></a>
+                                            title="<?php echo e($color->value); ?>">
+                                        </a>
                                     </li>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
@@ -523,43 +612,82 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
 
-
-    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.btn-cart').forEach(button => {
-                button.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                    event.preventDefault();
-                });
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
+            // Enhanced color selection with animation
             const colorButtons = document.querySelectorAll('.color-option');
 
             colorButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     // Remove the selected class from all buttons
-                    colorButtons.forEach(btn => btn.classList.remove('selected-color'));
+                    colorButtons.forEach(btn => {
+                        btn.classList.remove('selected-color');
+                        btn.style.transform = 'scale(1)';
+                    });
 
+                    // Add animation to selected button
                     this.classList.add('selected-color');
+                    this.style.transform = 'scale(1.1)';
 
-                    const selectedColor = this.getAttribute('data-color');
-                    console.log('Selected Color: ', selectedColor);
+                    // Optional: Add ripple effect
+                    const ripple = document.createElement('span');
+                    ripple.classList.add('ripple-effect');
+                    this.appendChild(ripple);
 
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+
+            // Product card hover effects
+            const productCards = document.querySelectorAll('.single-products-box');
+            productCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Smooth scroll for filter modal
+            const filterLinks = document.querySelectorAll('.collections-list-row a, .size-list-row a, .color-list-row a');
+            filterLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (window.innerWidth < 992) {
+                        e.preventDefault();
+                        const targetModal = document.getElementById('productsFilterModal');
+                        const bsModal = bootstrap.Modal.getInstance(targetModal);
+                        if (bsModal) {
+                            bsModal.hide();
+                        }
+                        setTimeout(() => {
+                            window.location.href = this.href;
+                        }, 300);
+                    }
+                });
+            });
+
+            // Image gallery in modal with smooth transitions
+            document.querySelectorAll('.thumbnail-image').forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    const mainImage = document.getElementById('mainImage');
+                    mainImage.style.opacity = 0;
+
+                    setTimeout(() => {
+                        mainImage.src = this.getAttribute('data-image');
+                        mainImage.style.opacity = 1;
+                    }, 200);
                 });
             });
         });
-    </script>
 
-
-    <script>
+        // Enhanced AJAX cart functionality with better feedback
         $(document).ready(function() {
-            // Add to Cart click event
             $('.add-to-cart-modal').on('click', function(e) {
                 e.preventDefault();
-                console.log('Button clicked'); // Debugging line to check if the click event is firing
 
                 const productId = $(this).data('product-id');
                 const isAuth = $(this).data('auth');
@@ -572,28 +700,32 @@
                 const selectedSize = hasSizeOptions ? sizeOptions.filter('.active').data('size') : null;
                 const selectedColor = hasColorOptions ? colorOptions.filter('.active').data('color') : null;
 
-                // Check if size is required and not selected
+                // Check requirements
                 if (hasSizeOptions && !selectedSize) {
-                    toastr.warning('Please select a size option before adding this product to the cart.',
-                        'Warning', {
-                            positionClass: 'toast-top-right',
-                            timeOut: 3000,
-                        });
-                    return; // Stop further execution
+                    toastr.warning('Please select a size option before adding this product to the cart.', 'Size Required', {
+                        positionClass: 'toast-top-right',
+                        timeOut: 3000,
+                        closeButton: true,
+                        progressBar: true
+                    });
+                    return;
                 }
 
-                // Check if color is required and not selected
                 if (hasColorOptions && !selectedColor) {
-                    toastr.warning('Please select a color option before adding this product to the cart.',
-                        'Warning', {
-                            positionClass: 'toast-top-right',
-                            timeOut: 3000,
-                        });
-                    return; // Stop further execution
+                    toastr.warning('Please select a color option before adding this product to the cart.', 'Color Required', {
+                        positionClass: 'toast-top-right',
+                        timeOut: 3000,
+                        closeButton: true,
+                        progressBar: true
+                    });
+                    return;
                 }
 
-                // Check if the user is authenticated
                 if (isAuth === true || isAuth === "true") {
+                    const btn = $(this);
+                    btn.html('<i class="fa fa-spinner fa-spin me-1"></i> Adding...');
+                    btn.prop('disabled', true);
+
                     $.ajax({
                         url: "<?php echo e(route('cart.add')); ?>",
                         method: 'POST',
@@ -604,63 +736,76 @@
                             color: selectedColor
                         },
                         success: function(response) {
+                            // Update cart count
                             $.get("<?php echo e(route('cart.count')); ?>", function(data) {
                                 $('#cart-count').text(data.cart_count);
+
+                                // Add animation to cart icon
+                                const cartIcon = $('.cart-icon');
+                                cartIcon.addClass('animate-bounce');
+                                setTimeout(() => {
+                                    cartIcon.removeClass('animate-bounce');
+                                }, 1000);
                             });
 
-                            toastr.success('Item added to cart!', 'Success', {
+                            toastr.success('Item successfully added to your cart!', 'Added to Cart', {
                                 positionClass: 'toast-top-right',
                                 timeOut: 3000,
+                                closeButton: true,
+                                progressBar: true,
+                                onHidden: function() {
+                                    btn.html('<i class="me-1 fa fa-shopping-basket"></i>Add to cart');
+                                    btn.prop('disabled', false);
+                                }
                             });
 
-                            productContainer.find('button.size-option.active').removeClass(
-                                'active');
-                            productContainer.find('button.color-option.active').removeClass(
-                                'active');
+                            // Reset selections
+                            productContainer.find('button.size-option.active').removeClass('active');
+                            productContainer.find('button.color-option.active').removeClass('active');
                         },
                         error: function(xhr) {
                             toastr.error('Something went wrong. Please try again.', 'Error', {
                                 positionClass: 'toast-top-right',
                                 timeOut: 3000,
+                                closeButton: true,
+                                progressBar: true
                             });
+                            btn.html('<i class="me-1 fa fa-shopping-basket"></i>Add to cart');
+                            btn.prop('disabled', false);
                         }
                     });
                 } else {
-                    toastr.warning('Please log in to add items to your cart.', 'Warning', {
+                    toastr.warning('Please log in to add items to your cart.', 'Login Required', {
                         positionClass: 'toast-top-right',
                         timeOut: 3000,
+                        closeButton: true,
+                        progressBar: true,
+                        onclick: function() {
+                            window.location.href = "<?php echo e(route('login')); ?>";
+                        }
                     });
                 }
             });
 
-            // Size selection click event
+            // Enhanced selection with animation
             $('.size-option').on('click', function() {
                 $('.size-option').removeClass('active');
                 $(this).addClass('active');
+                $(this).css('transform', 'scale(1.05)');
+                setTimeout(() => {
+                    $(this).css('transform', 'scale(1)');
+                }, 200);
             });
 
-            // Color selection click event
             $('.color-option').on('click', function() {
-                // Reset previous color selection
-                $('.color-option').removeClass('active');
-                $(this).addClass('active');
+                $('.color-option').removeClass('active selected-color');
+                $(this).addClass('active selected-color');
+                $(this).css('transform', 'scale(1.1)');
             });
         });
     </script>
 
 
-    <script>
-        $('.js-range-of-price').on('input', function() {
-            var minPrice = $(this).data('min');
-            var maxPrice = $(this).data('max');
-            var priceRange = $(this).val();
-
-            // Update the URL with the price range filter
-            var url = new URL(window.location);
-            url.searchParams.set('price', priceRange);
-            window.location.href = url.toString();
-        });
-    </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('frontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Manulas Doc\Project\Intern\Project\omcnew project\OMCNEW\resources\views/frontend/all_items.blade.php ENDPATH**/ ?>

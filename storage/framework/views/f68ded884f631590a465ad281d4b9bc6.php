@@ -1,7 +1,7 @@
 <?php $__env->startSection('content'); ?>
+
 <style>
-
-
+    /* Improved Button Styles */
     .btn-cart {
         background-color: white;
         border: none;
@@ -11,27 +11,147 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background-color 0.3s, color 0.3s;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     .btn-cart i {
         font-size: 1.5rem;
         color: black;
+        transition: color 0.3s ease;
     }
 
     .btn-cart:hover {
         background-color: black;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
     .btn-cart:hover i {
         color: white;
     }
-    .color-option.selected-color {
-    border: 2px solid #007bff; /* Blue border for the selected color */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Optional: adds a glow effect */
-}
 
+    /* Color Selection Styles */
+    .color-option {
+        transition: all 0.2s ease;
+    }
+
+    .color-option.selected-color {
+        border: 2px solid #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+        transform: scale(1.1);
+    }
+
+    /* Product Card Enhancements */
+    .single-products-box {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .single-products-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .products-image {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hover-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .single-products-box:hover .hover-image {
+        opacity: 1;
+    }
+
+    .single-products-box:hover .main-image {
+        opacity: 0;
+    }
+
+    /* Price Styling */
+    .old-price {
+        text-decoration: line-through;
+        color: #999;
+        margin-right: 8px;
+    }
+
+    .new-price {
+        color: #f55b29;
+        font-weight: 600;
+    }
+
+    /* Filter Widget Styling */
+    .woocommerce-widget {
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .woocommerce-widget-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    /* Pagination Styling */
+    .pagination-area .page-numbers {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        margin: 0 5px;
+        border-radius: 50%;
+        background: #f5f5f5;
+        color: #333;
+        transition: all 0.3s ease;
+    }
+
+    .pagination-area .page-numbers:hover,
+    .pagination-area .page-numbers.current {
+        background: #007bff;
+        color: white;
+    }
+
+    /* Modal Enhancements */
+    .modal-content {
+        border: none;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .btn-custom-cart {
+        transition: all 0.3s ease;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+
+    .btn-custom-cart:hover {
+        background-color: #0069d9 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 767px) {
+        .products-col-item {
+            margin-bottom: 30px;
+        }
+
+        .woocommerce-widget-area {
+            margin-bottom: 30px;
+        }
+    }
 </style>
+
         <!-- Start Page Title -->
         <div class="page-title-area">
             <div class="container">

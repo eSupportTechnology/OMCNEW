@@ -354,18 +354,18 @@
 
     /* Main footer content area */
     .footer-padding {
-        padding: 40px 0;
-        margin-bottom: auto;
+        padding: 40px 0 0;  /* Remove bottom padding */
+        margin-bottom: 0;   /* Ensure no margin at bottom */
     }
 
-    /* Company info section */
+    /* Company info section - FIXED */
     .address-info {
-        display: flex;
-        flex-direction: column;
+        display: block; /* Changed from flex to block to fix alignment */
     }
 
+    /* Direct logo styling fix */
     .address-info img {
-        width: 300px !important;
+        max-width: 300px;
         height: auto;
         display: block;
         margin-bottom: 20px;
@@ -511,10 +511,11 @@
             <!-- Company info and social media -->
             <div class="col-md-4">
                 <div class="address-info">
+                    <!-- Simplified logo structure -->
                     <?php if($siteLogo && $siteLogo->image_path): ?>
                         <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>" alt="Site Logo">
                     <?php else: ?>
-                        <img src="<?php echo e(asset('frontend/newstyle/assets/images/buyabans-logo.webp')); ?>">
+                        <img src="<?php echo e(asset('frontend/newstyle/assets/images/buyabans-logo.webp')); ?>" alt="Site Logo">
                     <?php endif; ?>
 
                     <div class="hotline">
@@ -533,7 +534,7 @@
                 </div>
             </div>
 
-            <!-- Footer navigation links -->
+            <!-- Footer navigation links - no changes needed here -->
             <div class="col-md-8">
                 <div class="row">
                     <!-- About section -->
