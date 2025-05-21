@@ -43,164 +43,45 @@
                                     <h3 class="title-terms">Frequently Asked Questions</h3>
 
                                     <ol>
-                                        <li class="title-other">Do I need to create a user account to buy products on
-                                            BuyAbans.com?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>No. You can browse and purchase what you want as a guest. However, by
-                                                    registering as a user, you can make your online shopping experience even
-                                                    better by earning & spending customer Loyalty points for special
-                                                    discounts, saving items to your Wish List to buy later, keeping track of
-                                                    past & current orders, and more. </li>
+                                        <li class="title-other">What shipping methods are available?
+                                            <ol style="list-style-type: square">
+                                                <li>Shipping times and costs depend on the shipping method and location. Standard shipping typically takes 5-7 business days, while express shipping takes 2-3 days. For same-day delivery, it's available in select areas for orders placed before 12 PM. Shipping costs are calculated at checkout, with free standard shipping on orders over LKR 5,000. Additional fees apply for express and international shipping.</li>
                                             </ol>
                                         </li>
-                                        <li class="title-other">Are my online transactions safe?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>Yes. We utilize the latest in digital encryption &amp; web technology to
-                                                    ensure that your transactions are secure and your personal details are
-                                                    safe when
-                                                    you shop at BuyAbans.com. You can read our <a href="policy.html">Privacy
-                                                        Policy</a> here for more details on how we keep your personal
-                                                    details
-                                                    safe.</li>
+                                        <li class="title-other">What are shipping times and costs?
+                                            <ol style="list-style-type: square">
+                                                <li>We offer several shipping methods to ensure your order arrives as quickly and securely as possible. Our available shipping options include: Standard Shipping – Delivered within 5-7 business days. Express Shipping – Delivered within 2-3 business days. Same-Day Delivery – Available in select areas for orders placed before 12 PM. International Shipping – We also offer international shipping to select countries, with delivery times varying based on location.</li>
                                             </ol>
                                         </li>
                                         <li class="title-other">What payment methods can I use?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>We accept Visa/MasterCard/AMEX credit &amp; debit cards, FriMi &amp;
-                                                    Dialog
-                                                    genie digital wallets, bank transfers and cash on delivery payments.
+                                            <ol style="list-style-type: square">
+                                                <li>Credit Card: Visa, MasterCard, Discover, American Express, JCB, Visa Electron. The total will be charged to your card when the order is shipped.
+                                                </li>
+                                            </ol>
+                                            <ol style="list-style-type: square; ">
+                                                <li>Comero features a Fast Checkout option, allowing you to securely save your credit card details so that you don't have to re-enter them for future purchases.
+                                                </li>
+                                            </ol>
+                                            <ol style="list-style-type: square">
+                                                <li>PayPal: Shop easily online without having to enter your credit card details on the website. Your account will be charged once the order is completed. To register for a PayPal account, visit the website paypal.com.
+                                                </li>
+                                            </ol>
+                                            <ol style="list-style-type: square">
+                                                <li>Credit Card: Visa, MasterCard, Discover, American Express, JCB, Visa Electron. The total will be charged to your card when the order is shipped.
                                                 </li>
                                             </ol>
                                         </li>
-                                        <li class="title-other">Can I pay in installments?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>Yes. We offer Easy Payment Plans for up to 60 Months with Interest-Free
-                                                    Payments Plans available up to 48 Months for credit cardholders. You can
-                                                    view the available payment plans on the product page and select your
-                                                    preference during Check Out.</li>
+                                        <li class="title-other">Can I use my own domain name?
+                                            <ol style="list-style-type: square">
+                                                <li>Absolutely! Simply point your domain directly to your new Xton. You do not need to use a subdomain or any other temporary domain name placeholder.</li>
                                             </ol>
                                         </li>
-                                        <li class="title-other">How do I track/check the status of my order?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>Simply log in to your user account, go to My Orders and select the order
-                                                    to
-                                                    check the status.</li>
+                                        <li class="title-other">What kind of customer service do you offer?
+                                            <ol style="list-style-type: square">
+                                                <li>Our ecommerce consultants are here to answer your questions. In addition to FREE phone support, you can contact our consultants via email or live chat.</li>
                                             </ol>
                                         </li>
-                                        <li class="title-other">How long will it take to deliver my order?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>We can deliver your order within 4 to 5 working days anywhere in Sri
-                                                    Lanka.
-                                                </li>
-                                            </ol>
-                                        </li>
-                                        <li class="title-other">What is Pickup ?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>If you don’t want to wait for your order to be delivered to your home,
-                                                    you can now pick it up yourself from one of our Abans Elite Showrooms.
-                                                    Simply select Pick up at checkout and choose your preferred store. When
-                                                    your order is ready to collect, we’ll let you know.</li>
-                                            </ol>
-                                        </li>
-                                        <li class="title-other">There is something wrong with my order. What do I do?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>You can contact our customer care hotline at <a
-                                                        href="tel:+94112222888">+94 112 222 888</a>, WhatsApp us at
-                                                    <a href="tel:+94772222888">+94 772 222 888</a>
-                                                </li>
-                                            </ol>
-                                        </li>
-                                        <li class="title-other">I received my order but there is something missing/product
-                                            is
-                                            damaged/wrong product. What should I do?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>You can contact our customer care hotline at <a
-                                                        href="tel:+94112222888">+94 112 222 888</a>, WhatsApp us at
-                                                    <a href="tel:+94772222888">+94 772 222 888</a>
-                                                </li>
-                                            </ol>
-                                        </li>
-                                        <li class="title-other">How do I get my Air-Conditioner installed?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>Our team will complete the installation of your Air-Conditioner within
-                                                    03
-                                                    working days after delivery. Installation of up to 5 meters of piping
-                                                    from the
-                                                    indoor unit to the outdoor unit will be free of charge. Our team will
-                                                    provide you with an estimate of additional charges (if any) based on
-                                                    their
-                                                    site inspection prior to installation.</li>
-                                            </ol>
-                                        </li>
-                                        <li class="title-other">I need help setting up my TV/Washing Machine/Refrigerator.
-                                            Who
-                                            do I call?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>Contact our customer care hotline at <a href="tel:+94112222888">+94 112
-                                                        222 888</a>, WhatsApp us at <a href="tel:+94772222888">+94 772 222
-                                                        888</a> and we will send a team within 03 to 04 working days to help
-                                                    set up your device.</li>
-                                            </ol>
-                                        </li>
-                                        <li class="title-other">My device stopped working/is faulty (within 48 hours of
-                                            delivery). Who do I call?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>You can try shutting down &amp; restarting the device which can
-                                                    sometimes
-                                                    resolve minor issues in electronic devices. If the problem persists,
-                                                    contact
-                                                    our customer care team, and closely follow their instructions. You can
-                                                    call
-                                                    them at <a href="tel:+94112222888">+94 112 222 888</a>, WhatsApp at <a
-                                                        href="tel:+94772222888">+94 772 222 888</a>
-                                                    If the defective product is an electronic device, please shut
-                                                    down/switch off
-                                                    while the issue is being resolved and await further instructions from
-                                                    our
-                                                    customer care team.
-                                                </li>
-                                            </ol>
-                                        </li>
-                                        <li class="title-other">The product I bought last week/month/year stopped working/is
-                                            faulty. Who do I call?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>You can contact our service center at +94 115 555 888 and follow their
-                                                    instructions.</li>
-                                            </ol>
-                                        </li>
-                                        <li class="title-other">How do I get a replacement/refund?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>Log in to your user account, go to Return Requests and make a
-                                                    replacement/refund request. Here you can give us details of the issue
-                                                    you experienced and share photos of the faulty product to help process
-                                                    your request. You can also contact our customer care hotline at<a
-                                                        href="tel:+94112222888"> +94 112 222 888</a>, WhatsApp us at <a
-                                                        href="tel:+94772222888">+94 772 222 888</a>.</li>
-                                            </ol>
-                                        </li>
-                                        <li class="title-other">What is the BuyAbans.com return/refund policy?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>You can read our <a href="refundpolicy.html">Return and Refund
-                                                        Policy</a> here.
-                                                </li>
-                                            </ol>
-                                        </li>
-                                        <li>What is the Warranty I can get for a product?
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>You can check the specific available warranty period &amp; details on
-                                                    the
-                                                    product page.</li>
-                                            </ol>
-                                        </li>
-                                        <li class="title-other">Further Questions
-                                            <ol style="list-style-type: lower-alpha;">
-                                                <li>If you have any other questions, please feel free contact us at <a
-                                                        href="tel:+94112222888">+94 112 222 888</a>or WhatsApp us at <a
-                                                        href="tel:+94772222888">+94 772 222 888</a>.
 
-
-                                            </ol>
-                                        </li>
                                     </ol>
                                 </div>
 

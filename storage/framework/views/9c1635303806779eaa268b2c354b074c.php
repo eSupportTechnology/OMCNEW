@@ -28,13 +28,13 @@
                     <h2 class="accordion-header" id="flush-headingOne">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#BuyAbansHotline" aria-expanded="false" aria-controls="BuyAbansHotline">
-                            BuyAbans Hotline
+                            OMC Hotline
                         </button>
                     </h2>
                     <div id="BuyAbansHotline" class="accordion-collapse collapse show" aria-labelledby="BuyAbansHotline"
                         data-bs-parent="#accordion-contact">
                         <div class="accordion-body">
-                            <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 112 222 888</p>
+                            <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 75 833 7141</p>
                             <p class="contact-txt"><i class="fa-solid fa-envelope"></i><a
                                     href="cdn-cgi/l/email-protection.html" class="__cf_email__"
                                     data-cfemail="b0d9ded6dff0d2c5c9d1d2d1dec39ed3dfdd">[email&#160;protected]</a></p>
@@ -46,14 +46,14 @@
                     <h2 class="accordion-header" id="flush-headingOne">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#AbansDutyFree" aria-expanded="false" aria-controls="AbansDutyFree">
-                            Abans Duty Free
+                            OMC Duty Free
                         </button>
                     </h2>
                     <div id="AbansDutyFree" class="accordion-collapse collapse" aria-labelledby="AbansDutyFree"
                         data-bs-parent="#accordion-contact">
                         <div class="accordion-body">
-                            <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 112 252 156</p>
-                            <p class="contact-txt"><i class="fa-solid fa-phone transparent"></i>+94 112 263 300</p>
+                            <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 75 833 7141</p>
+                            <p class="contact-txt"><i class="fa-solid fa-phone transparent"></i>+94 75 833 7141</p>
                         </div>
                     </div>
                 </div>
@@ -69,8 +69,8 @@
                     <div id="Headoffice" class="accordion-collapse collapse" aria-labelledby="Headoffice"
                         data-bs-parent="#accordion-contact">
                         <div class="accordion-body">
-                            <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 112 252 156</p>
-                            <p class="contact-txt"><i class="fa-solid fa-phone transparent"></i>+94 112 263 300</p>
+                            <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 75 833 7141</p>
+                            <p class="contact-txt"><i class="fa-solid fa-phone transparent"></i>+94 75 833 7141</p>
                         </div>
                     </div>
                 </div>
@@ -85,8 +85,8 @@
                     <div id="Serviceinquiries" class="accordion-collapse collapse" aria-labelledby="Serviceinquiries"
                         data-bs-parent="#accordion-contact">
                         <div class="accordion-body">
-                            <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 112 252 156</p>
-                            <p class="contact-txt"><i class="fa-solid fa-phone transparent"></i>+94 112 263 300</p>
+                            <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 75 833 7141</p>
+                            <p class="contact-txt"><i class="fa-solid fa-phone transparent"></i>+94 75 833 7141</p>
                         </div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
                     <div class="white-box-contact-info">
                         <div class="contact-info">
                             <div class="main-contact-info">
-                                <p class="contact-title">BuyAbans Hotline</p>
+                                <p class="contact-title">OMC Hotline</p>
                                 <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 112 222 888</p>
 
                             </div>
@@ -110,20 +110,18 @@
                         <div class="contact-info">
                             <div class="main-contact-info">
                                 <p class="contact-title">Abans Duty Free</p>
-                                <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 112 252 156</p>
-                                <p class="contact-txt"><i class="fa-solid fa-phone transparent"></i>+94 112 263 300</p>
+                                <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 75 833 7141</p>
+                                <p class="contact-txt"><i class="fa-solid fa-phone transparent"></i>+94 75 833 7141</p>
                             </div>
                         </div>
 
                         <div class="contact-info">
                             <div class="main-contact-info">
                                 <p class="contact-title">Contact Our Headoffice</p>
-                                <p class="contact-txt mb-0"><i class="fa-solid fa-location-dot"></i>No 498 Galle Road,
-                                    Colombo
-                                    03,</p>
+                                <p class="contact-txt mb-0"><i class="fa-solid fa-location-dot"></i>No 425/2, Parakum Place, Kaduruwela, Polannaruwa.</p>
                                 <p class="contact-txt"><i class="fa-solid fa-location-dot transparent"></i>Sri Lanka.</p>
                                 <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 115 775 000</p>
-                                <p class="contact-txt"><i class="fa-solid fa-envelope"></i>www.abansgroup.com</p>
+                                <p class="contact-txt"><i class="fa-solid fa-envelope"></i>www.myomc.lk</p>
 
                             </div>
                         </div>
@@ -141,8 +139,8 @@
 
                     <div class="contact-map">
 
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3960.8910420259135!2d79.8494583744827!3d6.9036315186303145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25960aaa01ca3%3A0xe908476a81db02de!2sAbans%20Elite%20-%20Colombo%2003%20(Main%20Showroom)!5e0!3m2!1sen!2slk!4v1703064492054!5m2!1sen!2slk"
+
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d31613.237266021137!2d81.045318!3d7.93109!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3afb45b9b663e885%3A0x401c82be0e935ded!2sOnline%20Marketing%20Complex!5e0!3m2!1sen!2slk!4v1747806887113!5m2!1sen!2slk"
                             width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"></iframe>
 

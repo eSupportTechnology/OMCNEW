@@ -20,10 +20,10 @@
             <div class="row">
                 <div class="col-md-3 terms-nav">
                     <div class="nav flex-column nav-pills" id="v-pills-tab">
-                        <a class="nav-link  active " id="v-pills-one-tab" href="terms-and-conditions.html"
-                            role="tab">Terms and Conditions</a>
-                        <a class="nav-link " id="v-pills-two-tab" href="policy.html">Privacy Policy</a>
-                        <a class="nav-link " id="v-pills-three-tab" href="refundpolicy.html">Return and Refund Policy</a>
+                        <a class="nav-link  active " id="v-pills-one-tab" href="/terms-condition" role="tab">Terms and
+                            Conditions</a>
+                        <a class="nav-link " id="v-pills-two-tab" href="/privacy-policy">Privacy Policy</a>
+                        <a class="nav-link " id="v-pills-three-tab" href="/return-refund">Return and Refund Policy</a>
                     </div>
                 </div>
                 <div class="col-md-9">
