@@ -14,21 +14,23 @@
 
 
     <style>
-        /* Custom styles */
         .carousel-item {
-            background-size: cover;
-            background-position: center;
-            height: 650px;
-            /* Adjust height as needed */
-            width: 100%;
-            position: relative;
-        }
+    height: auto; /* Let image dictate height */
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
 
         /* Mobile (up to 576px) */
         @media (max-width: 576px) {
             .carousel-item {
-                height: 200px;
-                /* Adjust height for mobile */
+                height: auto;
+        aspect-ratio: 1920 / 458; /* Maintains aspect ratio */
             }
 
             .carousel {
@@ -39,8 +41,8 @@
         /* Tablet (576px to 768px) */
         @media (min-width: 577px) and (max-width: 768px) {
             .carousel-item {
-                height: 500px;
-                /* Adjust height for tablets */
+                height: auto;
+        aspect-ratio: 1920 / 458;
             }
         }
 
@@ -239,15 +241,16 @@
     </style>
 
     <!-- Carousel Section -->
-    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" ">
-                                                                                                                                                                                                <div class="carousel-inner">
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
 
-                                                         @foreach ($carousels as $index=>
-        $carousel)
-        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}"
-            style="background-image: url('{{ asset('storage/carousel_images/' . $carousel->image_path) }}');">
-        </div>
-        @endforeach
+            @foreach ($carousels as $index => $carousel)
+    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+        <img src="{{ asset('storage/carousel_images/' . $carousel->image_path) }}" class="d-block w-100" alt="Slide {{ $index + 1 }}">
+    </div>
+@endforeach
+
+
         {{-- <div class="carousel-item active">
                 <!-- First banner image -->
             </div>

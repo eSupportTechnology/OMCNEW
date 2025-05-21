@@ -12,21 +12,23 @@
 
 
     <style>
-        /* Custom styles */
         .carousel-item {
-            background-size: cover;
-            background-position: center;
-            height: 650px;
-            /* Adjust height as needed */
-            width: 100%;
-            position: relative;
-        }
+    height: auto; /* Let image dictate height */
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
 
         /* Mobile (up to 576px) */
         @media (max-width: 576px) {
             .carousel-item {
-                height: 200px;
-                /* Adjust height for mobile */
+                height: auto;
+        aspect-ratio: 1920 / 458; /* Maintains aspect ratio */
             }
 
             .carousel {
@@ -37,8 +39,8 @@
         /* Tablet (576px to 768px) */
         @media (min-width: 577px) and (max-width: 768px) {
             .carousel-item {
-                height: 500px;
-                /* Adjust height for tablets */
+                height: auto;
+        aspect-ratio: 1920 / 458;
             }
         }
 
@@ -237,15 +239,16 @@
     </style>
 
     <!-- Carousel Section -->
-    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" ">
-                                                                                                                                                                                                <div class="carousel-inner">
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
 
-                                                         <?php $__currentLoopData = $carousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index=>
-        $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <div class="carousel-item <?php echo e($index === 0 ? 'active' : ''); ?>"
-            style="background-image: url('<?php echo e(asset('storage/carousel_images/' . $carousel->image_path)); ?>');">
-        </div>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php $__currentLoopData = $carousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <div class="carousel-item <?php echo e($index === 0 ? 'active' : ''); ?>">
+        <img src="<?php echo e(asset('storage/carousel_images/' . $carousel->image_path)); ?>" class="d-block w-100" alt="Slide <?php echo e($index + 1); ?>">
+    </div>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
         
     </div>
     <div class="carousel-indicators">
