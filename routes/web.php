@@ -151,7 +151,7 @@ Route::get('/search-products', [ProductController::class, 'searchProducts'])->na
 
 
 
-
+Route::get('/payment-fail', [PaymentController::class, 'paymentFail'])->name('order.payment-fail');
 
 
 Route::get('/dashboard/profile/edit', [UserDashboardController::class, 'editProfile'])->name('user.editProfile');

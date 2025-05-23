@@ -6,6 +6,7 @@ use App\Helpers\CartHelper;
 use App\Models\CartItem;
 use App\Models\Logo;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        Route::prefix('api')
+            ->middleware('api')
+            ->group(base_path('routes/api.php'));
+
         View::composer('*', function ($view) {
             $view->with('siteLogo', Logo::first());
         });

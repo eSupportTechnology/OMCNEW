@@ -91,6 +91,10 @@ class WishListController extends Controller
     
         return redirect()->back()->with('message', 'Item removed from wishlist');
     }
+
+    public function getWishlistCount(){
+        
+    } 
     
   
 }

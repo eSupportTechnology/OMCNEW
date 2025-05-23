@@ -170,8 +170,17 @@ class PaymentController extends Controller
             $reference = 'DSA_' . uniqid();
 
             Log::info('Initiating OnePay Payment', [
-                'amount'    => $amount,
-                'reference' => $reference,
+                'currency'                 => $currency,
+                'app_id'                   => config('onepay.app_id'),
+                'hash'                     => $hash,
+                'amount'                   => $amount,
+                'reference'                => $reference,
+                'customer_first_name'      => $order->customer_fname,
+                'customer_last_name'       => optional($order->user)->name ?? 'Unknown',
+                'customer_phone_number'    => $order->phone,
+                'customer_email'           => $order->email,
+                'transaction_redirect_url' => route('order.thankyou', ['order_code' => $order_code]),
+                'additional_data'          => $reference,
             ]);
 
             // Make API request to OnePay
@@ -237,6 +246,9 @@ class PaymentController extends Controller
         $order = CustomerOrder::where('order_code', $order_code)->first();
         if (!$order) {
             return redirect()->back()->with('error', 'Order not found.');
+        }
+        if($order->payment_status != "Paid"){
+            return redirect()->route('order.payment-fail')->with('error', 'Order not found.');
         }
         return view('frontend.order_received', [
             'order_code' => $order_code,
@@ -326,5 +338,46 @@ class PaymentController extends Controller
         ]);
 
         return redirect()->route('withdrawals')->with('success', 'Your payment request has been submitted and will be processed within 48 hours.');
+    }
+
+    public function getPaymentInfo(Request $request)
+    {
+        Log::info("this is working");
+        Log::info('Original response from onepay : ', ['response' => $request]);
+
+        try {
+            $statusMessage = $request->input('status_message');
+            $reference = $request->input('additional_data');
+
+            // Find the order by the transaction_id (stored as additional_data / reference)
+            $order = CustomerOrder::where('transaction_id', $reference)->first();
+
+            if (!$order) {
+                Log::error('Order not found for transaction reference: ' . $reference);
+                return redirect()->route('order.payment-fail')->with('error', 'Order not found.');
+            }
+
+            if (strtoupper($statusMessage) === 'SUCCESS') {
+                $order->update(['payment_status' => 'Paid']);
+                Log::info('Order marked as Paid', ['order_code' => $order->order_code]);
+                return response()->json(['message' => 'Payment confirmed and order updated.']);
+            } else {
+                Log::warning('Payment failed or not successful', ['status_message' => $statusMessage]);
+                return redirect()->route('order.payment-fail')->with('error', 'Payment was not successful.');
+            }
+        } catch (\Exception $e) {
+            Log::error('Error handling payment callback', [
+                'message' => $e->getMessage(),
+                'line'    => $e->getLine(),
+                'file'    => $e->getFile(),
+            ]);
+
+            return redirect()->route('order.payment-fail')->with('error', 'An error occurred while processing the payment.');
+        }
+    }
+
+    public function paymentFail()
+    {
+        return view('frontend.payment-fail');
     }
 }
