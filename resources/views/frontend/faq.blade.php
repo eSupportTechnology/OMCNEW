@@ -108,7 +108,7 @@
                                     Promo Codes, and choose your preferred delivery method. Select Home Delivery to have
                                     your
                                     order delivered to your home address by our professional courier service or select Click
-                                    &amp; Collect to pick it up from an Abans Elite showroom of your choice.</li>
+                                    &amp; Collect to pick it up from an OMC Elite showroom of your choice.</li>
                                 <li class="monial-graph">Login to automatically fill in your saved personal &amp; delivery
                                     information or Continue as Guest and add your details manually.</li>
                                 <li class="monial-graph">Choose your preferred Payment Method, fill in the requested payment
@@ -129,7 +129,7 @@
                             <h3 class="title-terms mb-4">Shipping &amp; Delivery</h3>
 
                             <ol>
-                                <li class="monial-graph">Items ordered online on BuyAbans.com will be delivered in within 3
+                                <li class="monial-graph">Items ordered online on myomc.lk/ will be delivered in within 3
                                     to 5 working days anywhere in Sri Lanka.</li>
                                 <li class="monial-graph">Estimated delivery time may vary based on the availability of
                                     items
@@ -183,14 +183,14 @@
                             aria-labelledby="v-pills-four-tab">
 
                             <h3 class="title-terms mb-4">Warranty</h3>
-                            <p class="monial-graph">The warranty provided through the BuyAbans.com website is the same as
+                            <p class="monial-graph">The warranty provided through the myomc.lk/ website is the same as
                                 the
-                                common warranty provided to all Abans PLC showrooms. For any warranty-related issues, please
+                                common warranty provided to all OMC PLC showrooms. For any warranty-related issues, please
                                 contact the Service Centre via the contact details on the warranty card.</p>
-                            <p class="monial-graph">We guarantee that all products sold by Abans PLC are in good quality
+                            <p class="monial-graph">We guarantee that all products sold by OMC PLC are in good quality
                                 and
                                 working order and tested for quality and handed over to the customer for normal and standard
-                                usage, subject to the following terms and conditions. Abans PLC agrees to repair the
+                                usage, subject to the following terms and conditions. OCM PLC agrees to repair the
                                 manufacturing defects in products on free of charge basis only <strong
                                     class="warrenty-first-strong">within the 01-year standard warranty period except for
                                     products covered under different warranty periods.</strong></p>
@@ -199,7 +199,7 @@
                             <p class="monial-graph">The warranty will not be effective for <strong
                                     class="warrenty-second-strong">repairs/installations/services done by any 03rd party
                                     other
-                                    than Abans Electricals PLC/Abans PLC or its authorized service agents, damage caused by
+                                    than OMC Electricals PLC/OMC PLC or its authorized service agents, damage caused by
                                     ancillary equipment and non-recommended accessories, normal wear, tear and corrosion,
                                     corrosion of copper tanks, promotional Items given free of charge with the main product,
                                     damages due to split and liquid, drop damages, seepage, secretion from insects, rodents
@@ -264,7 +264,7 @@
                                         </tr>
                                         <tr>
                                             <td><strong>Televisions LCD/LED</strong></td>
-                                            <td>If it is a manufacturing fault within the warranty period, Abans PLC will
+                                            <td>If it is a manufacturing fault within the warranty period, OMC PLC will
                                                 repair it free of charge.<br><br>1-year warranty for panel and 3-year
                                                 warranty for other parts including Main and Power PCB.<br><br>Colour dots up
                                                 to 7 numbers on LCD/LED TV screens shall be considered as a normal
@@ -327,7 +327,7 @@
                                                     and 05-year warranty for the compressor of all other inverter and
                                                     non-inverter Air Conditioner (residential) brands in the range 9000 BTU
                                                     to
-                                                    36000 BTU shall apply only if the service agreement is signed with Abans
+                                                    36000 BTU shall apply only if the service agreement is signed with OMC
                                                     Electrical PLC for 04 years at the end of the first year. Customer shall
                                                     bear any charges for the labour and accessories in relation to the
                                                     replacement of the compressor. <br><br>Additional services will be
@@ -339,7 +339,7 @@
                                                     Conditioner
                                                     brands (Commercial) in the range of 12000 BTU to 100000 BTU shall apply
                                                     only
-                                                    if the service agreement is signed with Abans Electrical PLC for 04
+                                                    if the service agreement is signed with OMC Electrical PLC for 04
                                                     years at
                                                     the end of the first year. Customer shall bear any charges for the
                                                     labour
@@ -364,7 +364,7 @@
                                                 <td>
                                                     <div><strong>The Apple One-Year Limited Warranty is a voluntary
                                                             manufacturer’s warranty that can be claimed from any Apple store
-                                                            world-wide and only at Abans Apple Authorized Service
+                                                            world-wide and only at OMC Apple Authorized Service
                                                             Centres</strong></div>
                                                     <br>Apple, as defined, warrants Apple-branded hardware product against
                                                     defects in materials and workmanship under normal use for a period of

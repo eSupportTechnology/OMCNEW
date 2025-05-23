@@ -520,7 +520,7 @@
 
                     <div class="hotline">
                         <p>HOTLINE</p>
-                        <a class="tel-no" href="#">+94 112 251 202</a>
+                        <a class="tel-no" href="#">+94 75 833 7141</a>
                     </div>
                     <div class="social-media">
                         <ul>
