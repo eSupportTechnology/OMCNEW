@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Affiliate_User;
 use Carbon\Carbon;
 use App\Models\PaymentRequest;
+use App\Services\DialogSMSService;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -124,6 +125,17 @@ class PaymentController extends Controller
             ]);
 
             session()->forget('cart');
+        }
+
+        // ✅ Send SMS to vendor
+        try {
+            $smsService = new DialogSMSService();
+            $vendorMobile = env('SMS_PHONE_NUMBER'); // Change this to your vendor's actual mobile number
+            $message = "New COD Order Received:\nOrder Code: {$order->order_code}\nTotal: Rs. {$order->total}";
+
+            $smsService->sendSMS($vendorMobile, $message);
+        } catch (\Exception $e) {
+            Log::error('Failed to send SMS to vendor: ' . $e->getMessage());
         }
 
         return redirect()->route('order.thankyou', ['order_code' => $order_code])
@@ -247,6 +259,13 @@ class PaymentController extends Controller
         if (!$order) {
             return redirect()->back()->with('error', 'Order not found.');
         }
+        if ($order->payment_status == "Not Paid") {
+            return view('frontend.place_order', [
+                'order_code' => $order_code,
+                'total_cost' => $order->total_cost,
+            ]);
+        }
+
         if($order->payment_status != "Paid"){
             return redirect()->route('order.payment-fail')->with('error', 'Order not found.');
         }
@@ -360,6 +379,18 @@ class PaymentController extends Controller
             if (strtoupper($statusMessage) === 'SUCCESS') {
                 $order->update(['payment_status' => 'Paid']);
                 Log::info('Order marked as Paid', ['order_code' => $order->order_code]);
+
+                // ✅ Send SMS to vendor
+                try {
+                    $smsService = new DialogSMSService();
+                    $vendorMobile = env('SMS_PHONE_NUMBER'); // Change this to your vendor's actual mobile number
+                    $message = "New Card Order Received:\nOrder Code: {$order->order_code}\nTotal: Rs. {$order->total}";
+
+                    $smsService->sendSMS($vendorMobile, $message);
+                } catch (\Exception $e) {
+                    Log::error('Failed to send SMS to vendor: ' . $e->getMessage());
+                }
+
                 return response()->json(['message' => 'Payment confirmed and order updated.']);
             } else {
                 Log::warning('Payment failed or not successful', ['status_message' => $statusMessage]);
