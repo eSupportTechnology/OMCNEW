@@ -102,16 +102,16 @@
                         <div class="contact-info">
                             <div class="main-contact-info">
                                 <p class="contact-title">OMC Hotline</p>
-                                <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 112 222 888</p>
+                                <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 75 833 7141</p>
 
                             </div>
                         </div>
 
                         <div class="contact-info">
                             <div class="main-contact-info">
-                                <p class="contact-title">Abans Duty Free</p>
+                                <p class="contact-title">OMC Duty Free</p>
                                 <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 75 833 7141</p>
-                                <p class="contact-txt"><i class="fa-solid fa-phone transparent"></i>+94 75 833 7141</p>
+                                
                             </div>
                         </div>
 
@@ -129,7 +129,7 @@
                         <div class="contact-info">
                             <div class="main-contact-info">
                                 <p class="contact-title">Service inquiries</p>
-                                <p class="contact-txt"><i class="fa-solid fa-phone"></i> +94 112 222 888</p>
+                                <p class="contact-txt"><i class="fa-solid fa-phone"></i> +94 75 833 7141</p>
                             </div>
                         </div>
                     </div>

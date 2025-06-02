@@ -694,7 +694,7 @@
                                     </div>
                                     <div><a href="#" title="">
                                             <i class="fa-solid fa-phone me-2"></i>
-                                            +94 112 251 202
+                                            +94 75 833 7141
 
                                         </a>
                                     </div>
@@ -808,7 +808,7 @@
                     </div>
                     <div>
                         <div>HOT LINE</div>
-                        <strong>+94 112 251 202
+                        <strong>+94 75 833 7141
                         </strong>
                     </div>
                 </div>
