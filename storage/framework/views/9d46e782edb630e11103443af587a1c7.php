@@ -33,16 +33,16 @@
                             <div id="accordion" role="tablist">
                                 <h3 class="title-terms pt-0">Terms and Conditions</h3>
 
-                                <p>Welcome to www.BuyAbans.com, the online purchasing platform for Abans PLC (Sri Lanka).
-                                    The BuyAbans.com website provides services to its valued customers under the following
+                                <p>Welcome to www.myomc.lk, the online purchasing platform for OMC PLC (Sri Lanka).
+                                    The myomc.lk website provides services to its valued customers under the following
                                     conditions. Please read and accept the under-mentioned conditions and guidelines
                                     carefully before using the services of this website.</p>
 
-                                <h3 class="title-terms">Product information at BuyAbans.com website</h3>
-                                <p>The BuyAbans.com website attempts to be as accurate as possible with the information
-                                    displayed on the site. However, BuyAbans.com does not guarantee that product
+                                <h3 class="title-terms">Product information at myomc.lk website</h3>
+                                <p>The myomc.lk website attempts to be as accurate as possible with the information
+                                    displayed on the site. However, myomc.lk does not guarantee that product
                                     descriptions or other content on this site are 100% accurate, complete, reliable or
-                                    completely free of errors. If a product offered by BuyAbans.com is not as described on
+                                    completely free of errors. If a product offered by myomc.lk is not as described on
                                     the website, a customer’s sole remedy is to return it in an unused condition within two
                                     days of delivery. If there is any external damage to the package, a customer is
                                     responsible for checking the item when it is handed over. An item will not be exchanged
@@ -51,10 +51,10 @@
                                     faults and are subjected to a fine or penalty for the cost. </p>
 
                                 <p>In case the item received is found defective, customers should immediately inform
-                                    BuyAbans.com within 24 hours to arrange a replacement with a brand-new unit or a full
+                                    myomc.lk within 24 hours to arrange a replacement with a brand-new unit or a full
                                     refund will be provided if the stock is unavailable. </p>
 
-                                <p>Regarding the items sold through BuyAbans.com, the price of an item cannot be confirmed
+                                <p>Regarding the items sold through myomc.lk, the price of an item cannot be confirmed
                                     until the customer orders the item. Even though every effort is made to provide accurate
                                     pricing, there may be a negligible probability that some items can be mispriced. If the
                                     new price is higher than the mentioned price, we will not cancel or deliver the item
@@ -63,14 +63,14 @@
                                     the additional amount but if you decide to cancel, we will issue a refund. </p>
 
                                 <p>Due to current international exchange laws and conventions, even if delivery of the
-                                    selected item is canceled, BuyAbans.com cannot refund your money. You will, however, be
+                                    selected item is canceled, myomc.lk cannot refund your money. You will, however, be
                                     provided with credit on the website to purchase another available product up to the
                                     value of the previous item.</p>
 
                                 <div class="content-section">
                                     <h3 class="title-terms">Return and Refund Policy</h3>
                                     <ul>
-                                        <li><strong>Period :</strong> BuyAbans must be informed within 3 days for
+                                        <li><strong>Period :</strong> OMC must be informed within 3 days for
                                             Electronics &
                                             7
                                             days for Lifestyle brands (Skechers, Under Armour, Hugo Boss) of receiving the
@@ -92,7 +92,7 @@
                                             route to us. Items damaged en route will not be accepted.</li>
                                         <li>It is the customer’s responsibility to ensure proof of postage for parcels that
                                             contain items to be returned.</li>
-                                        <li>BuyAbans will require minimum 05-07 business days to process your return request
+                                        <li>OMC will require minimum 05-07 business days to process your return request
                                             and
                                             prepare the replacement unit. </li>
                                     </ul>
@@ -108,11 +108,11 @@
                                             to
                                             your credit card/ bank account may require additional time depending on the bank
                                             due
-                                            to its own operational time for which BuyAbans will not be responsible.</li>
+                                            to its own operational time for which OMC will not be responsible.</li>
                                         <li>In the event of purchasing an AC unit with low capacity, the consumer is only
                                             eligible for a credit note for the amount of their purchase or they can switch
                                             to a
-                                            unit with a higher capacity. BuyAbans.com will not be issuing refunds for these
+                                            unit with a higher capacity. myomc.lk will not be issuing refunds for these
                                             cases.</li>
                                         <li>Customers can use the BTU calculator when purchasing AC to calculate the exact
                                             capacity that best suits
@@ -121,32 +121,32 @@
                                         <li>The total warranty and the comprehensive warranty will not apply if an
                                             under-capacity air conditioner is purchased.</li>
                                         <li>All manufacturing and material defects that require repair or return must be
-                                            informed and returned to BuyAbans within the warranty period of 30 days. Any
+                                            informed and returned to OMC within the warranty period of 30 days. Any
                                             repair or return that failed to be reported or returned within the specified
                                             time frame will not be accepted or refunded.</li>
                                         <li>• Refunds will not be provided for change of mind. All sales are final. Refunds
                                             will only be issued under specific circumstances as outlined in our policy.</li>
                                     </ul>
 
-                                    <p class="pt-2 pb-2">The prices for all the items mentioned on BuyAbans.com are the
+                                    <p class="pt-2 pb-2">The prices for all the items mentioned on myomc.lk are the
                                         final
                                         and last prices of
                                         sale via online means.</p>
                                 </div>
 
                                 <div class="content-section">
-                                    <h3 class="title-terms">Using BuyAbans.com accounts</h3>
+                                    <h3 class="title-terms">Using myomc.lk accounts</h3>
                                     <p>It is the responsibility of the users of this site to keep their passwords, other
                                         account
                                         information, and the computer used to log on to the site, secure. Website account
                                         holders are solely responsible for all activities conducted via through their
-                                        BuyAbans.com account or their passwords and BuyAbans shall be indemnified from any
+                                        myomc.lk account or their passwords and OMC shall be indemnified from any
                                         such
                                         liability.</p>
                                 </div>
 
                                 <div class="content-section">
-                                    <h3 class="title-terms">Abans Duty Free purchase via www.BuyAbans.com</h3>
+                                    <h3 class="title-terms">OMC Duty Free purchase via www.myomc.lk</h3>
                                     <p>The payment will be considered as conditional purchase as the transaction will
                                         complete
                                         once the passenger physically arrives to the BIA and fulfil the requirements of the
@@ -159,7 +159,7 @@
                                         goods
                                         from the duty-free shop will only be processed upon the exchange of the items
                                         physically
-                                        at our Duty-free shop. BuyAbans website has the legal right to process a refund in
+                                        at our Duty-free shop. OMC website has the legal right to process a refund in
                                         any
                                         case upon the approval of the Sri Lanka Customs officers based at Bandaranayake
                                         International Airport (BIA).</p>
@@ -171,16 +171,16 @@
 
                                 <div class="content-section">
                                     <h3 class="title-terms">Warranty:</h3>
-                                    <p>The warranty provided through the BuyAbans.com website is the same as the common
+                                    <p>The warranty provided through the myomc.lk website is the same as the common
                                         warranty
-                                        provided to all Abans PLC showrooms. For any warranty-related issues, please contact
+                                        provided to all OMC PLC showrooms. For any warranty-related issues, please contact
                                         the
                                         Service Centre via the contact details on the warranty card.</p>
-                                    <p>We guarantee that all products sold by Abans PLC are of good quality and working
+                                    <p>We guarantee that all products sold by OMC PLC are of good quality and working
                                         order
                                         and tested for quality and handed over to the customer for normal and standard
                                         usage,
-                                        subject to the following terms and conditions. Abans PLC agrees to repair the
+                                        subject to the following terms and conditions. OMC PLC agrees to repair the
                                         manufacturing defects in products on free-of-charge basis only within the 01-year
                                         standard warranty period except for products covered under different warranty
                                         periods.
@@ -191,7 +191,7 @@
 
                                     <p>The warranty will not be effective for <strong>repairs/installations/services done by
                                             any
-                                            03rd party other than Abans Electricals PLC/Abans PLC or its authorized service
+                                            03rd party other than OMC Electricals PLC/OMC PLC or its authorized service
                                             agents for damages caused by ancillary equipment and non-recommended
                                             accessories, normal
                                             wear, tear and corrosion, corrosion of copper tanks, promotional Items given
@@ -269,7 +269,7 @@
                                             <tr>
                                                 <td><strong>Televisions LCD/LED</strong></td>
                                                 <td>
-                                                    <p>If there is a manufacturing fault within the warranty period, Abans
+                                                    <p>If there is a manufacturing fault within the warranty period, OMC
                                                         PLC will
                                                         repair it free of charge.</p>
                                                     <p>1-year warranty for panel and 3-year warranty for other parts
@@ -367,7 +367,7 @@
                                                         warranty
                                                         for the compressor of all other inverter and non-inverter Air
                                                         Conditioner (residential) brands in the range 9000 BTU to 36000 BTU
-                                                        shall apply only if the service agreement is signed with Abans
+                                                        shall apply only if the service agreement is signed with OMC
                                                         Electrical PLC for 04 years at the end of the first year. Customer
                                                         shall
                                                         bear any charges for the labour and accessories to the relation to
@@ -380,7 +380,7 @@
                                                     <p>05-year warranty for the compressor of all Air Conditioner brands
                                                         (Commercial) in the range of 12000 BTU to 100000 BTU shall apply
                                                         only if
-                                                        the service agreement is signed with Abans Electrical PLC for 04
+                                                        the service agreement is signed with OMC Electrical PLC for 04
                                                         years
                                                         at the end of the first year. Customer shall bear any charges for
                                                         the
@@ -417,7 +417,7 @@
                                                             manufacturer’s
                                                             warranty that can be claimed from any Apple store worldwide and
                                                             only at
-                                                            Abans Apple Authorized Service Centres</strong></p>
+                                                            OMC Apple Authorized Service Centres</strong></p>
 
                                                     <p>Apple, as defined, warrants Apple-branded hardware products against
                                                         defects in materials and workmanship under normal use for a period
@@ -475,15 +475,15 @@
 
                                 <div class="content-section">
                                     <h3 class="title-terms">Exchange of Goods: </h3>
-                                    <p>BuyAbans.com may exchange the purchased item on valid for another item requested by
+                                    <p>myomc.lk may exchange the purchased item on valid for another item requested by
                                         the
                                         customer. The said customer will have to pay for any difference in the price and
                                         that
                                         payment will also need to be completed within 48 hours from the time of purchase.
                                     </p>
-                                    <p>BuyAbans.com is not allowed to exchange any goods purchased at the BIA Duty Free
+                                    <p>myomc.lk is not allowed to exchange any goods purchased at the BIA Duty Free
                                         unless
-                                        the products sold contain internal technical faults.BuyAbans.com can only provide
+                                        the products sold contain internal technical faults.myomc.lk can only provide
                                         like-for-like exchanges when stock is available at our showrooms outside the
                                         Duty-Free zones. </p>
 
@@ -491,50 +491,50 @@
 
 
                                 <div class="content-section">
-                                    <h3 class="title-terms">Policy for information gathered by BuyAbans.com</h3>
+                                    <h3 class="title-terms">Policy for information gathered by myomc.lk</h3>
                                     <p>
 
-                                        All information entered in to BuyAbans.com by site visitors will be collected and
+                                        All information entered in to myomc.lk by site visitors will be collected and
                                         stored. If certain visitors decide not to provide certain information, they will not
                                         be
                                         able to acquire the valuable advantages and features of this website. This vital
                                         information is used for quick and fruitful responses to your requests, and for
                                         communicating with you in present and future instances. Information about customers
                                         is
-                                        important to BuyAbans and will be treated with utmost confidentiality and will not
+                                        important to OMC and will be treated with utmost confidentiality and will not
                                         be
                                         divulged to 03rd parties. Customer information is used only as described below and
                                         with
-                                        affiliates of BuyAbans.com.</p>
+                                        affiliates of myomc.lk.</p>
 
 
                                     <p><i>Note: Customer is responsible for informing the change of his/her phone no. and/or
                                             email address to
-                                            Buyabans.</i></p>
+                                            OMC.</i></p>
                                 </div>
 
                                 <div class="content-section">
                                     <h3 class="title-terms">Copyrights</h3>
                                     <p>
 
-                                        The content of the BuyAbans.com site is the property of Abans PLC (Sri Lanka) and is
-                                        protected under international copyright laws. The trademark of www.BuyAbans.com is a
+                                        The content of the myomc.lk site is the property of OMC PLC (Sri Lanka) and is
+                                        protected under international copyright laws. The trademark of www.myomc.lk is a
                                         registered trademark and the sole rights of changing, modifying, assigning, or using
-                                        this trademark is solely with Abans PLC (Sri Lanka). Anyone other than Abans PLC who
+                                        this trademark is solely with OMC PLC (Sri Lanka). Anyone other than OMC PLC who
                                         is
                                         involved in changing, modifying, assigning, or using this trademark without prior
-                                        written authorization of Abans PLC (Sri Lanka) will be violating international
+                                        written authorization of OMC PLC (Sri Lanka) will be violating international
                                         copyright
                                         laws.</p>
                                 </div>
 
                                 <div class="content-section">
-                                    <h3 class="title-terms">Communication between you and BuyAbans.com</h3>
+                                    <h3 class="title-terms">Communication between you and myomc.lk</h3>
                                     <p>
 
-                                        When you visit the BuyAbans.com website or communicate with BuyAbans.com via
+                                        When you visit the myomc.lk website or communicate with myomc.lk via
                                         e-mails,
-                                        you are considered as communicating with BuyAbans.com. This permits BuyAbans.com to
+                                        you are considered as communicating with myomc.lk. This permits myomc.lk to
                                         send
                                         e-mails and to communicate with you and you are deemed as agreeing to all terms and
                                         conditions, notices and other means of communications that we provide to you
@@ -546,7 +546,7 @@
                                     <h3 class="title-terms">Contact Details:</h3>
 
                                     <div class="border-box-table">
-                                        <p><strong>www.Buyabans.com</strong></p>
+                                        <p><strong>www.myomc.lk</strong></p>
                                         <p>No. 498,<br>
                                             Galle Road, Colombo 03.<br>
                                             Sri Lanka.</p>
@@ -558,7 +558,7 @@
 
                                             <tr>
                                                 <td>Web </td>
-                                                <td> : www.buyabans.com</td>
+                                                <td> : www.myomc.lk</td>
                                             </tr>
 
 
@@ -567,7 +567,7 @@
 
 
                                     <div class="border-box-table">
-                                        <p><strong>Abans PLC</strong></p>
+                                        <p><strong>OMC PLC</strong></p>
                                         <p>No. 498,<br>
                                             Galle Road, Colombo 03.<br>
                                             Sri Lanka.</p>
@@ -584,7 +584,7 @@
 
                                             <tr>
                                                 <td>Web </td>
-                                                <td> : www.buyabans.com</td>
+                                                <td> : www.myomc.lk</td>
                                             </tr>
 
 
@@ -600,14 +600,14 @@
                         <div class="tab-pane fade " id="v-pills-two" role="tabpanel" aria-labelledby="v-pills-two-tab">
 
                             <h3 class="title-terms" style="padding-top: 0px;">Privacy Policy</h3>
-                            <p class="monial-graph">We, Abans PLC (PV 5301 PB/PQ), having its registered office at No. 498,
+                            <p class="monial-graph">We, OMC PLC (PV 5301 PB/PQ), having its registered office at No. 498,
                                 Galle Road, Colombo 03 are pleased to provide our policy on privacy for the users of our
-                                website <a href="www.buyabans.html">www.buyabans.com</a>. We collect, use, maintain and
+                                website <a href="/">www.myomc.lk</a>. We collect, use, maintain and
                                 disclose
                                 information collected from users of our website. We assure you that, we use our best and
                                 reasonable
                                 effort to protect the privacy of users of our website, <a
-                                    href="www.buyabans.html">www.buyabans.com</a>.</p>
+                                    href="/">www.myomc.lk</a>.</p>
                             <p class="monial-graph">We receive your personal information such as Name, Address, E-mail
                                 address,
                                 National Identity Card Number, Mobile Number, Credit Card details &amp; Transaction
@@ -615,7 +615,7 @@
                                 usage &amp; preference information, Log and device information, etc., and we only collect
                                 and
                                 store the information you submit voluntarily when you use our website, <a
-                                    href="www.buyabans.html">www.buyabans.com</a>. You can always refuse to provide personal
+                                    href="/">www.myomc.lk</a>. You can always refuse to provide personal
                                 information, except that it may prevent you from engaging in certain site-related
                                 activities.
                             </p>
@@ -661,18 +661,18 @@
                                 sites
                                 that are subject to their privacy policies.</p>
                             <p class="monial-graph">The information contained on <a
-                                    href="www.buyabans.html">www.buyabans.com</a>
+                                    href="/">www.myomc.lk</a>
                                 website is for general information purposes only. The <a
-                                    href="www.buyabans.html">www.buyabans.com</a> website assumes no responsibility for
+                                    href="/">www.myomc.lk</a> website assumes no responsibility for
                                 errors or
                                 omissions in the content of the services. In no event shall <a
-                                    href="www.buyabans.html">www.buyabans.com</a> website be liable for any special, direct,
+                                    href="/">www.myomc.lk</a> website be liable for any special, direct,
                                 indirect, consequential, or incidental damages or any damages whatsoever, whether in an
                                 action
                                 of contract, negligence or other tort, arising out of or in connection with the use of the
                                 services or the content of the service. We reserve the right to make additions, deletions or
                                 modifications to the content on the services at any time without prior notice. The <a
-                                    href="www.buyabans.html">www.buyabans.com</a> website does not warrant that the website
+                                    href="/">www.myomc.lk</a> website does not warrant that the website
                                 is
                                 free from viruses or other harmful components.</p>
                             <p class="monial-graph">We may change this privacy policy from time to time, as necessary. When
@@ -742,7 +742,7 @@
                             <div class="content-section">
                                 <h3 class="title-terms">Return and Refund Policy</h3>
                                 <ul>
-                                    <li><strong>Period :</strong> BuyAbans must be informed within 3 days for Electronics &
+                                    <li><strong>Period :</strong> OMC must be informed within 3 days for Electronics &
                                         7
                                         days for Lifestyle brands (Skechers, Under Armour, Hugo Boss) of receiving the item
                                         to be eligible for return.</li>
@@ -757,7 +757,7 @@
                                         route to us. Items damaged en route will not be accepted.</li>
                                     <li>It is the customer’s responsibility to ensure proof of postage for parcels that
                                         contain items to be returned.</li>
-                                    <li>BuyAbans will require minimum 05-07 business days to process your return request and
+                                    <li>OMC will require minimum 05-07 business days to process your return request and
                                         prepare the replacement unit. </li>
                                 </ul>
                             </div>
@@ -770,10 +770,10 @@
                                         charges borne by the customer for return of item. </li>
                                     <li>All refunds will be processed within 3-5 working days. Processing refunds back to
                                         your credit card/ bank account may require additional time depending on the bank due
-                                        to its own operational time for which BuyAbans will not be responsible.</li>
+                                        to its own operational time for which OMC will not be responsible.</li>
                                     <li>In the event of purchasing an AC unit with low capacity, the consumer is only
                                         eligible for a credit note for the amount of their purchase or they can switch to a
-                                        unit with a higher capacity. BuyAbans.com will not be issuing refunds for these
+                                        unit with a higher capacity. myomc.lk will not be issuing refunds for these
                                         cases.</li>
                                     <li>Customers can use the BTU calculator when purchasing AC to calculate the exact
                                         capacity that best suits
@@ -782,14 +782,14 @@
                                     <li>The total warranty and the comprehensive warranty will not apply if an
                                         under-capacity air conditioner is purchased.</li>
                                     <li>All manufacturing and material defects that require repair or return must be
-                                        informed and returned to BuyAbans within the warranty period of 30 days. Any repair
+                                        informed and returned to OMC within the warranty period of 30 days. Any repair
                                         or return that failed to be reported or returned within the specified time frame
                                         will not be accepted or refunded.</li>
                                     <li>• Refunds will not be provided for change of mind. All sales are final. Refunds will
                                         only be issued under specific circumstances as outlined in our policy.</li>
                                 </ul>
 
-                                <p class="pt-2 pb-2">The prices for all the items mentioned on BuyAbans.com are the final
+                                <p class="pt-2 pb-2">The prices for all the items mentioned on myomc.lk are the final
                                     and last prices of
                                     sale via online means.</p>
                             </div>

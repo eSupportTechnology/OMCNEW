@@ -54,240 +54,288 @@
 
 
             <!-- mobile hearder begin -->
-            <!-- top banner mobile-->
-            <div class="mobi-main-header fixed-header">
-                <div id="topupbar_banner_mobile"></div>
-                <header class="header mobile-header ">
-                    <div class="container mobile-header-container mr-2 ">
-                        <div class="mobi-full-row">
-                            <div class="col-5-5">
-                                <div class="d-flex">
-                                    <div class="header-left me-2">
-                                        <a href="#" class="mobile-menu-toggle new-mobile-toggle"
-                                            onclick="if (!window.__cfRLUnblockHandlers) return false;  openMenuMobi()"
-                                            data-cf-modified-a071cb3ff60724c4b8f55cf9-="">
-                                            <img class="mobi-menu-icon"
-                                                src="<?php echo e(asset('frontend/newstyle/assets/images/menuLOGO-mbo.png')); ?>">
+           <!-- top banner mobile-->
+<div class="mobi-main-header fixed-header">
+    <div id="topupbar_banner_mobile"></div>
+    <header class="header mobile-header">
+        <div class="container mobile-header-container">
+            <div class="mobi-full-row d-flex align-items-center justify-content-between">
+                <!-- Left Section: Menu + Logo -->
+                <div class="header-left-section d-flex align-items-center">
+                    <div class="header-left me-2">
+                        <a href="#" class="mobile-menu-toggle new-mobile-toggle"
+                            onclick="if (!window.__cfRLUnblockHandlers) return false; openMenuMobi()"
+                            data-cf-modified-a071cb3ff60724c4b8f55cf9-="">
+                            <img class="mobi-menu-icon"
+                                src="<?php echo e(asset('frontend/newstyle/assets/images/menuLOGO-mbo.png')); ?>">
+                        </a>
+                    </div>
 
+                    <div class="mobi-logo">
+                        <?php if($siteLogo && $siteLogo->image_path): ?>
+                            <a href="<?php echo e(url('/')); ?>">
+                                <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>"
+                                    alt="Site Logo" class="img-fluid" style="max-height: 60px;">
+                            </a>
+                        <?php else: ?>
+                            <a href="/">
+                                <img src="<?php echo e(asset('frontend/newstyle/assets/images/buyabanslogo-new.png')); ?>"
+                                    alt="logo" />
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </div>
 
+                <!-- Right Section: Account, Cart, Search Icons -->
+                <div class="header-right-section d-flex align-items-center">
+                    <div class="mobile-icons-container d-flex align-items-center">
 
+                        <!-- Account Icon -->
+                        <div class="mobile-icon-item">
+                            <?php if(auth()->guard()->check()): ?>
+                                <div class="loged-user">
+                                    <div class="log-user-img">
+                                        <a href="<?php echo e(route('dashboard')); ?>">
+                                            <img src="https://buyabans.com/themes/buyabans/assets/images/icon/dummy-user.png"
+                                                 alt="User" class="mobile-account-icon">
                                         </a>
                                     </div>
-
-                                    <div class="mobi-logo">
-                                        <?php if($siteLogo && $siteLogo->image_path): ?>
-                                            <a href="<?php echo e(url('/')); ?>">
-                                                <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>"
-                                                    alt="Site Logo" class="img-fluid" style="max-height: 60px;">
-                                            </a>
-                                        <?php else: ?>
-                                            <a href="/"><img
-                                                    src="<?php echo e(asset('frontend/newstyle/assets/images/buyabanslogo-new.png')); ?>"
-                                                    alt="logo" />
-                                            </a>
-                                        <?php endif; ?>
-
-                                    </div>
-
                                 </div>
-                            </div>
-
-                            <div class="col-2-5">
-                                <div class="mobi-header-btn mobi-search-btn">
-                                    <img class="cart-icon"
-                                        src="<?php echo e(asset('frontend/newstyle/assets/images/icon/mobi-search.png')); ?>">
-                                </div>
-                            </div>
-
-
-                            <!-- Header Middle Right start -->
-                            <div class="header-right flex-align d-lg-block d-none">
-                                <div class="flex-wrap gap-32 header-two-activities flex-align">
-                                    <button type="button"
-                                        class="gap-4 flex-align search-icon d-lg-none d-flex item-hover-two">
-                                        <span class="text-2xl text-white d-flex position-relative item-hover__text">
-                                            <i class="ph ph-magnifying-glass"></i>
-                                        </span>
-                                    </button>
-
-
-
-
-
-                                    <a href="javascript:void(0)"
-                                        class="gap-8 ml-10 flex-align flex-column item-hover-two"
-                                        style="margin-right:30px;">
-                                        <span
-                                            class="mt-6 text-2xl text-white d-flex position-relative me-6 item-hover__text">
-                                            <i class="ph ph-shopping-cart-simple"></i>
-                                            <!-- Display the cart count dynamically -->
-                                            <span id="cart-count-1"
-                                                class="w-16 h-16 text-xs text-white flex-center rounded-circle bg-main-two-600 position-absolute top-n6 end-n4">
-                                                <?php echo e($cartCount ?? 0); ?>
-
-
-                                            </span>
-                                        </span>
-                                        <span class="text-white text-md item-hover__text d-none d-lg-flex">Cart</span>
-                                    </a>
-
-
-                                </div>
-                            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <div class="col-2-5">
-                                <div class="header-right-con">
-                                    <div class="top-right-nav d-flex align-items-center justify-content-end flex-wrap">
-
-                                        <!-- Profile Dropdown -->
-                                        <div class="profile-dropdown">
-                                            <?php if(auth()->guard()->check()): ?>
-                                                <div class="auth-container d-flex align-items-center">
-                                                    <div class="loged-user d-inline-flex align-items-center gap-2">
-                                                        <div class="log-user-img">
-                                                            <a href="<?php echo e(route('dashboard')); ?>">
-                                                                <img
-                                                                    src="https://buyabans.com/themes/buyabans/assets/images/icon/dummy-user.png">
-                                                            </a>
-                                                        </div>
-                                                        <div class="log-user-data dropdown">
-                                                            <div class="dropdown-box">
-                                                                <ul class="log-popup-links">
-                                                                    <li>
-                                                                        <a href="<?php echo e(route('dashboard')); ?>">
-                                                                            <img
-                                                                                src="https://buyabans.com/themes/buyabans/assets/images/icon/mini-profile/user.png">
-                                                                            My Account
-                                                                        </a>
-                                                                    </li>
-                                                                    <li>
-                                                                        <a>
-                                                                            <img
-                                                                                src="https://buyabans.com/themes/buyabans/assets/images/icon/mini-profile/turn-off.png">
-                                                                            <form method="POST"
-                                                                                action="<?php echo e(route('logout')); ?>">
-                                                                                <?php echo csrf_field(); ?>
-                                                                                <button type="submit"
-                                                                                    class="dropdown-item w-100">Logout</button>
-                                                                            </form>
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            <?php else: ?>
-                                                <!-- Guest Login/Register -->
-                                                <div class="d-flex align-items-center gap-3 flex-wrap"
-                                                    style="padding-right: 30px;">
-                                                    <div class="sign-up d-inline-flex">
-                                                        <div class="mobhide">
-                                                            <a href="<?php echo e(route('login')); ?>"
-                                                                class="d-flex align-items-center">
-                                                                <div class="dt-icon-div">
-                                                                    <img
-                                                                        src="<?php echo e(asset('frontend/newstyle/assets/images/account-icon.png')); ?>">
-                                                                </div>
-                                                                <div>Login</div>
-                                                            </a>
-                                                        </div>
-
-                                                        <div class="boder-right"></div>
-
-                                                        <div class="mobhide">
-                                                            <a class="sign-up-link" href="<?php echo e(route('signup')); ?>">
-                                                                <span>Sign Up</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="mobshow ">
-                                                        <a href="<?php echo e(route('login')); ?>" class="d-flex align-items-center">
-                                                            <div class="dt-icon-div">
-                                                                <img src="<?php echo e(asset('frontend/newstyle/assets/images/account-icon.png')); ?>"
-                                                                    style="padding-bottom: 17px;">
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            <?php endif; ?>
-                                        </div>
-
-                                        <!-- Cart -->
-                                        <div class="des-cart pos-relative cart-popup mt-1 mr-2">
-                                            <a href="javascript:void(0)"
-                                                class="d-flex align-items-center gap-2 item-hover-two">
-                                                <span class="text-2xl text-white2 position-relative">
-                                                    <i class="ph ph-shopping-cart-simple"></i>
-                                                    <span id="cart-count-2"
-                                                        class="w-16 h-16 text-xs text-white flex-center rounded-circle bg-main-two-600 position-absolute top-n6 end-n4">
-                                                        <?php echo e($cartCount ?? 0); ?>
-
-                                                    </span>
-                                                </span>
-                                                <span class="text-white2 text-md d-none d-lg-flex">Cart</span>
-                                            </a>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
+                            <?php else: ?>
+                                <a href="<?php echo e(route('login')); ?>" class="mobile-account-link">
+                                    <img src="<?php echo e(asset('frontend/newstyle/assets/images/account-icon.png')); ?>"
+                                         alt="Account" class="mobile-account-icon">
+                                </a>
+                            <?php endif; ?>
                         </div>
+
+                        <!-- Cart Icon -->
+                        <div class="mobile-icon-item des-cart cart-popup">
+                            <a href="javascript:void(0)" class="mobile-cart-link">
+                                <div class="mobile-cart-wrapper">
+                                    <i class="ph ph-shopping-cart-simple mobile-cart-icon"></i>
+                                    <span class="mobile-cart-count" id="cart-count-1"><?php echo e($cartCount ?? 0); ?></span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Search Icon -->
+                        <div class="mobile-icon-item">
+                            <button class="mobile-search-btn ">
+                                <img src="<?php echo e(asset('frontend/newstyle/assets/images/icon/mobi-search.png')); ?>"
+                                     alt="Search" class="mobile-search-icon">
+                            </button>
+                        </div>
+
                     </div>
-
-                    <div class="search-con search-con-mobile">
-                        <div class="search-title col-sm-12" style="display: none;">
-                            <p>Search</p>
-                            <button class="close-search"><i class="fa-solid fa-xmark"></i></button>
-                        </div>
-                        <div class="top-search clear-both">
-                            <input type="text" class="form-control main-search top-search-suggestion-mobi"
-                                placeholder="Search for products, categories and more">
-                            <button type="button" class="btn btn-primary submit-search-mobi"><i
-                                    class="fa-solid fa-magnifying-glass"></i></button>
-                            <div id="suggestions-box-display-mobi" class="suggestions-box suggestions-box-display-mobi"
-                                style="display: none;">
-
-                                <div class="left-suggestion-no-products" hidden>
-                                    <p>No results found.</p>
-                                </div>
-
-                                <div class="left-suggestion-main-con">
-                                </div>
-
-                                <div class="right-suggestion-main-con">
-
-                                    <div>
-                                        <h4 class="headding search-category-title" hidden>Categories</h4>
-                                        <ul>
-                                        </ul>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </header>
-
+                </div>
             </div>
+        </div>
+
+        <!-- Search Container -->
+        <div class="search-con search-con-mobile">
+            <div class="search-title col-sm-12" style="display: none;">
+                <p>Search</p>
+                <button class="close-search"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="top-search clear-both">
+                <input type="text" class="form-control main-search top-search-suggestion-mobi"
+                    placeholder="Search for products, categories and more">
+                <button type="button" class="btn btn-primary submit-search-mobi">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <div id="suggestions-box-display-mobi" class="suggestions-box suggestions-box-display-mobi"
+                    style="display: none;">
+                    <div class="left-suggestion-no-products" hidden>
+                        <p>No results found.</p>
+                    </div>
+                    <div class="left-suggestion-main-con"></div>
+                    <div class="right-suggestion-main-con">
+                        <div>
+                            <h4 class="headding search-category-title" hidden>Categories</h4>
+                            <ul></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+
+<!-- Add this CSS for proper mobile header styling -->
+<style>
+.mobi-main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.mobile-header-container {
+    padding: 10px 15px;
+}
+
+.mobi-full-row {
+    width: 100%;
+}
+
+.header-left-section {
+    flex: 1;
+}
+
+.header-right-section {
+    flex-shrink: 0;
+}
+
+.mobile-icons-container {
+    gap: 20px; /* Equal spacing between all icons */
+}
+
+.mobile-icon-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+/* Account Icon Styling */
+.mobile-account-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.mobile-account-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Cart Icon Styling */
+.mobile-cart-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-cart-icon {
+    font-size: 24px;
+    color: #333;
+}
+
+.mobile-cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff4444;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+    min-width: 18px;
+}
+
+.mobile-cart-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+
+/* Search Icon Styling */
+.mobile-search-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.mobile-search-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+/* Logo styling */
+.mobi-logo img {
+    max-height: 50px;
+    width: auto;
+}
+
+/* Menu icon styling */
+.mobi-menu-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .mobile-icons-container {
+        gap: 15px;
+    }
+
+    .mobile-icon-item {
+        width: 36px;
+        height: 36px;
+    }
+
+    .mobile-account-icon,
+    .mobile-search-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .mobile-cart-icon {
+        font-size: 20px;
+    }
+
+    .mobile-cart-count {
+        width: 16px;
+        height: 16px;
+        font-size: 10px;
+        top: -6px;
+        right: -6px;
+    }
+}
+
+/* Hover effects */
+.mobile-icon-item:hover {
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+/* Ensure proper alignment */
+.d-flex {
+    display: flex;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+</style>
 
 
             <!-- destop header begin -->
@@ -1185,7 +1233,7 @@
 // Mobile Search Toggle Functionality
 document.addEventListener('DOMContentLoaded', function() {
     // Get the search button and search container elements
-    const searchButton = document.querySelector('.mobi-search-btn');
+    const searchButton = document.querySelector('.mobile-search-btn');
     const searchContainer = document.querySelector('.search-con-mobile');
     const closeButton = document.querySelector('.close-search');
     const searchTitle = document.querySelector('.search-title');
