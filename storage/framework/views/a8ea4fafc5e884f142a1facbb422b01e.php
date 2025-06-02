@@ -92,12 +92,12 @@
                                 </div>
                             </div>
 
-                            <!-- <div class="col-2-5">
-                        <div class="mobi-header-btn mobi-search-btn">
-                            <img class="cart-icon"
-                                src="frontend/newstyle/assets/images/icon/mobi-search.png">
-                        </div>
-                    </div> -->
+                            <div class="col-2-5">
+                                <div class="mobi-header-btn mobi-search-btn">
+                                    <img class="cart-icon"
+                                        src="<?php echo e(asset('frontend/newstyle/assets/images/icon/mobi-search.png')); ?>">
+                                </div>
+                            </div>
 
 
                             <!-- Header Middle Right start -->
@@ -248,6 +248,41 @@
                             </div>
 
                         </div>
+                    </div>
+
+                    <div class="search-con search-con-mobile">
+                        <div class="search-title col-sm-12" style="display: none;">
+                            <p>Search</p>
+                            <button class="close-search"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <div class="top-search clear-both">
+                            <input type="text" class="form-control main-search top-search-suggestion-mobi"
+                                placeholder="Search for products, categories and more">
+                            <button type="button" class="btn btn-primary submit-search-mobi"><i
+                                    class="fa-solid fa-magnifying-glass"></i></button>
+                            <div id="suggestions-box-display-mobi" class="suggestions-box suggestions-box-display-mobi"
+                                style="display: none;">
+
+                                <div class="left-suggestion-no-products" hidden>
+                                    <p>No results found.</p>
+                                </div>
+
+                                <div class="left-suggestion-main-con">
+                                </div>
+
+                                <div class="right-suggestion-main-con">
+
+                                    <div>
+                                        <h4 class="headding search-category-title" hidden>Categories</h4>
+                                        <ul>
+                                        </ul>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                 </header>
@@ -311,7 +346,7 @@
 
                                 <div class="search-con">
                                     <div class="top-search search-container">
-                                        <input type="text" class="form-control main-search top-search-suggestion"
+                                        <input type="text" class="form-control main-search  top-search-suggestion-desk"
                                             placeholder="Search for products, categories and more">
                                         <button type="button" class="btn btn-primary submit-search"><i
                                                 class="fa-solid fa-magnifying-glass"></i></button>
@@ -972,64 +1007,6 @@
     </div>
 
     <script>
-        document.querySelector('.main-search').addEventListener('keyup', function() {
-            let query = this.value.trim();
-
-            if (query.length < 2) {
-                document.getElementById('suggestions-box-display').style.display = 'none';
-                return;
-            }
-
-            fetch(`/search-suggestions?q=${encodeURIComponent(query)}`)
-                .then(res => res.json())
-                .then(data => {
-                    const box = document.getElementById('suggestions-box-display');
-                    const productCon = box.querySelector('.left-suggestion-main-con');
-                    const categoryCon = box.querySelector('.category-list');
-                    const noResults = box.querySelector('.left-suggestion-no-products');
-
-                    productCon.innerHTML = '';
-                    categoryCon.innerHTML = '';
-
-                    if (data.products.length === 0 && data.categories.length === 0) {
-                        noResults.hidden = false;
-                        box.style.display = 'block';
-                        return;
-                    }
-
-                    noResults.hidden = true;
-
-                    // Add products
-                    data.products.forEach(product => {
-                        const productHTML = `
-                    <a class="search-product-element" href="${product.url}">
-                        <div class="suggestion-box">
-                            <div class="suggestion-product-img"><img class="img-fluid" alt="" src="${product.image ?? ''}"></div>
-                            <div class="suggestion-box-details">
-                                <div class="product-line product-name">${product.name}</div>
-                            </div>
-                        </div>
-                    </a>
-                `;
-                        productCon.innerHTML += productHTML;
-                    });
-
-                    // Add categories
-                    data.categories.forEach(category => {
-                        const categoryHTML =
-                            `<li><a class="search-category-name" href="${category.url}">${category.name}</a></li>`;
-                        categoryCon.innerHTML += categoryHTML;
-                    });
-
-                    box.style.display = 'block';
-                })
-                .catch(err => {
-                    console.error('Search error:', err);
-                });
-        });
-    </script>
-
-    <script>
         document.querySelectorAll('.nav-link').forEach((tab) => {
             tab.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1203,6 +1180,215 @@
         submenu.addEventListener('mouseleave', handleMouseLeave);
     });
 </script>
+
+    <script>
+// Mobile Search Toggle Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the search button and search container elements
+    const searchButton = document.querySelector('.mobi-search-btn');
+    const searchContainer = document.querySelector('.search-con-mobile');
+    const closeButton = document.querySelector('.close-search');
+    const searchTitle = document.querySelector('.search-title');
+
+    // Function to show search container
+    function showSearch() {
+        if (searchContainer) {
+            searchContainer.style.display = 'block';
+            // Show the search title as well
+            if (searchTitle) {
+                searchTitle.style.display = 'block';
+            }
+            // Focus on the search input for better UX
+            const searchInput = searchContainer.querySelector('.main-search');
+            if (searchInput) {
+                setTimeout(() => searchInput.focus(), 100);
+            }
+        }
+    }
+
+    // Function to hide search container
+    function hideSearch() {
+        if (searchContainer) {
+            searchContainer.style.display = 'none';
+            // Hide the search title as well
+            if (searchTitle) {
+                searchTitle.style.display = 'none';
+            }
+        }
+    }
+
+    // Add click event listener to search button
+    if (searchButton) {
+        searchButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            showSearch();
+        });
+    }
+
+    // Add click event listener to close button
+    if (closeButton) {
+        closeButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            hideSearch();
+        });
+    }
+
+    // Optional: Close search when clicking outside
+    document.addEventListener('click', function(e) {
+        if (searchContainer &&
+            searchContainer.style.display === 'block' &&
+            !searchContainer.contains(e.target) &&
+            !searchButton.contains(e.target)) {
+            hideSearch();
+        }
+    });
+
+    // Optional: Close search with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && searchContainer && searchContainer.style.display === 'block') {
+            hideSearch();
+        }
+    });
+});
+
+    </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.querySelector('.top-search-suggestion-mobi');
+        const suggestionBox = document.getElementById('suggestions-box-display-mobi');
+        const productCon = suggestionBox.querySelector('.left-suggestion-main-con');
+        const categoryCon = suggestionBox.querySelector('.right-suggestion-main-con ul');
+        const noResults = suggestionBox.querySelector('.left-suggestion-no-products');
+        const searchCloseBtn = document.querySelector('.close-search');
+
+        // Search functionality
+        searchInput.addEventListener('keyup', function () {
+            const query = this.value.trim();
+
+            if (query.length < 2) {
+                suggestionBox.style.display = 'none';
+                return;
+            }
+
+            fetch(`/search-suggestions?q=${encodeURIComponent(query)}`)
+                .then(res => res.json())
+                .then(data => {
+                    productCon.innerHTML = '';
+                    categoryCon.innerHTML = '';
+
+                    if (data.products.length === 0 && data.categories.length === 0) {
+                        noResults.hidden = false;
+                        suggestionBox.style.display = 'block';
+                        return;
+                    }
+
+                    noResults.hidden = true;
+
+                    // Products
+                    data.products.forEach(product => {
+                        productCon.innerHTML += `
+                            <a class="search-product-element" href="${product.url}">
+                                <div class="suggestion-box">
+                                    <div class="suggestion-product-img">
+                                        <img class="img-fluid" alt="" src="${product.image ?? ''}">
+                                    </div>
+                                    <div class="suggestion-box-details">
+                                        <div class="product-line product-name">${product.name}</div>
+                                    </div>
+                                </div>
+                            </a>`;
+                    });
+
+                    // Categories
+                    data.categories.forEach(category => {
+                        categoryCon.innerHTML += `
+                            <li><a class="search-category-name" href="${category.url}">${category.name}</a></li>`;
+                    });
+
+                    suggestionBox.style.display = 'block';
+                })
+                .catch(err => {
+                    console.error('Mobile search error:', err);
+                });
+        });
+
+        // Close search suggestions
+        if (searchCloseBtn) {
+            searchCloseBtn.addEventListener('click', () => {
+                suggestionBox.style.display = 'none';
+                searchInput.value = '';
+            });
+        }
+    });
+</script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInputDesktop = document.querySelector('.top-search-suggestion-desk'); // give desktop input a unique class
+        const suggestionBox = document.getElementById('suggestions-box-display');
+        const productCon = suggestionBox?.querySelector('.left-suggestion-main-con');
+        const categoryCon = suggestionBox?.querySelector('.right-suggestion-main-con ul');
+        const noResults = suggestionBox?.querySelector('.left-suggestion-no-products');
+
+        if (!searchInputDesktop) return;
+
+        searchInputDesktop.addEventListener('keyup', function () {
+            const query = this.value.trim();
+
+            if (query.length < 2) {
+                if (suggestionBox) suggestionBox.style.display = 'none';
+                return;
+            }
+
+            fetch(`/search-suggestions?q=${encodeURIComponent(query)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (!suggestionBox) return;
+
+                    productCon.innerHTML = '';
+                    categoryCon.innerHTML = '';
+
+                    if (data.products.length === 0 && data.categories.length === 0) {
+                        noResults.hidden = false;
+                        suggestionBox.style.display = 'block';
+                        return;
+                    }
+
+                    noResults.hidden = true;
+
+                    // Products
+                    data.products.forEach(product => {
+                        productCon.innerHTML += `
+                            <a class="search-product-element" href="${product.url}">
+                                <div class="suggestion-box">
+                                    <div class="suggestion-product-img">
+                                        <img class="img-fluid" alt="" src="${product.image ?? ''}">
+                                    </div>
+                                    <div class="suggestion-box-details">
+                                        <div class="product-line product-name">${product.name}</div>
+                                    </div>
+                                </div>
+                            </a>`;
+                    });
+
+                    // Categories
+                    data.categories.forEach(category => {
+                        categoryCon.innerHTML += `
+                            <li><a class="search-category-name" href="${category.url}">${category.name}</a></li>`;
+                    });
+
+                    suggestionBox.style.display = 'block';
+                })
+                .catch(err => {
+                    console.error('Desktop search error:', err);
+                });
+        });
+    });
+</script>
+
 
     </header>
 <?php /**PATH D:\Manulas Doc\Project\Intern\Project\omcnew project\OMCNEW\resources\views/frontend/navbar-new.blade.php ENDPATH**/ ?>
