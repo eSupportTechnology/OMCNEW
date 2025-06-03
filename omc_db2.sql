@@ -16,7 +16,7 @@
 
 
 -- Dumping database structure for omc_db2
-CREATE DATABASE IF NOT EXISTS `omc_db2` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE DATABASE IF NOT EXISTS `omc_db2` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `omc_db2`;
 
 -- Dumping structure for table omc_db2.addresses
@@ -36,11 +36,13 @@ CREATE TABLE IF NOT EXISTS `addresses` (
   PRIMARY KEY (`id`),
   KEY `addresses_user_id_foreign` (`user_id`),
   CONSTRAINT `addresses_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table omc_db2.addresses: ~1 rows (approximately)
-REPLACE INTO `addresses` (`id`, `user_id`, `full_name`, `phone_num`, `email`, `address`, `apartment`, `city`, `postal_code`, `default`, `created_at`, `updated_at`) VALUES
-	(1, 2, 'Manula', '0234234324', 'manulakavishka9@gmail.com', 'ABC', NULL, 'Colombo', '12345', 1, '2025-05-21 05:16:33', '2025-05-21 05:16:33');
+-- Dumping data for table omc_db2.addresses: ~3 rows (approximately)
+INSERT IGNORE INTO `addresses` (`id`, `user_id`, `full_name`, `phone_num`, `email`, `address`, `apartment`, `city`, `postal_code`, `default`, `created_at`, `updated_at`) VALUES
+	(1, 2, 'Manula', '0734234324', 'manulakavishka9@gmail.com', 'ABC', NULL, 'Colombo', '12345', 1, '2025-05-21 05:16:33', '2025-05-23 00:56:51'),
+	(2, 2, 'Manula', '1234213', '213213@gmail.com', '12321', '123123', '21321', '21321', 0, '2025-05-23 00:59:45', '2025-05-23 00:59:45'),
+	(3, 2, '123', '123213', '12323@gmail.com', '12321', '123213', '12321', '12312', 0, '2025-05-23 01:06:40', '2025-05-23 01:06:40');
 
 -- Dumping structure for table omc_db2.affiliate_customers
 CREATE TABLE IF NOT EXISTS `affiliate_customers` (
@@ -213,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `banners` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table omc_db2.banners: ~2 rows (approximately)
-REPLACE INTO `banners` (`id`, `title`, `image_path`, `position`, `is_active`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `banners` (`id`, `title`, `image_path`, `position`, `is_active`, `created_at`, `updated_at`) VALUES
 	(6, 'ghfh', '1747800757_Banner 1.png', 'bottom', 1, '2025-05-05 02:18:26', '2025-05-20 22:42:37'),
 	(7, 'Father', '1747800747_Banner 3.png', 'right', 1, '2025-05-05 02:18:43', '2025-05-20 22:42:27'),
 	(8, 'A family', '1747800714_Banner 2.png', 'left', 1, '2025-05-05 02:18:59', '2025-05-20 22:41:54');
@@ -221,17 +223,17 @@ REPLACE INTO `banners` (`id`, `title`, `image_path`, `position`, `is_active`, `c
 -- Dumping structure for table omc_db2.brands
 CREATE TABLE IF NOT EXISTS `brands` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `is_top_brand` tinyint(1) DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table omc_db2.brands: ~2 rows (approximately)
-REPLACE INTO `brands` (`id`, `name`, `image`, `slug`, `is_top_brand`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `brands` (`id`, `name`, `image`, `slug`, `is_top_brand`, `created_at`, `updated_at`) VALUES
 	(3, 'Apple', 'brands/ADwVa2Hd0lqRYZdSIZOmd81VbHql0Kz6ulPWNJGU.png', 'apple', 1, '2025-05-18 23:12:30', '2025-05-18 23:14:41'),
 	(4, 'Huawei', 'brands/APcuy36L4JhitylRlWarIhnJjzBdDmx1GpSTzKos.png', 'huawei', 1, '2025-05-19 00:17:45', '2025-05-19 00:17:45');
 
@@ -243,7 +245,9 @@ CREATE TABLE IF NOT EXISTS `cache` (
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table omc_db2.cache: ~0 rows (approximately)
+-- Dumping data for table omc_db2.cache: ~1 rows (approximately)
+INSERT IGNORE INTO `cache` (`key`, `value`, `expiration`) VALUES
+	('dialog_sms_token', 's:272:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUwOTgsInVzZXJuYW1lIjoiTWFkdW1hbGkiLCJtb2JpbGUiOjc3ODMzNzE0MywiZW1haWwiOiJvbWFya2V0aW5nY29tcGxleEBnbWFpbC5jb20iLCJjdXN0b21lcl9yb2xlIjowLCJpYXQiOjE3NDg4NTI0MDIsImV4cCI6MTc0ODg5NTYwMn0.w-n4l8ZmBr72_DuajIY5V-bD5PD0NLrR1pficmKCZs8";', 1748853062);
 
 -- Dumping structure for table omc_db2.cache_locks
 CREATE TABLE IF NOT EXISTS `cache_locks` (
@@ -267,7 +271,7 @@ CREATE TABLE IF NOT EXISTS `carousels` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table omc_db2.carousels: ~3 rows (approximately)
-REPLACE INTO `carousels` (`id`, `title`, `image_path`, `is_active`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `carousels` (`id`, `title`, `image_path`, `is_active`, `created_at`, `updated_at`) VALUES
 	(2, 'Abans', '1747800813_Slider 1.png', 1, '2025-05-04 23:59:38', '2025-05-20 22:43:33'),
 	(3, 'A family', '1747800823_Slider 2.png', 1, '2025-05-04 23:32:41', '2025-05-20 22:43:43'),
 	(6, 'deal', '1747800836_Slider 3.png', 1, '2025-05-04 23:44:07', '2025-05-20 22:43:56');
@@ -286,15 +290,11 @@ CREATE TABLE IF NOT EXISTS `cart_items` (
   PRIMARY KEY (`id`),
   KEY `cart_items_user_id_foreign` (`user_id`),
   CONSTRAINT `cart_items_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table omc_db2.cart_items: ~5 rows (approximately)
-REPLACE INTO `cart_items` (`id`, `user_id`, `product_id`, `quantity`, `size`, `color`, `image`, `created_at`, `updated_at`) VALUES
-	(2, 2, 'PRODUCT-9LKT4G', 3, 'xl', '#000000', NULL, '2025-05-06 23:33:22', '2025-05-09 01:09:17'),
-	(3, 2, 'PRODUCT-PVB5M9', 1, NULL, 'Black', NULL, '2025-05-07 07:30:50', '2025-05-07 07:30:50'),
-	(4, 2, 'PRODUCT-9LKT4G', 3, 'xl', 'Black', NULL, '2025-05-07 10:28:16', '2025-05-07 10:30:26'),
-	(5, 2, 'PRODUCT-9LKT4G', 1, 'Xl', '#c32828', NULL, '2025-05-21 01:45:45', '2025-05-21 01:45:45'),
-	(6, 2, 'PRODUCT-RJ2ROA', 1, NULL, NULL, NULL, '2025-05-21 01:53:54', '2025-05-21 01:53:54');
+-- Dumping data for table omc_db2.cart_items: ~0 rows (approximately)
+INSERT IGNORE INTO `cart_items` (`id`, `user_id`, `product_id`, `quantity`, `size`, `color`, `image`, `created_at`, `updated_at`) VALUES
+	(7, 3, 'PRODUCT-9LKT4G', 1, NULL, NULL, NULL, '2025-06-02 07:15:47', '2025-06-02 07:15:47');
 
 -- Dumping structure for table omc_db2.categories
 CREATE TABLE IF NOT EXISTS `categories` (
@@ -307,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table omc_db2.categories: ~0 rows (approximately)
-REPLACE INTO `categories` (`id`, `parent_category`, `image`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `categories` (`id`, `parent_category`, `image`, `created_at`, `updated_at`) VALUES
 	(1, 'LG', '1746442998_LG.png', '2025-05-02 05:59:59', '2025-05-05 05:33:18');
 
 -- Dumping structure for table omc_db2.contact_messages
@@ -322,7 +322,7 @@ CREATE TABLE IF NOT EXISTS `contact_messages` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table omc_db2.contact_messages: ~0 rows (approximately)
-REPLACE INTO `contact_messages` (`id`, `name`, `email`, `message`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `contact_messages` (`id`, `name`, `email`, `message`, `created_at`, `updated_at`) VALUES
 	(1, 'Manula', 'manulakavishka9@gmail.com', '123', '2025-05-05 04:12:51', '2025-05-05 04:12:51');
 
 -- Dumping structure for table omc_db2.customer_order
@@ -351,10 +351,10 @@ CREATE TABLE IF NOT EXISTS `customer_order` (
   KEY `customer_order_user_id_foreign` (`user_id`),
   KEY `customer_order_order_code_index` (`order_code`),
   CONSTRAINT `customer_order_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table omc_db2.customer_order: ~46 rows (approximately)
-REPLACE INTO `customer_order` (`id`, `order_code`, `user_id`, `customer_fname`, `phone`, `email`, `company_name`, `address`, `apartment`, `city`, `postal_code`, `date`, `total_cost`, `status`, `payment_method`, `payment_status`, `discount`, `transaction_id`, `created_at`, `updated_at`) VALUES
+-- Dumping data for table omc_db2.customer_order: ~49 rows (approximately)
+INSERT IGNORE INTO `customer_order` (`id`, `order_code`, `user_id`, `customer_fname`, `phone`, `email`, `company_name`, `address`, `apartment`, `city`, `postal_code`, `date`, `total_cost`, `status`, `payment_method`, `payment_status`, `discount`, `transaction_id`, `created_at`, `updated_at`) VALUES
 	(1, '123', 1, '123', '123', '123', '123', '123', '123', '123', '123', '2025-05-05', 123.00, 'Confirmed', NULL, NULL, NULL, NULL, NULL, NULL),
 	(2, 'ORD-4a412b06', 2, 'Manula', '0234234324', 'manulakavishka9@gmail.com', 'asdf', 'sd', '123', '123', '123', '2025-05-06', 1200.00, 'Confirmed', NULL, NULL, 0.00, NULL, '2025-05-06 01:18:40', '2025-05-06 01:18:40'),
 	(3, 'ORD-c1b713fe', 2, 'Manula', '0234234324', 'manulakavishka9@gmail.com', 'asdf', 'sd', '123', '123', '123', '2025-05-08', 1200.00, 'Confirmed', NULL, NULL, 0.00, NULL, '2025-05-07 22:35:24', '2025-05-07 22:35:24'),
@@ -400,7 +400,10 @@ REPLACE INTO `customer_order` (`id`, `order_code`, `user_id`, `customer_fname`, 
 	(43, 'ORD-ae7f135f', 2, 'Manula', '+94752538738', 'manulakavishka9@gmail.com', 'abc', 'ABC', 'fsd', 'Colombo', '12345', '2025-05-22', 2200.00, 'Confirmed', 'Card', 'Pending', 0.00, 'DSA_682f0a9b39c69', '2025-05-22 05:59:25', '2025-05-22 05:59:32'),
 	(44, 'ORD-7e553baa', 2, 'Manula', '+94752538738', 'manulakavishka9@gmail.com', NULL, 'ABC', NULL, 'Colombo', '12345', '2025-05-23', 3900.00, 'Confirmed', 'Card', 'Pending', 0.00, 'DSA_682fef9421b5d', '2025-05-22 22:16:22', '2025-05-22 22:16:30'),
 	(45, 'ORD-bc35db05', 2, 'Manula', '+94752538738', 'manulakavishka9@gmail.com', NULL, 'ABC', NULL, 'Colombo', '12345', '2025-05-23', 3900.00, 'Confirmed', 'Card', 'Pending', 0.00, 'DSA_682ff0f501e41', '2025-05-22 22:21:13', '2025-05-22 22:22:21'),
-	(46, 'ORD-8ce4e1c5', 2, 'Manula', '+94752538738', 'manulakavishka9@gmail.com', NULL, 'ABC', NULL, 'Colombo', '12345', '2025-05-23', 3900.00, 'Confirmed', 'Card', 'Paid', 0.00, 'DSA_682ff8644ee49', '2025-05-22 22:44:36', '2025-05-22 22:54:38');
+	(46, 'ORD-8ce4e1c5', 2, 'Manula', '+94752538738', 'manulakavishka9@gmail.com', NULL, 'ABC', NULL, 'Colombo', '12345', '2025-05-23', 3900.00, 'Confirmed', 'Card', 'Paid', 0.00, 'DSA_682ff8644ee49', '2025-05-22 22:44:36', '2025-05-22 22:54:38'),
+	(47, 'ORD-f0bcb541', 2, 'Manula', '0734234324', 'manulakavishka9@gmail.com', 'abc', 'ABC', 'fsd', 'Colombo', '12345', '2025-05-26', 2200.00, 'Confirmed', 'COD', 'Not Paid', 0.00, NULL, '2025-05-26 01:25:51', '2025-05-26 01:25:59'),
+	(48, 'ORD-44a4ab6a', 2, 'Manula', '0734234324', 'manulakavishka9@gmail.com', 'abc', 'ABC', 'fsd', 'Colombo', '12345', '2025-05-26', 2200.00, 'Confirmed', 'COD', 'Not Paid', 0.00, NULL, '2025-05-26 01:50:54', '2025-05-26 01:51:04'),
+	(49, 'ORD-49092142', 2, 'Manula', '0734234324', 'manulakavishka9@gmail.com', 'abc', 'ABC', 'fsd', 'Colombo', '12345', '2025-05-26', 2200.00, 'Confirmed', 'COD', 'Not Paid', 0.00, NULL, '2025-05-26 01:52:29', '2025-05-26 01:52:35');
 
 -- Dumping structure for table omc_db2.customer_order_items
 CREATE TABLE IF NOT EXISTS `customer_order_items` (
@@ -418,10 +421,10 @@ CREATE TABLE IF NOT EXISTS `customer_order_items` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `customer_order_items_id_unique` (`id`),
   KEY `customer_order_items_order_code_index` (`order_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table omc_db2.customer_order_items: ~49 rows (approximately)
-REPLACE INTO `customer_order_items` (`id`, `order_code`, `product_id`, `quantity`, `size`, `color`, `date`, `cost`, `reviewed`, `created_at`, `updated_at`) VALUES
+-- Dumping data for table omc_db2.customer_order_items: ~55 rows (approximately)
+INSERT IGNORE INTO `customer_order_items` (`id`, `order_code`, `product_id`, `quantity`, `size`, `color`, `date`, `cost`, `reviewed`, `created_at`, `updated_at`) VALUES
 	(1, '123', 'PRODUCT-9LKT4G', 1, 'xl', 'red', '2025-05-05', 100.00, 'no', '2025-05-05 11:21:27', '2025-05-05 11:21:28'),
 	(2, 'ORD-4a412b06', 'PRODUCT-9LKT4G', 1, 'xl', '#000000', '2025-05-06', 900.00, 'no', '2025-05-06 01:18:40', '2025-05-06 01:18:40'),
 	(3, 'ORD-c1b713fe', 'PRODUCT-9LKT4G', 1, 'xl', 'Black', '2025-05-08', 900.00, 'no', '2025-05-07 22:35:24', '2025-05-07 22:35:24'),
@@ -473,7 +476,10 @@ REPLACE INTO `customer_order_items` (`id`, `order_code`, `product_id`, `quantity
 	(49, 'ORD-ae7f135f', 'PRODUCT-RJ2ROA', 1, NULL, NULL, '2025-05-22', 1900.00, 'no', '2025-05-22 05:59:25', '2025-05-22 05:59:25'),
 	(50, 'ORD-7e553baa', 'PRODUCT-PVB5M9', 1, NULL, NULL, '2025-05-23', 3600.00, 'no', '2025-05-22 22:16:22', '2025-05-22 22:16:22'),
 	(51, 'ORD-bc35db05', 'PRODUCT-PVB5M9', 1, NULL, NULL, '2025-05-23', 3600.00, 'no', '2025-05-22 22:21:13', '2025-05-22 22:21:13'),
-	(52, 'ORD-8ce4e1c5', 'PRODUCT-PVB5M9', 1, NULL, NULL, '2025-05-23', 3600.00, 'no', '2025-05-22 22:44:36', '2025-05-22 22:44:36');
+	(52, 'ORD-8ce4e1c5', 'PRODUCT-PVB5M9', 1, NULL, NULL, '2025-05-23', 3600.00, 'no', '2025-05-22 22:44:36', '2025-05-22 22:44:36'),
+	(53, 'ORD-f0bcb541', 'PRODUCT-RJ2ROA', 1, NULL, NULL, '2025-05-26', 1900.00, 'no', '2025-05-26 01:25:51', '2025-05-26 01:25:51'),
+	(54, 'ORD-44a4ab6a', 'PRODUCT-RJ2ROA', 1, NULL, NULL, '2025-05-26', 1900.00, 'no', '2025-05-26 01:50:54', '2025-05-26 01:50:54'),
+	(55, 'ORD-49092142', 'PRODUCT-RJ2ROA', 1, NULL, NULL, '2025-05-26', 1900.00, 'no', '2025-05-26 01:52:29', '2025-05-26 01:52:29');
 
 -- Dumping structure for table omc_db2.failed_jobs
 CREATE TABLE IF NOT EXISTS `failed_jobs` (
@@ -554,7 +560,7 @@ CREATE TABLE IF NOT EXISTS `logos` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table omc_db2.logos: ~0 rows (approximately)
-REPLACE INTO `logos` (`id`, `title`, `image_path`, `is_active`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `logos` (`id`, `title`, `image_path`, `is_active`, `created_at`, `updated_at`) VALUES
 	(1, 'Father', '1746528761_brand_name l - Copy.png', 1, '2025-05-05 02:52:34', '2025-05-06 05:22:41');
 
 -- Dumping structure for table omc_db2.migrations
@@ -566,7 +572,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
 ) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table omc_db2.migrations: ~36 rows (approximately)
-REPLACE INTO `migrations` (`id`, `migration`, `batch`) VALUES
+INSERT IGNORE INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(34, '0001_01_01_000000_create_users_table', 1),
 	(35, '0001_01_01_000001_create_cache_table', 1),
 	(36, '0001_01_01_000002_create_jobs_table', 1),
@@ -660,10 +666,10 @@ CREATE TABLE IF NOT EXISTS `products` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table omc_db2.products: ~4 rows (approximately)
-REPLACE INTO `products` (`id`, `product_id`, `product_name`, `product_description`, `brand_id`, `product_category`, `subcategory`, `sub_subcategory`, `quantity`, `tags`, `normal_price`, `is_affiliate`, `affiliate_price`, `commission_percentage`, `total_price`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `products` (`id`, `product_id`, `product_name`, `product_description`, `brand_id`, `product_category`, `subcategory`, `sub_subcategory`, `quantity`, `tags`, `normal_price`, `is_affiliate`, `affiliate_price`, `commission_percentage`, `total_price`, `created_at`, `updated_at`) VALUES
 	(1, 'PRODUCT-9LKT4G', 'Casual Shoes Loafers British Leather Sneakers', '<p><span style="color: rgb(67, 70, 73);">Per le dimensioni</span></p><p><span style="color: rgb(67, 70, 73);">Si prega di scegliere le dimensioni in base alla lunghezza del piede (dal tallone alla punta)!</span></p><p><span style="color: rgb(67, 70, 73);">Il materiale diverso del paese ha uno standard di diverse dimensioni.</span></p><p><span style="color: rgb(67, 70, 73);">Così la nostra taglia usa, la taglia europea potrebbe essere diversa con la tua.</span></p>', NULL, 'LG', 'Phones', '', 80, 'Whether,with,metal,toe,cap', 1000.00, 1, 1000.00, 10.00, 1100.00, '2025-05-02 06:00:52', '2025-05-22 05:46:49'),
 	(2, 'PRODUCT-PVB5M9', 'New Trendy All-match Platform', '<p><span style="color: rgb(67, 70, 73);">Così la nostra taglia usa, la taglia europea potrebbe essere diversa con la tua.</span></p><p><span style="color: rgb(67, 70, 73);">Misura la lunghezza del piede prima e poi scegli la misura corrispondente.</span></p><p><span style="color: rgb(67, 70, 73);">Il numero di dimensioni contrassegnato nella suola della scarpa è il numero di dimensioni della cina, non la dimensione europea.</span></p><p><span style="color: rgb(67, 70, 73);">Aberrazione cromatica</span></p>', 0, 'LG', 'Laptops', '', 420, '43', 4000.00, 0, NULL, NULL, 4000.00, '2025-05-02 06:01:32', '2025-05-22 22:44:36'),
-	(3, 'PRODUCT-RJ2ROA', '20pcs Wooden Candles Wick DIY Candle Making Kit Smokeless Candle Core with Clip Base Handmade Candle Wood Core Candlewick', '<p><strong style="color: rgb(0, 0, 0);">20pcs Wooden Candles Wick DIY Candle Making Kit Smokeless Candle Core with Clip Base Handmade Candle Wood Core Candlewick</strong></p><p><span class="ql-cursor">﻿</span>Features: Wooden Candles Wick</p><p>Specification: Wooden Candles Wick for Candle Making Kit</p><p>Package includes：20pcs/pack, 3 sheets Candle Wick Stickers</p><p>Size: 6*60mm,13*130mm,15*150mm</p>', 0, 'LG', 'Phones', 'LG 101', 84, '', 2000.00, 0, NULL, NULL, 2000.00, '2025-05-07 10:52:40', '2025-05-22 05:59:25'),
+	(3, 'PRODUCT-RJ2ROA', '20pcs Wooden Candles Wick DIY Candle Making Kit Smokeless Candle Core with Clip Base Handmade Candle Wood Core Candlewick', '<p><strong style="color: rgb(0, 0, 0);">20pcs Wooden Candles Wick DIY Candle Making Kit Smokeless Candle Core with Clip Base Handmade Candle Wood Core Candlewick</strong></p><p><span class="ql-cursor">﻿</span>Features: Wooden Candles Wick</p><p>Specification: Wooden Candles Wick for Candle Making Kit</p><p>Package includes：20pcs/pack, 3 sheets Candle Wick Stickers</p><p>Size: 6*60mm,13*130mm,15*150mm</p>', 0, 'LG', 'Phones', 'LG 101', 81, '', 2000.00, 0, NULL, NULL, 2000.00, '2025-05-07 10:52:40', '2025-05-26 01:52:29'),
 	(4, 'PRODUCT-8BYSDO', '4 Ports USB C PD Charger Quick Charge 3.0 Type C USB Phone Chargers Fast Charging Adapter For iPhone 15 14 Samsung Xiaomi Huawei', '<p><strong style="color: rgb(0, 0, 0);">4 Ports USB C PD Charger Quick Charge 3.0 Type C USB Phone Chargers Fast Charging Adapter For iPhone 15 14 Samsung Xiaomi Huawei</strong></p>', 4, 'LG', 'Phones', '', 97, 'Top Selling', 1000.00, 0, NULL, NULL, 1000.00, '2025-05-19 00:14:20', '2025-05-22 05:43:29');
 
 -- Dumping structure for table omc_db2.product_images
@@ -679,7 +685,7 @@ CREATE TABLE IF NOT EXISTS `product_images` (
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table omc_db2.product_images: ~8 rows (approximately)
-REPLACE INTO `product_images` (`id`, `product_id`, `image_path`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `product_images` (`id`, `product_id`, `image_path`, `created_at`, `updated_at`) VALUES
 	(3, 'PRODUCT-PVB5M9', 'product_images/1746443262_1726654559_d1 (1).png', '2025-05-05 05:37:42', '2025-05-05 05:37:42'),
 	(4, 'PRODUCT-PVB5M9', 'product_images/1746443262_1726654863_d (1).png', '2025-05-05 05:37:42', '2025-05-05 05:37:42'),
 	(5, 'PRODUCT-9LKT4G', 'product_images/1746443282_1726656996_baby4.jpg', '2025-05-05 05:38:02', '2025-05-05 05:38:02'),
@@ -754,7 +760,7 @@ CREATE TABLE IF NOT EXISTS `sales` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table omc_db2.sales: ~0 rows (approximately)
-REPLACE INTO `sales` (`id`, `product_id`, `normal_price`, `sale_rate`, `sale_price`, `end_date`, `status`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `sales` (`id`, `product_id`, `normal_price`, `sale_rate`, `sale_price`, `end_date`, `status`, `created_at`, `updated_at`) VALUES
 	(1, 'PRODUCT-PVB5M9', 4000.00, 10.00, 3600.00, '2025-05-30 16:48:00', 'active', '2025-05-05 05:49:07', '2025-05-21 01:58:24');
 
 -- Dumping structure for table omc_db2.sessions
@@ -770,13 +776,9 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   KEY `sessions_last_activity_index` (`last_activity`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Dumping data for table omc_db2.sessions: ~4 rows (approximately)
-REPLACE INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-	('5kOk3XRYyL7LwZr2s6T9mWMEHPOrRKPphoFkx8a4', NULL, '127.0.0.1', 'onepay/2.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiNUZyeU1TdGNsTVFEeWZXVmlDZFlFS1RDeFp5VzlZMHVhMjZ5YXVzVSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTQ6Imh0dHA6Ly82NzA4LTExMi0xMzQtMjIyLTc2Lm5ncm9rLWZyZWUuYXBwL3BheW1lbnQtZmFpbCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1747972389),
-	('cOQuhJdMQcI00hDKuQTTjMVOQiRntzOw9LLpWGfC', NULL, '127.0.0.1', 'onepay/2.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoibHp5MzVwS1p2clBlUVJ4cHFqeHZSRTF5bHJRUzF5TkFNNDhmNFBYRyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTQ6Imh0dHA6Ly82NzA4LTExMi0xMzQtMjIyLTc2Lm5ncm9rLWZyZWUuYXBwL3BheW1lbnQtZmFpbCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1747974198),
-	('Duni67NbOPXcYUOpBNfIflopmSqP9tdFkZSMcI0F', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiUXdjQUVFaFdFbTk3d1dyekxaR1VKSEtDVW42dlRYd1N4a01IMXU2QyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9jYXJ0L2NvdW50Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MjtzOjEyOiJwcm9kdWN0X2RhdGEiO2E6Njp7czoxMDoicHJvZHVjdF9pZCI7czoxNDoiUFJPRFVDVC1QVkI1TTkiO3M6MTI6InByb2R1Y3RfbmFtZSI7czoyOToiTmV3IFRyZW5keSBBbGwtbWF0Y2ggUGxhdGZvcm0iO3M6NToicHJpY2UiO3M6NzoiMzYwMC4wMCI7czo0OiJzaXplIjtOO3M6NToiY29sb3IiO047czo4OiJxdWFudGl0eSI7czoxOiIxIjt9fQ==', 1747973788),
-	('tIAcwnJyFfXN13oAota4nwEsPGvhwyxVYkWX9qIZ', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiQmgyUldIYWhoWUczeFVkeUF2U2liMlkwa2ZQY3RabDNBcTE0SVlMSSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9kYXNoYm9hcmQiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjg6ImlzX2FkbWluIjtiOjE7czo0OiJuYW1lIjtzOjM6IjEyMyI7czo1OiJlbWFpbCI7czoyNToibWFudWxha2F2aXNoa2E3QGdtYWlsLmNvbSI7czoxMDoiaW1hZ2VfcGF0aCI7czo5OiJSZWFjdC5wbmciO30=', 1747970932),
-	('WVIo9iKelk6tktxguk25mtI5GcxwIB4dTFtuvK5H', 2, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiczJKUjBFWnVpV2FabzBJSllwcWtsR2JWUWNSSTZGQTkyU0gxb0wzTSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NzU6Imh0dHA6Ly82NzA4LTExMi0xMzQtMjIyLTc2Lm5ncm9rLWZyZWUuYXBwL29yZGVyL29yZGVyX3JlY2VpdmVkL09SRC04Y2U0ZTFjNSI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7fQ==', 1747974289);
+-- Dumping data for table omc_db2.sessions: ~3 rows (approximately)
+INSERT IGNORE INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
+	('I5Vk646R9qHZSc2W2M00cA2bjZ0bjHxgaFQewfGl', 3, '127.0.0.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiYlVBTnNBT1BGNGo3RWFGYkhOM1k2Yll6bTJUSjFXZDEwdG5BWXN3eCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzI6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9jYXJ0L2NvdW50Ijt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6Mzt9', 1748868368);
 
 -- Dumping structure for table omc_db2.special_offers
 CREATE TABLE IF NOT EXISTS `special_offers` (
@@ -793,7 +795,7 @@ CREATE TABLE IF NOT EXISTS `special_offers` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table omc_db2.special_offers: ~0 rows (approximately)
-REPLACE INTO `special_offers` (`id`, `product_id`, `normal_price`, `offer_rate`, `offer_price`, `month`, `status`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `special_offers` (`id`, `product_id`, `normal_price`, `offer_rate`, `offer_price`, `month`, `status`, `created_at`, `updated_at`) VALUES
 	(1, 'PRODUCT-9LKT4G', 1000.00, 10.00, 900.00, '2025-05', 'active', '2025-05-05 05:40:21', '2025-05-05 05:40:21'),
 	(2, 'PRODUCT-RJ2ROA', 2000.00, 5.00, 1900.00, '2025-05', 'active', '2025-05-07 10:53:10', '2025-05-07 10:53:10');
 
@@ -808,7 +810,7 @@ CREATE TABLE IF NOT EXISTS `subcategories` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table omc_db2.subcategories: ~2 rows (approximately)
-REPLACE INTO `subcategories` (`id`, `category_id`, `subcategory`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `subcategories` (`id`, `category_id`, `subcategory`, `created_at`, `updated_at`) VALUES
 	(3, 1, 'Phones', '2025-05-05 05:33:18', '2025-05-05 05:33:18'),
 	(4, 1, 'Laptops', '2025-05-05 05:33:18', '2025-05-05 05:33:18');
 
@@ -823,7 +825,7 @@ CREATE TABLE IF NOT EXISTS `sub_subcategories` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table omc_db2.sub_subcategories: ~4 rows (approximately)
-REPLACE INTO `sub_subcategories` (`id`, `subcategory_id`, `sub_subcategory`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `sub_subcategories` (`id`, `subcategory_id`, `sub_subcategory`, `created_at`, `updated_at`) VALUES
 	(3, 3, 'LG 101', '2025-05-05 05:33:18', '2025-05-05 05:33:18'),
 	(4, 3, 'LG A02', '2025-05-05 05:33:18', '2025-05-05 05:33:18'),
 	(5, 4, 'Gaming', '2025-05-05 05:33:18', '2025-05-05 05:33:18'),
@@ -846,7 +848,7 @@ CREATE TABLE IF NOT EXISTS `system_users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table omc_db2.system_users: ~0 rows (approximately)
-REPLACE INTO `system_users` (`id`, `name`, `email`, `contact`, `password`, `role`, `image_path`, `status`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `system_users` (`id`, `name`, `email`, `contact`, `password`, `role`, `image_path`, `status`, `created_at`, `updated_at`) VALUES
 	(1, '123', 'manulakavishka7@gmail.com', '0754555411', '$2y$12$n0Po0rPjl1yB6x9Zaz/Z7OcxcOp4weLOtDrhm5uVQ6l6NEOTxB.l.', 'admin', 'React.png', 1, '2025-05-02 11:27:56', '2025-05-08 22:28:12'),
 	(2, 'Manula', 'manulakavishka@gmail.com', '0754555412', '$2y$12$FURnnjOAqj9Ao9Sv1OnpEuLH1ms50lXfNOq84SY7JJWx40a7/N5qK', 'admin', 'Next.png', 1, '2025-05-08 22:27:36', '2025-05-08 22:27:36');
 
@@ -874,13 +876,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table omc_db2.users: ~3 rows (approximately)
-REPLACE INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `address`, `district`, `date_of_birth`, `gender`, `phone_num`, `acc_no`, `bank_name`, `branch`, `last_login`, `role`, `profile_image`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `address`, `district`, `date_of_birth`, `gender`, `phone_num`, `acc_no`, `bank_name`, `branch`, `last_login`, `role`, `profile_image`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
 	(1, 'Manula', 'manula@gmail.com', NULL, NULL, '123', '123', '2025-05-05', 'male', '123', '123', '123', '123', NULL, 'user', NULL, '1', NULL, NULL, NULL),
-	(2, 'Manula', 'manulakavishka9@gmail.com', NULL, '$2y$12$H4Tb6/2XXbmezI7Taa5eC.x7FFJhM8ck1OD07tyrXKVIErAxQHp96', 'sd', '123', '2025-02-03', NULL, '0234234324', NULL, NULL, NULL, '2025-05-22 22:21:50', NULL, NULL, NULL, NULL, '2025-05-06 01:16:45', '2025-05-22 22:21:50'),
-	(3, 'asd', 'manu@gmail.com', NULL, '$2y$12$jTpEGUejxHdKRhTI5BNYluigGD8pQaISrhiGlMdfWhLumlDWyYPCa', '123/ colombo1212', '123', '2025-05-19', NULL, '0234234324', NULL, NULL, NULL, '2025-05-20 00:10:25', NULL, NULL, NULL, NULL, '2025-05-20 00:10:12', '2025-05-20 00:10:25');
+	(2, 'Manula', 'manulakavishka9@gmail.com', NULL, '$2y$12$H4Tb6/2XXbmezI7Taa5eC.x7FFJhM8ck1OD07tyrXKVIErAxQHp96', 'sd', '123', '2025-02-03', NULL, '0234234324', NULL, NULL, NULL, '2025-05-26 01:25:22', NULL, NULL, NULL, NULL, '2025-05-06 01:16:45', '2025-05-26 01:25:22'),
+	(3, 'asd', 'manu@gmail.com', NULL, '$2y$12$jTpEGUejxHdKRhTI5BNYluigGD8pQaISrhiGlMdfWhLumlDWyYPCa', '123/ colombo1212', '123', '2025-05-19', NULL, '0234234324', NULL, NULL, NULL, '2025-06-02 07:14:49', NULL, NULL, NULL, NULL, '2025-05-20 00:10:12', '2025-06-02 07:14:49'),
+	(4, 'asd', 'kavi@gmail.com', NULL, '$2y$12$l2VRIQKLAfLN3dtP9yyfsOlrLjHTXa1Y.MLIxsijC4cTlDPYPERP6', '123/ colombo1212', '123', '2025-06-01', NULL, '752538738', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-06-02 02:37:08', '2025-06-02 02:37:08'),
+	(5, 'asd', 'kavi1@gmail.com', NULL, '$2y$12$gDCCoq8B3.c3T9QVgtSoBu76/Xf6gRiMiNCodq5QcXUZpwWW8CLZO', '123/ colombo1212', '123', '2025-05-11', NULL, '752538738', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-06-02 02:50:01', '2025-06-02 02:50:01');
 
 -- Dumping structure for table omc_db2.variations
 CREATE TABLE IF NOT EXISTS `variations` (
@@ -898,7 +902,7 @@ CREATE TABLE IF NOT EXISTS `variations` (
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for table omc_db2.variations: ~3 rows (approximately)
-REPLACE INTO `variations` (`id`, `product_id`, `type`, `value`, `hex_value`, `quantity`, `created_at`, `updated_at`) VALUES
+INSERT IGNORE INTO `variations` (`id`, `product_id`, `type`, `value`, `hex_value`, `quantity`, `created_at`, `updated_at`) VALUES
 	(26, 'PRODUCT-9LKT4G', 'Material', 'lather', NULL, 3, '2025-05-21 01:42:45', '2025-05-21 01:42:45'),
 	(27, 'PRODUCT-9LKT4G', 'Size', 'Xl', NULL, 0, '2025-05-21 01:42:45', '2025-05-21 05:40:24'),
 	(28, 'PRODUCT-9LKT4G', 'Color', 'Tall Poppy', '#c32828', 0, '2025-05-21 01:42:47', '2025-05-22 05:16:53');
