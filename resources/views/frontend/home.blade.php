@@ -2,7 +2,6 @@
 
 @section('content')
     <style>
-        /* Sample UI Recreation with Blue Theme */
         :root {
             --primary: #2b96c5;
             --primary-dark: #1e7ba8;
@@ -36,7 +35,6 @@
             padding: 20px;
         }
 
-        /* Carousel */
         .carousel-wrapper {
             margin-bottom: 30px;
             border-radius: var(--radius);
@@ -63,7 +61,6 @@
             background: var(--primary);
         }
 
-        /* Categories Grid - Matching Sample */
         .categories-section {
             margin-bottom: 40px;
         }
@@ -100,7 +97,6 @@
             transform: translateY(-1px);
         }
 
-        /* Section Headers - Matching Sample */
         .section-header {
             background: var(--text-dark);
             color: var(--white);
@@ -110,8 +106,6 @@
             font-size: 1.25rem;
             font-weight: 600;
         }
-
-        /* Product Grid - Matching Sample */
         .products-container {
             background: var(--white);
             border-radius: 0 0 var(--radius) var(--radius);
@@ -146,14 +140,19 @@
             background: var(--white);
             padding: 20px;
             text-align: center;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .product-image {
-            width: 100%;
-            height: 150px;
+            max-height: 100%;
+            max-width: 100%;
             object-fit: contain;
             display: block;
         }
+
 
         .wishlist-btn {
             position: absolute;
@@ -230,7 +229,6 @@
             font-weight: 600;
         }
 
-        /* Navigation Buttons - Matching Sample */
         .section-navigation {
             display: flex;
             justify-content: space-between;
@@ -257,7 +255,6 @@
             cursor: not-allowed;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
             .container {
                 padding: 15px;
@@ -312,7 +309,6 @@
             }
         }
 
-        /* Override any existing owl carousel on mobile */
         @media (max-width: 576px) {
             .owl-carousel {
                 display: block !important;
@@ -331,7 +327,6 @@
         }
     </style>
 
-    <!-- Carousel Section -->
     <div class="container">
         <div class="carousel-wrapper">
             <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
@@ -357,7 +352,6 @@
             </div>
         </div>
 
-        <!-- Categories Section -->
         <div class="categories-section">
             <div class="categories-grid">
                 @foreach ($categories as $category)
@@ -369,7 +363,6 @@
             </div>
         </div>
 
-        <!-- Special Offers Section -->
         <div class="section-header">Special Offers</div>
         <div class="products-container">
             <div class="products-grid">
@@ -415,7 +408,6 @@
             </div>
         </div>
 
-        <!-- Top Selling Section -->
         <div class="section-header">Top Selling</div>
         <div class="products-container">
             <div class="products-grid">
@@ -469,7 +461,6 @@
             </div>
         </div>
 
-        <!-- Flash Sale Section -->
         <div class="section-header">Flash Sale</div>
         <div class="products-container">
             <div class="products-grid">
@@ -530,9 +521,7 @@
         </div>
     </div>
 
-    <!-- Scripts -->
     <script>
-        // Remove owl carousel on mobile
         document.addEventListener('DOMContentLoaded', function() {
             if (window.innerWidth <= 576) {
                 const carousels = document.querySelectorAll('.owl-carousel');
@@ -558,7 +547,6 @@
             }
         });
 
-        // Wishlist functionality
         document.addEventListener('DOMContentLoaded', function() {
             const productIds = [...document.querySelectorAll('.heart-icon')].map(button =>
                 button.id.replace('wishlist-icon-', ''));
