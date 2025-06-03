@@ -605,200 +605,194 @@
         </div>
 
         <!--    category begin -->
-        <div class="header-bottom destop-categories">
-            <div class="site-common-con">
-                <div class="d-flex">
-                    <div class="cat-main-set ">
-                        <div id="mega-menu">
-                            <div class="btn-mega">
-                                <div class="all-cat-txt">
-                                    <div class="cat-icon">
+{{--        <div class="header-bottom destop-categories">--}}
+{{--            <div class="site-common-con">--}}
+{{--                <div class="d-flex">--}}
+{{--                    <div class="cat-main-set ">--}}
+{{--                        <div id="mega-menu">--}}
+{{--                            <div class="btn-mega">--}}
+{{--                                <div class="all-cat-txt">--}}
+{{--                                    <div class="cat-icon">--}}
 
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </div>
-                                    <span class="nav-vcenter">
-                                        All Categories
-                                        <span class="fa-solid fa-chevron-down cat-arrow"></span>
-                                    </span>
-                                </div>
-                            </div>
-                            <style>
+{{--                                        <span></span>--}}
+{{--                                        <span></span>--}}
+{{--                                        <span></span>--}}
+{{--                                    </div>--}}
+{{--                                    <span class="nav-vcenter">--}}
+{{--                                        All Categories--}}
+{{--                                        <span class="fa-solid fa-chevron-down cat-arrow"></span>--}}
+{{--                                    </span>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <style>--}}
 
 
 
 
-                            </style>
-                            <div class="wrap-menu">
-                                <div class="wrap-inner">
-                                    @foreach ($categories as $category)
-                                        <div class="fly main-link">
-                                            <a href="/all-items?category={{ urlencode($category->parent_category) }}">
+{{--                            </style>--}}
+{{--                            <div class="wrap-menu">--}}
+{{--                                <div class="wrap-inner">--}}
+{{--                                    @foreach ($categories as $category)--}}
+{{--                                        <div class="fly main-link">--}}
+{{--                                            <a href="/all-items?category={{ urlencode($category->parent_category) }}">--}}
 
-                                                {{ $category->parent_category }}
-                                            </a>
+{{--                                                {{ $category->parent_category }}--}}
+{{--                                            </a>--}}
 
 
-                                            <div class="inner">
-                                                <div class="scroll-height"></div>
-                                                <div class="scroll-cat-set">
+{{--                                            <div class="inner">--}}
+{{--                                                <div class="scroll-height"></div>--}}
+{{--                                                <div class="scroll-cat-set">--}}
 
 
-                                                    <!-- Check if the category has subcategories -->
-                                                    @if ($category->subcategories->isNotEmpty())
-                                                        @foreach ($category->subcategories as $subcategory)
-                                                            <div class="one-third">
-                                                                <div class="cat-title">
-                                                                    <a
-                                                                        href="/all-items?subcategory={{ urlencode($subcategory->subcategory) }}">
-                                                                        {{ $subcategory->subcategory }}
-                                                                    </a>
-                                                                </div>
-                                                                <ul>
-                                                                    @if ($category->subcategories->isNotEmpty())
-                                                                        @foreach ($subcategory->subSubcategories as $subSubcategory)
-                                                                            <li class="fly main-link">
-                                                                                <a
-                                                                                    href="/all-items?subsubcategory={{ urlencode($subSubcategory->sub_subcategory) }}">
-                                                                                    {{ $subSubcategory->sub_subcategory }}
-                                                                                </a>
+{{--                                                    <!-- Check if the category has subcategories -->--}}
+{{--                                                    @if ($category->subcategories->isNotEmpty())--}}
+{{--                                                        @foreach ($category->subcategories as $subcategory)--}}
+{{--                                                            <div class="one-third">--}}
+{{--                                                                <div class="cat-title">--}}
+{{--                                                                    <a--}}
+{{--                                                                        href="/all-items?subcategory={{ urlencode($subcategory->subcategory) }}">--}}
+{{--                                                                        {{ $subcategory->subcategory }}--}}
+{{--                                                                    </a>--}}
+{{--                                                                </div>--}}
+{{--                                                                <ul>--}}
+{{--                                                                    @if ($category->subcategories->isNotEmpty())--}}
+{{--                                                                        @foreach ($subcategory->subSubcategories as $subSubcategory)--}}
+{{--                                                                            <li class="fly main-link">--}}
+{{--                                                                                <a--}}
+{{--                                                                                    href="/all-items?subsubcategory={{ urlencode($subSubcategory->sub_subcategory) }}">--}}
+{{--                                                                                    {{ $subSubcategory->sub_subcategory }}--}}
+{{--                                                                                </a>--}}
 
 
-                                                                            </li>
-                                                                        @endforeach
-                                                                    @endif
+{{--                                                                            </li>--}}
+{{--                                                                        @endforeach--}}
+{{--                                                                    @endif--}}
 
-                                                                </ul>
+{{--                                                                </ul>--}}
 
-                                                            </div>
-                                                        @endforeach
-                                                    @endif
+{{--                                                            </div>--}}
+{{--                                                        @endforeach--}}
+{{--                                                    @endif--}}
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    @endforeach--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div><!-- /.col-md-3 col-2 -->--}}
 
 
+{{--                    <!-- right sub menu end -->--}}
 
-                        </div>
 
+{{--                    <div class="cat-sub-set">--}}
+{{--                        <div class="nav-wrap">--}}
+{{--                            <div id="mainnav" class="mainnav">--}}
+{{--                                <ul class="menu">--}}
 
 
-                    </div><!-- /.col-md-3 col-2 -->
 
+{{--                                    <li class="column-1"> <a href="/" title="">Home</a> </li>--}}
+{{--                                    <!-- /.column-1 -->--}}
 
-                    <!-- right sub menu end -->
 
+{{--                                    <!-- /.column-1 -->--}}
+{{--                                    --}}{{-- <li class="column-1"><a href="/shop" title="">Shop</a></li> --}}
+{{--                                    <!-- /.column-1 -->--}}
 
-                    <div class="cat-sub-set">
-                        <div class="nav-wrap">
-                            <div id="mainnav" class="mainnav">
-                                <ul class="menu">
 
+{{--                                    </li><!-- /.column-1 -->--}}
 
 
-                                    <li class="column-1"> <a href="/" title="">Home</a> </li>
-                                    <!-- /.column-1 -->
 
 
-                                    <!-- /.column-1 -->
-                                    {{-- <li class="column-1"><a href="/shop" title="">Shop</a></li> --}}
-                                    <!-- /.column-1 -->
 
+{{--                                    <li class="has-mega-menu">--}}
+{{--                                        <a href="#" title="Brands">--}}
 
-                                    </li><!-- /.column-1 -->
+{{--                                            Brands </a>--}}
 
+{{--                                        <ul class="submenu" id="brand-submenu">--}}
+{{--                                            <div class="row align-items-start">--}}
+{{--                                                <div class="col-sm-6">--}}
+{{--                                                    <p class="brand-topic">Top Brands</p>--}}
+{{--                                                    <div id="top-brands" class="brand-logos-set row"></div>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="col-sm-6 px-40">--}}
+{{--                                                    <p class="brand-topic">All Brands</p>--}}
+{{--                                                    <div id="all-brands" class="row align-items-start"></div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </ul>--}}
 
 
+{{--                                    </li>--}}
 
 
-                                    <li class="has-mega-menu">
-                                        <a href="#" title="Brands">
 
-                                            Brands </a>
+{{--                                    <li class="column-1">--}}
+{{--                                        <a href="{{ route('about') }}" title="">--}}
 
-                                        <ul class="submenu" id="brand-submenu">
-                                            <div class="row align-items-start">
-                                                <div class="col-sm-6">
-                                                    <p class="brand-topic">Top Brands</p>
-                                                    <div id="top-brands" class="brand-logos-set row"></div>
-                                                </div>
-                                                <div class="col-sm-6 px-40">
-                                                    <p class="brand-topic">All Brands</p>
-                                                    <div id="all-brands" class="row align-items-start"></div>
-                                                </div>
-                                            </div>
-                                        </ul>
+{{--                                            About Us </a>--}}
 
+{{--                                    </li>--}}
 
-                                    </li>
 
+{{--                                    <li class="column-1">--}}
+{{--                                        <a href="{{ route('contac') }}" title="">--}}
 
+{{--                                            Contact Us </a>--}}
 
-                                    <li class="column-1">
-                                        <a href="{{ route('about') }}" title="">
+{{--                                    </li>--}}
 
-                                            About Us </a>
+{{--                                    --}}{{-- <li class="column-1">--}}
+{{--                                        <a href="{{ route('frontend.vendor') }}" title="">--}}
 
-                                    </li>
+{{--                                            Vendors </a>--}}
 
+{{--                                    </li> --}}
 
-                                    <li class="column-1">
-                                        <a href="{{ route('contac') }}" title="">
 
-                                            Contact Us </a>
 
-                                    </li>
 
-                                    {{-- <li class="column-1">
-                                        <a href="{{ route('frontend.vendor') }}" title="">
+{{--                                    <!-- /.column-1 -->--}}
+{{--                                </ul><!-- /.menu -->--}}
 
-                                            Vendors </a>
 
-                                    </li> --}}
 
+{{--                                <div class="destop-hotline d-flex">--}}
 
+{{--                                    <div class="top-track">--}}
 
+{{--                                        <a href="/home/My-Account/myorders"><i--}}
+{{--                                                class="fa-solid fa-location-dot me-2"></i>Track your order</a>--}}
 
-                                    <!-- /.column-1 -->
-                                </ul><!-- /.menu -->
+{{--                                    </div>--}}
+{{--                                    <div><a href="#" title="">--}}
+{{--                                            <i class="fa-solid fa-phone me-2"></i>--}}
+{{--                                            +94 75 833 7141--}}
 
+{{--                                        </a>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
+{{--                            </div><!-- /.mainnav -->--}}
+{{--                        </div><!-- /.nav-wrap -->--}}
 
-                                <div class="destop-hotline d-flex">
+{{--                        <div class="btn-menu">--}}
+{{--                            <span></span>--}}
+{{--                        </div><!-- //mobile menu button -->--}}
+{{--                    </div><!-- /.col-md-9 -->--}}
+{{--                </div><!-- /.row -->--}}
 
-                                    <div class="top-track">
 
-                                        <a href="/home/My-Account/myorders"><i
-                                                class="fa-solid fa-location-dot me-2"></i>Track your order</a>
 
-                                    </div>
-                                    <div><a href="#" title="">
-                                            <i class="fa-solid fa-phone me-2"></i>
-                                            +94 75 833 7141
 
-                                        </a>
-                                    </div>
-                                </div>
-
-                            </div><!-- /.mainnav -->
-                        </div><!-- /.nav-wrap -->
-
-                        <div class="btn-menu">
-                            <span></span>
-                        </div><!-- //mobile menu button -->
-                    </div><!-- /.col-md-9 -->
-                </div><!-- /.row -->
-
-
-
-
-            </div><!-- /.container -->
-        </div>
+{{--            </div><!-- /.container -->--}}
+{{--        </div>--}}
         <!-- destop category end -->
     </div>
     </div>
