@@ -151,6 +151,7 @@
             max-width: 100%;
             object-fit: contain;
             display: block;
+            margin: 10px;
         }
 
 
