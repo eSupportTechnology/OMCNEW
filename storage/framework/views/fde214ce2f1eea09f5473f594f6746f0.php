@@ -1,6 +1,4 @@
-@extends ('frontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
     <style>
         /* Global Styles */
         :root {
@@ -700,7 +698,7 @@
     <div class="page-title-area">
         <div class="container">
             <div class="page-title-content">
-                <h2>{{ $product->product_name }}</h2>
+                <h2><?php echo e($product->product_name); ?></h2>
                 <ul>
                     <li><a href="/">Home</a></li>
                     <li>Products Details</li>
@@ -719,26 +717,26 @@
                     <div class="product-image-gallery">
                         <!-- Main Image -->
                         <div class="main-image-container">
-                            @if ($product->images->isNotEmpty())
-                                <a href="{{ asset('storage/' . $product->images->first()->image_path) }}" class="glightbox">
+                            <?php if($product->images->isNotEmpty()): ?>
+                                <a href="<?php echo e(asset('storage/' . $product->images->first()->image_path)); ?>" class="glightbox">
                                     <img id="main-product-image"
-                                        src="{{ asset('storage/' . $product->images->first()->image_path) }}"
-                                        alt="{{ $product->product_name }}">
+                                        src="<?php echo e(asset('storage/' . $product->images->first()->image_path)); ?>"
+                                        alt="<?php echo e($product->product_name); ?>">
                                 </a>
-                            @endif
+                            <?php endif; ?>
                         </div>
 
                         <!-- Thumbnails -->
                         <div class="slick-thumbs">
                             <ul>
-                                @foreach ($product->images as $image)
+                                <?php $__currentLoopData = $product->images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <li>
                                         <a href="javascript:void(0)" class="thumbnail-link"
-                                            data-src="{{ asset('storage/' . $image->image_path) }}">
-                                            <img src="{{ asset('storage/' . $image->image_path) }}" alt="thumbnail">
+                                            data-src="<?php echo e(asset('storage/' . $image->image_path)); ?>">
+                                            <img src="<?php echo e(asset('storage/' . $image->image_path)); ?>" alt="thumbnail">
                                         </a>
                                     </li>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </ul>
                         </div>
                     </div>
@@ -746,92 +744,93 @@
 
                 <div class="col-lg-7 col-md-12">
                     <div class="products-details-desc">
-                        <h3>{{ $product->product_name }}</h3>
+                        <h3><?php echo e($product->product_name); ?></h3>
 
                         <div class="price">
-                            @if ($sale)
-                                <span class="new-price">Rs. {{ number_format($sale->sale_price, 2) }}</span>
-                                <span class="old-price">Rs. {{ number_format($sale->normal_price, 2) }}</span>
-                                <span class="discount">{{ number_format($sale->sale_rate, 0) }}% off</span>
-                            @elseif($specialOffer)
-                                <span class="new-price">Rs. {{ number_format($specialOffer->offer_price, 2) }}</span>
-                                <span class="old-price">Rs. {{ number_format($specialOffer->normal_price, 2) }}</span>
-                                <span class="discount">{{ number_format($specialOffer->offer_rate, 0) }}% off</span>
-                            @else
-                                <span class="new-price">Rs. {{ number_format($product->normal_price, 2) }}</span>
-                            @endif
+                            <?php if($sale): ?>
+                                <span class="new-price">Rs. <?php echo e(number_format($sale->sale_price, 2)); ?></span>
+                                <span class="old-price">Rs. <?php echo e(number_format($sale->normal_price, 2)); ?></span>
+                                <span class="discount"><?php echo e(number_format($sale->sale_rate, 0)); ?>% off</span>
+                            <?php elseif($specialOffer): ?>
+                                <span class="new-price">Rs. <?php echo e(number_format($specialOffer->offer_price, 2)); ?></span>
+                                <span class="old-price">Rs. <?php echo e(number_format($specialOffer->normal_price, 2)); ?></span>
+                                <span class="discount"><?php echo e(number_format($specialOffer->offer_rate, 0)); ?>% off</span>
+                            <?php else: ?>
+                                <span class="new-price">Rs. <?php echo e(number_format($product->normal_price, 2)); ?></span>
+                            <?php endif; ?>
                         </div>
 
                         <div class="products-review">
                             <div class="rating">
-                                @for ($i = 1; $i <= 5; $i++)
-                                    @if ($averageRating >= $i)
+                                <?php for($i = 1; $i <= 5; $i++): ?>
+                                    <?php if($averageRating >= $i): ?>
                                         <i class='fa-solid fa-star'></i> <!-- Full star -->
-                                    @elseif ($averageRating >= $i - 0.5)
+                                    <?php elseif($averageRating >= $i - 0.5): ?>
                                         <i class='fa-solid fa-star-half'></i> <!-- Half star -->
-                                    @else
+                                    <?php else: ?>
                                         <i class='fa-solid fa-star'></i> <!-- Empty star -->
-                                    @endif
-                                @endfor
+                                    <?php endif; ?>
+                                <?php endfor; ?>
                             </div>
 
-                            <a href="#reviews-tab" class="rating-count">{{ $totalReviews }} Ratings</a>
+                            <a href="#reviews-tab" class="rating-count"><?php echo e($totalReviews); ?> Ratings</a>
                         </div>
 
                         <ul class="products-info">
                             <li>
                                 <span>Availability:</span>
-                                @if ($product->quantity > 1)
+                                <?php if($product->quantity > 1): ?>
                                     <span class="availability-badge instock"><i class='fa-solid fa-circle-check'></i> In
                                         stock</span>
-                                @else
+                                <?php else: ?>
                                     <span class="availability-badge out-of-stock"><i class='fa-solid fa-circle-xmark'></i>
                                         Out of
                                         stock</span>
-                                @endif
+                                <?php endif; ?>
                             </li>
                             <li>
                                 <span>Description:</span>
                                 <span
-                                    class="product-description">{{ Str::limit(strip_tags($product->product_description), 150) }}</span>
+                                    class="product-description"><?php echo e(Str::limit(strip_tags($product->product_description), 150)); ?></span>
                             </li>
                         </ul>
 
                         <!-- Color Options -->
-                        @if ($product->variations->where('type', 'Color')->isNotEmpty())
+                        <?php if($product->variations->where('type', 'Color')->isNotEmpty()): ?>
                             <div class="products-color-switch">
                                 <span>Color:</span>
                                 <div class="color-options-container">
-                                    @foreach ($product->variations->where('type', 'Color') as $color)
-                                        @if ($color->quantity > 0)
-                                            <button class="color-option" style="background-color: {{ $color->hex_value }};"
-                                                data-color="{{ $color->hex_value }}" data-color-name="{{ $color->value }}"
-                                                title="{{ $color->value }}">
+                                    <?php $__currentLoopData = $product->variations->where('type', 'Color'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $color): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if($color->quantity > 0): ?>
+                                            <button class="color-option" style="background-color: <?php echo e($color->hex_value); ?>;"
+                                                data-color="<?php echo e($color->hex_value); ?>" data-color-name="<?php echo e($color->value); ?>"
+                                                title="<?php echo e($color->value); ?>">
                                             </button>
-                                        @endif
-                                    @endforeach
+                                        <?php endif; ?>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
                             </div>
-                        @endif
+                        <?php endif; ?>
 
                         <!-- Size Options -->
-                        @if ($product->variations->where('type', 'Size')->isNotEmpty())
+                        <?php if($product->variations->where('type', 'Size')->isNotEmpty()): ?>
                             <div class="products-size-wrapper">
                                 <span>Size:</span>
                                 <ul>
-                                    @foreach ($product->variations->where('type', 'Size') as $size)
-                                        @if ($size->quantity > 0)
+                                    <?php $__currentLoopData = $product->variations->where('type', 'Size'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $size): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if($size->quantity > 0): ?>
                                             <li>
                                                 <a href="javascript:void(0)" class="size-option"
-                                                    data-size="{{ $size->value }}">
-                                                    {{ $size->value }}
+                                                    data-size="<?php echo e($size->value); ?>">
+                                                    <?php echo e($size->value); ?>
+
                                                 </a>
                                             </li>
-                                        @endif
-                                    @endforeach
+                                        <?php endif; ?>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </ul>
                             </div>
-                        @endif
+                        <?php endif; ?>
 
                         <div class="products-add-to-cart">
                             <div class="input-counter">
@@ -839,35 +838,30 @@
                                     <us class="fa-solid fa-minus"></us>
                                 </span>
                                 <input type="text" id="quantity" value="1" min="1"
-                                    max="{{ $product->quantity }}">
+                                    max="<?php echo e($product->quantity); ?>">
                                 <span class="plus-btn"><i class="fa-solid fa-plus"></i></span>
                             </div>
 
                             <div class="buttons-row">
-                                @auth
-                                    <button class="Add-to-Cart" data-product-id="{{ $product->product_id }}" id="addToCartBtn">
+                                <?php if(auth()->guard()->check()): ?>
+                                    <button class="Add-to-Cart" data-product-id="<?php echo e($product->product_id); ?>" id="addToCartBtn">
                                         <i class='fa-solid fa-cart-shopping'></i> Add to Cart
                                     </button>
-                                    <button class="buy-nowbtn" id="buyNowBtn" data-product-id="{{ $product->product_id }}">
+                                    <button class="buy-nowbtn" id="buyNowBtn" data-product-id="<?php echo e($product->product_id); ?>">
                                         <i class='fa-solid fa-bag-shopping'></i> Buy Now
                                     </button>
-                                @else
+                                <?php else: ?>
                                     <button class="Add-to-Cart" onclick="alert('Please log in to add to cart.')">
                                         <i class='fa-solid fa-cart-shopping'></i> Add to Cart
                                     </button>
                                     <button class="buy-nowbtn" onclick="alert('Please log in to proceed to checkout.')">
                                         <i class='fa-solid fa-bag-shopping'></i> Buy Now
                                     </button>
-                                @endauth
+                                <?php endif; ?>
                             </div>
 
 
-                            {{-- <a href="javascript:void(0)" class="wishlist-toggle"
-                                data-product-id="{{ $product->product_id }}" id="wishlist-{{ $product->product_id }}">
-                                <i
-                                    class="fa-solid fa-heart {{ in_array($product->product_id, $wishlistProductIds) ? 'filled' : '' }}"></i>
-                                Add to Wishlist
-                            </a> --}}
+                            
                         </div>
                     </div>
                 </div>
@@ -895,7 +889,7 @@
                 <div class="tab-content">
                     <div class="tabs-item active" id="description-tab">
                         <div class="products-details-tab-content">
-                            <p>{{ strip_tags($product->product_description) }}</p>
+                            <p><?php echo e(strip_tags($product->product_description)); ?></p>
                         </div>
                     </div>
 
@@ -907,24 +901,24 @@
                                         <tr>
                                             <td>Color:</td>
                                             <td>
-                                                @foreach ($product->variations->where('type', 'Color') as $color)
-                                                    @if ($color->quantity > 0)
+                                                <?php $__currentLoopData = $product->variations->where('type', 'Color'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $color): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php if($color->quantity > 0): ?>
                                                         <span
-                                                            style="background-color: {{ $color->hex_value }}; width: 20px; height: 20px; display: inline-block; border-radius: 50%; margin-right: 5px;"
-                                                            title="{{ $color->value }}"></span>
-                                                    @endif
-                                                @endforeach
+                                                            style="background-color: <?php echo e($color->hex_value); ?>; width: 20px; height: 20px; display: inline-block; border-radius: 50%; margin-right: 5px;"
+                                                            title="<?php echo e($color->value); ?>"></span>
+                                                    <?php endif; ?>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Size:</td>
                                             <td>
-                                                @foreach ($product->variations->where('type', 'Size') as $size)
-                                                    @if ($size->quantity > 0)
+                                                <?php $__currentLoopData = $product->variations->where('type', 'Size'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $size): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <?php if($size->quantity > 0): ?>
                                                         <span
-                                                            class="badge bg-light text-dark me-1">{{ $size->value }}</span>
-                                                    @endif
-                                                @endforeach
+                                                            class="badge bg-light text-dark me-1"><?php echo e($size->value); ?></span>
+                                                    <?php endif; ?>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </td>
                                         </tr>
                                         <tr>
@@ -963,65 +957,65 @@
 
                                 <div class="review-title">
                                     <div class="rating">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            @if ($averageRating >= $i)
+                                        <?php for($i = 1; $i <= 5; $i++): ?>
+                                            <?php if($averageRating >= $i): ?>
                                                 <i class='bx bxs-star'></i> <!-- Full star -->
-                                            @elseif ($averageRating >= $i - 0.5)
+                                            <?php elseif($averageRating >= $i - 0.5): ?>
                                                 <i class='bx bxs-star-half'></i> <!-- Half star -->
-                                            @else
+                                            <?php else: ?>
                                                 <i class='bx bx-star'></i> <!-- Empty star -->
-                                            @endif
-                                        @endfor
+                                            <?php endif; ?>
+                                        <?php endfor; ?>
                                     </div>
-                                    <p>Based on {{ $totalReviews }} reviews</p>
+                                    <p>Based on <?php echo e($totalReviews); ?> reviews</p>
                                 </div>
 
                                 <div class="review-comments">
-                                    @foreach ($reviews as $review)
+                                    <?php $__currentLoopData = $reviews; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $review): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <div class="review-item">
                                             <div class="rating">
-                                                @for ($i = 1; $i <= 5; $i++)
-                                                    @if ($review->rating >= $i)
+                                                <?php for($i = 1; $i <= 5; $i++): ?>
+                                                    <?php if($review->rating >= $i): ?>
                                                         <i class='fa-solid fa-star'></i>
-                                                    @elseif ($review->rating >= $i - 0.5)
+                                                    <?php elseif($review->rating >= $i - 0.5): ?>
                                                         <i class='bx bxs-star-half'></i>
-                                                    @else
+                                                    <?php else: ?>
                                                         <i class='bx bx-star'></i>
-                                                    @endif
-                                                @endfor
+                                                    <?php endif; ?>
+                                                <?php endfor; ?>
                                             </div>
-                                            <h3>{{ $review->comment_title ?? 'Review' }}</h3>
+                                            <h3><?php echo e($review->comment_title ?? 'Review'); ?></h3>
                                             <span>
-                                                @if ($review->is_anonymous)
-                                                    <strong> {{ ucfirst(substr($review->user->name, 0, 1)) }}***</strong>
-                                                @else
-                                                    <strong>{{ $review->user->name ?? 'User' }}</strong>
-                                                @endif
-                                                on <strong>{{ $review->created_at->format('M d, Y') }}</strong>
+                                                <?php if($review->is_anonymous): ?>
+                                                    <strong> <?php echo e(ucfirst(substr($review->user->name, 0, 1))); ?>***</strong>
+                                                <?php else: ?>
+                                                    <strong><?php echo e($review->user->name ?? 'User'); ?></strong>
+                                                <?php endif; ?>
+                                                on <strong><?php echo e($review->created_at->format('M d, Y')); ?></strong>
                                             </span>
-                                            <p>{{ $review->comment }}</p>
+                                            <p><?php echo e($review->comment); ?></p>
 
-                                            @if ($review->media->isNotEmpty())
+                                            <?php if($review->media->isNotEmpty()): ?>
                                                 <div class="review-media">
-                                                    @foreach ($review->media as $media)
-                                                        @if ($media->media_type === 'image')
-                                                            <a href="{{ asset('storage/' . $media->media_path) }}"
+                                                    <?php $__currentLoopData = $review->media; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $media): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <?php if($media->media_type === 'image'): ?>
+                                                            <a href="<?php echo e(asset('storage/' . $media->media_path)); ?>"
                                                                 class="glightbox">
-                                                                <img src="{{ asset('storage/' . $media->media_path) }}"
+                                                                <img src="<?php echo e(asset('storage/' . $media->media_path)); ?>"
                                                                     alt="Review Media" class="review-image">
                                                             </a>
-                                                        @elseif ($media->media_type === 'video')
+                                                        <?php elseif($media->media_type === 'video'): ?>
                                                             <video controls>
-                                                                <source src="{{ asset('storage/' . $media->media_path) }}"
+                                                                <source src="<?php echo e(asset('storage/' . $media->media_path)); ?>"
                                                                     type="video/mp4">
                                                                 Your browser does not support the video tag.
                                                             </video>
-                                                        @endif
-                                                    @endforeach
+                                                        <?php endif; ?>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </div>
-                                            @endif
+                                            <?php endif; ?>
                                         </div>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </div>
                             </div>
                         </div>
@@ -1119,7 +1113,7 @@
                 const heartIcon = $(this).find('i');
 
                 $.ajax({
-                    url: '{{ route('wishlist.toggle') }}',
+                    url: '<?php echo e(route('wishlist.toggle')); ?>',
                     method: 'POST',
                     data: {
                         product_id: productId,
@@ -1156,7 +1150,7 @@
                 e.preventDefault();
 
                 const productId = $(this).data('product-id');
-                const isAuth = "{{ Auth::check() ? 'true' : 'false' }}";
+                const isAuth = "<?php echo e(Auth::check() ? 'true' : 'false'); ?>";
                 const selectedSize = $('.size-option.selected').data('size');
                 const selectedColor = $('.color-option.selected').data('color-name');
                 const quantity = $('#quantity').val() || 1;
@@ -1191,10 +1185,10 @@
                     btn.html('<i class="bx bx-loader-alt bx-spin"></i> Adding...');
 
                     $.ajax({
-                        url: "{{ route('cart.add') }}",
+                        url: "<?php echo e(route('cart.add')); ?>",
                         method: 'POST',
                         data: {
-                            _token: "{{ csrf_token() }}",
+                            _token: "<?php echo e(csrf_token()); ?>",
                             product_id: productId,
                             size: selectedSize || null,
                             color: selectedColor || null,
@@ -1202,7 +1196,7 @@
                         },
                         success: function(response) {
                             // Update cart count
-                            $.get("{{ route('cart.count') }}", function(data) {
+                            $.get("<?php echo e(route('cart.count')); ?>", function(data) {
                                 $('#cart-count').text(data.cart_count);
                             });
 
@@ -1242,7 +1236,7 @@
                 e.preventDefault();
 
                 const productId = $(this).data('product-id');
-                const isAuth = "{{ Auth::check() ? 'true' : 'false' }}";
+                const isAuth = "<?php echo e(Auth::check() ? 'true' : 'false'); ?>";
                 const selectedSize = $('.size-option.selected').data('size');
                 const selectedColor = $('.color-option.selected').data('color-name');
                 const quantity = $('#quantity').val() || 1;
@@ -1277,10 +1271,10 @@
                     btn.html('<i class="bx bx-loader-alt bx-spin"></i> Processing...');
 
                     $.ajax({
-                        url: "{{ route('buynow.checkout') }}",
+                        url: "<?php echo e(route('buynow.checkout')); ?>",
                         method: 'POST',
                         data: {
-                            _token: "{{ csrf_token() }}",
+                            _token: "<?php echo e(csrf_token()); ?>",
                             product_id: productId,
                             size: selectedSize || null,
                             color: selectedColor || null,
@@ -1329,4 +1323,6 @@
         });
     </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\ASUS\Desktop\OMC\OMCNEW\resources\views/frontend/product-description.blade.php ENDPATH**/ ?>
