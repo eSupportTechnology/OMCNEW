@@ -46,6 +46,7 @@
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         border-radius: 8px;
         overflow: hidden;
+
     }
 
     .single-products-box:hover {
@@ -84,6 +85,7 @@
     .new-price {
         color: #f55b29;
         font-weight: 600;
+        margin-right: 80px;
     }
 
     /* Filter Widget Styling */
@@ -325,7 +327,7 @@
                                                         <?php echo e(number_format($product->normal_price, 2)); ?></span>
                                                 <?php endif; ?>
                                             </div>
-                                            <div class="star-rating" style="margin-right: 20px">
+                                            <div class="star-rating" style="margin-right: 10px">
                                                 <?php for($i = 1; $i <= 5; $i++): ?>
                                                     <?php if($i <= floor($product->average_rating)): ?>
                                                         <i class='fa-solid fa-star'></i>
