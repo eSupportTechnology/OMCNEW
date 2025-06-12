@@ -108,8 +108,8 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 35px;
-        height: 35px;
+        min-width: 40px;
+        height: 40px;
         margin: 0 5px;
         border-radius: 50%;
         background: #f5f5f5;
@@ -306,7 +306,7 @@
 
                                         </div>
 
-                                        <div class="products-content" style="margin-left: 20px">
+                                        <div class="products-content" style="margin-left: 20px;">
                                             <h3><a
                                                     href="<?php echo e(route('product-description', ['product_id' => $product->product_id])); ?>">
                                                     <?php echo e(\Illuminate\Support\Str::limit($product->product_name, 25)); ?></a>
@@ -327,7 +327,7 @@
                                                         <?php echo e(number_format($product->normal_price, 2)); ?></span>
                                                 <?php endif; ?>
                                             </div>
-                                            <div class="star-rating" style="margin-right: 10px">
+                                            <div class="star-rating" style="margin-right: 10px;">
                                                 <?php for($i = 1; $i <= 5; $i++): ?>
                                                     <?php if($i <= floor($product->average_rating)): ?>
                                                         <i class='fa-solid fa-star'></i>
@@ -340,7 +340,7 @@
 
                                             </div>
 
-                                            <a href="/cart" class="add-to-cart" data-bs-toggle="modal"
+                                            <a href="" class="add-to-cart" data-bs-toggle="modal"
                                                 data-bs-target="#cartModal_<?php echo e($product->product_id); ?>">Add to Cart</a>
                                         </div>
 

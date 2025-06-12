@@ -35,7 +35,7 @@
 
 
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 
@@ -442,7 +442,7 @@
 
                                         <a href="javascript:void(0)" class="d-flex">
 
-                                            <cart-item-count></cart-item-count>
+                                            {{--  <cart-item-count></cart-item-count>  --}}
                                             <div class="dt-icon-div">
                                                     <span id="cart-count-3"
                                                           class="w-16 h-16 text-xs text-white flex-center rounded-circle bg-main-two-600 position-absolute top-n6 ">
@@ -1259,17 +1259,17 @@
         fetch("{{ route('cart.count') }}")
             .then(response => response.json())
             .then(data => {
-                document.getElementById('cart-count-1').textContent = data.cart_count;
-                document.getElementById('cart-count-2').textContent = data.cart_count;
-                document.getElementById('cart-count-3').textContent = data.cart_count;
-                document.getElementById('cart-count-4').textContent = data.cart_count;
+                const countIds = ['cart-count-1', 'cart-count-2', 'cart-count-3', 'cart-count-4'];
+                countIds.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = data.cart_count;
+                });
             })
             .catch(error => {
                 console.error('Error fetching cart count:', error);
             });
     }
 
-    // Call on page load
     document.addEventListener('DOMContentLoaded', function() {
         updateCartCount();
     });
