@@ -28,7 +28,7 @@
             /* Hides .mobshow on screens 768px or wider */
         }
     }
-    
+
 </style>
 
 <body>
@@ -295,12 +295,13 @@
             /* Responsive adjustments */
             @media (max-width: 480px) {
                 .mobile-icons-container {
-                    gap: 15px;
+                    gap: 4px;
                 }
 
                 .mobile-icon-item {
                     width: 36px;
                     height: 36px;
+
                 }
 
                 .mobile-account-icon,
@@ -319,6 +320,12 @@
                     font-size: 10px;
                     top: -6px;
                     right: -6px;
+                }
+            }
+
+            @media (min-width: 480px){
+                  .mobile-icons-container {
+                    gap: 4px;
                 }
             }
 
@@ -637,6 +644,7 @@
             overflow-x: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
+
         }
 
         .category-list::-webkit-scrollbar {
@@ -645,18 +653,20 @@
 
         .category-item {
             flex-shrink: 0;
+
         }
 
         .category-link {
             display: block;
             padding: 15px 20px;
-            color: #333;
+            color: #2b96c5;
             text-decoration: none;
             font-weight: 500;
             font-size: 14px;
             transition: all 0.3s ease;
             white-space: nowrap;
             position: relative;
+
         }
 
         .category-link:hover {
@@ -687,15 +697,18 @@
             z-index: 10;
             opacity: 0;
             transition: opacity 0.3s ease;
+
         }
 
         .scroll-indicator.left {
             left: 0;
             background: linear-gradient(270deg, rgba(248,249,250,0) 0%, rgba(248,249,250,1) 100%);
+
         }
 
         .scroll-indicator.right {
             right: 0;
+
         }
 
         .scroll-indicator.visible {

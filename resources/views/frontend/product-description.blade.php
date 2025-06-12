@@ -697,7 +697,7 @@
     </style>
 
     <!-- Start Page Title -->
-    <div class="page-title-area">
+    {{--  <div class="page-title-area">
         <div class="container">
             <div class="page-title-content">
                 <h2>{{ $product->product_name }}</h2>
@@ -708,7 +708,7 @@
 
             </div>
         </div>
-    </div>
+    </div>  --}}
     <!-- End Page Title -->
 
     <!-- Start Product Details Area -->

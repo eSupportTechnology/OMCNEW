@@ -113,20 +113,25 @@
         }
 
         .products-grid {
-            display: grid;
+            display: flex;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
+            transition: transform 0.5s ease-in-out;
         }
 
         .product-card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            overflow: hidden;
-            position: relative;
-            transition: var(--transition);
-            box-shadow: var(--shadow);
-        }
+    width: 250px; /* fixed width */
+    height: 400px; /* fixed height */
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+}
 
         .product-card:hover {
             transform: translateY(-2px);
@@ -272,8 +277,12 @@
             }
 
             .products-grid {
+                display: grid;
                 grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
+
+
+
             }
 
             .product-image {
@@ -291,6 +300,7 @@
 
             .products-container {
                 padding: 15px;
+
             }
         }
 
@@ -325,6 +335,10 @@
                 float: none !important;
             }
         }
+
+
+
+
     </style>
 
     <div class="container">
@@ -524,8 +538,8 @@
             </div>
 
             <div class="section-navigation">
-                <button class="nav-btn">Previous</button>
-                <button class="nav-btn">Next</button>
+                <button class="nav-btn" onclick="slideProducts(-1)">Previous</button>
+        <button class="nav-btn" onclick="slideProducts(1)">Next</button>
             </div>
         </div>
     </div>
@@ -618,6 +632,27 @@
                 .catch(error => console.error('Error:', error));
         }
     </script>
+    <script>
+    let currentIndex = 0;
+    const cardsPerView = 2;
+    const slider = document.getElementById('product-slider');
+    const products = document.querySelectorAll('.product-card');
+    const totalSlides = Math.ceil(products.length / cardsPerView);
+
+    function slideProducts(direction) {
+        currentIndex += direction;
+
+        if (currentIndex < 0) currentIndex = 0;
+        if (currentIndex > totalSlides - 1) currentIndex = totalSlides - 1;
+
+        const shiftPercent = currentIndex * 100;
+        slider.style.transform = `translateX(-${shiftPercent}%)`;
+    }
+
+    // Initialize on page load
+    window.addEventListener('load', () => slideProducts(0));
+</script>
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('frontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\ASUS\Desktop\OMC\OMCNEW\resources\views/frontend/home.blade.php ENDPATH**/ ?>

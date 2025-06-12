@@ -3021,9 +3021,10 @@ body {
         display: none
     }
 
-    .search-con {
-        width: 40%
-    }
+    /* .search-con {
+        justify-items: center;
+
+    } */
 
     .destop-footer-con {
         display: none
