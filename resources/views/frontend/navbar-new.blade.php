@@ -66,8 +66,9 @@
                                 <a href="#" class="mobile-menu-toggle new-mobile-toggle"
                                    onclick="if (!window.__cfRLUnblockHandlers) return false; openMenuMobi()"
                                    data-cf-modified-a071cb3ff60724c4b8f55cf9-="">
-                                    <img class="mobi-menu-icon"
-                                         src="{{ asset('frontend/newstyle/assets/images/menuLOGO-mbo.png') }}">
+                                    {{--  <img class="mobi-menu-icon"
+                                         src="{{ asset('frontend/newstyle/assets/images/menuLOGO-mbo.png') }}">  --}}
+                                         <i class="ph ph-list mobile-menu-icon mobi-menu-icon" style="color: #2b96c5; font-size: 24px;"></i>
                                 </a>
                             </div>
 
@@ -113,7 +114,7 @@
                                 <div class="mobile-icon-item des-cart cart-popup">
                                     <a href="javascript:void(0)" class="mobile-cart-link">
                                         <div class="mobile-cart-wrapper">
-                                            <i class="ph ph-shopping-cart-simple mobile-cart-icon"></i>
+                                            <i class="ph ph-shopping-cart-simple mobile-cart-icon" style="color:#2b96c5"></i>
                                             <span class="mobile-cart-count" id="cart-count-1">{{ $cartCount ?? 0 }}</span>
                                         </div>
                                     </a>
@@ -122,8 +123,10 @@
                                 <!-- Search Icon -->
                                 <div class="mobile-icon-item">
                                     <button class="mobile-search-btn ">
-                                        <img src="{{ asset('frontend/newstyle/assets/images/icon/mobi-search.png') }}"
-                                             alt="Search" class="mobile-search-icon">
+                                        {{--  <img src="{{ asset('frontend/newstyle/assets/images/icon/mobi-search.png') }}"
+                                             alt="Search" class="mobile-search-icon"  >  --}}
+                                             <i class="ph ph-magnifying-glass mobile-search-icon" style="color: #2b96c5; font-size: 24px;" ></i>
+
                                     </button>
                                 </div>
 
@@ -141,7 +144,7 @@
                     <div class="top-search clear-both">
                         <input type="text" class="form-control main-search top-search-suggestion-mobi"
                                placeholder="Search for products, categories and more">
-                        <button type="button" class="btn btn-primary submit-search-mobi">
+                        <button type="button" class="btn btn-primary submit-search" style=" marging-top:100px"  >
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                         <div id="suggestions-box-display-mobi" class="suggestions-box suggestions-box-display-mobi"
@@ -273,6 +276,7 @@
                 width: 24px;
                 height: 24px;
                 object-fit: contain;
+
             }
 
             /* Logo styling */
