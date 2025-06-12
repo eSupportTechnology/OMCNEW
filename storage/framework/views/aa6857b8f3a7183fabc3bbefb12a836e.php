@@ -28,6 +28,7 @@
             /* Hides .mobshow on screens 768px or wider */
         }
     }
+    
 </style>
 
 <body>
@@ -134,7 +135,7 @@
                 </div>
 
                 <!-- Search Container -->
-                <div class="search-con search-con-mobile">
+                <div class="search-con search-con-mobile" style="marging-left:100px ">
                     <div class="search-title col-sm-12" style="display: none;">
                         <p>Search</p>
                         <button class="close-search"><i class="fa-solid fa-xmark"></i></button>
