@@ -661,6 +661,9 @@
             nav: false, // set to true if you want built-in buttons
 
             dots: false,
+            autoplay: true, // ✅ enables auto movement
+            autoplayTimeout: 3000, // ✅ moves every 3 seconds
+            autoplayHoverPause: true, // ✅ pauses on hover
             responsive: {
                 0: { items: 1 },
                 400: { items: 1 },
