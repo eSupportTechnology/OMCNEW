@@ -346,6 +346,26 @@
 }
 
 
+.owl-nav button.owl-prev,
+.owl-nav button.owl-next {
+    width: 40px;              /* Adjust width */
+    height: 40px;             /* Adjust height */
+    font-size: 24px;          /* Size of the arrow symbol */
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 50%;       /* Make it circular */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: all 0.3s;
+}
+
+.owl-nav button.owl-prev {
+    left: -25px;
+}
+
+.owl-nav button.owl-next {
+    right: -25px;
+}
 
 
 
@@ -658,7 +678,7 @@
         var owl = $('.special-offer-slider').owlCarousel({
             loop: true,
             margin: 10,
-            nav: false, // set to true if you want built-in buttons
+            nav: true, // set to true if you want built-in buttons
 
             dots: false,
             autoplay: true, // ✅ enables auto movement
@@ -684,6 +704,7 @@
     <!-- Before closing </body> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
 
 
 <?php $__env->stopSection(); ?>
