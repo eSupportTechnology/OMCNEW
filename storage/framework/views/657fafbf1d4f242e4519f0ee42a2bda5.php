@@ -1,4 +1,9 @@
 <?php $__env->startSection('content'); ?>
+    <!-- In your <head> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+
     <style>
         :root {
             --primary: #2b96c5;
@@ -8,7 +13,7 @@
             --bg-light: #f7fafc;
             --white: #ffffff;
             --border: #e2e8f0;
-            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             --radius: 12px;
             --transition: all 0.2s ease;
             --orange: #ff6b35;
@@ -51,7 +56,7 @@
             height: 8px;
             border-radius: 50%;
             border: none;
-            background: rgba(255,255,255,0.5);
+            background: rgba(255, 255, 255, 0.5);
             margin: 0 4px;
         }
 
@@ -82,7 +87,7 @@
             font-weight: 600;
             transition: var(--transition);
             display: block;
-            min-height:50px;
+            min-height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -104,6 +109,7 @@
             font-size: 1.25rem;
             font-weight: 600;
         }
+
         .products-container {
             background: var(--white);
             border-radius: 0 0 var(--radius) var(--radius);
@@ -116,26 +122,28 @@
             display: flex;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
-            transition: transform 0.5s ease-in-out;
+
         }
 
         .product-card {
-    width: 250px; /* fixed width */
-    height: 400px; /* fixed height */
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    position: relative;
-    transition: var(--transition);
-    box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-}
+            width: 250px;
+            /* fixed width */
+            height: 400px;
+            /* fixed height */
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            position: relative;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
 
         .product-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .product-image-container {
@@ -147,7 +155,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 10px
+            margin-top: 50px;
+            margin-right: 10px;
+
         }
 
         .product-image {
@@ -319,27 +329,16 @@
             }
         }
 
-        @media (max-width: 576px) {
-            .owl-carousel {
-                display: block !important;
-            }
 
-            .owl-stage-outer,
-            .owl-stage {
-                transform: none !important;
-                width: auto !important;
-            }
 
-            .owl-item {
-                width: auto !important;
-                float: none !important;
-            }
-        }
+
 
 
 
 
     </style>
+
+
 
     <div class="container">
         <div class="carousel-wrapper">
@@ -348,8 +347,7 @@
                     <?php $__currentLoopData = $carousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <div class="carousel-item <?php echo e($index === 0 ? 'active' : ''); ?>">
                             <img src="<?php echo e(asset('storage/carousel_images/' . $carousel->image_path)); ?>"
-                                 alt="Slide <?php echo e($index + 1); ?>"
-                                 loading="<?php echo e($index === 0 ? 'eager' : 'lazy'); ?>">
+                                alt="Slide <?php echo e($index + 1); ?>" loading="<?php echo e($index === 0 ? 'eager' : 'lazy'); ?>">
                         </div>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
@@ -358,8 +356,7 @@
                     <div class="carousel-indicators">
                         <?php $__currentLoopData = $carousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="<?php echo e($index); ?>"
-                                    class="<?php echo e($index === 0 ? 'active' : ''); ?>"
-                                    aria-label="Slide <?php echo e($index + 1); ?>"></button>
+                                class="<?php echo e($index === 0 ? 'active' : ''); ?>" aria-label="Slide <?php echo e($index + 1); ?>"></button>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
                 <?php endif; ?>
@@ -369,8 +366,7 @@
         <div class="categories-section">
             <div class="categories-grid">
                 <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <a href="/all-items?category=<?php echo e(urlencode($category->parent_category)); ?>"
-                       class="category-button">
+                    <a href="/all-items?category=<?php echo e(urlencode($category->parent_category)); ?>" class="category-button">
                         <?php echo e($category->parent_category); ?>
 
                     </a>
@@ -380,7 +376,8 @@
 
         <div class="section-header">Special Offers</div>
         <div class="products-container">
-            <div class="products-grid">
+            <div class="owl-carousel special-offer-slider owl-theme  ">
+
                 <?php $__currentLoopData = $specialOffers->slice(0, 8); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="product-card">
                         <?php if($product->product->specialOffer && $product->product->specialOffer->status === 'active'): ?>
@@ -389,17 +386,17 @@
 
                         <div class="product-image-container">
                             <button class="wishlist-btn heart-icon" id="wishlist-icon-<?php echo e($product->product_id); ?>"
-                                    onclick="toggleWishlist(this, <?php echo e($product->product_id); ?>)">
+                                onclick="toggleWishlist(this, <?php echo e($product->product_id); ?>)">
                                 <i class="fa-regular fa-heart"></i>
                             </button>
 
                             <a href="<?php echo e(route('product-description', $product->product_id)); ?>">
                                 <?php if($product->product->images->isEmpty()): ?>
                                     <img src="<?php echo e(asset('frontend/newstyle/assets/images/loader.gif')); ?>"
-                                         alt="<?php echo e($product->product_name); ?>" class="product-image" loading="lazy">
+                                        alt="<?php echo e($product->product_name); ?>" class="product-image" loading="lazy">
                                 <?php else: ?>
                                     <img src="<?php echo e(asset('storage/' . $product->product->images->first()->image_path)); ?>"
-                                         alt="<?php echo e($product->product_name); ?>" class="product-image" loading="lazy">
+                                        alt="<?php echo e($product->product_name); ?>" class="product-image" loading="lazy">
                                 <?php endif; ?>
                             </a>
                         </div>
@@ -422,12 +419,13 @@
                         </div>
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
             </div>
         </div>
 
         <div class="section-header">Top Selling</div>
         <div class="products-container">
-            <div class="products-grid">
+            <div class="owl-carousel special-offer-slider owl-theme">
                 <?php $__currentLoopData = $orderedProducts->slice(0, 8); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="product-card">
                         <?php if($product->sale): ?>
@@ -436,17 +434,17 @@
 
                         <div class="product-image-container">
                             <button class="wishlist-btn heart-icon" id="wishlist-icon-<?php echo e($product->product_id); ?>"
-                                    onclick="toggleWishlist(this, <?php echo e($product->product_id); ?>)">
+                                onclick="toggleWishlist(this, <?php echo e($product->product_id); ?>)">
                                 <i class="fa-regular fa-heart"></i>
                             </button>
 
                             <a href="<?php echo e(route('product-description', $product->product_id)); ?>">
                                 <?php if($product->images->isEmpty()): ?>
                                     <img src="<?php echo e(asset('frontend/newstyle/assets/images/loader.gif')); ?>"
-                                         alt="<?php echo e($product->product_name); ?>" class="product-image" loading="lazy">
+                                        alt="<?php echo e($product->product_name); ?>" class="product-image" loading="lazy">
                                 <?php else: ?>
                                     <img src="<?php echo e(asset('storage/' . $product->images->first()->image_path)); ?>"
-                                         alt="<?php echo e($product->product_name); ?>" class="product-image" loading="lazy">
+                                        alt="<?php echo e($product->product_name); ?>" class="product-image" loading="lazy">
                                 <?php endif; ?>
                             </a>
                         </div>
@@ -475,15 +473,12 @@
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
-            <div class="section-navigation">
-                <button class="nav-btn">Previous</button>
-                <button class="nav-btn">Next</button>
-            </div>
+            
         </div>
 
         <div class="section-header">Flash Sale</div>
         <div class="products-container">
-            <div class="products-grid">
+            <div class="owl-carousel special-offer-slider owl-theme">
                 <?php $__currentLoopData = $recentProducts->slice(0, 5); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <div class="product-card">
                         <?php if($product->sale): ?>
@@ -498,17 +493,17 @@
 
                         <div class="product-image-container">
                             <button class="wishlist-btn heart-icon" id="wishlist-icon-<?php echo e($product->product_id); ?>"
-                                    onclick="toggleWishlist(this, <?php echo e($product->product_id); ?>)">
+                                onclick="toggleWishlist(this, <?php echo e($product->product_id); ?>)">
                                 <i class="fa-regular fa-heart"></i>
                             </button>
 
                             <a href="<?php echo e(route('product-description', $product->product_id)); ?>">
                                 <?php if($product->images->isEmpty()): ?>
                                     <img src="<?php echo e(asset('frontend/newstyle/assets/images/loader.gif')); ?>"
-                                         alt="<?php echo e($product->product_name); ?>" class="product-image" loading="lazy">
+                                        alt="<?php echo e($product->product_name); ?>" class="product-image" loading="lazy">
                                 <?php else: ?>
                                     <img src="<?php echo e(asset('storage/' . $product->images->first()->image_path)); ?>"
-                                         alt="<?php echo e($product->product_name); ?>" class="product-image" loading="lazy">
+                                        alt="<?php echo e($product->product_name); ?>" class="product-image" loading="lazy">
                                 <?php endif; ?>
                             </a>
                         </div>
@@ -537,12 +532,15 @@
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
-            <div class="section-navigation">
-                <button class="nav-btn" onclick="slideProducts(-1)">Previous</button>
-        <button class="nav-btn" onclick="slideProducts(1)">Next</button>
-            </div>
+            
         </div>
     </div>
+
+
+
+
+
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -576,13 +574,15 @@
 
             if (productIds.length > 0) {
                 fetch('/wishlist/check-multiple', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
-                    },
-                    body: JSON.stringify({ product_ids: productIds })
-                })
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
+                        },
+                        body: JSON.stringify({
+                            product_ids: productIds
+                        })
+                    })
                     .then(response => response.json())
                     .then(data => {
                         data.wishlist.forEach(productId => {
@@ -614,13 +614,15 @@
             }
 
             fetch('/wishlist/toggle', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
-                },
-                body: JSON.stringify({ product_id: productId })
-            })
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '<?php echo e(csrf_token()); ?>'
+                    },
+                    body: JSON.stringify({
+                        product_id: productId
+                    })
+                })
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
@@ -632,26 +634,37 @@
                 .catch(error => console.error('Error:', error));
         }
     </script>
+
     <script>
-    let currentIndex = 0;
-    const cardsPerView = 2;
-    const slider = document.getElementById('product-slider');
-    const products = document.querySelectorAll('.product-card');
-    const totalSlides = Math.ceil(products.length / cardsPerView);
+    $(document).ready(function () {
+        // Initialize carousel and assign to variable
+        var owl = $('.special-offer-slider').owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: false, // set to true if you want built-in buttons
 
-    function slideProducts(direction) {
-        currentIndex += direction;
+            dots: false,
+            responsive: {
+                0: { items: 1 },
+                400: { items: 1 },
+                600: { items: 2 },
+                768: { items: 2 },
+                992: { items: 3 },
+                1200: { items: 4 },
+                1400: { items: 4 }
+            }
+        });
 
-        if (currentIndex < 0) currentIndex = 0;
-        if (currentIndex > totalSlides - 1) currentIndex = totalSlides - 1;
+        // Custom buttons trigger
 
-        const shiftPercent = currentIndex * 100;
-        slider.style.transform = `translateX(-${shiftPercent}%)`;
-    }
-
-    // Initialize on page load
-    window.addEventListener('load', () => slideProducts(0));
+    });
 </script>
+
+
+    <!-- Before closing </body> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
 
 <?php $__env->stopSection(); ?>
 

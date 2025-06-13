@@ -1,6 +1,11 @@
 @extends ('frontend.master')
 
 @section('content')
+    <!-- In your <head> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+
     <style>
         :root {
             --primary: #2b96c5;
@@ -10,7 +15,7 @@
             --bg-light: #f7fafc;
             --white: #ffffff;
             --border: #e2e8f0;
-            --shadow: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             --radius: 12px;
             --transition: all 0.2s ease;
             --orange: #ff6b35;
@@ -53,7 +58,7 @@
             height: 8px;
             border-radius: 50%;
             border: none;
-            background: rgba(255,255,255,0.5);
+            background: rgba(255, 255, 255, 0.5);
             margin: 0 4px;
         }
 
@@ -84,7 +89,7 @@
             font-weight: 600;
             transition: var(--transition);
             display: block;
-            min-height:50px;
+            min-height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -106,6 +111,7 @@
             font-size: 1.25rem;
             font-weight: 600;
         }
+
         .products-container {
             background: var(--white);
             border-radius: 0 0 var(--radius) var(--radius);
@@ -122,22 +128,24 @@
         }
 
         .product-card {
-    width: 250px; /* fixed width */
-    height: 400px; /* fixed height */
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    position: relative;
-    transition: var(--transition);
-    box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-}
+            width: 250px;
+            /* fixed width */
+            height: 400px;
+            /* fixed height */
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            position: relative;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
 
         .product-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .product-image-container {
@@ -149,7 +157,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-top: 10px
+            margin-top: 50px;
+            margin-right: 10px;
+
         }
 
         .product-image {
@@ -321,27 +331,33 @@
             }
         }
 
-        @media (max-width: 576px) {
-            .owl-carousel {
-                display: block !important;
-            }
+       @media (max-width: 500px) {
+    .owl-carousel .owl-stage {
+        display: flex !important;
+        justify-content: center !important;
+    }
 
-            .owl-stage-outer,
-            .owl-stage {
-                transform: none !important;
-                width: auto !important;
-            }
+    .owl-carousel .owl-item {
+        display: flex;
+        justify-content: center;
+    }
 
-            .owl-item {
-                width: auto !important;
-                float: none !important;
-            }
-        }
+    .product-card {
+        margin: 0 auto;
+    }
+}
+
+
+
+
+
 
 
 
 
     </style>
+
+
 
     <div class="container">
         <div class="carousel-wrapper">
@@ -350,18 +366,16 @@
                     @foreach ($carousels as $index => $carousel)
                         <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                             <img src="{{ asset('storage/carousel_images/' . $carousel->image_path) }}"
-                                 alt="Slide {{ $index + 1 }}"
-                                 loading="{{ $index === 0 ? 'eager' : 'lazy' }}">
+                                alt="Slide {{ $index + 1 }}" loading="{{ $index === 0 ? 'eager' : 'lazy' }}">
                         </div>
                     @endforeach
                 </div>
 
-                @if(count($carousels) > 1)
+                @if (count($carousels) > 1)
                     <div class="carousel-indicators">
                         @foreach ($carousels as $index => $carousel)
                             <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="{{ $index }}"
-                                    class="{{ $index === 0 ? 'active' : '' }}"
-                                    aria-label="Slide {{ $index + 1 }}"></button>
+                                class="{{ $index === 0 ? 'active' : '' }}" aria-label="Slide {{ $index + 1 }}"></button>
                         @endforeach
                     </div>
                 @endif
@@ -371,8 +385,7 @@
         <div class="categories-section">
             <div class="categories-grid">
                 @foreach ($categories as $category)
-                    <a href="/all-items?category={{ urlencode($category->parent_category) }}"
-                       class="category-button">
+                    <a href="/all-items?category={{ urlencode($category->parent_category) }}" class="category-button">
                         {{ $category->parent_category }}
                     </a>
                 @endforeach
@@ -381,7 +394,8 @@
 
         <div class="section-header">Special Offers</div>
         <div class="products-container">
-            <div class="products-grid">
+            <div class="owl-carousel special-offer-slider owl-theme  ">
+
                 @foreach ($specialOffers->slice(0, 8) as $product)
                     <div class="product-card">
                         @if ($product->product->specialOffer && $product->product->specialOffer->status === 'active')
@@ -390,17 +404,17 @@
 
                         <div class="product-image-container">
                             <button class="wishlist-btn heart-icon" id="wishlist-icon-{{ $product->product_id }}"
-                                    onclick="toggleWishlist(this, {{ $product->product_id }})">
+                                onclick="toggleWishlist(this, {{ $product->product_id }})">
                                 <i class="fa-regular fa-heart"></i>
                             </button>
 
                             <a href="{{ route('product-description', $product->product_id) }}">
                                 @if ($product->product->images->isEmpty())
                                     <img src="{{ asset('frontend/newstyle/assets/images/loader.gif') }}"
-                                         alt="{{ $product->product_name }}" class="product-image" loading="lazy">
+                                        alt="{{ $product->product_name }}" class="product-image" loading="lazy">
                                 @else
                                     <img src="{{ asset('storage/' . $product->product->images->first()->image_path) }}"
-                                         alt="{{ $product->product_name }}" class="product-image" loading="lazy">
+                                        alt="{{ $product->product_name }}" class="product-image" loading="lazy">
                                 @endif
                             </a>
                         </div>
@@ -421,12 +435,13 @@
                         </div>
                     </div>
                 @endforeach
+
             </div>
         </div>
 
         <div class="section-header">Top Selling</div>
         <div class="products-container">
-            <div class="products-grid">
+            <div class="owl-carousel special-offer-slider owl-theme">
                 @foreach ($orderedProducts->slice(0, 8) as $product)
                     <div class="product-card">
                         @if ($product->sale)
@@ -435,17 +450,17 @@
 
                         <div class="product-image-container">
                             <button class="wishlist-btn heart-icon" id="wishlist-icon-{{ $product->product_id }}"
-                                    onclick="toggleWishlist(this, {{ $product->product_id }})">
+                                onclick="toggleWishlist(this, {{ $product->product_id }})">
                                 <i class="fa-regular fa-heart"></i>
                             </button>
 
                             <a href="{{ route('product-description', $product->product_id) }}">
                                 @if ($product->images->isEmpty())
                                     <img src="{{ asset('frontend/newstyle/assets/images/loader.gif') }}"
-                                         alt="{{ $product->product_name }}" class="product-image" loading="lazy">
+                                        alt="{{ $product->product_name }}" class="product-image" loading="lazy">
                                 @else
                                     <img src="{{ asset('storage/' . $product->images->first()->image_path) }}"
-                                         alt="{{ $product->product_name }}" class="product-image" loading="lazy">
+                                        alt="{{ $product->product_name }}" class="product-image" loading="lazy">
                                 @endif
                             </a>
                         </div>
@@ -471,20 +486,20 @@
                 @endforeach
             </div>
 
-            <div class="section-navigation">
-                <button class="nav-btn">Previous</button>
-                <button class="nav-btn">Next</button>
-            </div>
+            {{--  <div class="section-navigation">
+                <button class="nav-btn " id="customPrevBtn2" >Previous</button>
+        <button class="nav-btn" id="customNextBtn2" >Next</button>
+            </div>  --}}
         </div>
 
         <div class="section-header">Flash Sale</div>
         <div class="products-container">
-            <div class="products-grid">
+            <div class="owl-carousel special-offer-slider owl-theme">
                 @foreach ($recentProducts->slice(0, 5) as $product)
                     <div class="product-card">
                         @if ($product->sale)
                             <div class="discount-badge">
-                                @if($product->sale && $product->sale->status === 'active')
+                                @if ($product->sale && $product->sale->status === 'active')
                                     {{ round((($product->normal_price - $product->sale->sale_price) / $product->normal_price) * 100) }}%
                                 @else
                                     Sale!
@@ -494,17 +509,17 @@
 
                         <div class="product-image-container">
                             <button class="wishlist-btn heart-icon" id="wishlist-icon-{{ $product->product_id }}"
-                                    onclick="toggleWishlist(this, {{ $product->product_id }})">
+                                onclick="toggleWishlist(this, {{ $product->product_id }})">
                                 <i class="fa-regular fa-heart"></i>
                             </button>
 
                             <a href="{{ route('product-description', $product->product_id) }}">
                                 @if ($product->images->isEmpty())
                                     <img src="{{ asset('frontend/newstyle/assets/images/loader.gif') }}"
-                                         alt="{{ $product->product_name }}" class="product-image" loading="lazy">
+                                        alt="{{ $product->product_name }}" class="product-image" loading="lazy">
                                 @else
                                     <img src="{{ asset('storage/' . $product->images->first()->image_path) }}"
-                                         alt="{{ $product->product_name }}" class="product-image" loading="lazy">
+                                        alt="{{ $product->product_name }}" class="product-image" loading="lazy">
                                 @endif
                             </a>
                         </div>
@@ -530,12 +545,18 @@
                 @endforeach
             </div>
 
-            <div class="section-navigation">
-                <button class="nav-btn" >Previous</button>
-        <button class="nav-btn" >Next</button>
-            </div>
+            {{--  <div class="section-navigation">
+                <button class="nav-btn " id="customPrevBtn" >Previous</button>
+        <button class="nav-btn" id="customNextBtn" >Next</button>
+            </div>  --}}
         </div>
     </div>
+
+
+
+
+
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -569,13 +590,15 @@
 
             if (productIds.length > 0) {
                 fetch('/wishlist/check-multiple', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({ product_ids: productIds })
-                })
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            product_ids: productIds
+                        })
+                    })
                     .then(response => response.json())
                     .then(data => {
                         data.wishlist.forEach(productId => {
@@ -607,13 +630,15 @@
             }
 
             fetch('/wishlist/toggle', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({ product_id: productId })
-            })
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        product_id: productId
+                    })
+                })
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
@@ -625,5 +650,36 @@
                 .catch(error => console.error('Error:', error));
         }
     </script>
+
+    <script>
+    $(document).ready(function () {
+        // Initialize carousel and assign to variable
+        var owl = $('.special-offer-slider').owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: false, // set to true if you want built-in buttons
+
+            dots: false,
+            responsive: {
+                0: { items: 1 },
+                400: { items: 1 },
+                600: { items: 2 },
+                768: { items: 2 },
+                992: { items: 3 },
+                1200: { items: 4 },
+                1400: { items: 4 }
+            }
+        });
+
+        // Custom buttons trigger
+
+    });
+</script>
+
+
+    <!-- Before closing </body> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
 
 @endsection

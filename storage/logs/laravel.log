@@ -368,3 +368,7 @@
 [2025-06-11 04:02:09] local.ERROR: Failed to send SMS to vendor: SMS Failed: Not enough money in the wallet  
 [2025-06-11 09:34:48] local.INFO: Buy Now Checkout request: {"product_id":"PRODUCT-9LKT4G","size":null,"color":null,"quantity":"1"} 
 [2025-06-11 09:34:48] local.INFO: Product details: {"product_id":"PRODUCT-9LKT4G","product_name":"Casual Shoes Loafers British Leather Sneakers"} 
+[2025-06-13 03:18:17] local.ERROR: Maximum execution time of 60 seconds exceeded {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Maximum execution time of 60 seconds exceeded at C:\\Users\\ASUS\\Desktop\\OMC\\OMCNEW\\vendor\\composer\\ClassLoader.php:577)
+[stacktrace]
+#0 {main}
+"} 
