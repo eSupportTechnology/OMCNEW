@@ -331,7 +331,7 @@
             }
         }
 
-       @media (max-width: 500px) {
+       @media (max-width: 600px) {
     .owl-carousel .owl-stage {
         display: flex !important;
         justify-content: center !important;

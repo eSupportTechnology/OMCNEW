@@ -329,6 +329,23 @@
             }
         }
 
+       @media (max-width: 600px) {
+    .owl-carousel .owl-stage {
+        display: flex !important;
+        justify-content: center !important;
+    }
+
+    .owl-carousel .owl-item {
+        display: flex;
+        justify-content: center;
+    }
+
+    .product-card {
+        margin: 0 auto;
+    }
+}
+
+
 
 
 
