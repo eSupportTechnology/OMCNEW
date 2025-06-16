@@ -1,4 +1,19 @@
 <style>
+    .search-container {
+        position: relative;
+    }
+
+    .suggestions-box {
+        position: absolute;
+        top: 100%;
+        /* Pushes it just below the input */
+        left: 0;
+        width: 100%;
+        z-index: 999;
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
     /* Hide elements with the class .mobhide on screens smaller than or equal to 768px */
     @media (max-width: 768px) {
         .mobhide {
@@ -39,230 +54,288 @@
 
 
             <!-- mobile hearder begin -->
-            <!-- top banner mobile-->
-            <div class="mobi-main-header fixed-header">
-                <div id="topupbar_banner_mobile"></div>
-                <header class="header mobile-header ">
-                    <div class="container mobile-header-container">
-                        <div class="mobi-full-row">
-                            <div class="col-5-5">
-                                <div class="d-flex">
-                                    <div class="header-left me-2">
-                                        <a href="#" class="mobile-menu-toggle new-mobile-toggle"
-                                            onclick="if (!window.__cfRLUnblockHandlers) return false;  openMenuMobi()"
-                                            data-cf-modified-a071cb3ff60724c4b8f55cf9-="">
-                                            <img class="mobi-menu-icon"
-                                                src="<?php echo e(asset('frontend/newstyle/assets/images/menuLOGO-mbo.png')); ?>">
+           <!-- top banner mobile-->
+<div class="mobi-main-header fixed-header">
+    <div id="topupbar_banner_mobile"></div>
+    <header class="header mobile-header">
+        <div class="container mobile-header-container">
+            <div class="mobi-full-row d-flex align-items-center justify-content-between">
+                <!-- Left Section: Menu + Logo -->
+                <div class="header-left-section d-flex align-items-center">
+                    <div class="header-left me-2">
+                        <a href="#" class="mobile-menu-toggle new-mobile-toggle"
+                            onclick="if (!window.__cfRLUnblockHandlers) return false; openMenuMobi()"
+                            data-cf-modified-a071cb3ff60724c4b8f55cf9-="">
+                            <img class="mobi-menu-icon"
+                                src="<?php echo e(asset('frontend/newstyle/assets/images/menuLOGO-mbo.png')); ?>">
+                        </a>
+                    </div>
 
+                    <div class="mobi-logo">
+                        <?php if($siteLogo && $siteLogo->image_path): ?>
+                            <a href="<?php echo e(url('/')); ?>">
+                                <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>"
+                                    alt="Site Logo" class="img-fluid" style="max-height: 60px;">
+                            </a>
+                        <?php else: ?>
+                            <a href="/">
+                                <img src="<?php echo e(asset('frontend/newstyle/assets/images/buyabanslogo-new.png')); ?>"
+                                    alt="logo" />
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </div>
 
+                <!-- Right Section: Account, Cart, Search Icons -->
+                <div class="header-right-section d-flex align-items-center">
+                    <div class="mobile-icons-container d-flex align-items-center">
 
+                        <!-- Account Icon -->
+                        <div class="mobile-icon-item">
+                            <?php if(auth()->guard()->check()): ?>
+                                <div class="loged-user">
+                                    <div class="log-user-img">
+                                        <a href="<?php echo e(route('dashboard')); ?>">
+                                            <img src="https://buyabans.com/themes/buyabans/assets/images/icon/dummy-user.png"
+                                                 alt="User" class="mobile-account-icon">
                                         </a>
                                     </div>
-
-                                    <div class="mobi-logo">
-                                        <?php if($siteLogo && $siteLogo->image_path): ?>
-                                            <a href="<?php echo e(url('/')); ?>">
-                                                <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>"
-                                                    alt="Site Logo" class="img-fluid" style="max-height: 60px;">
-                                            </a>
-                                        <?php else: ?>
-                                            <a href="/"><img
-                                                    src="<?php echo e(asset('frontend/newstyle/assets/images/buyabanslogo-new.png')); ?>"
-                                                    alt="logo" />
-                                            </a>
-                                        <?php endif; ?>
-
-                                    </div>
-
                                 </div>
-                            </div>
-
-                            <!-- <div class="col-2-5">
-                        <div class="mobi-header-btn mobi-search-btn">
-                            <img class="cart-icon"
-                                src="frontend/newstyle/assets/images/icon/mobi-search.png">
-                        </div>
-                    </div> -->
-
-
-                            <!-- Header Middle Right start -->
-                            <div class="header-right flex-align d-lg-block d-none">
-                                <div class="flex-wrap gap-32 header-two-activities flex-align">
-                                    <button type="button"
-                                        class="gap-4 flex-align search-icon d-lg-none d-flex item-hover-two">
-                                        <span class="text-2xl text-white d-flex position-relative item-hover__text">
-                                            <i class="ph ph-magnifying-glass"></i>
-                                        </span>
-                                    </button>
-
-
-
-
-
-                                    <a href="javascript:void(0)"
-                                        class="gap-8 ml-10 flex-align flex-column item-hover-two"
-                                        style="margin-right:30px;">
-                                        <span
-                                            class="mt-6 text-2xl text-white d-flex position-relative me-6 item-hover__text">
-                                            <i class="ph ph-shopping-cart-simple"></i>
-                                            <!-- Display the cart count dynamically -->
-                                            <span id="cart-count"
-                                                class="w-16 h-16 text-xs text-white flex-center rounded-circle bg-main-two-600 position-absolute top-n6 end-n4">
-                                                <?php echo e($cartCount ?? 0); ?>
-
-
-                                            </span>
-                                        </span>
-                                        <span class="text-white text-md item-hover__text d-none d-lg-flex">Cart</span>
-                                    </a>
-
-
-                                </div>
-                            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <div class="col-2-5">
-                                <div class="header-right-con">
-                                    <div class="top-right-nav">
-
-
-                                        <!-- Profile Dropdown -->
-                                        <div class="profile-dropdown">
-                                            <div class="profile-dropdown">
-                                                <?php if(auth()->guard()->check()): ?>
-
-                                                    <div class="auth-container">
-                                                        <div class="loged-user d-inline-flex">
-                                                            <div class="log-user-img"><img
-                                                                    src="https://buyabans.com/themes/buyabans/assets/images/icon/dummy-user.png">
-                                                            </div>
-                                                            <div class="log-user-data dropdown">
-                                                                <div class="user-name">Hi!
-                                                                    <?php echo e(auth()->user()->name); ?>
-
-                                                                </div>
-                                                                <div class="dropdown-box">
-
-                                                                    <ul class="log-popup-links">
-                                                                        <li>
-                                                                            <a href="<?php echo e(route('dashboard')); ?>">
-                                                                                <img
-                                                                                    src="https://buyabans.com/themes/buyabans/assets/images/icon/mini-profile/user.png">My
-                                                                                Account
-                                                                            </a>
-                                                                        </li>
-
-                                                                        <li>
-                                                                            <a>
-                                                                                <img
-                                                                                    src="https://buyabans.com/themes/buyabans/assets/images/icon/mini-profile/turn-off.png">
-                                                                                <form method="POST"
-                                                                                    action="<?php echo e(route('logout')); ?>">
-
-
-                                                                                    <?php echo csrf_field(); ?>
-                                                                                    <button type="submit"
-                                                                                        class="dropdown-item w-100">Logout</button>
-                                                                                </form>
-                                                                            </a>
-                                                                        </li>
-
-
-
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                <?php else: ?>
-                                                    <!-- Default Profile Icon and Links for Guests -->
-                                                    <div class="sign-up d-inline-flex">
-                                                        <div class= "mobhide">
-                                                            <a href="<?php echo e(route('login')); ?>" class="d-flex">
-                                                                <div class="dt-icon-div"><img
-                                                                        src=" <?php echo e(asset('frontend/newstyle/assets/images/account-icon.png')); ?> ">
-                                                                </div>
-                                                                <div>Login</div>
-                                                            </a>
-                                                        </div>
-
-                                                        <div class="boder-right"></div>
-
-                                                        <div class= "mobhide">
-                                                            <a class="sign-up-link" href="<?php echo e(route('signup')); ?>"><span>Sign
-                                                                    Up</span></a>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class= "mobshow">
-                                                        <a href="<?php echo e(route('login')); ?>" class="d-flex">
-                                                            <div class="dt-icon-div"><img
-                                                                    src=" <?php echo e(asset('frontend/newstyle/assets/images/account-icon.png')); ?> "
-                                                                    style="padding-bottom: 17px;">
-                                                            </div>
-                                                            <div></div>
-                                                        </a>
-                                                    </div>
-
-
-
-                                                </div>
-
-
-                                            <?php endif; ?>
-                                        </div>
-
-
-
-
-                                        <div class="des-cart pos-relative cart-popup ">
-                                            <a href="javascript:void(0)"
-                                                class="gap-8 ml-10 flex-align flex-column item-hover-two"
-                                                style="margin-right:30px;">
-                                                <span
-                                                    class="mt-6 text-2xl text-white2 d-flex position-relative me-6 item-hover__text">
-                                                    <i class="ph ph-shopping-cart-simple"></i>
-                                                    <!-- Display the cart count dynamically -->
-                                                    <span id="cart-count"
-                                                        class="w-16 h-16 text-xs text-white flex-center rounded-circle bg-main-two-600 position-absolute top-n6 end-n4">
-                                                        <?php echo e($cartCount ?? 0); ?>
-
-
-                                                    </span>
-                                                </span>
-
-                                                <span
-                                                    class="text-white2 text-md item-hover__text d-none d-lg-flex">Cart</span>
-                                            </a>
-
-                                        </div>
-
-
-
-
-                                    </div>
-                                </div>
-
-
-                            </div>
+                            <?php else: ?>
+                                <a href="<?php echo e(route('login')); ?>" class="mobile-account-link">
+                                    <img src="<?php echo e(asset('frontend/newstyle/assets/images/account-icon.png')); ?>"
+                                         alt="Account" class="mobile-account-icon">
+                                </a>
+                            <?php endif; ?>
                         </div>
 
+                        <!-- Cart Icon -->
+                        <div class="mobile-icon-item des-cart cart-popup">
+                            <a href="javascript:void(0)" class="mobile-cart-link">
+                                <div class="mobile-cart-wrapper">
+                                    <i class="ph ph-shopping-cart-simple mobile-cart-icon"></i>
+                                    <span class="mobile-cart-count" id="cart-count-1"><?php echo e($cartCount ?? 0); ?></span>
+                                </div>
+                            </a>
+                        </div>
 
-                </header>
+                        <!-- Search Icon -->
+                        <div class="mobile-icon-item">
+                            <button class="mobile-search-btn ">
+                                <img src="<?php echo e(asset('frontend/newstyle/assets/images/icon/mobi-search.png')); ?>"
+                                     alt="Search" class="mobile-search-icon">
+                            </button>
+                        </div>
 
+                    </div>
+                </div>
             </div>
+        </div>
+
+        <!-- Search Container -->
+        <div class="search-con search-con-mobile">
+            <div class="search-title col-sm-12" style="display: none;">
+                <p>Search</p>
+                <button class="close-search"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="top-search clear-both">
+                <input type="text" class="form-control main-search top-search-suggestion-mobi"
+                    placeholder="Search for products, categories and more">
+                <button type="button" class="btn btn-primary submit-search-mobi">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <div id="suggestions-box-display-mobi" class="suggestions-box suggestions-box-display-mobi"
+                    style="display: none;">
+                    <div class="left-suggestion-no-products" hidden>
+                        <p>No results found.</p>
+                    </div>
+                    <div class="left-suggestion-main-con"></div>
+                    <div class="right-suggestion-main-con">
+                        <div>
+                            <h4 class="headding search-category-title" hidden>Categories</h4>
+                            <ul></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+
+<!-- Add this CSS for proper mobile header styling -->
+<style>
+.mobi-main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.mobile-header-container {
+    padding: 10px 15px;
+}
+
+.mobi-full-row {
+    width: 100%;
+}
+
+.header-left-section {
+    flex: 1;
+}
+
+.header-right-section {
+    flex-shrink: 0;
+}
+
+.mobile-icons-container {
+    gap: 20px; /* Equal spacing between all icons */
+}
+
+.mobile-icon-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+/* Account Icon Styling */
+.mobile-account-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.mobile-account-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Cart Icon Styling */
+.mobile-cart-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-cart-icon {
+    font-size: 24px;
+    color: #333;
+}
+
+.mobile-cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff4444;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+    min-width: 18px;
+}
+
+.mobile-cart-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+
+/* Search Icon Styling */
+.mobile-search-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.mobile-search-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+/* Logo styling */
+.mobi-logo img {
+    max-height: 50px;
+    width: auto;
+}
+
+/* Menu icon styling */
+.mobi-menu-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .mobile-icons-container {
+        gap: 15px;
+    }
+
+    .mobile-icon-item {
+        width: 36px;
+        height: 36px;
+    }
+
+    .mobile-account-icon,
+    .mobile-search-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .mobile-cart-icon {
+        font-size: 20px;
+    }
+
+    .mobile-cart-count {
+        width: 16px;
+        height: 16px;
+        font-size: 10px;
+        top: -6px;
+        right: -6px;
+    }
+}
+
+/* Hover effects */
+.mobile-icon-item:hover {
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+/* Ensure proper alignment */
+.d-flex {
+    display: flex;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+</style>
 
 
             <!-- destop header begin -->
@@ -320,8 +393,8 @@
 
 
                                 <div class="search-con">
-                                    <div class="top-search ">
-                                        <input type="text" class="form-control main-search top-search-suggestion"
+                                    <div class="top-search search-container">
+                                        <input type="text" class="form-control main-search  top-search-suggestion-desk"
                                             placeholder="Search for products, categories and more">
                                         <button type="button" class="btn btn-primary submit-search"><i
                                                 class="fa-solid fa-magnifying-glass"></i></button>
@@ -330,17 +403,22 @@
                                             <div class="left-suggestion-no-products" hidden>
                                                 <p>No results found.</p>
                                             </div>
+
                                             <div class="left-suggestion-main-con">
+                                                <!-- JS will inject products here -->
                                             </div>
 
                                             <div class="right-suggestion-main-con">
                                                 <div>
-                                                    <h4 class="headding search-category-title" hidden>Categories</h4>
-                                                    <ul>
+                                                    <h4 class="headding search-category-title">Categories</h4>
+                                                    <ul class="category-list">
+                                                        <!-- JS will inject categories here -->
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
+
+
                                     </div>
 
 
@@ -355,6 +433,9 @@
 
 
                                 </div>
+
+
+
                                 <div class="header-right-con">
                                     <div class="top-right-nav">
                                         <div class="des-cart pos-relative cart-popup ">
@@ -362,14 +443,18 @@
                                             <a href="javascript:void(0)" class="d-flex">
 
                                                 <cart-item-count></cart-item-count>
-                                                <div class="dt-icon-div"><span id="cart-count"
+                                                <div class="dt-icon-div">
+                                                    <span id="cart-count-3"
                                                         class="w-16 h-16 text-xs text-white flex-center rounded-circle bg-main-two-600 position-absolute top-n6 ">
                                                         <?php echo e($cartCount ?? 0); ?>
 
 
-                                                    </span> <img
+                                                    </span>
+                                                    <img
                                                         src=" <?php echo e(asset('frontend/newstyle/assets/images/cart-new.png')); ?>"
-                                                        class="cart-img"></div><span>Cart</span>
+                                                        class="cart-img">
+                                                </div>
+                                                    <span class="span-cart">Cart</span>
                                             </a>
                                         </div>
 
@@ -626,7 +711,7 @@
 
 
                                     <!-- /.column-1 -->
-                                    <li class="column-1"><a href="/shop" title="">Shop</a></li>
+                                    
                                     <!-- /.column-1 -->
 
 
@@ -636,12 +721,31 @@
 
 
 
+                                    <li class="has-mega-menu">
+                                        <a href="#" title="Brands">
 
+                                            Brands </a>
+
+                                        <ul class="submenu" id="brand-submenu">
+                                            <div class="row align-items-start">
+                                                <div class="col-sm-6">
+                                                    <p class="brand-topic">Top Brands</p>
+                                                    <div id="top-brands" class="brand-logos-set row"></div>
+                                                </div>
+                                                <div class="col-sm-6 px-40">
+                                                    <p class="brand-topic">All Brands</p>
+                                                    <div id="all-brands" class="row align-items-start"></div>
+                                                </div>
+                                            </div>
+                                        </ul>
+
+
+                                    </li>
 
 
 
                                     <li class="column-1">
-                                        <a href="/about" title="">
+                                        <a href="<?php echo e(route('about')); ?>" title="">
 
                                             About Us </a>
 
@@ -649,7 +753,7 @@
 
 
                                     <li class="column-1">
-                                        <a href="/contact" title="">
+                                        <a href="<?php echo e(route('contac')); ?>" title="">
 
                                             Contact Us </a>
 
@@ -669,13 +773,13 @@
 
                                     <div class="top-track">
 
-                                        <!-- <a href="#"><i
-                                                        class="fa-solid fa-location-dot me-2"></i>Track your order</a> -->
+                                        <a href="/home/My-Account/myorders"><i
+                                                class="fa-solid fa-location-dot me-2"></i>Track your order</a>
 
                                     </div>
                                     <div><a href="#" title="">
                                             <i class="fa-solid fa-phone me-2"></i>
-                                            +94 112 251 202
+                                            +94 75 833 7141
 
                                         </a>
                                     </div>
@@ -789,7 +893,7 @@
                     </div>
                     <div>
                         <div>HOT LINE</div>
-                        <strong>+94 112 251 202
+                        <strong>+94 75 833 7141
                         </strong>
                     </div>
                 </div>
@@ -818,13 +922,14 @@
 
 
                         <li> <a href="/" title="">Home</a> </li>
+                        <li class="column-1"><a href="#" title="">Brands</a></li>
 
 
-                        <li class="column-1"><a href="/shop" title="">Shop</a></li>
+                        
 
-                        <li><a href="/about" title=""> About Us </a></li>
+                        <li><a href="<?php echo e(route('about')); ?>" title=""> About Us </a></li>
 
-                        <li><a href="/contact" title="">Contact Us </a></li>
+                        <li><a href="<?php echo e(route('contac')); ?>" title="">Contact Us </a></li>
 
                         
 
@@ -850,9 +955,9 @@
 
                                 <!-- Main Category and Toggle -->
                                 <div class="d-flex justify-content-between align-items-center ">
-                                    <a href="<?php echo e(url('/shop?category_id=' . $category->id)); ?>"
+                                    <a href="/all-items?category=<?php echo e(urlencode($category->parent_category)); ?>"
                                         class="text-dark text-decoration-none fw-semibold" style="line-height: 1.6;">
-                                        <?php echo e($category->name); ?>
+                                        <?php echo e($category->parent_category); ?>
 
                                     </a>
 
@@ -870,10 +975,10 @@
                                         class="dropdown subcategory-dropdown bg-light border mt-1 rounded shadow-sm d-none">
                                         <?php $__currentLoopData = $category->subcategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <li>
-                                                <a href="<?php echo e(url('/shop?subcategory_id=' . $subcategory->id)); ?>"
+                                                <a href="/all-items?subcategory=<?php echo e(urlencode($subcategory->subcategory)); ?>"
                                                     class="d-block px-4 py-2 text-dark text-decoration-none"
                                                     style="line-height: 1.6;">
-                                                    <?php echo e($subcategory->name); ?>
+                                                    <?php echo e($subcategory->subcategory); ?>
 
                                                 </a>
                                             </li>
@@ -949,7 +1054,6 @@
     <!-- End of Mobile Menu -->
     </div>
 
-
     <script>
         document.querySelectorAll('.nav-link').forEach((tab) => {
             tab.addEventListener('click', function(e) {
@@ -1004,7 +1108,334 @@
         });
     </script>
 
+    <script>
+        function updateCartCount() {
+            fetch("<?php echo e(route('cart.count')); ?>")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('cart-count-1').textContent = data.cart_count;
+                    document.getElementById('cart-count-2').textContent = data.cart_count;
+                    document.getElementById('cart-count-3').textContent = data.cart_count;
+                    document.getElementById('cart-count-4').textContent = data.cart_count;
+                })
+                .catch(error => {
+                    console.error('Error fetching cart count:', error);
+                });
+        }
 
+        // Call on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+    </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const brandsMenuItem = document.querySelector('li > a[title="Brands"]')?.parentElement;
+        const submenu = document.getElementById('brand-submenu');
+
+        let brandsLoaded = false;
+        let brandsFetching = false;
+        let hoverTimeout = null;
+
+        if (!brandsMenuItem || !submenu) return;
+
+        // Show submenu on hover
+        brandsMenuItem.addEventListener('mouseenter', () => {
+            // Clear any existing timeout to avoid flickering
+            if (hoverTimeout) clearTimeout(hoverTimeout);
+
+            submenu.style.display = 'block';
+
+            // Only fetch data if it hasn't been loaded or isn't currently fetching
+            if (!brandsLoaded && !brandsFetching) {
+                brandsFetching = true; // Lock to prevent multiple requests
+
+                console.log('Fetching brands data');
+
+                fetch('/brands-data')
+                    .then(res => {
+                        if (!res.ok) throw new Error('Network response was not ok');
+                        return res.json();
+                    })
+                    .then(data => {
+                        const topContainer = document.getElementById('top-brands');
+                        const allContainer = document.getElementById('all-brands');
+
+                        // Clear containers first to prevent duplicate content
+                        topContainer.innerHTML = '';
+                        allContainer.innerHTML = '';
+
+                        const allList = [
+                            [],
+                            [],
+                            [],
+                            []
+                        ];
+                        let col = 0;
+
+                        data.forEach(brand => {
+                            const imageUrl = brand.image ? brand.image :
+                            'default-image.png';
+
+                            const brandLink = `<a title="${brand.name}" href="/brand/${brand.slug}">
+                        <img src="/storage/${imageUrl}" alt="${brand.name}" style="height: 50px;">
+                    </a>`;
+
+                            if (brand.is_top_brand) {
+                                topContainer.insertAdjacentHTML('beforeend',
+                                    `<div class="brand-img col-sm-3">${brandLink}</div>`
+                                    );
+                            }
+
+                            allList[col].push(
+                                `<li><a href="/brand/${brand.slug}">${brand.name}</a></li>`
+                                );
+                            col = (col + 1) % 4;
+                        });
+
+                        allList.forEach(column => {
+                            allContainer.insertAdjacentHTML('beforeend',
+                                `<ul class="col-sm-3">${column.join('')}</ul>`);
+                        });
+
+                        brandsLoaded = true;
+                        console.log('Brands loaded successfully');
+                    })
+                    .catch(err => {
+                        console.error('Brand fetch failed:', err);
+                    })
+                    .finally(() => {
+                        brandsFetching = false;
+                    });
+            }
+        });
+
+        // Add event listeners to both menu item and submenu to prevent flickering
+        submenu.addEventListener('mouseenter', () => {
+            if (hoverTimeout) clearTimeout(hoverTimeout);
+            submenu.style.display = 'block';
+        });
+
+        // Hide submenu on mouse leave with slight delay to prevent flickering
+        const handleMouseLeave = () => {
+            hoverTimeout = setTimeout(() => {
+                submenu.style.display = 'none';
+            }, 200); // Small delay to prevent flickering when moving between menu and submenu
+        };
+
+        brandsMenuItem.addEventListener('mouseleave', handleMouseLeave);
+        submenu.addEventListener('mouseleave', handleMouseLeave);
+    });
+</script>
+
+    <script>
+// Mobile Search Toggle Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the search button and search container elements
+    const searchButton = document.querySelector('.mobile-search-btn');
+    const searchContainer = document.querySelector('.search-con-mobile');
+    const closeButton = document.querySelector('.close-search');
+    const searchTitle = document.querySelector('.search-title');
+
+    // Function to show search container
+    function showSearch() {
+        if (searchContainer) {
+            searchContainer.style.display = 'block';
+            // Show the search title as well
+            if (searchTitle) {
+                searchTitle.style.display = 'block';
+            }
+            // Focus on the search input for better UX
+            const searchInput = searchContainer.querySelector('.main-search');
+            if (searchInput) {
+                setTimeout(() => searchInput.focus(), 100);
+            }
+        }
+    }
+
+    // Function to hide search container
+    function hideSearch() {
+        if (searchContainer) {
+            searchContainer.style.display = 'none';
+            // Hide the search title as well
+            if (searchTitle) {
+                searchTitle.style.display = 'none';
+            }
+        }
+    }
+
+    // Add click event listener to search button
+    if (searchButton) {
+        searchButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            showSearch();
+        });
+    }
+
+    // Add click event listener to close button
+    if (closeButton) {
+        closeButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            hideSearch();
+        });
+    }
+
+    // Optional: Close search when clicking outside
+    document.addEventListener('click', function(e) {
+        if (searchContainer &&
+            searchContainer.style.display === 'block' &&
+            !searchContainer.contains(e.target) &&
+            !searchButton.contains(e.target)) {
+            hideSearch();
+        }
+    });
+
+    // Optional: Close search with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && searchContainer && searchContainer.style.display === 'block') {
+            hideSearch();
+        }
+    });
+});
+
+    </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.querySelector('.top-search-suggestion-mobi');
+        const suggestionBox = document.getElementById('suggestions-box-display-mobi');
+        const productCon = suggestionBox.querySelector('.left-suggestion-main-con');
+        const categoryCon = suggestionBox.querySelector('.right-suggestion-main-con ul');
+        const noResults = suggestionBox.querySelector('.left-suggestion-no-products');
+        const searchCloseBtn = document.querySelector('.close-search');
+
+        // Search functionality
+        searchInput.addEventListener('keyup', function () {
+            const query = this.value.trim();
+
+            if (query.length < 2) {
+                suggestionBox.style.display = 'none';
+                return;
+            }
+
+            fetch(`/search-suggestions?q=${encodeURIComponent(query)}`)
+                .then(res => res.json())
+                .then(data => {
+                    productCon.innerHTML = '';
+                    categoryCon.innerHTML = '';
+
+                    if (data.products.length === 0 && data.categories.length === 0) {
+                        noResults.hidden = false;
+                        suggestionBox.style.display = 'block';
+                        return;
+                    }
+
+                    noResults.hidden = true;
+
+                    // Products
+                    data.products.forEach(product => {
+                        productCon.innerHTML += `
+                            <a class="search-product-element" href="${product.url}">
+                                <div class="suggestion-box">
+                                    <div class="suggestion-product-img">
+                                        <img class="img-fluid" alt="" src="${product.image ?? ''}">
+                                    </div>
+                                    <div class="suggestion-box-details">
+                                        <div class="product-line product-name">${product.name}</div>
+                                    </div>
+                                </div>
+                            </a>`;
+                    });
+
+                    // Categories
+                    data.categories.forEach(category => {
+                        categoryCon.innerHTML += `
+                            <li><a class="search-category-name" href="${category.url}">${category.name}</a></li>`;
+                    });
+
+                    suggestionBox.style.display = 'block';
+                })
+                .catch(err => {
+                    console.error('Mobile search error:', err);
+                });
+        });
+
+        // Close search suggestions
+        if (searchCloseBtn) {
+            searchCloseBtn.addEventListener('click', () => {
+                suggestionBox.style.display = 'none';
+                searchInput.value = '';
+            });
+        }
+    });
+</script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInputDesktop = document.querySelector('.top-search-suggestion-desk'); // give desktop input a unique class
+        const suggestionBox = document.getElementById('suggestions-box-display');
+        const productCon = suggestionBox?.querySelector('.left-suggestion-main-con');
+        const categoryCon = suggestionBox?.querySelector('.right-suggestion-main-con ul');
+        const noResults = suggestionBox?.querySelector('.left-suggestion-no-products');
+
+        if (!searchInputDesktop) return;
+
+        searchInputDesktop.addEventListener('keyup', function () {
+            const query = this.value.trim();
+
+            if (query.length < 2) {
+                if (suggestionBox) suggestionBox.style.display = 'none';
+                return;
+            }
+
+            fetch(`/search-suggestions?q=${encodeURIComponent(query)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (!suggestionBox) return;
+
+                    productCon.innerHTML = '';
+                    categoryCon.innerHTML = '';
+
+                    if (data.products.length === 0 && data.categories.length === 0) {
+                        noResults.hidden = false;
+                        suggestionBox.style.display = 'block';
+                        return;
+                    }
+
+                    noResults.hidden = true;
+
+                    // Products
+                    data.products.forEach(product => {
+                        productCon.innerHTML += `
+                            <a class="search-product-element" href="${product.url}">
+                                <div class="suggestion-box">
+                                    <div class="suggestion-product-img">
+                                        <img class="img-fluid" alt="" src="${product.image ?? ''}">
+                                    </div>
+                                    <div class="suggestion-box-details">
+                                        <div class="product-line product-name">${product.name}</div>
+                                    </div>
+                                </div>
+                            </a>`;
+                    });
+
+                    // Categories
+                    data.categories.forEach(category => {
+                        categoryCon.innerHTML += `
+                            <li><a class="search-category-name" href="${category.url}">${category.name}</a></li>`;
+                    });
+
+                    suggestionBox.style.display = 'block';
+                })
+                .catch(err => {
+                    console.error('Desktop search error:', err);
+                });
+        });
+    });
+</script>
 
 
     </header>

@@ -17,6 +17,7 @@ class Products extends Model
         'product_name',
         'product_description',
         'product_category',
+        'brand_id',
         'subcategory',
         'sub_subcategory',
         'quantity',
@@ -38,7 +39,7 @@ class Products extends Model
     }
 
 
-   
+
     public function images()
     {
         return $this->hasMany(ProductImage::class, 'product_id', 'product_id');
@@ -48,7 +49,7 @@ class Products extends Model
     {
         return $this->belongsTo(Category::class, 'product_category', 'id');
     }
-    
+
 
     public function variations()
     {
@@ -59,7 +60,7 @@ class Products extends Model
     {
         return $this->hasOne(SpecialOffers::class, 'product_id', 'product_id')->where('status', 'active');
     }
-    
+
 
     public function Sale()
     {
@@ -81,6 +82,9 @@ class Products extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-    
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
 }
 

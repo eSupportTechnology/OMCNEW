@@ -1,3 +1,22 @@
+<style>
+    .footer-white-color-css {
+        color: #ffffff;
+    }
+
+    .copyright {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+
+    .copyright small {
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+        line-height: 1.4;
+    }
+</style>
+
 <div class="mobile-footer-con">
 
 
@@ -11,8 +30,8 @@
                     </a>
                 </div>
                 <div class="footer-details">
-                    <p>Customer Support</p>
-                    <span>8am - 5pm</span>
+                    <p class="footer-white-color-css">Customer Support</p>
+                    <!-- <span>8am - 5pm</span> -->
                 </div>
             </div>
             <div class="col-6 mobi-purple-div">
@@ -23,7 +42,7 @@
                     </a>
                 </div>
                 <div class="footer-details">
-                    <p>Island-wide Delivery</p>
+                    <p class="footer-white-color-css">Island-wide Delivery</p>
                 </div>
             </div>
 
@@ -35,7 +54,7 @@
                     </a>
                 </div>
                 <div class="footer-details">
-                    <p>Express Delivery</p>
+                    <p class="footer-white-color-css">Express Delivery</p>
                 </div>
             </div>
 
@@ -47,7 +66,7 @@
                     </a>
                 </div>
                 <div class="footer-details">
-                    <p>100+ Service Centers</p>
+                    <p class="footer-white-color-css">100+ Service Centers</p>
                 </div>
             </div>
         </div>
@@ -55,18 +74,18 @@
         <div class="row footer-mobi-details text-center m-0">
             <div class="col-12 mobi-footer-link">
                 <ul>
-                    <li><a href="#" target="_blank"><img
-                                src="{{ asset('frontend/newstyle/assets/images/footer/facebook.webp') }}"></a></li>
-                    <li><a href="#" target="_blank"><img
-                                src="{{ asset('frontend/newstyle/assets/images/footer/twitter.webp') }}"></a></li>
-                    <li><a href="#" target="_blank"><img
-                                src="{{ asset('frontend/newstyle/assets/images/footer/instagram.webp') }}"></a></li>
-                    <li><a href="#" target="_blank"><img
-                                src="{{ asset('frontend/newstyle/assets/images/footer/linkedin-in.webp') }}"></a></li>
-                    <li><a href="#" target="_blank"><img
-                                src="{{ asset('frontend/newstyle/assets/images/footer/youtube.webp') }}"></a></li>
-
+                    <li><a href="#" target="_blank"><i class="fab fa-facebook" fab fa-facebook
+                                style="color:#2B96C5 ; font-size: 22px;"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fab fa-twitter" fab fa-facebook
+                                style="color:#2B96C5 ; font-size: 22px;"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fab fa-instagram" fab fa-facebook
+                                style="color:#2B96C5 ; font-size: 22px;"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fab fa-linkedin-in" fab fa-facebook
+                                style="color:#2B96C5 ; font-size: 22px;"></i></a></li>
+                    <li><a href="#" target="_blank"><i class="fab fa-youtube" fab fa-facebook
+                                style="color:#2B96C5 ; font-size: 22px;"></i></a></li>
                 </ul>
+
             </div>
 
             <div class="accordion accordion-flush" id="accordionFlushExample">
@@ -81,9 +100,9 @@
                         data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li class="footer-nav"><a href="#">About Us</a></li>
+                                <li class="footer-nav"><a href="/about">About Us</a></li>
                                 <li class="footer-nav"><a href="#">Careers</a></li>
-                                <li class="footer-nav"><a href="#">Contact Us</a></li>
+                                <li class="footer-nav"><a href="/contact">Contact Us</a></li>
 
                             </ul>
                         </div>
@@ -100,11 +119,19 @@
                         data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li class="footer-nav"><a href="#">Frequently Asked Questions</a></li>
-                                <li class="footer-nav"><a href="#">How To Buy</a></li>
+                                {{-- <li class="footer-nav"><a href="/faq">Frequently Asked Questions</a></li>
+                                <li class="footer-nav"><a href="/buy">How To Buy</a></li>
                                 <li class="footer-nav"><a href="#">Shipping &amp; Delivery</a></li>
                                 <li class="footer-nav"><a href="#">Warranty Information</a></li>
-                                <li class="footer-nav"><a href="#">Return Products</a></li>
+                                <li class="footer-nav"><a href="#">Return Products</a></li> --}}
+
+                                <li class="footer-nav"><a href="{{ route('faq') }}">Frequently Asked Questions</a>
+                                </li>
+                                <li class="footer-nav"><a href="{{ route('buy') }}">How To Buy</a></li>
+                                <li class="footer-nav"><a href="{{ route('shipping-delivery') }}">Shipping &amp;
+                                        Delivery</a></li>
+                                <li class="footer-nav"><a href="{{ route('warranty') }}">Warranty Information</a></li>
+                                <li class="footer-nav"><a href="{{ route('return-product') }}">Return Products</a></li>
                             </ul>
                         </div>
                     </div>
@@ -121,9 +148,16 @@
                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-                                <li class="footer-nav"><a href="#">Privacy Policy</a></li>
+                                {{-- <li class="footer-nav"><a href="#">Privacy Policy</a></li>
                                 <li class="footer-nav"><a href="#">Return and Refund Policy</a></li>
-                                <li class="footer-nav"><a href="#">Terms and Conditions</a></li>
+                                <li class="footer-nav"><a href="#">Terms and Conditions</a></li> --}}
+
+                                <li class="footer-nav"><a href="{{ route('PrivacyPolicy') }} ">Privacy Policy</a>
+                                </li>
+                                <li class="footer-nav"><a href="{{ route('return-refund') }}">Return and Refund
+                                        Policy</a></li>
+                                <li class="footer-nav"><a href="{{ route('terms-condition') }}">Terms and
+                                        Conditions</a></li>
                             </ul>
                         </div>
                     </div>
@@ -183,7 +217,10 @@
 
             </div>
 
-            <div class="copyright"><small>Copyright © 2025 Buyabans. All Rights Reserved.</small></div>
+            <div class="copyright"><small>Copyright © 2025 ONLINE
+                    MARKETING
+                    COMPLEX. All Rights
+                    Reserved.</small></div>
         </div>
 
         <!-- <div class="flex-wrap mobi-stickey-footer d-flex">
@@ -234,203 +271,361 @@
     <div class="cart-white">
         <div class="close-minicart"><i class="fa-solid fa-xmark"></i></div>
         <div class="cart-logo">
+            {{-- <img src="{{ asset('frontend/newstyle/assets/images/logo.png') }}"> --}}
             @if ($siteLogo && $siteLogo->image_path)
                 <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}" alt="Site Logo"
-                    class="img-fluid">
+                    style="width: 180px;">
             @else
-                <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.png') }}">
+                <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.png') }}" style="width: 180px;">
             @endif
-
-
         </div>
-        <h4>My Cart </h4>
-        <div id="mini-cart-data"></div>
+        <h4>My Cart</h4>
+        <div id="mini-cart-data">
+            <div>
+                <div class="subtotal">
+                    <div class="toatal-div-main">
+                        <div class="sub-total-label">Cart Subtotal</div>
+                        <div class="pro-amount">
+                            <span id= "cart-count-4">0</span> Items Added
+                        </div>
+                    </div>
+                    <div class="sub-total" id="cart-subtotal-1">Rs. 0</div>
+                </div>
+
+                <div class="cart-added">
+                    <p class="cart-include">Cart Include</p>
+
+                    {{-- mini cart here --}}
+                    @include('frontend.partials.mini-cart')
+                    {{-- mini cart here end --}}
+
+
+                    <div>
+                        <a href="{{ route('cart') }}" class="btn btn-site-default w-100 mt-4">View Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
 <!-- footer for mobile end -->
 
+
 <!-- footer for destop begin -->
+<style>
+    /* Footer styling */
+    .destop-footer-con {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .footer {
+        margin-bottom: 0;
+    }
+
+    /* Top blue service bar */
+    .purple-div {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        padding: 20px 0;
+        margin-bottom: 0;
+        background-color: #2B96C5; /* Keeping the original blue color */
+    }
+
+    .footer-box {
+        display: flex;
+        align-items: center;
+        margin: 10px 15px;
+    }
+
+    .footer-icon {
+        margin-right: 10px;
+    }
+
+    .footer-icon img {
+        width: 38px;
+        height: 32px;
+    }
+
+    .footer-details p {
+        margin: 0;
+        font-weight: 500;
+    }
+
+    .footer-white-color-css {
+        color: white;
+        font-size: 14px;
+    }
+
+    /* Main footer content area */
+    .footer-padding {
+        padding: 40px 0 0;  /* Remove bottom padding */
+        margin-bottom: 0;   /* Ensure no margin at bottom */
+    }
+
+    /* Company info section - FIXED */
+    .address-info {
+        display: block; /* Changed from flex to block to fix alignment */
+    }
+
+    /* Direct logo styling fix */
+    .address-info img {
+        max-width: 300px;
+        height: auto;
+        display: block;
+        margin-bottom: 20px;
+        padding-left: 1.9rem;
+    }
+
+    .hotline {
+        margin-top: 20px;
+    }
+
+    .hotline p {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    .tel-no {
+        color: #2B96C5;
+        font-size: 18px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    /* Social media section */
+    .social-media {
+        margin-top: 20px;
+        margin-bottom: auto;
+    }
+
+    .social-media ul {
+        display: flex;
+        padding: 0;
+        list-style: none;
+    }
+
+    .social-media ul li {
+        margin-right: 15px;
+    }
+
+    /* Footer links styling */
+    .footer-title {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 16px;
+    }
+
+    .footer-links-set ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-link {
+        margin-bottom: 10px;
+    }
+
+    .footer-link a {
+        color: #555;
+        text-decoration: none;
+        transition: color 0.3s;
+        font-size: 14px;
+    }
+
+    .footer-link a:hover {
+        color: #2B96C5;
+    }
+
+    /* Payment methods section */
+    .payment-methods-container {
+        padding: 20px 0;
+        border-top: 1px solid #eee;
+    }
+
+    .footer-payment-methods {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .bank-image {
+        margin: 5px;
+    }
+
+    .bank-image img {
+        height: 25px;
+        width: auto;
+    }
+
+    /* Copyright section */
+    .copyright {
+        text-align: center;
+        padding: 15px 0;
+        margin-top: 10px;
+    }
+
+    .copyright small {
+        font-size: 13px;
+        color: #555;
+        letter-spacing: 0.5px;
+    }
+</style>
+
 <div class="destop-footer-con">
-    <div class="footer ft-destop">
-        <div class="purple-div">
-            <div class="footer-box">
-                <div class="footer-icon"><img src="{{ asset('frontend/newstyle/assets/images/icon/Page-1.webp') }}">
-                </div>
-                <div class="footer-details">
-                    <p>Customer Support</p>
-                    <span>8am - 5pm</span>
-                </div>
+    <!-- Top service bar with blue background -->
+    <div class="purple-div">
+        <div class="footer-box">
+            <div class="footer-icon">
+                <img src="{{ asset('frontend/newstyle/assets/images/icon/Page-1.webp') }}">
             </div>
-            <div class="footer-box">
-                <div class="footer-icon"><img
-                        src="{{ asset('frontend/newstyle/assets/images/icon/sri-lanka.webp') }}">
-                </div>
-                <div class="footer-details">
-                    <p>Island-wide Delivery</p>
-                </div>
-            </div>
-            <div class="footer-box">
-                <div class="footer-icon"><img
-                        src="{{ asset('frontend/newstyle/assets/images/icon/stopwatch.webp') }}">
-                </div>
-                <div class="footer-details">
-                    <p>Express Delivery</p>
-                </div>
-            </div>
-            <div class="footer-box">
-                <div class="footer-icon"><img
-                        src="{{ asset('frontend/newstyle/assets/images/icon/technical-support.webp') }}">
-                </div>
-                <div class="footer-details">
-                    <p>100+ Service Centers</p>
-                </div>
+            <div class="footer-details">
+                <p class="footer-white-color-css">Customer Support</p>
             </div>
         </div>
+        <div class="footer-box">
+            <div class="footer-icon">
+                <img src="{{ asset('frontend/newstyle/assets/images/icon/sri-lanka.webp') }}">
+            </div>
+            <div class="footer-details">
+                <p class="footer-white-color-css">Island-wide Delivery</p>
+            </div>
+        </div>
+        <div class="footer-box">
+            <div class="footer-icon">
+                <img src="{{ asset('frontend/newstyle/assets/images/icon/stopwatch.webp') }}">
+            </div>
+            <div class="footer-details">
+                <p class="footer-white-color-css">Express Delivery</p>
+            </div>
+        </div>
+        <div class="footer-box">
+            <div class="footer-icon">
+                <img src="{{ asset('frontend/newstyle/assets/images/icon/technical-support.webp') }}">
+            </div>
+            <div class="footer-details">
+                <p class="footer-white-color-css">100+ Service Centers</p>
+            </div>
+        </div>
+    </div>
 
-        <div class="container footer-padding">
-            <div class="row align-items-start">
-                <div class="col-md-3 address-info">
-
+    <!-- Main footer content -->
+    <div class="container footer-padding">
+        <div class="row">
+            <!-- Company info and social media -->
+            <div class="col-md-4">
+                <div class="address-info">
+                    <!-- Simplified logo structure -->
                     @if ($siteLogo && $siteLogo->image_path)
-                        <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}" alt="Site Logo"
-                            class="img-fluid">
+                        <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}" alt="Site Logo">
                     @else
-                        <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.webp') }}">
+                        <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.webp') }}" alt="Site Logo">
                     @endif
-                    <div class="address">
-                        <p>No. 38, 2nd Lane,</p>
-                        <p>Rubber Watte Road,</p>
-                        <p>Gangodawila, Nugegoda, Sri Lanka.</p>
-                    </div>
+
                     <div class="hotline">
                         <p>HOTLINE</p>
-                        <a class="tel-no" href="#">+94 112 251 202 </a>
+                        <a class="tel-no" href="#">+94 75 833 7141</a>
                     </div>
                     <div class="social-media">
                         <ul>
-                            <li><a href="#" target="_blank"><img
-                                        src="{{ asset('frontend/newstyle/assets/images/footer/facebook.webp') }}"></a>
-                            </li>
-                            <li><a href="#" target="_blank"><img
-                                        src="{{ asset('frontend/newstyle/assets/images/footer/twitter.webp') }}"></a>
-                            </li>
-                            <li><a href="#" target="_blank"><img
-                                        src="{{ asset('frontend/newstyle/assets/images/footer/instagram.webp') }}"></a>
-                            </li>
-                            <li><a href="#" target="_blank"><img
-                                        src="{{ asset('frontend/newstyle/assets/images/footer/linkedin-in.webp') }}"></a>
-                            </li>
-                            <li><a href="#" target="_blank"><img
-                                        src="{{ asset('frontend/newstyle/assets/images/footer/youtube.webp') }}"></a>
-                            </li>
-
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- <div class="col-md-3 mt-1">
-                    <p class="footer-title">&nbsp;</p>
-                    <div class="footer-img-div"><a href="#"><img src="frontend/newstyle/assets/images/icon/shop.png">Showroom Locator</a></div>
-                    <div class="footer-img-div"><a href="#"><img src="frontend/newstyle/assets/images/icon/shop.png">Showroom Login</a></div>
-                    <div class="footer-img-div"><a href="#" target="_blank"><img src="frontend/newstyle/assets/images/icon/repair-tool-new.png">Service Center Locator</a></div>
-                    <div class="footer-img-div"><a href="#" target="_blank"><img src="frontend/newstyle/assets/images/icon/order-tracking.png">Track your Order</a></div>
-                </div> -->
-
-                <div class="col-md-3">
-                    <div class="footer-links-set">
-                        <p class="footer-title">About</p>
-                        <ul>
-                            <li><a class="footer-link" href="{{ route('about') }}">About Us</a></li>
-                            <li><a class="footer-link" href="#">Careers</a></li>
-                            <li><a class="footer-link" href="#">Contact Us</a></li>
-                            <li><a class="footer-link" href="{{ route('Subscribe_Newsletter') }}">Subscribe
-                                    Newsletter</a></li>
-
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="footer-links-set">
-                        <p class="footer-title">Help</p>
-                        <ul>
-                            <li><a class="footer-link" href="{{ route('faq') }}">Frequently Asked Questions</a></li>
-                            <li><a class="footer-link" href="#">How To Buy</a></li>
-                            <li><a class="footer-link" href="#">Shipping &amp; Delivery</a></li>
-                            <li><a class="footer-link" href="#">Warranty Information</a></li>
-                            <li><a class="footer-link" href="#">Return Products</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-md-2">
-                    <div class="footer-links-set">
-                        <p class="footer-title">Policies</p>
-                        <ul>
-                            <li><a class="footer-link" href="#">Privacy Policy</a></li>
-                            <li><a class="footer-link" href="#">Return and Refund Policy</a></li>
-                            <li><a class="footer-link" href="#">Terms and Conditions</a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-facebook" style="color:#2B96C5; font-size: 22px;"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-twitter" style="color:#2B96C5; font-size: 22px;"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-instagram" style="color:#2B96C5; font-size: 22px;"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-linkedin-in" style="color:#2B96C5; font-size: 22px;"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-youtube" style="color:#2B96C5; font-size: 22px;"></i></a></li>
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="bg-white-con">
-            <div class="container">
-                <div class="footer-payment-methods d-flex">
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/VISA1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/MASTER1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/AMEX1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/COMBANK1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/FRIMI.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/HSBC.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/PB1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/DFCC.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/SAMPATH1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/NDB1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/NTB1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/PAB.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/BOC1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/AMANA1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/CARGILLS1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/CDB1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/KOKO.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/CARGILLS1.webp') }}"></div>
-                    <!-- (duplicate CARGILLS) -->
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/HNB1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/LOLC1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/NSB1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/SC1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/SEY1.webp') }}"></div>
-                    <div class="bank-image"><img
-                            src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/UB1.webp') }}"></div>
+            <!-- Footer navigation links - no changes needed here -->
+            <div class="col-md-8">
+                <div class="row">
+                    <!-- About section -->
+                    <div class="col-md-3">
+                        <div class="footer-links-set">
+                            <p class="footer-title">About</p>
+                            <ul>
+                                <li class="footer-link"><a href="{{ route('about') }}">About Us</a></li>
+                                <li class="footer-link"><a href="#">Careers</a></li>
+                                <li class="footer-link"><a href="{{ route('contac') }}">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
 
+                    <!-- Help section -->
+                    <div class="col-md-3">
+                        <div class="footer-links-set">
+                            <p class="footer-title">Help</p>
+                            <ul>
+                                <li class="footer-link"><a href="{{ route('faq') }}">F&Q</a></li>
+                                <li class="footer-link"><a href="{{ route('buy') }}">How To Buy</a></li>
+                                <li class="footer-link"><a href="{{ route('shipping-delivery') }}">Shipping &amp; Delivery</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Policies section -->
+                    <div class="col-md-3">
+                        <div class="footer-links-set">
+                            <p class="footer-title">Policies</p>
+                            <ul>
+                                <li class="footer-link"><a href="{{ route('PrivacyPolicy') }}">Privacy Policy</a></li>
+                                <li class="footer-link"><a href="{{ route('return-refund') }}">Return and Refund Policy</a></li>
+                                <li class="footer-link"><a href="{{ route('terms-condition') }}">Terms and Conditions</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links section -->
+                    <div class="col-md-3">
+                        <div class="footer-links-set">
+                            <p class="footer-title">Quick Links</p>
+                            <ul>
+                                <li class="footer-link"><a href="#">Brands</a></li>
+                                <li class="footer-link"><a href="#">Warranty Information</a></li>
+                                <li class="footer-link"><a href="#">Return Products</a></li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="copyright"><small>Copyright © 2025 CROWN ELECTRONICS. All Rights Reserved.</small></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment methods and copyright -->
+    <div class="payment-methods-container">
+        <div class="container">
+            <div class="footer-payment-methods">
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/VISA1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/MASTER1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/AMEX1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/COMBANK1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/FRIMI.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/HSBC.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/PB1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/DFCC.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/SAMPATH1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/NDB1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/NTB1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/PAB.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/BOC1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/AMANA1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/CARGILLS1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/CDB1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/KOKO.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/HNB1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/LOLC1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/NSB1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/SC1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/SEY1.webp') }}"></div>
+                <div class="bank-image"><img src="{{ asset('frontend/newstyle/assets/images/new-bank-logo/UB1.webp') }}"></div>
+            </div>
+            <div class="copyright">
+                <small>Copyright © 2025 ONLINE MARKETING COMPLEX. All Rights Reserved.</small>
             </div>
         </div>
     </div>
@@ -439,12 +634,43 @@
 
 
 
-
-
 <overlay-loader :is-open="show_loader"></overlay-loader>
 
 
 </div>
+
+
+
+<script>
+    function updateSubTotal() {
+        fetch("{{ route('cart.subtotal') }}")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('cart-subtotal-1').textContent = "Rs. " + data.subtotal;
+            })
+            .catch(error => {
+                console.error('Error fetching cart subtotal:', error);
+            });
+    }
+
+    // Call on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateSubTotal();
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </body>

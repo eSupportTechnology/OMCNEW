@@ -1,46 +1,166 @@
 @extends ('frontend.master')
 
 @section('content')
-<style>
-   
 
+<style>
+    /* Improved Button Styles */
     .btn-cart {
-        background-color: white; 
+        background-color: white;
         border: none;
         border-radius: 50%;
-        width: 40px; 
-        height: 40px; 
+        width: 40px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: background-color 0.3s, color 0.3s; 
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
     .btn-cart i {
-        font-size: 1.5rem; 
+        font-size: 1.5rem;
         color: black;
+        transition: color 0.3s ease;
     }
 
     .btn-cart:hover {
-        background-color: black; 
+        background-color: black;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
     .btn-cart:hover i {
-        color: white; 
+        color: white;
     }
-    .color-option.selected-color {
-    border: 2px solid #007bff; /* Blue border for the selected color */
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Optional: adds a glow effect */
-}
 
+    /* Color Selection Styles */
+    .color-option {
+        transition: all 0.2s ease;
+    }
+
+    .color-option.selected-color {
+        border: 2px solid #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+        transform: scale(1.1);
+    }
+
+    /* Product Card Enhancements */
+    .single-products-box {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .single-products-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .products-image {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hover-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+
+    .single-products-box:hover .hover-image {
+        opacity: 1;
+    }
+
+    .single-products-box:hover .main-image {
+        opacity: 0;
+    }
+
+    /* Price Styling */
+    .old-price {
+        text-decoration: line-through;
+        color: #999;
+        margin-right: 8px;
+    }
+
+    .new-price {
+        color: #f55b29;
+        font-weight: 600;
+    }
+
+    /* Filter Widget Styling */
+    .woocommerce-widget {
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .woocommerce-widget-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    /* Pagination Styling */
+    .pagination-area .page-numbers {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 35px;
+        height: 35px;
+        margin: 0 5px;
+        border-radius: 50%;
+        background: #f5f5f5;
+        color: #333;
+        transition: all 0.3s ease;
+    }
+
+    .pagination-area .page-numbers:hover,
+    .pagination-area .page-numbers.current {
+        background: #007bff;
+        color: white;
+    }
+
+    /* Modal Enhancements */
+    .modal-content {
+        border: none;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .btn-custom-cart {
+        transition: all 0.3s ease;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+
+    .btn-custom-cart:hover {
+        background-color: #0069d9 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 767px) {
+        .products-col-item {
+            margin-bottom: 30px;
+        }
+
+        .woocommerce-widget-area {
+            margin-bottom: 30px;
+        }
+    }
 </style>
+
         <!-- Start Page Title -->
         <div class="page-title-area">
             <div class="container">
                 <div class="page-title-content">
                     <h2>Special Offers</h2>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="/">Home</a></li>
                         <li>Special Offers</li>
                     </ul>
                 </div>
@@ -55,9 +175,9 @@
                     <div class="col-lg-3 col-md-12">
                         <div class="woocommerce-widget-area">
                             <div class="woocommerce-widget filter-list-widget">
-                              
-                                    <a href="{{ route('special-offers') }}" class="delete-selected-filters"><i class='bx bx-trash'></i> <span>Clear All</span></a>
-                               
+
+                                    <a href="{{ route('special-offers') }}" class="delete-selected-filters"><i class='fa fa-trash'></i> <span>Clear All</span></a>
+
                             </div>
 
                             <div class="woocommerce-widget collections-list-widget">
@@ -66,7 +186,7 @@
                                 <ul class="collections-list-row">
                                 @foreach($categories as $category)
                                     <li>
-                                        <a href="{{ route('special-offers') }}?category={{ $category->parent_category }}" 
+                                        <a href="{{ route('special-offers') }}?category={{ $category->parent_category }}"
                                         class="{{ request('category') === $category->parent_category ? 'active' : '' }}">
                                             {{ $category->parent_category }}
                                         </a>
@@ -81,18 +201,18 @@
                                 <ul class="size-list-row">
                                     @foreach($sizes as $size)
                                         <li>
-                                            <a href="{{ route('special-offers') }}?size={{ $size->value }}" 
+                                            <a href="{{ route('special-offers') }}?size={{ $size->value }}"
                                             class="{{ request('size') === $size->value ? 'active' : '' }}">
                                                 {{ $size->value }}
                                             </a>
                                         </li>
                                     @endforeach
-                                       
+
                                 </ul>
-                              
+
                             </div>
 
-                            
+
 
                             <!-- Color Filter -->
                             <div class="woocommerce-widget color-list-widget">
@@ -100,15 +220,15 @@
                                 <ul class="color-list-row">
                                     @foreach($colors as $color)
                                         <li>
-                                            <a href="{{ route('special-offers') }}?color={{ $color->value }}" 
-                                            style="background-color: {{ $color->hex_value }};" 
-                                            class="{{ request('color') === $color->value ? 'active' : '' }}" 
+                                            <a href="{{ route('special-offers') }}?color={{ $color->value }}"
+                                            style="background-color: {{ $color->hex_value }};"
+                                            class="{{ request('color') === $color->value ? 'active' : '' }}"
                                             title="{{ $color->value }}"></a>
                                         </li>
                                     @endforeach
                                 </ul>
                             </div>
-                           
+
                         </div>
                     </div>
 
@@ -117,8 +237,8 @@
                             <div class="row align-items-center justify-content-center">
                                 <div class="col-lg-4 col-md-4">
                                     <div class="d-lg-flex d-md-flex align-items-center">
-                                        <span class="sub-title d-lg-none"><a href="#" data-bs-toggle="modal" data-bs-target="#productsFilterModal"><i class='bx bx-filter-alt'></i> Filter</a></span>
-                                        
+                                        <span class="sub-title d-lg-none"><a href="#" data-bs-toggle="modal" data-bs-target="#productsFilterModal"><i class='fa fa-filter-alt'></i> Filter</a></span>
+
                                         <!--<span class="sub-title d-none d-lg-block d-md-block">View:</span>
 
                                         <div class="view-list-row d-none d-lg-block d-md-block">
@@ -177,19 +297,19 @@
                                                 </a>
 
 
-                                                <div class="products-button">
+                                                {{-- <div class="products-button">
                                                         <ul>
                                                             <li>
                                                                 <div class="wishlist-btn">
                                                                     <a href="#" class="wishlist-toggle" data-product-id="{{ $product->product_id }}" id="wishlist-{{ $product->product_id }}">
-                                                                        <i class="bx bx-heart {{ in_array($product->product_id, $wishlistProductIds) ? 'filled' : '' }}"></i> 
+                                                                        <i class="fa fa-heart {{ in_array($product->product_id, $wishlistProductIds) ? 'filled' : '' }}"></i>
                                                                         <span class="tooltip-label">Add to Wishlist</span>
                                                                     </a>
                                                                 </div>
                                                             </li>
                                                         </ul>
-                                                    </div>
-                                               
+                                                    </div> --}}
+
                                                 @if(($product->sale && $product->sale->status === 'active') || ($product->specialOffer && $product->specialOffer->status === 'active'))
                                                     <div class="sale-tag">
                                                         @if($product->sale && $product->sale->status === 'active')
@@ -228,14 +348,14 @@
                                                         @if ($i <= $product->average_rating)
                                                             <i class='bx bxs-star'></i> <!-- Full star -->
                                                         @else
-                                                            <i class='bx bx-star'></i> <!-- Empty star -->
+                                                            <i class='fa fa-star'></i> <!-- Empty star -->
                                                         @endif
                                                     @endfor
                                                 </div>
 
                                                 <a href="/cart" class="add-to-cart"  data-bs-toggle="modal" data-bs-target="#cartModal_{{ $product->product_id }}">Add to Cart</a>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 @endforeach
@@ -246,9 +366,9 @@
                         <div class="pagination-area text-center">
                             <!-- Previous Page Link -->
                             @if ($products->onFirstPage())
-                                <span class="prev page-numbers disabled"><i class='bx bx-chevron-left'></i></span>
+                                <span class="prev page-numbers disabled"><i class='fa fa-chevron-left'></i></span>
                             @else
-                                <a href="{{ $products->previousPageUrl() }}" class="prev page-numbers"><i class='bx bx-chevron-left'></i></a>
+                                <a href="{{ $products->previousPageUrl() }}" class="prev page-numbers"><i class='fa fa-chevron-left'></i></a>
                             @endif
 
                             <!-- Page Numbers -->
@@ -262,9 +382,9 @@
 
                             <!-- Next Page Link -->
                             @if ($products->hasMorePages())
-                                <a href="{{ $products->nextPageUrl() }}" class="next page-numbers"><i class='bx bx-chevron-right'></i></a>
+                                <a href="{{ $products->nextPageUrl() }}" class="next page-numbers"><i class='fa fa-chevron-right'></i></a>
                             @else
-                                <span class="next page-numbers disabled"><i class='bx bx-chevron-right'></i></span>
+                                <span class="next page-numbers disabled"><i class='fa fa-chevron-right'></i></span>
                             @endif
                         </div>
 
@@ -290,13 +410,13 @@
                             @if($product->images->first())
                                 <a class="rounded-4 main-image-link" href="{{ asset('storage/' . $product->images->first()->image_path) }}">
                                     <img id="mainImage" class="rounded-4 fit" style="width:280px; height:auto"
-                                        src="{{ asset('storage/' . $product->images->first()->image_path) }}" 
+                                        src="{{ asset('storage/' . $product->images->first()->image_path) }}"
                                     />
                                 </a>
                             @else
                                 <a class="rounded-4 main-image-link" href="{{ asset('images/default.jpg') }}">
-                                    <img id="mainImage" class="rounded-4 fit" 
-                                        src="{{ asset('images/default.jpg') }}" 
+                                    <img id="mainImage" class="rounded-4 fit"
+                                        src="{{ asset('images/default.jpg') }}"
                                     />
                                 </a>
                             @endif
@@ -315,25 +435,25 @@
                             <h4>{{ $product->product_name }}</h4>
                             <p class="description">
                                 {{ (str_replace('&nbsp;', ' ', strip_tags($product->product_description))) }}
-                            </p>  
+                            </p>
                             <div class="d-flex flex-row my-3">
                                 <div class="text-warning mb-1 me-2">
                                     @for ($i = 1; $i <= 5; $i++)
-                                        @if ($i <= floor($product->average_rating)) 
-                                            <i class='bx bxs-star'></i> 
+                                        @if ($i <= floor($product->average_rating))
+                                            <i class='bx bxs-star'></i>
                                         @elseif ($i == ceil($product->average_rating) && fmod($product->average_rating, 1) >= 0.5)
-                                            <i class='bx bxs-star-half'></i> 
+                                            <i class='bx bxs-star-half'></i>
                                         @else
-                                            <i class='bx bx-star'></i>
+                                            <i class='fa fa-star'></i>
                                         @endif
                                     @endfor
                                     <span class="ms-1">{{ number_format($product->average_rating, 1) }}</span>
                                 </div>
                                 <span class="text-primary">{{ $product->rating_count }} Ratings  </span>
-                               
+
                             </div>
                             <hr />
-                            
+
                             <div class="product-availability mt-3 mb-1">
                                 <span>Availability :</span>
                                 @if($product->quantity > 1)
@@ -349,7 +469,7 @@
                                 <div class="mb-2">
                                     <span>Size: </span>
                                     @foreach($product->variations->where('type', 'Size') as $size)
-                                        @if($size->quantity > 0)  
+                                        @if($size->quantity > 0)
                                             <button class="btn btn-outline-secondary btn-sm me-1 size-option" style="height:28px;" data-size="{{ $size->value }}">
                                                 {{ $size->value }}
                                             </button>
@@ -362,10 +482,10 @@
                                 <div class="mb-2">
                                     <span>Color: </span>
                                     @foreach($product->variations->where('type', 'Color') as $color)
-                                        @if($color->quantity > 0)  
-                                            <button class="btn btn-outline-secondary btn-sm color-option" 
-                                                style="background-color: {{ $color->hex_value }}; border-color: #e8ebec; height: 17px; width: 15px;" 
-                                                data-color="{{ $color->hex_value }}" 
+                                        @if($color->quantity > 0)
+                                            <button class="btn btn-outline-secondary btn-sm color-option"
+                                                style="background-color: {{ $color->hex_value }}; border-color: #e8ebec; height: 17px; width: 15px;"
+                                                data-color="{{ $color->hex_value }}"
                                                 data-color-name="{{ $color->value }}">
                                             </button>
                                         @endif
@@ -391,7 +511,7 @@
                                     <i class="me-1 fa fa-shopping-basket"></i>Add to cart
                                 </a>
                             @else
-                                <a href="#" class="btn btn-custom-cart mb-3 add-to-cart-modal shadow-0 {{ $product->quantity <= 1 ? 'btn-disabled' : '' }}" 
+                                <a href="#" class="btn btn-custom-cart mb-3 add-to-cart-modal shadow-0 {{ $product->quantity <= 1 ? 'btn-disabled' : '' }}"
                                     data-product-id="{{ $product->product_id }}" data-auth="false" style="width: 40%; background-color: #007bff; color: white;">
                                     <i class="me-1 fa fa-shopping-basket"></i>Add to cart
                                 </a>
@@ -416,15 +536,15 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true"><i class='bx bx-x'></i> Close</span>
+                        <span aria-hidden="true"><i class='fa fa-x'></i> Close</span>
                     </button>
 
                     <div class="modal-body">
                     <div class="woocommerce-widget-area">
                             <div class="woocommerce-widget filter-list-widget">
-                              
-                                    <a href="{{ route('all-items') }}" class="delete-selected-filters"><i class='bx bx-trash'></i> <span>Clear All</span></a>
-                               
+
+                                    <a href="{{ route('all-items') }}" class="delete-selected-filters"><i class='fa fa-trash'></i> <span>Clear All</span></a>
+
                             </div>
 
                             <div class="woocommerce-widget collections-list-widget">
@@ -433,7 +553,7 @@
                                 <ul class="collections-list-row">
                                 @foreach($categories as $category)
                                     <li>
-                                        <a href="{{ route('all-items') }}?category={{ $category->parent_category }}" 
+                                        <a href="{{ route('all-items') }}?category={{ $category->parent_category }}"
                                         class="{{ request('category') === $category->parent_category ? 'active' : '' }}">
                                             {{ $category->parent_category }}
                                         </a>
@@ -448,18 +568,18 @@
                                 <ul class="size-list-row">
                                     @foreach($sizes as $size)
                                         <li>
-                                            <a href="{{ route('all-items') }}?size={{ $size->value }}" 
+                                            <a href="{{ route('all-items') }}?size={{ $size->value }}"
                                             class="{{ request('size') === $size->value ? 'active' : '' }}">
                                                 {{ $size->value }}
                                             </a>
                                         </li>
                                     @endforeach
-                                       
+
                                 </ul>
-                              
+
                             </div>
 
-                            
+
 
                             <!-- Color Filter -->
                             <div class="woocommerce-widget color-list-widget">
@@ -467,15 +587,15 @@
                                 <ul class="color-list-row">
                                     @foreach($colors as $color)
                                         <li>
-                                            <a href="{{ route('all-items') }}?color={{ $color->value }}" 
-                                            style="background-color: {{ $color->hex_value }};" 
-                                            class="{{ request('color') === $color->value ? 'active' : '' }}" 
+                                            <a href="{{ route('all-items') }}?color={{ $color->value }}"
+                                            style="background-color: {{ $color->hex_value }};"
+                                            class="{{ request('color') === $color->value ? 'active' : '' }}"
                                             title="{{ $color->value }}"></a>
                                         </li>
                                     @endforeach
                                 </ul>
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -491,10 +611,10 @@
         $(document).ready(function() {
     // Handle the click event on the heart icon
     $('.wishlist-toggle').on('click', function(e) {
-        e.preventDefault(); 
+        e.preventDefault();
 
-        var productId = $(this).data('product-id'); 
-        var heartIcon = $(this).find('i'); 
+        var productId = $(this).data('product-id');
+        var heartIcon = $(this).find('i');
 
         $.ajax({
             url: '{{ route('wishlist.toggle') }}',
@@ -520,7 +640,7 @@
     });
 });
 
-</script>     
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.btn-cart').forEach(button => {
@@ -538,7 +658,7 @@
         button.addEventListener('click', function() {
             // Remove the selected class from all buttons
             colorButtons.forEach(btn => btn.classList.remove('selected-color'));
-            
+
             this.classList.add('selected-color');
 
             const selectedColor = this.getAttribute('data-color');
@@ -589,7 +709,7 @@ $(document).ready(function() {
         }
 
         // Check if the user is authenticated
-        if (isAuth === true || isAuth === "true") { 
+        if (isAuth === true || isAuth === "true") {
             $.ajax({
                 url: "{{ route('cart.add') }}",
                 method: 'POST',
@@ -660,4 +780,3 @@ $('.js-range-of-price').on('input', function() {
 
     </script>
 @endsection
-        

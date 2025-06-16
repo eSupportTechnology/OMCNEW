@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\DialogSMSService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
@@ -64,6 +66,17 @@ class RegisterController extends Controller
         $user->email = $validatedData['email'];
         $user->password = Hash::make($validatedData['password']);
         $user->save();
+
+        // ✅ Send SMS to vendor
+        try {
+            $smsService = new DialogSMSService();
+            $vendorMobile = env('SMS_PHONE_NUMBER'); // Change this to your vendor's actual mobile number
+            $message = "New User is registed:\nUser Name: {$user->name}\nEmail: Rs. {$user->email}";
+
+            $smsService->sendSMS($vendorMobile, $message);
+        } catch (\Exception $e) {
+            Log::error('Failed to send SMS to vendor: ' . $e->getMessage());
+        }
 
         // Redirect to a success page or login
         return redirect()->route('login')->with('success', 'Account created successfully! You can now log in.');

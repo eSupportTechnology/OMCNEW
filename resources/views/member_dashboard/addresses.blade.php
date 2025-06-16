@@ -158,38 +158,295 @@
 <button class="btn btn-primary mt-3" onclick="openPopup()">+ Add New</button>
 
 <!-- Displaying Address Cards -->
-<div class="row mt-4">
-    @forelse($addresses as $address)
-        <div class="col-md-4 mb-3">
-            <div class="card address-card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h6 class="card-title mb-0">{{ $address->full_name }}</h6>
+<!-- Enhanced CSS for Address Cards -->
+<style>
+    .address-cards-container {
+        padding: 20px 0;
+    }
+
+    .address-card {
+        background: linear-gradient(145deg, #ffffff, #f8f9fa);
+        border: 1px solid #e3e6ea;
+        border-radius: 15px;
+        padding: 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .address-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        border-color: #4CAF50;
+    }
+
+    .address-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 4px;
+        height: 100%;
+        background: linear-gradient(180deg, #4CAF50, #45a049);
+        border-radius: 0 2px 2px 0;
+    }
+
+    .address-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .address-card-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #2c3e50;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .address-card-title i {
+        color: #4CAF50;
+        font-size: 16px;
+    }
+
+    .default-badge {
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+    }
+
+    .address-card-content {
+        margin-bottom: 20px;
+    }
+
+    .address-info-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+        color: #555;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .address-info-row i {
+        width: 20px;
+        color: #4CAF50;
+        margin-right: 12px;
+        font-size: 14px;
+        flex-shrink: 0;
+    }
+
+    .address-info-row span {
+        flex: 1;
+        word-break: break-word;
+    }
+
+    .address-card-actions {
+        display: flex;
+        gap: 12px;
+        padding-top: 16px;
+        border-top: 1px solid #e9ecef;
+        flex-wrap: wrap;
+    }
+
+    .action-btn {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        min-width: 80px;
+        justify-content: center;
+    }
+
+    .edit-btn {
+        background: linear-gradient(135deg, #17a2b8, #138496);
+        color: white;
+        border: 1px solid transparent;
+    }
+
+    .edit-btn:hover {
+        background: linear-gradient(135deg, #138496, #117a8b);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(23, 162, 184, 0.3);
+        color: white;
+        text-decoration: none;
+    }
+
+    .delete-btn {
+        background: linear-gradient(135deg, #dc3545, #c82333);
+        color: white;
+        border: 1px solid transparent;
+    }
+
+    .delete-btn:hover {
+        background: linear-gradient(135deg, #c82333, #bd2130);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+        color: white;
+    }
+
+    .no-addresses {
+        text-align: center;
+        padding: 60px 20px;
+        color: #6c757d;
+        background: #f8f9fa;
+        border-radius: 15px;
+        border: 2px dashed #dee2e6;
+    }
+
+    .no-addresses i {
+        font-size: 48px;
+        color: #dee2e6;
+        margin-bottom: 16px;
+        display: block;
+    }
+
+    .no-addresses h4 {
+        margin-bottom: 8px;
+        color: #495057;
+        font-weight: 600;
+    }
+
+    .no-addresses p {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .address-card {
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .address-card-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .address-card-title {
+            font-size: 16px;
+        }
+
+        .default-badge {
+            align-self: flex-start;
+        }
+
+        .address-card-actions {
+            justify-content: center;
+        }
+
+        .action-btn {
+            flex: 1;
+            min-width: 120px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .address-cards-container {
+            padding: 10px 0;
+        }
+
+        .address-card {
+            padding: 16px;
+        }
+
+        .address-info-row {
+            font-size: 13px;
+        }
+
+        .address-card-actions {
+            flex-direction: column;
+        }
+
+        .action-btn {
+            min-width: 100%;
+        }
+    }
+</style>
+
+<!-- Enhanced Displaying Address Cards -->
+<div class="address-cards-container">
+    <div class="row">
+        @forelse($addresses as $address)
+            <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12">
+                <div class="address-card">
+                    <div class="address-card-header">
+                        <h6 class="address-card-title">
+                            <i class="fas fa-user-circle"></i>
+                            {{ $address->full_name }}
+                        </h6>
                         @if($address->default)
-                            <span class="badge bg-primary">Default</span>
+                            <span class="default-badge">
+                                <i class="fas fa-star"></i> Default
+                            </span>
                         @endif
                     </div>
-                    <p class="card-text">
-                        {{ $address->phone_num }}<br>
-                        {{ $address->email }}<br>
-                        {{ $address->address }}{{ $address->apartment ? ', ' . $address->apartment : '' }}<br>
-                        {{ $address->city }}<br>
-                        {{ $address->postal_code }}
-                    </p>
-                    <div class="d-flex">
-                        <button class="btn btn-sm" onclick="openEditPopup({{ json_encode($address) }})" style="color:red">Edit</button>
-                        <form action="{{ route('address.delete', $address->id) }}" method="POST" class="ms-2">
+
+                    <div class="address-card-content">
+                        <div class="address-info-row">
+                            <i class="fas fa-phone"></i>
+                            <span>{{ $address->phone_num }}</span>
+                        </div>
+                        <div class="address-info-row">
+                            <i class="fas fa-envelope"></i>
+                            <span>{{ $address->email }}</span>
+                        </div>
+                        <div class="address-info-row">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>
+                                {{ $address->address }}{{ $address->apartment ? ', ' . $address->apartment : '' }}<br>
+                                {{ $address->city }}, {{ $address->postal_code }}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="address-card-actions">
+                        <button class="action-btn edit-btn" onclick="openEditPopup({{ json_encode($address) }})">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <form action="{{ route('address.delete', $address->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm text-danger">Delete</button>
+                            <button type="submit" class="action-btn delete-btn" onclick="return confirm('Are you sure you want to delete this address?')">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
-    @empty
-        <p class="text-center">No addresses found.</p>
-    @endforelse
+        @empty
+            <div class="col-12">
+                <div class="no-addresses">
+                    <i class="fas fa-address-book"></i>
+                    <h4>No Addresses Found</h4>
+                    <p>You haven't added any addresses yet. Click "Add New" to create your first address.</p>
+                </div>
+            </div>
+        @endforelse
+    </div>
 </div>
 
 @if (session('success'))
@@ -240,7 +497,7 @@
                         <label for="default" style="margin: 0;">Set as default address</label>
                     </div>
                 </div>
-                
+
                 <div class="form-buttons">
                     <button type="submit" class="save-btn">
                         <i class="fas fa-check"></i> Save
@@ -327,7 +584,7 @@
 
 
 
-   
+
 
 <!-- Popup container for adding address -->
 <div class="popup" id="popup">

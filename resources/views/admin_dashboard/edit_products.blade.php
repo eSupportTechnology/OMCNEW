@@ -9,7 +9,7 @@
     .form-group {
         margin-bottom: 1rem;
         display: flex;
-         flex-direction: column; 
+         flex-direction: column;
     }
 
     .form-group label {
@@ -87,21 +87,21 @@
         cursor: pointer;
     }
     .card1 {
-    border: 1px solid #ddd; 
-    box-shadow: none; 
+    border: 1px solid #ddd;
+    box-shadow: none;
 }
 
     .remove-btn {
-        border: 1px solid #b72626; 
-        color: #b72626; 
-        background-color: white; 
-        box-shadow: none; 
+        border: 1px solid #b72626;
+        color: #b72626;
+        background-color: white;
+        box-shadow: none;
     }
 
 
     .remove-btn:hover {
-        background-color: #b72626; 
-        color: white; 
+        background-color: #b72626;
+        color: white;
     }
 
 </style>
@@ -109,7 +109,7 @@
 
 
 <main style="margin-top: 20px">
-    <div class="container p-5"> 
+    <div class="container p-5">
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -191,6 +191,17 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
+                                    <label for="subsubcategory">Brand</label>
+                                    <select name="brand_id" class="form-control" id="brandSelect">
+                                        <option value="">Select a brand</option>
+                                        @foreach ($brands as $brand)
+                                        <option value="{{ $brand->id }}"
+                                            {{ $brand->id == $product->brand_id ? 'selected' : '' }}>{{ $brand->name }}
+                                        </option>
+                                    @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label for="quantity">Total Quantity</label>
                                     <input type="number" id="quantity" name="quantity" class="form-control" placeholder="Enter quantity" value="{{ old('quantity', $product->quantity) }}">
                                 </div>
@@ -223,7 +234,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Product Variations Card -->
                         <div class="card1 px-2 py-2 mt-4">
                                 <div class="card-body">
@@ -292,7 +303,7 @@
     };
 </script>
 <script>
-  
+
     document.addEventListener('DOMContentLoaded', function() {
         const affiliateCheckbox = document.getElementById('affiliateProduct');
         const affiliatePriceGroup = document.getElementById('affiliatePriceGroup');
@@ -304,8 +315,8 @@
 
         affiliateCheckbox.addEventListener('change', function() {
             if (affiliateCheckbox.checked) {
-                affiliatePriceGroup.style.display = 'flex'; 
-                commissionGroup.style.display = 'flex'; 
+                affiliatePriceGroup.style.display = 'flex';
+                commissionGroup.style.display = 'flex';
             } else {
                 affiliatePriceGroup.style.display = 'none';
                 commissionGroup.style.display = 'none';
@@ -412,7 +423,7 @@
         if (e.target.classList.contains('delete-btn')) {
             const container = e.target.closest('.image-container');
             const imageId = container.dataset.imageId;
-            
+
             if (imageId) {
                 const hiddenInput = document.createElement('input');
                 hiddenInput.type = 'hidden';
@@ -501,7 +512,7 @@ document.getElementById('addVariationBtn').addEventListener('click', function ()
     const newRow = document.createElement('div');
     newRow.classList.add('variation-row', 'row', 'mb-3');
     newRow.setAttribute('data-index', variationIndex);
-    
+
     newRow.innerHTML = `
         <div class="col-md-3">
             <select class="form-control variation-type" name="variation[${variationIndex}][type]" onchange="handleVariationChange(this)">
@@ -533,7 +544,7 @@ function removeVariationRow(button) {
 function handleVariationChange(select) {
     const row = select.closest('.variation-row');
     const variationInputContainer = row.querySelector('.variation-input-container');
-    
+
     // Check if the selected type is "Color"
     if (select.value === 'Color') {
         variationInputContainer.innerHTML = `<input type="color" class="form-control variation-input" name="${select.name.replace('type', 'value')}" onchange="updateHexValue(this)" value="#000000">`;

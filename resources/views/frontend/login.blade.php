@@ -8,7 +8,7 @@
         <div class="page-title-content">
             <h2>My Account</h2>
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li>Login</li>
             </ul>
         </div>
@@ -41,7 +41,7 @@
                         </div>
 
                         <div class="form-group position-relative">
-                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Enter your password" required>                           
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Enter your password" required>
                             @error('password')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror

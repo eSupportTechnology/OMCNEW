@@ -2,13 +2,13 @@
 
 @section('content')
 
-<style> 
+<style>
 
 
-</style>  
+</style>
 
 <main style="margin-top: 58px">
-    <div class="container pt-4 px-4"> 
+    <div class="container pt-4 px-4">
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -45,6 +45,7 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Image</th>
                                     <th scope="col" style="width:15%">Category</th>
+                                    <th scope="col" style="width:10%">Brand</th>
                                     <th scope="col" style="width:10%">Quantity</th>
                                     <th scope="col">Total Price</th>
                                     <th scope="col" style="width:12%">Action</th>
@@ -52,11 +53,11 @@
                             </thead>
                             <tbody>
                             @foreach ($products as $index => $product)
-                                <tr class="product-row" 
-                                    data-category="{{ $product->product_category }}" 
-                                    data-affiliate="{{ $product->is_affiliate ? 'true' : 'false' }}" 
-                                    data-id="{{ $product->product_id }}" 
-                                    data-images="{{ $product->images->toJson() }}" 
+                                <tr class="product-row"
+                                    data-category="{{ $product->product_category }}"
+                                    data-affiliate="{{ $product->is_affiliate ? 'true' : 'false' }}"
+                                    data-id="{{ $product->product_id }}"
+                                    data-images="{{ $product->images->toJson() }}"
                                     data-variations="{{ $product->variations->toJson() }}">
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $product->product_id }}</td>
@@ -69,10 +70,11 @@
                                         @endif
                                     </td>
                                     <td>{{ $product->product_category ?? 'No Category' }}</td>
+                                    <td>{{ $product->brand->name ?? 'No Brand' }}</td>
                                     <td>{{ $product->quantity }}</td>
                                     <td>Rs {{ number_format($product->total_price, 2) }}</td>
                                     <td class="action-buttons">
-                                        <a href="{{ route('product-details', $product->id) }}" class="btn btn-info btn-sm view-btn mb-1" 
+                                        <a href="{{ route('product-details', $product->id) }}" class="btn btn-info btn-sm view-btn mb-1"
                                         style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"> <i class="fas fa-eye"></i></a>
                                         <a href="{{ route('edit_product', $product->id) }}" class="btn btn-warning btn-sm mb-1" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"><i class="fas fa-edit"></i></a>
                                         <form id="delete-form-{{ $product->id }}" action="{{ route('delete_product', $product->id) }}" method="POST" style="display:inline;">
@@ -86,7 +88,7 @@
                                 </tr>
                                 @endforeach
                             </tbody>
-                        </table>   
+                        </table>
                     </div>
                 </div>
             </div>
@@ -117,9 +119,9 @@
                 const showAffiliate = !isAffiliateOnly || isAffiliate;
 
                 if (showCategory && showAffiliate) {
-                    row.style.display = ''; 
+                    row.style.display = '';
                 } else {
-                    row.style.display = 'none'; 
+                    row.style.display = 'none';
                 }
             });
         }

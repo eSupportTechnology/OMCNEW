@@ -426,25 +426,25 @@
 
 /* Main Button */
 .btn-main {
-    background-color: #001ed4 !important;
+    background-color: #2B96C5 !important;
     /* Red color */
-    border-color: #001ed4 !important;
+    border-color: #2B96C5 !important;
     /* Red border */
 }
 
 .btn-main:hover {
-    background-color: #001ed4 !important;
+    background-color: #2B96C5 !important;
     /* Darker red for hover */
-    border-color: #001ed4 !important;
+    border-color: #2B96C5 !important;
     /* Darker red border */
 }
 
 /* Main Outline Button */
 .btn-outline-main {
     background-color: transparent !important;
-    border-color: #001ed4 !important;
+    border-color: #2B96C5 !important;
     /* Red border */
-    color: #001ed4 !important;
+    color: #2B96C5 !important;
     /* Red text */
 }
 
@@ -5106,7 +5106,7 @@ input:focus-visible {
 }
 
 .text-main-two-600 {
-    color: #001ed4 !important;
+    color: #2B96C5 !important;
     /* Darker shade of original color */
 }
 

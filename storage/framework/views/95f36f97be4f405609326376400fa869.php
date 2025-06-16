@@ -1,12 +1,12 @@
 <?php $__env->startSection('content'); ?>
 
-<style> 
+<style>
 
 
-</style>  
+</style>
 
 <main style="margin-top: 58px">
-    <div class="container pt-4 px-4"> 
+    <div class="container pt-4 px-4">
         <?php if(session('success')): ?>
             <div class="alert alert-success">
                 <?php echo e(session('success')); ?>
@@ -44,6 +44,7 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Image</th>
                                     <th scope="col" style="width:15%">Category</th>
+                                    <th scope="col" style="width:10%">Brand</th>
                                     <th scope="col" style="width:10%">Quantity</th>
                                     <th scope="col">Total Price</th>
                                     <th scope="col" style="width:12%">Action</th>
@@ -51,11 +52,11 @@
                             </thead>
                             <tbody>
                             <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <tr class="product-row" 
-                                    data-category="<?php echo e($product->product_category); ?>" 
-                                    data-affiliate="<?php echo e($product->is_affiliate ? 'true' : 'false'); ?>" 
-                                    data-id="<?php echo e($product->product_id); ?>" 
-                                    data-images="<?php echo e($product->images->toJson()); ?>" 
+                                <tr class="product-row"
+                                    data-category="<?php echo e($product->product_category); ?>"
+                                    data-affiliate="<?php echo e($product->is_affiliate ? 'true' : 'false'); ?>"
+                                    data-id="<?php echo e($product->product_id); ?>"
+                                    data-images="<?php echo e($product->images->toJson()); ?>"
                                     data-variations="<?php echo e($product->variations->toJson()); ?>">
                                     <td><?php echo e($index + 1); ?></td>
                                     <td><?php echo e($product->product_id); ?></td>
@@ -68,10 +69,11 @@
                                         <?php endif; ?>
                                     </td>
                                     <td><?php echo e($product->product_category ?? 'No Category'); ?></td>
+                                    <td><?php echo e($product->brand->name ?? 'No Brand'); ?></td>
                                     <td><?php echo e($product->quantity); ?></td>
                                     <td>Rs <?php echo e(number_format($product->total_price, 2)); ?></td>
                                     <td class="action-buttons">
-                                        <a href="<?php echo e(route('product-details', $product->id)); ?>" class="btn btn-info btn-sm view-btn mb-1" 
+                                        <a href="<?php echo e(route('product-details', $product->id)); ?>" class="btn btn-info btn-sm view-btn mb-1"
                                         style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"> <i class="fas fa-eye"></i></a>
                                         <a href="<?php echo e(route('edit_product', $product->id)); ?>" class="btn btn-warning btn-sm mb-1" style="font-size: 0.75rem; padding: 0.25rem 0.5rem;"><i class="fas fa-edit"></i></a>
                                         <form id="delete-form-<?php echo e($product->id); ?>" action="<?php echo e(route('delete_product', $product->id)); ?>" method="POST" style="display:inline;">
@@ -85,7 +87,7 @@
                                 </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
-                        </table>   
+                        </table>
                     </div>
                 </div>
             </div>
@@ -116,9 +118,9 @@
                 const showAffiliate = !isAffiliateOnly || isAffiliate;
 
                 if (showCategory && showAffiliate) {
-                    row.style.display = ''; 
+                    row.style.display = '';
                 } else {
-                    row.style.display = 'none'; 
+                    row.style.display = 'none';
                 }
             });
         }

@@ -1,641 +1,578 @@
 @extends ('frontend.master')
 
 @section('content')
-    <!--
-                                                                                                                                                                    ==============================================================================================================================================================
-
-
-                                                                                                                                                                    home page
-
-
-                                                                                                                                                                    ===============================================================================================================================================================
-                                                                                                                                                                    -->
-
-
+    <!-- In your <head> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
 
     <style>
-        /* Custom styles */
-        .carousel-item {
-            background-size: cover;
-            background-position: center;
-            height: 650px;
-            /* Adjust height as needed */
+        :root {
+            --primary: #2b96c5;
+            --primary-dark: #1e7ba8;
+            --text-dark: #1a202c;
+            --text-light: #718096;
+            --bg-light: #f7fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+            --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+            --transition: all 0.2s ease;
+            --orange: #ff6b35;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-light);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .carousel-wrapper {
+            margin-bottom: 30px;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .carousel-item img {
             width: 100%;
-            position: relative;
+            height: auto;
+            display: block;
         }
 
-        /* Mobile (up to 576px) */
-        @media (max-width: 576px) {
-            .carousel-item {
-                height: 200px;
-                /* Adjust height for mobile */
-            }
-
-            .carousel {
-                margin-top: 65px;
-            }
-        }
-
-        /* Tablet (576px to 768px) */
-        @media (min-width: 577px) and (max-width: 768px) {
-            .carousel-item {
-                height: 500px;
-                /* Adjust height for tablets */
-            }
-        }
-
-        /* Discount Tag Styling for Product Carousel */
-.normal-pro-promo-tags {
-    position: absolute;
-    top: 10px;
-    left: 20px;
-    z-index: 10;
-    pointer-events: none; /* Allows clicks to pass through to elements below */
-}
-
-.discout-tag {
-    display: inline-flex;
-    align-items: center;
-    background: linear-gradient(135deg, #ff6666, #cc0000);
-     width: 70px;
-     height: 70px;
-    color: white;
-    border-radius: 50px;
-    padding: 4px 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-    transform: rotate(-5deg);
-    transition: all 0.3s ease;
-}
-
-.discount-amount {
-    font-size: 12px;
-    font-weight: 700;
-    margin-right: 2px;
-    letter-spacing: 0.5px;
-}
-
-.off-txt {
-    font-size: 15px;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-/* Make sure the grid-product-wapper has relative positioning */
-.grid-product-wapper {
-    position: relative;
-    overflow: hidden;
-}
-
-/* Animation for the discount tag */
-@keyframes bounce-light {
-    0%, 100% { transform: rotate(-5deg); }
-    50% { transform: rotate(-3deg) scale(1.05); }
-}
-
-/* Apply animation when hovering over the product */
-.grid-product-wapper:hover .discout-tag {
-    animation: bounce-light 2s infinite ease-in-out;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .discout-tag {
-        padding: 3px 6px;
-    }
-    
-    .discount-amount {
-        font-size: 12px;
-    }
-    
-    .off-txt {
-        font-size: 15px;
-    }
-}
-
-/* Make sure the discount tag doesn't overlap with other UI elements */
-.owl-item .grid-product-wapper .normal-pro-promo-tags {
-    z-index: 5;
-}
-
-/* Special styling for higher discounts */
-.discout-tag .discount-amount[class*="discount-amount"]:not([class*="0%"]):not([class*="1%"]):not([class*="2%"]) {
-    font-weight: 800;
-    letter-spacing: 0.8px;
-}
-
-
-
-        /* Each carousel item with a different image */
-        .carousel-item:nth-child(1) {
-            background-image: url('frontend/newstyle/assets/images/public.jpg');
-            /* Replace with your image path */
-        }
-
-        .carousel-item:nth-child(2) {
-            background-image: url('frontend/newstyle/assets/images/public.jpg');
-            /* Replace with your image path */
-        }
-
-        .carousel-item:nth-child(3) {
-            background-image: url('frontend/newstyle/assets/images/public.jpg');
-            /* Replace with your image path */
-        }
-
-        .carousel-item-next,
-        .carousel-item-prev,
-        .carousel-item.active {
-            transition: transform 0.5s ease;
-        }
-
-        /* Optional: Ensure the carousel controls are visible */
-        .carousel-control-prev-icon,
-        .carousel-control-next-icon {
-            background-color: black;
-            /* For better visibility */
-        }
-
-        /* Hide the carousel control buttons */
-        .carousel-control-prev,
-        .carousel-control-next {
-            display: none;
-        }
-
-        /* Style the dots (indicators) */
-        .carousel-indicators li {
-            background-color: transparent;
-            width: 20px;
-            height: 20px;
-            border-radius: 0;
-            border: 2px solid white;
-            margin: 0 5px;
-            /* Adds some space between dots */
+        .carousel-indicators [data-bs-target] {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.5);
+            margin: 0 4px;
         }
 
         .carousel-indicators .active {
-            background-color: white;
-            transform: scale(1.2);
+            background: var(--primary);
         }
 
+        .categories-section {
+            margin-bottom: 40px;
+        }
 
-        .owl-carousel .owl-nav button.owl-next,
-        .owl-carousel .owl-nav button.owl-prev,
-        .owl-carousel button.owl-dot {
-            background: 0 0;
-            color: inherit;
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .category-button {
+            background: var(--primary);
+            color: var(--white);
             border: none;
-            padding: 0 !important;
-            font: inherit;
-            font-size: 37px !important;
+            border-radius: var(--radius);
+            padding: 16px 12px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+            display: block;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
+        .category-button:hover {
+            background: var(--primary-dark);
+            color: var(--white);
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        .section-header {
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 15px 20px;
+            margin: 30px 0 20px 0;
+            border-radius: var(--radius) var(--radius) 0 0;
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .products-container {
+            background: var(--white);
+            border-radius: 0 0 var(--radius) var(--radius);
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .products-grid {
+            display: flex;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+
+        }
+
+        .product-card {
+            width: 250px;
+            /* fixed width */
+            height: 400px;
+            /* fixed height */
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            position: relative;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image-container {
+            position: relative;
+            background: var(--white);
+            padding: 20px;
+            text-align: center;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 50px;
+            margin-right: 10px;
+
+        }
 
         .product-image {
-            width: 100% !important;
-            height: auto !important;
-            object-fit: cover !important;
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            display: block;
+            margin: 10px;
         }
+
+
+        .wishlist-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .wishlist-btn:hover {
+            background: var(--bg-light);
+        }
+
+        .wishlist-btn i {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .product-info {
+            padding: 15px;
+            background: var(--white);
+        }
+
+        .product-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin: 0 0 8px 0;
+            line-height: 1.3;
+            height: 2.6em;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--orange);
+            margin: 8px 0;
+        }
+
+        .price-crossed {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-decoration: line-through;
+            margin-right: 8px;
+        }
+
+        .extra-offer {
+            font-size: 0.75rem;
+            color: var(--orange);
+            margin: 5px 0;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--orange);
+            color: var(--white);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .section-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .category-button {
+                padding: 12px 8px;
+                font-size: 0.8rem;
+                min-height: 45px;
+            }
+
+            .products-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+
+
+
+            }
+
+            .product-image {
+                height: 120px;
+            }
+
+            .product-info {
+                padding: 12px;
+            }
+
+            .section-header {
+                padding: 12px 15px;
+                font-size: 1.1rem;
+            }
+
+            .products-container {
+                padding: 15px;
+
+            }
+        }
+
+        @media (max-width: 480px) {
+            .category-button {
+                font-size: 0.75rem;
+                padding: 10px 6px;
+            }
+
+            .product-name {
+                font-size: 0.8rem;
+            }
+
+            .product-price {
+                font-size: 1rem;
+            }
+        }
+
+       @media (max-width: 600px) {
+    .owl-carousel .owl-stage {
+        display: flex !important;
+        justify-content: center !important;
+    }
+
+    .owl-carousel .owl-item {
+        display: flex;
+        justify-content: center;
+    }
+
+    .product-card {
+        margin: 0 auto;
+    }
+}
+
+
+.owl-nav button.owl-prev,
+.owl-nav button.owl-next {
+    width: 40px;              /* Adjust width */
+    height: 40px;             /* Adjust height */
+    font-size: 24px;          /* Size of the arrow symbol */
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 50%;       /* Make it circular */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: all 0.3s;
+}
+
+.owl-nav button.owl-prev {
+    left: -25px;
+}
+
+.owl-nav button.owl-next {
+    right: -25px;
+}
+
+
+
+
+
+
+
     </style>
 
-    <!-- Carousel Section -->
-    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" ">
-                                                                                                                                                                                            <div class="carousel-inner">
-
-                                                    @foreach ($carousels as $index=>
-        $carousel)
-        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}"
-            style="background-image: url('{{ asset('storage/carousel_images/' . $carousel->image_path) }}');">
-        </div>
-        @endforeach
-        {{-- <div class="carousel-item active">
-                <!-- First banner image -->
-            </div>
-            <div class="carousel-item">
-                <!-- Second banner image -->
-            </div>
-            <div class="carousel-item">
-                <!-- Third banner image -->
-            </div> --}}
-    </div>
-    <div class="carousel-indicators">
-       @foreach ($carousels as $index => $carousel)
-            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="{{ $index }}"
-                class="{{ $index === 0 ? 'active' : '' }}" aria-current="{{ $index === 0 ? 'true' : 'false' }}"
-                aria-label="Slide {{ $index + 1 }}"></button>
-        @endforeach
-    </div>
-    </div>
-
-    <div class="site-common-con">
-        <div class="home-product d-flex">
-            <div class="home-product-title exclusive">
-                <p class="home-page-product-title">Online Exclusive</p>
-            </div>
-            <div class="view-all-txt">
-                <a class="view-all-link" href="#">VIEW ALL</a>
-            </div>
-        </div>
-
-        <div id="category_products_list_28" class="products-grid row">
-            <div class="home-product-list owl-carousel owl-theme owl-loaded owl-drag">
-                <div class="owl-stage-outer">
-                    <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all; width: 2600px;">
 
 
-                        @foreach ($specialOffers->slice(0, 10) as $product)
-                            <div class="owl-item active" style="width: 216.638px;">
-                                <div class="item items-28">
-                                    <div class="grid-product-wapper">
-                                        <!-- Discount Tag -->
-                                        @if ($product->product->specialOffer && $product->product->specialOffer->status === 'active')
-                                            <div class="normal-pro-promo-tags">
-                                                <div class="discout-tag">
-                                                    <span
-                                                        class="discount-amount">{{ $product->product->specialOffer->offer_rate }}%</span>
-                                                    <span class="off-txt">OFF</span>
-                                                </div>
-                                            </div>
-                                        @endif
+    <div class="container">
+        <div class="carousel-wrapper">
+            <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach ($carousels as $index => $carousel)
+                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                            <img src="{{ asset('storage/carousel_images/' . $carousel->image_path) }}"
+                                alt="Slide {{ $index + 1 }}" loading="{{ $index === 0 ? 'eager' : 'lazy' }}">
+                        </div>
+                    @endforeach
+                </div>
 
-                                        <!-- Product Image -->
-                                        <div class="product-image">
-                                            <a
-                                                href="{{ route('product-description', $product->product_id) }}">
-
-                                                @if ($product->product->images->isEmpty())
-                                                    <img src="{{ asset('frontend/newstyle/assets/images/loader.gif') }}"
-                                                        alt="{{ $product->product_name }}" class="grid-product-img"
-                                                        loading="eager" width="178" height="178">
-                                                @else
-                                                    <img src="{{ asset('storage/' . $product->product->images->first()->image_path) }}"
-                                                        alt="{{ $product->product_name }}" class="grid-product-img"
-                                                        loading="eager" width="178" height="178">
-                                                @endif
-                                            </a>
-                                            <div class="products-btn-set">
-                                                <a href="{{ route('product-description', $product->product_id) }}"
-                                                    class="home-buynow">BUY
-                                                    NOW</a>
-                                            </div>
-                                        </div>
-
-                                        <!-- Product Title & Prices -->
-                                        <div class="grid-pro-drtail-con">
-                                            <div class="col-md-12 grid-product-title">
-                                                <div class="pro-name-compact" title="{{ $product->product->product_name }}">
-                                                    {{ $product->product->product_name }}
-                                                </div>
-                                            </div>
-                                            <div class="u">
-                                                @if ($product->product->specialOffer && $product->product->specialOffer->status === 'active')
-                                                    <span class="market-price">Rs.
-                                                        {{ number_format($product->normal_price, 2) }}</span>
-                                                    <span class="selling-price">Rs.
-                                                        {{ number_format($product->product->specialOffer->offer_price, 2) }}</span>
-                                                @else
-                                                    <span class="market-price">Rs.
-                                                        {{ number_format($product->normal_price, 2) }}</span>
-                                                @endif
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                @if (count($carousels) > 1)
+                    <div class="carousel-indicators">
+                        @foreach ($carousels as $index => $carousel)
+                            <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="{{ $index }}"
+                                class="{{ $index === 0 ? 'active' : '' }}" aria-label="Slide {{ $index + 1 }}"></button>
                         @endforeach
                     </div>
-                </div>
+                @endif
             </div>
         </div>
 
-    </div>
-
-
-
-
-    <!-- Include jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Include Owl Carousel CSS -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/frontend/newstyle/assets/owl.carousel.min.css">
-                                                                                                                                                                                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css"> -->
-
-    <!-- Include Owl Carousel JS -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script> -->
-
-
-    <script>
-        $(document).ready(function() {
-            $(".owl-carousel").owlCarousel({
-                loop: true, // Enable looping
-                margin: 10, // Margin between items
-                nav: true, // Show next/prev arrows
-
-                dots: false, // Disable dots navigation
-                autoplay: false, // Enable auto-scrolling
-                autoplayTimeout: 2000, // Auto-scroll interval in ms
-                responsive: {
-                    0: {
-                        items: 1 // Show 1 item for small screens
-                    },
-                    600: {
-                        items: 3 // Show 3 items for medium screens
-                    },
-                    1000: {
-                        items: 5 // Show 5 items for large screens
-                    }
-                }
-            });
-        });
-    </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class="site-common-con">
-        <div class="home-product d-flex">
-            <div class="home-product-title">
-                <p class="home-page-product-title">Top Selling</p>
-            </div>
-            <div class="view-all-txt">
-                <a class="view-all-link" href="top-selling.html">VIEW ALL</a>
+        <div class="categories-section">
+            <div class="categories-grid">
+                @foreach ($categories as $category)
+                    <a href="/all-items?category={{ urlencode($category->parent_category) }}" class="category-button">
+                        {{ $category->parent_category }}
+                    </a>
+                @endforeach
             </div>
         </div>
 
-        <div id="category_products_list_28" class="products-grid row">
-            <div class="home-product-list owl-carousel owl-theme owl-loaded owl-drag">
-                <div class="owl-stage-outer">
-                    <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all; width: 2600px;">
-                        @foreach ($orderedProducts as $product)
-                            <div class="owl-item active" style="width: 216.638px;">
-                                <div class="item items-28">
-                                    <div class="grid-product-wapper">
-                                        <!-- Discount Tag -->
-                                        @if ($product->sale)
-                                            <div class="normal-pro-promo-tags">
-                                                <div class="discout-tag">
-                                                    <span class="discount-amount">Sale!</span>
-                                                </div>
-                                            </div>
-                                        @endif
+        <div class="section-header">Special Offers</div>
+        <div class="products-container">
+            <div class="owl-carousel special-offer-slider owl-theme  ">
 
-                                        <!-- Product Image -->
-                                        <div class="product-image">
-                                            <a href="{{ route('product-description', $product->product_id) }}">
+                @foreach ($specialOffers->slice(0, 8) as $product)
+                    <div class="product-card">
+                        @if ($product->product->specialOffer && $product->product->specialOffer->status === 'active')
+                            <div class="discount-badge">{{ $product->product->specialOffer->offer_rate }}% OFF</div>
+                        @endif
 
-                                                @if ($product->images->isEmpty())
-                                                    <img src="{{ asset('frontend/newstyle/assets/images/loader.gif') }}"
-                                                        alt="{{ $product->product_name }}" class="grid-product-img"
-                                                        loading="eager" width="178" height="178">
-                                                @else
-                                                    <img src="{{ asset('storage/' . $product->images->first()->image_path) }}"
-                                                        alt="{{ $product->product_name }}" class="grid-product-img"
-                                                        loading="eager" width="178" height="178">
-                                                @endif
-                                            </a>
-                                            <div class="products-btn-set">
-                                                <a href="{{ route('product-description', $product->product_id) }}"
-                                                    class="home-buynow">BUY
-                                                    NOW</a>
-                                            </div>
-                                        </div>
+                        <div class="product-image-container">
+                            <button class="wishlist-btn heart-icon" id="wishlist-icon-{{ $product->product_id }}"
+                                onclick="toggleWishlist(this, {{ $product->product_id }})">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
 
-                                        <!-- Product Title & Prices -->
-                                        <div class="grid-pro-drtail-con">
-                                            <div class="col-md-12 grid-product-title">
-                                                <div class="pro-name-compact" title="{{ $product->product_name }}">
-                                                    {{ $product->product_name }}
-                                                </div>
-                                            </div>
-                                            <div class="u">
+                            <a href="{{ route('product-description', $product->product_id) }}">
+                                @if ($product->product->images->isEmpty())
+                                    <img src="{{ asset('frontend/newstyle/assets/images/loader.gif') }}"
+                                        alt="{{ $product->product_name }}" class="product-image" loading="lazy">
+                                @else
+                                    <img src="{{ asset('storage/' . $product->product->images->first()->image_path) }}"
+                                        alt="{{ $product->product_name }}" class="product-image" loading="lazy">
+                                @endif
+                            </a>
+                        </div>
 
-                                                @if ($product->sale && $product->sale->status === 'active')
-                                                    <span class="market-price">Rs.
-                                                        {{ number_format($product->normal_price, 2) }}</span>
-                                                    <span class="selling-price">Rs.
-                                                        {{ number_format($product->sale->sale_price, 2) }}</span>
-                                                @elseif ($product->specialOffer && $product->specialOffer->status === 'active')
-                                                    <span class="market-price">Rs.
-                                                        {{ number_format($product->normal_price, 2) }}</span>
-                                                    <span class="selling-price">Rs.
-                                                        {{ number_format($product->specialOffer->offer_price, 2) }}</span>
-                                                @else
-                                                    <span class="market-price">Rs.
-                                                        {{ number_format($product->normal_price, 2) }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="product-info">
+                            <h4 class="product-name">{{ $product->product->product_name }}</h4>
+
+                            <div class="product-price">
+                                @if ($product->product->specialOffer && $product->product->specialOffer->status === 'active')
+                                    <span class="price-crossed">Rs.{{ number_format($product->normal_price, 0) }}</span>
+                                    Rs.{{ number_format($product->product->specialOffer->offer_price, 0) }}
+                                @else
+                                    Rs.{{ number_format($product->normal_price, 0) }}
+                                @endif
                             </div>
-                        @endforeach
+
+                            <div class="extra-offer">Extra 2% off with coins</div>
+                        </div>
                     </div>
-                </div>
+                @endforeach
+
             </div>
         </div>
 
-    </div>
+        <div class="section-header">Top Selling</div>
+        <div class="products-container">
+            <div class="owl-carousel special-offer-slider owl-theme">
+                @foreach ($orderedProducts->slice(0, 8) as $product)
+                    <div class="product-card">
+                        @if ($product->sale)
+                            <div class="discount-badge">Sale!</div>
+                        @endif
 
-    <div class="site-common-con">
-        <div class="home-product d-flex">
-            <div class="home-product-title">
-                <p class="home-page-product-title">Most Recent</p>
-            </div>
-            <div class="view-all-txt">
-                <a class="view-all-link" href="top-selling.html">VIEW ALL</a>
-            </div>
-        </div>
+                        <div class="product-image-container">
+                            <button class="wishlist-btn heart-icon" id="wishlist-icon-{{ $product->product_id }}"
+                                onclick="toggleWishlist(this, {{ $product->product_id }})">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
 
-        <div id="category_products_list_28" class="products-grid row">
-            <div class="home-product-list owl-carousel owl-theme owl-loaded owl-drag">
-                <div class="owl-stage-outer">
-                    <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all; width: 2600px;">
-                        @foreach ($recentProducts as $product)
-                            <div class="owl-item active" style="width: 216.638px;">
-                                <div class="item items-28">
-                                    <div class="grid-product-wapper">
-                                        <!-- Discount Tag -->
-                                        @if ($product->sale)
-                                            <div class="normal-pro-promo-tags">
-                                                <div class="discout-tag">
-                                                    <span class="discount-amount">Sale!</span>
-                                                    <span class="off-txt"></span>
-                                                </div>
-                                            </div>
-                                        @endif
+                            <a href="{{ route('product-description', $product->product_id) }}">
+                                @if ($product->images->isEmpty())
+                                    <img src="{{ asset('frontend/newstyle/assets/images/loader.gif') }}"
+                                        alt="{{ $product->product_name }}" class="product-image" loading="lazy">
+                                @else
+                                    <img src="{{ asset('storage/' . $product->images->first()->image_path) }}"
+                                        alt="{{ $product->product_name }}" class="product-image" loading="lazy">
+                                @endif
+                            </a>
+                        </div>
 
-                                        <!-- Product Image -->
-                                        <div class="product-image">
-                                            <a href="{{ route('product-description', $product->product_id) }}">
-                                                @if ($product->images->isEmpty())
-                                                    <img src="{{ asset('frontend/newstyle/assets/images/loader.gif') }}"
-                                                        alt="{{ $product->product_name }}" class="grid-product-img"
-                                                        loading="eager" width="178" height="178">
-                                                @else
-                                                    <img src="{{ asset('storage/' . $product->images->first()->image_path) }}"
-                                                        alt="{{ $product->product_name }}" class="grid-product-img"
-                                                        loading="eager" width="178" height="178">
-                                                @endif
-                                            </a>
-                                            <div class="products-btn-set">
-                                                <a href="{{ route('product-description', $product->product_id) }}"
-                                                    class="home-buynow">BUY
-                                                    NOW</a>
-                                            </div>
-                                        </div>
+                        <div class="product-info">
+                            <h4 class="product-name">{{ $product->product_name }}</h4>
 
-                                        <!-- Product Title & Prices -->
-                                        <div class="grid-pro-drtail-con">
-                                            <div class="col-md-12 grid-product-title">
-                                                <div class="pro-name-compact" title="{{ $product->product_name }}">
-                                                    {{ $product->product_name }}
-                                                </div>
-                                            </div>
-                                            <div class="u">
-                                                @if ($product->sale && $product->sale->status === 'active')
-                                                    <span class="market-price">Rs.
-                                                        {{ number_format($product->normal_price, 2) }}</span>
-                                                    <span class="selling-price">Rs.
-                                                        {{ number_format($product->sale->sale_price, 2) }}</span>
-                                                @elseif ($product->specialOffer && $product->specialOffer->status === 'active')
-                                                    <span class="market-price">Rs.
-                                                        {{ number_format($product->normal_price, 2) }}</span>
-                                                    <span class="selling-price">Rs.
-                                                        {{ number_format($product->specialOffer->offer_price, 2) }}</span>
-                                                @else
-                                                    <span class="market-price">Rs.
-                                                        {{ number_format($product->normal_price, 2) }}</span>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="product-price">
+                                @if ($product->sale && $product->sale->status === 'active')
+                                    <span class="price-crossed">Rs.{{ number_format($product->normal_price, 0) }}</span>
+                                    Rs.{{ number_format($product->sale->sale_price, 0) }}
+                                @elseif ($product->specialOffer && $product->specialOffer->status === 'active')
+                                    <span class="price-crossed">Rs.{{ number_format($product->normal_price, 0) }}</span>
+                                    Rs.{{ number_format($product->specialOffer->offer_price, 0) }}
+                                @else
+                                    Rs.{{ number_format($product->normal_price, 0) }}
+                                @endif
                             </div>
-                        @endforeach
+
+                            <div class="extra-offer">Extra 2% off with coins</div>
+                        </div>
                     </div>
-                </div>
+                @endforeach
             </div>
+
+            {{--  <div class="section-navigation">
+                <button class="nav-btn " id="customPrevBtn2" >Previous</button>
+        <button class="nav-btn" id="customNextBtn2" >Next</button>
+            </div>  --}}
+        </div>
+
+        <div class="section-header">Flash Sale</div>
+        <div class="products-container">
+            <div class="owl-carousel special-offer-slider owl-theme">
+                @foreach ($recentProducts->slice(0, 5) as $product)
+                    <div class="product-card">
+                        @if ($product->sale)
+                            <div class="discount-badge">
+                                @if ($product->sale && $product->sale->status === 'active')
+                                    {{ round((($product->normal_price - $product->sale->sale_price) / $product->normal_price) * 100) }}%
+                                @else
+                                    Sale!
+                                @endif
+                            </div>
+                        @endif
+
+                        <div class="product-image-container">
+                            <button class="wishlist-btn heart-icon" id="wishlist-icon-{{ $product->product_id }}"
+                                onclick="toggleWishlist(this, {{ $product->product_id }})">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+
+                            <a href="{{ route('product-description', $product->product_id) }}">
+                                @if ($product->images->isEmpty())
+                                    <img src="{{ asset('frontend/newstyle/assets/images/loader.gif') }}"
+                                        alt="{{ $product->product_name }}" class="product-image" loading="lazy">
+                                @else
+                                    <img src="{{ asset('storage/' . $product->images->first()->image_path) }}"
+                                        alt="{{ $product->product_name }}" class="product-image" loading="lazy">
+                                @endif
+                            </a>
+                        </div>
+
+                        <div class="product-info">
+                            <h4 class="product-name">{{ $product->product_name }}</h4>
+
+                            <div class="product-price">
+                                @if ($product->sale && $product->sale->status === 'active')
+                                    <span class="price-crossed">Rs.{{ number_format($product->normal_price, 0) }}</span>
+                                    Rs.{{ number_format($product->sale->sale_price, 0) }}
+                                @elseif ($product->specialOffer && $product->specialOffer->status === 'active')
+                                    <span class="price-crossed">Rs.{{ number_format($product->normal_price, 0) }}</span>
+                                    Rs.{{ number_format($product->specialOffer->offer_price, 0) }}
+                                @else
+                                    Rs.{{ number_format($product->normal_price, 0) }}
+                                @endif
+                            </div>
+
+                            <div class="extra-offer">Extra 2% off with coins</div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            {{--  <div class="section-navigation">
+                <button class="nav-btn " id="customPrevBtn" >Previous</button>
+        <button class="nav-btn" id="customNextBtn" >Next</button>
+            </div>  --}}
         </div>
     </div>
 
-    <div class="site-common-con" style="margin-bottom: 50px;">
-        <div class="row m-0">
-            <!-- First Banner Image (Left Side) -->
-            <div class="col-12 col-sm-6 custom-4-banner">
-                 @if ($leftBanner)
-                <img src="{{ asset('storage/banner_images/' . $leftBanner->image_path) }}"
-                     class="img-fluid" alt="Banner Left">
-            @endif
-            </div>
 
-            <!-- Second Banner Image (Right Side) -->
-            <div class="col-12 col-sm-6 custom-4-banner">
-                @if ($rightBanner)
-                <img src="{{ asset('storage/banner_images/' . $rightBanner->image_path) }}"
-                     class="img-fluid" alt="Banner Right">
-            @endif
-            </div>
-        </div>
-
-        <!-- Single Banner Image (Full Width) -->
-        <!-- Bottom Banner with Optional Link -->
-    @if ($bottomBanner)
-        <a href="{{ $bottomBanner->link ?? '#' }}">
-            <div class="col-12 col-sm-12 single-banner-m">
-                <img src="{{ asset('storage/banner_images/' . $bottomBanner->image_path) }}"
-                     class="img-fluid" alt="Bottom Banner">
-            </div>
-        </a>
-    @endif
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!--
-
-                                                                                                                                                                                    =====================================================================================================================================================
-                                                                                                                                                                                                                         Home page end
-
-                                                                                                                                                                                    ===================================================================================================================================================== -->
 
 
 
@@ -643,38 +580,64 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const productIds = [...document.querySelectorAll('.heart-icon')].map(button => button.id.replace(
-                'wishlist-icon-', ''));
+            if (window.innerWidth <= 576) {
+                const carousels = document.querySelectorAll('.owl-carousel');
+                carousels.forEach(carousel => {
+                    carousel.classList.remove('owl-carousel', 'owl-theme', 'owl-loaded', 'owl-drag');
 
-            // Fetch wishlist status for all products on the page
-            fetch('/wishlist/check-multiple', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify({
-                        product_ids: productIds
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    // Loop through each product and update the icon if it's in the wishlist
-                    data.wishlist.forEach(productId => {
-                        const heartIcon = document.querySelector(`#wishlist-icon-${productId}`);
-                        if (heartIcon) {
-                            heartIcon.classList.add('active');
-                            const icon = heartIcon.querySelector('i');
-                            icon.classList.replace('fa-regular', 'fa-solid');
-                            icon.style.color = 'red';
+                    const stages = carousel.querySelectorAll('.owl-stage-outer, .owl-stage');
+                    stages.forEach(stage => {
+                        if (stage.parentNode) {
+                            while (stage.firstChild) {
+                                stage.parentNode.insertBefore(stage.firstChild, stage);
+                            }
+                            stage.remove();
                         }
                     });
-                })
-                .catch(error => console.error('Error:', error));
+
+                    const items = carousel.querySelectorAll('.owl-item');
+                    items.forEach(item => {
+                        item.classList.remove('owl-item', 'active');
+                        item.style.width = 'auto';
+                    });
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const productIds = [...document.querySelectorAll('.heart-icon')].map(button =>
+                button.id.replace('wishlist-icon-', ''));
+
+            if (productIds.length > 0) {
+                fetch('/wishlist/check-multiple', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            product_ids: productIds
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        data.wishlist.forEach(productId => {
+                            const heartIcon = document.querySelector(`#wishlist-icon-${productId}`);
+                            if (heartIcon) {
+                                heartIcon.classList.add('active');
+                                const icon = heartIcon.querySelector('i');
+                                if (icon) {
+                                    icon.classList.replace('fa-regular', 'fa-solid');
+                                    icon.style.color = 'red';
+                                }
+                            }
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
         });
 
         function toggleWishlist(button, productId) {
-            // Toggle active state
             button.classList.toggle('active');
             const icon = button.querySelector('i');
 
@@ -683,10 +646,9 @@
                 icon.style.color = 'red';
             } else {
                 icon.classList.replace('fa-solid', 'fa-regular');
-                icon.style.color = '#ccc';
+                icon.style.color = '#718096';
             }
 
-            // Send AJAX request to toggle wishlist status
             fetch('/wishlist/toggle', {
                     method: 'POST',
                     headers: {
@@ -700,17 +662,48 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.error) {
-                        alert(data.error); // If not logged in or another error
+                        alert(data.error);
                     } else {
-                        alert(data.message); // Display success message
+                        alert(data.message);
                     }
                 })
                 .catch(error => console.error('Error:', error));
         }
     </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+    $(document).ready(function () {
+        // Initialize carousel and assign to variable
+        var owl = $('.special-offer-slider').owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true, // set to true if you want built-in buttons
+
+            dots: false,
+            autoplay: true, // ✅ enables auto movement
+            autoplayTimeout: 3000, // ✅ moves every 3 seconds
+            autoplayHoverPause: true, // ✅ pauses on hover
+            responsive: {
+                0: { items: 1 },
+                400: { items: 1 },
+                600: { items: 2 },
+                768: { items: 2 },
+                992: { items: 3 },
+                1200: { items: 4 },
+                1400: { items: 4 }
+            }
+        });
+
+        // Custom buttons trigger
+
+    });
+</script>
+
+
+    <!-- Before closing </body> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+
+
 @endsection

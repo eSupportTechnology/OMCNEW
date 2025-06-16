@@ -143,6 +143,7 @@ Route::get('/affiliate/dashboard/payment/bank_acc', function () {
 Route::get('/payment/{order_code}', [PaymentController::class, 'payment'])->name('payment');
 
 Route::post('/order/confirm-cod/{order_code}', [PaymentController::class, 'confirmCod'])->name('order.confirm.cod');
+Route::post('/confirm-card-order/{order_code}', [PaymentController::class, 'confirmcardOrder'])->name('confirm.card.order');
 
 Route::get('/order/order_received/{order_code}', [PaymentController::class, 'getOrderDetails'])->name('order.thankyou');
 
@@ -150,7 +151,7 @@ Route::get('/search-products', [ProductController::class, 'searchProducts'])->na
 
 
 
-
+Route::get('/payment-fail', [PaymentController::class, 'paymentFail'])->name('order.payment-fail');
 
 
 Route::get('/dashboard/profile/edit', [UserDashboardController::class, 'editProfile'])->name('user.editProfile');
@@ -231,9 +232,11 @@ Route::post('/affiliate/dashboard/payment/realtime_tracking', [AffiliateReportCo
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\LogoController;
+use App\Http\Controllers\SearchController;
 use App\Http\Middleware\AdminAuth;
 
 
@@ -316,6 +319,13 @@ Route::post('/admin/category/add', [CategoryController::class, 'store'])->name('
 Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
 Route::get('category/edit/{id}', [CategoryController::class, 'edit'])->name('edit_category');
 Route::put('category/update/{id}', [CategoryController::class, 'update'])->name('update_category');
+
+Route::get('/admin/brands_list', [BrandController::class, 'showbrands'])->name('brand_list');
+Route::post('/admin/brands_list', [BrandController::class, 'store'])->name('brands.store');
+Route::get('/admin/brands_list/{brand}/edit', [BrandController::class, 'edit'])->name('brands.edit');
+Route::delete('/admin/brands_list/{brand}', [BrandController::class, 'destroy'])->name('brands.destroy');
+Route::put('/admin/brands_list/{brand}', [BrandController::class, 'update'])->name('brands.update');
+
 
 Route::get('/admin/carousel', [CarouselController::class, 'showCarousels'])->name('carousel');
 Route::post('/admin/carousel/add', [CarouselController::class, 'store'])->name('carousel_add');
@@ -404,6 +414,26 @@ Route::get('/privacy-policy', function () {
     return view('frontend.PrivacyPolicy');
 })->name('PrivacyPolicy');
 
+Route::get('/return-product', function () {
+    return view('frontend.ReturnProduct');
+})->name('return-product');
+
+Route::get('/return-refund', function () {
+    return view('frontend.ReturnRefund');
+})->name('return-refund');
+
+Route::get('/shipping-delivery', function () {
+    return view('frontend.ShippingDelivery');
+})->name('shipping-delivery');
+
+Route::get('/terms-condition', function () {
+    return view('frontend.TermsCondition');
+})->name('terms-condition');
+
+Route::get('/warranty', function () {
+    return view('frontend.warranty');
+})->name('warranty');
+
 Route::get('/newsletter-subscription', function () {
     return view('frontend.Subscribe-Newsletter');
 })->name('Subscribe_Newsletter');
@@ -429,9 +459,9 @@ Route::get('/login', function () {
     return view('frontend.login');
 })->name('login');
 
-Route::get('/privacy_policy', function () {
-    return view('frontend.privacy_policy');
-})->name('privacy_policy');
+// Route::get('/privacy_policy', function () {
+//     return view('frontend.privacy_policy');
+// })->name('privacy_policy');
 
 Route::get('/track-order', function () {
     return view('frontend.track-order');
@@ -444,6 +474,7 @@ Route::get('/all-items', [ProductController::class, 'show_all_items'])->name('al
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart');
 Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
+Route::get('/cart/subtotal', [CartController::class, 'getCartSubtotal'])->name('cart.subtotal');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 Route::delete('/cart/remove/{index}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
@@ -463,3 +494,9 @@ Route::post('/wishlist/check-multiple', [WishListController::class, 'checkMultip
 Route::post('/buynow_checkout', [CheckoutController::class, 'buyNowCheckout'])->name('buynow.checkout');
 Route::get('/checkout', [CheckoutController::class, 'showCheckoutPage'])->name('buynow.checkout.page');
 Route::post('/buynoworder', [CustomerOrderController::class, 'buynowstore'])->name('buynoworder.store');
+
+Route::get('/search-suggestions', [SearchController::class, 'suggestions']);
+
+Route::get('/brands-data', [BrandController::class, 'getBrands']);
+
+Route::get('/brand/{slug}', [BrandController::class, 'showBrandProducts'])->name('brand.products');

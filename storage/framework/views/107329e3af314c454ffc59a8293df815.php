@@ -1,32 +1,34 @@
 <?php $__env->startSection('content'); ?>
     <!--
-                                                                                                                                                                    ==============================================================================================================================================================
+                                                                                                                                                                        ==============================================================================================================================================================
 
 
-                                                                                                                                                                    home page
+                                                                                                                                                                        home page
 
 
-                                                                                                                                                                    ===============================================================================================================================================================
-                                                                                                                                                                    -->
+                                                                                                                                                                        ===============================================================================================================================================================
+                                                                                                                                                                        -->
 
 
 
     <style>
-        /* Custom styles */
         .carousel-item {
-            background-size: cover;
-            background-position: center;
-            height: 650px;
-            /* Adjust height as needed */
-            width: 100%;
-            position: relative;
-        }
+    height: auto; /* Let image dictate height */
+}
+
+.carousel-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
 
         /* Mobile (up to 576px) */
         @media (max-width: 576px) {
             .carousel-item {
-                height: 200px;
-                /* Adjust height for mobile */
+                height: auto;
+        aspect-ratio: 1920 / 458; /* Maintains aspect ratio */
             }
 
             .carousel {
@@ -37,8 +39,8 @@
         /* Tablet (576px to 768px) */
         @media (min-width: 577px) and (max-width: 768px) {
             .carousel-item {
-                height: 500px;
-                /* Adjust height for tablets */
+                height: auto;
+        aspect-ratio: 1920 / 458;
             }
         }
 
@@ -113,22 +115,144 @@
             height: auto !important;
             object-fit: cover !important;
         }
+
+        /* Discount Tag Styling for Product Carousel */
+        .normal-pro-promo-tags {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            z-index: 10;
+            pointer-events: none;
+            /* Allows clicks to pass through to elements below */
+        }
+
+        .discout-tag {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #ff6666, #cc0000);
+            width: 70px;
+            height: 70px;
+            color: white;
+            border-radius: 50px;
+            padding: 4px 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            transform: rotate(-5deg);
+            transition: all 0.3s ease;
+        }
+
+        .discount-amount {
+            font-size: 12px;
+            font-weight: 700;
+            margin-right: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        .off-txt {
+            font-size: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Make sure the grid-product-wapper has relative positioning */
+        .grid-product-wapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animation for the discount tag */
+        @keyframes bounce-light {
+
+            0%,
+            100% {
+                transform: rotate(-5deg);
+            }
+
+            50% {
+                transform: rotate(-3deg) scale(1.05);
+            }
+        }
+
+        /* Apply animation when hovering over the product */
+        .grid-product-wapper:hover .discout-tag {
+            animation: bounce-light 2s infinite ease-in-out;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .discout-tag {
+                padding: 3px 6px;
+            }
+
+            .discount-amount {
+                font-size: 12px;
+            }
+
+            .off-txt {
+                font-size: 15px;
+            }
+        }
+
+@media (max-width: 576px) {
+  .home-product-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .home-product-list .item {
+    width: 50%;
+    box-sizing: border-box;
+    padding: 5px;
+  }
+
+ .normal-pro-promo-tags {
+    top: 6px;       /* move badge closer to the corner */
+    left: 8px;
+  }
+.discout-tag {
+    width: 50px;    /* smaller circle */
+    height: 50px;
+    padding: 2px 6px;
+    transform: rotate(-5deg) scale(0.9);
+  }
+
+  .discount-amount {
+    font-size: 10px;     /* smaller text */
+    margin-right: 1px;
+  }
+
+  .off-txt {
+    display: none;       /* hide “OFF” text when it’s just “Sale!” */
+  }
+}
+
+
+        /* Make sure the discount tag doesn't overlap with other UI elements */
+        .owl-item .grid-product-wapper .normal-pro-promo-tags {
+            z-index: 5;
+        }
+
+        /* Special styling for higher discounts */
+        .discout-tag .discount-amount[class*="discount-amount"]:not([class*="0%"]):not([class*="1%"]):not([class*="2%"]) {
+            font-weight: 800;
+            letter-spacing: 0.8px;
+        }
     </style>
 
     <!-- Carousel Section -->
-    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" ">
-                                                                                                                                                                                            <div class="carousel-inner">
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
 
-                                                    <?php $__currentLoopData = $carousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index=>
-        $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-        <div class="carousel-item <?php echo e($index === 0 ? 'active' : ''); ?>"
-            style="background-image: url('<?php echo e(asset('storage/carousel_images/' . $carousel->image_path)); ?>');">
-        </div>
-        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php $__currentLoopData = $carousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <div class="carousel-item <?php echo e($index === 0 ? 'active' : ''); ?>">
+        <img src="<?php echo e(asset('storage/carousel_images/' . $carousel->image_path)); ?>" class="d-block w-100" alt="Slide <?php echo e($index + 1); ?>">
+    </div>
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
         
     </div>
     <div class="carousel-indicators">
-       <?php $__currentLoopData = $carousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <?php $__currentLoopData = $carousels; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $carousel): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="<?php echo e($index); ?>"
                 class="<?php echo e($index === 0 ? 'active' : ''); ?>" aria-current="<?php echo e($index === 0 ? 'true' : 'false'); ?>"
                 aria-label="Slide <?php echo e($index + 1); ?>"></button>
@@ -142,7 +266,7 @@
                 <p class="home-page-product-title">Online Exclusive</p>
             </div>
             <div class="view-all-txt">
-                <a class="view-all-link" href="#">VIEW ALL</a>
+                <a class="view-all-link" href="<?php echo e(route('special_offerproducts')); ?>">VIEW ALL</a>
             </div>
         </div>
 
@@ -169,8 +293,7 @@
 
                                         <!-- Product Image -->
                                         <div class="product-image">
-                                            <a
-                                                href="<?php echo e(route('product-description', $product->product_id)); ?>">
+                                            <a href="<?php echo e(route('product-description', $product->product_id)); ?>">
 
                                                 <?php if($product->product->images->isEmpty()): ?>
                                                     <img src="<?php echo e(asset('frontend/newstyle/assets/images/loader.gif')); ?>"
@@ -192,7 +315,8 @@
                                         <!-- Product Title & Prices -->
                                         <div class="grid-pro-drtail-con">
                                             <div class="col-md-12 grid-product-title">
-                                                <div class="pro-name-compact" title="<?php echo e($product->product->product_name); ?>">
+                                                <div class="pro-name-compact"
+                                                    title="<?php echo e($product->product->product_name); ?>">
                                                     <?php echo e($product->product->product_name); ?>
 
                                                 </div>
@@ -219,7 +343,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 
@@ -230,7 +353,7 @@
 
     <!-- Include Owl Carousel CSS -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/frontend/newstyle/assets/owl.carousel.min.css">
-                                                                                                                                                                                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css"> -->
+                                                                                                                                                                                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.theme.default.min.css"> -->
 
     <!-- Include Owl Carousel JS -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script> -->
@@ -261,6 +384,26 @@
         });
     </script>
 
+<script>
+ $(document).ready(function() {
+  var $carousel = $(".home-product-list.owl-carousel");
+
+  if ($(window).width() <= 576) {
+    // Properly destroy, but leave your HTML in place
+    $carousel.trigger('destroy.owl.carousel');
+
+    // Remove only Owl’s classes so your grid CSS kicks in
+    $carousel
+      .removeClass('owl-carousel owl-loaded')
+      .find('.owl-stage-outer, .owl-stage, .owl-item')
+      .removeAttr('style')
+      .removeClass('owl-stage-outer owl-stage owl-item active');
+
+    // Now your fallback CSS (the 2-column flex/grid) will display them
+  }
+});
+
+</script>
 
 
 
@@ -286,7 +429,7 @@
                 <p class="home-page-product-title">Top Selling</p>
             </div>
             <div class="view-all-txt">
-                <a class="view-all-link" href="top-selling.html">VIEW ALL</a>
+                <a class="view-all-link" href="<?php echo e(route('sale_products')); ?>">VIEW ALL</a>
             </div>
         </div>
 
@@ -365,13 +508,13 @@
 
     </div>
 
-    <div class="site-common-con">
+    <div class="site-common-con" style="margin-bottom: 30px;">
         <div class="home-product d-flex">
             <div class="home-product-title">
                 <p class="home-page-product-title">Most Recent</p>
             </div>
             <div class="view-all-txt">
-                <a class="view-all-link" href="top-selling.html">VIEW ALL</a>
+                <a class="view-all-link" href="<?php echo e(route('all-items')); ?>">VIEW ALL</a>
             </div>
         </div>
 
@@ -452,31 +595,31 @@
         <div class="row m-0">
             <!-- First Banner Image (Left Side) -->
             <div class="col-12 col-sm-6 custom-4-banner">
-                 <?php if($leftBanner): ?>
-                <img src="<?php echo e(asset('storage/banner_images/' . $leftBanner->image_path)); ?>"
-                     class="img-fluid" alt="Banner Left">
-            <?php endif; ?>
+                <?php if($leftBanner): ?>
+                    <img src="<?php echo e(asset('storage/banner_images/' . $leftBanner->image_path)); ?>" class="img-fluid"
+                        alt="Banner Left">
+                <?php endif; ?>
             </div>
 
             <!-- Second Banner Image (Right Side) -->
             <div class="col-12 col-sm-6 custom-4-banner">
                 <?php if($rightBanner): ?>
-                <img src="<?php echo e(asset('storage/banner_images/' . $rightBanner->image_path)); ?>"
-                     class="img-fluid" alt="Banner Right">
-            <?php endif; ?>
+                    <img src="<?php echo e(asset('storage/banner_images/' . $rightBanner->image_path)); ?>" class="img-fluid"
+                        alt="Banner Right">
+                <?php endif; ?>
             </div>
         </div>
 
         <!-- Single Banner Image (Full Width) -->
         <!-- Bottom Banner with Optional Link -->
-    <?php if($bottomBanner): ?>
-        <a href="<?php echo e($bottomBanner->link ?? '#'); ?>">
-            <div class="col-12 col-sm-12 single-banner-m">
-                <img src="<?php echo e(asset('storage/banner_images/' . $bottomBanner->image_path)); ?>"
-                     class="img-fluid" alt="Bottom Banner">
-            </div>
-        </a>
-    <?php endif; ?>
+        <?php if($bottomBanner): ?>
+            <a href="<?php echo e($bottomBanner->link ?? '#'); ?>">
+                <div class="col-12 col-sm-12 single-banner-m">
+                    <img src="<?php echo e(asset('storage/banner_images/' . $bottomBanner->image_path)); ?>" class="img-fluid"
+                        alt="Bottom Banner">
+                </div>
+            </a>
+        <?php endif; ?>
     </div>
 
 
@@ -545,10 +688,10 @@
 
     <!--
 
-                                                                                                                                                                                    =====================================================================================================================================================
-                                                                                                                                                                                                                         Home page end
+                                                                                                                                                                                        =====================================================================================================================================================
+                                                                                                                                                                                                                             Home page end
 
-                                                                                                                                                                                    ===================================================================================================================================================== -->
+                                                                                                                                                                                        ===================================================================================================================================================== -->
 
 
 

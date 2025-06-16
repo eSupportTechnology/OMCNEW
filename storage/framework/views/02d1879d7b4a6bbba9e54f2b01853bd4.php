@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en" class="color-two font-exo">
 
     <head>
 
@@ -55,6 +55,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
 
+        <link rel="stylesheet" href="<?php echo e(asset('themes/buyabans/assets/css/main.min27e9.css?t=1744680605')); ?>">
+        <link rel="stylesheet" href="<?php echo e(asset('themes/buyabans/assets/css/main.min27e9.css?t=1744680605')); ?>">
+        <link rel="stylesheet" href="<?php echo e(asset('themes/buyabans/assets/libs/skeleton/avnSkeleton.css')); ?>" />
+        
+
 
 
 
@@ -96,7 +101,12 @@
             integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        <link rel="icon" sizes="16x16" href="<?php echo e(asset('frontend/assets/images/logo.png')); ?>" />
+        <?php if($siteLogo && $siteLogo->image_path): ?>
+            <link rel="icon" sizes="16x16"
+                href="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>" />
+        <?php else: ?>
+            <link rel="icon" sizes="16x16" href="<?php echo e(asset('frontend/assets/images/logo.png')); ?>" />
+        <?php endif; ?>
 
         <!-- <link rel="stylesheet" href="assets/libs/owl-carousel/assets/owl.carousel.min.css">
     <link rel="stylesheet" href="assets/libs/owl-carousel/assets/owl.theme.default.min.css">
@@ -121,7 +131,7 @@
 
     <style>
         .item-hover-two:hover .item-hover__text {
-            color: #0035ff !important;
+            color: #2B96C5 !important;
         }
 
 
@@ -135,53 +145,53 @@
 
 
         .bg-main-600 {
-            background-color: #001ed4 !important;
+            background-color: #2B96C5 !important;
         }
 
 
         .pagination .page-item.active .page-link {
-            background-color: #001ed4 !important;
-            border-color: #001ed4 !important;
+            background-color: #2B96C5 !important;
+            border-color: #2B96C5 !important;
             color: #ffffff !important;
         }
 
         .hover-bg-main-600:hover {
-            background-color: #001ed4 !important;
+            background-color: #2B96C5 !important;
         }
 
         .hover-border-main-600:hover {
-            border-color: #001ed4 !important;
+            border-color: #2B96C5 !important;
         }
 
 
         .text-gray-900:hover {
-            color: #001ed4 !important;
+            color: #2B96C5 !important;
         }
 
         .border:hover {
-            border: color: #001ed4 !important;
+            border: color: #2B96C5 !important;
         }
 
         .text-neutral-600:hover {
-            color: color: #001ed4 !important;
+            color: color: #2B96C5 !important;
         }
 
         .btn-main {
-            background-color: color: #001ed4 !important;
-            border-color: color: #001ed4 !important;
+            background-color: color: #2B96C5 !important;
+            border-color: color: #2B96C5 !important;
         }
 
         .btn-main:hover {
-            background-color: #001ed4 !important;
-            border-color: #001ed4 !important;
+            background-color: #2B96C5 !important;
+            border-color: #2B96C5 !important;
         }
 
         .products-btn-set:hover {
-            background-color: #001ed4 !important;
+            background-color: #2B96C5 !important;
         }
 
         .home-buynow:hover {
-            background-color: #001ed4 !important;
+            background-color: #2B96C5 !important;
         }
 
         .bg-main-50 {
@@ -191,7 +201,7 @@
 
 
         .btn-site-default:hover {
-            background: #001ed4;
+            background: #2B96C5;
             color: #fff;
             height: 36px;
             border-radius: 0px;

@@ -29,6 +29,7 @@ class CustomerOrder extends Model
         'payment_method',
         'payment_status',
         'discount',
+        'transaction_id',
     ];
 
 
@@ -40,7 +41,11 @@ class CustomerOrder extends Model
 
     public function product()
     {
-        return $this->belongsTo(Products::class, 'product_id', 'product_id'); 
+        return $this->belongsTo(Products::class, 'product_id', 'product_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
 

@@ -47,6 +47,10 @@ class CarouselController extends Controller
             return response()->json(['status' => false, 'message' => 'Carousel not found.'], 404);
         }
 
+        if ($parentCategory->image_path) {
+            \Storage::disk('public')->delete('carousel_images/' . $parentCategory->image_path);
+        }
+
         $parentCategory->delete();
 
         return response()->json(['status' => true, 'message' => 'Carousel deleted successfully.']);

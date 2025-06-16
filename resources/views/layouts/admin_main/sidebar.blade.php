@@ -115,6 +115,11 @@
                 data-mdb-ripple-init>
                 <i class="fa-solid fa-folder-tree text-muted"></i><span class="text-muted">Product Categories</span>
             </a>
+            <a href="{{ route('brand_list') }}"
+                class="list-group-item list-group-item-action py-2 {{ request()->routeIs('brand_list') ? 'active' : '' }}"
+                data-mdb-ripple-init>
+                <i class="fa-solid fa-folder-open text-muted"></i><span class="text-muted">Product Brands</span>
+            </a>
             <a href="{{ route('show_users') }}"
                 class="list-group-item list-group-item-action py-2 {{ request()->routeIs('show_users') ? 'active' : '' }}"
                 data-mdb-ripple-init>
@@ -135,7 +140,7 @@
             <a href="{{ route('logo') }}"
                 class="list-group-item list-group-item-action py-2 {{ request()->routeIs('logo') ? 'active' : '' }}"
                 data-mdb-ripple-init>
-                <i class="fas fa-ad text-muted"></i><span class="text-muted">Logo Management</span>
+                <i class="fas fa-image text-muted"></i><span class="text-muted">Logo Management</span>
             </a>
         </div>
     </div>
