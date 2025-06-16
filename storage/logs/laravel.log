@@ -372,3 +372,4 @@
 [stacktrace]
 #0 {main}
 "} 
+[2025-06-16 06:04:59] local.ERROR: Failed to send SMS to vendor: SMS Failed: Not enough money in the wallet  

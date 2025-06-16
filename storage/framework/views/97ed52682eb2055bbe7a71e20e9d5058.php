@@ -6,7 +6,7 @@
         <div class="page-title-content">
             <h2>My Account</h2>
             <ul>
-                <li><a href="index.html">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li>Login</li>
             </ul>
         </div>
@@ -61,7 +61,7 @@ if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
-unset($__errorArgs, $__bag); ?>" id="password" name="password" placeholder="Enter your password" required>                           
+unset($__errorArgs, $__bag); ?>" id="password" name="password" placeholder="Enter your password" required>
                             <?php $__errorArgs = ['password'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
