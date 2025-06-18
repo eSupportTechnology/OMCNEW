@@ -251,50 +251,32 @@
             @endif
         </div>
 </div>
-@php
-    $currentPage = $products->currentPage();
-    $lastPage = $products->lastPage();
-    $pageWindow = 8;
-
-    $start = max(1, $currentPage - floor($pageWindow / 2));
-    $end = min($lastPage, $start + $pageWindow - 1);
-
-    // Adjust start if at the end
-    if (($end - $start + 1) < $pageWindow) {
-        $start = max(1, $end - $pageWindow + 1);
-    }
-@endphp
-
+<!-- Pagination -->
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-end mb-4" id="pagination">
-        {{-- Previous button --}}
-        @if ($currentPage > 1)
+        @if ($products->currentPage() > 1)
             <li class="page-item" id="prevPage">
-                <a class="page-link" href="#" aria-label="Previous" data-page="{{ $currentPage - 1 }}">
+                <a class="page-link" href="#" aria-label="Previous" data-page="{{ $products->currentPage() - 1 }}">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
         @endif
 
-        {{-- Page number links --}}
-        @for ($i = $start; $i <= $end; $i++)
-            <li class="page-item @if ($i == $currentPage) active @endif">
+        @for ($i = 1; $i <= $products->lastPage(); $i++)
+            <li class="page-item @if ($i == $products->currentPage()) active @endif">
                 <a class="page-link" href="#" data-page="{{ $i }}">{{ $i }}</a>
             </li>
         @endfor
 
-        {{-- Next button --}}
-        @if ($currentPage < $lastPage)
+        @if ($products->hasMorePages())
             <li class="page-item" id="nextPage">
-                <a class="page-link" href="#" aria-label="Next" data-page="{{ $currentPage + 1 }}">
+                <a class="page-link" href="#" aria-label="Next" data-page="{{ $products->currentPage() + 1 }}">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
             </li>
         @endif
     </ul>
 </nav>
-
-
 
 
 <!-- cart modal-->

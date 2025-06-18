@@ -351,32 +351,46 @@
                     </div>
 
 
-                    <div class="pagination-area text-center">
-                        <!-- Previous Page Link -->
-                        <?php if($products->onFirstPage()): ?>
-                            <span class="prev page-numbers disabled"><i class='fa fa-chevron-left'></i></span>
-                        <?php else: ?>
-                            <a href="<?php echo e($products->previousPageUrl()); ?>" class="prev page-numbers"><i
-                                    class='fa fa-chevron-left'></i></a>
-                        <?php endif; ?>
+                    <?php
+    $currentPage = $products->currentPage();
+    $lastPage = $products->lastPage();
+    $pageWindow = 8;
 
-                        <!-- Page Numbers -->
-                        <?php $__currentLoopData = $products->getUrlRange(1, $products->lastPage()); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $page => $url): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php if($page == $products->currentPage()): ?>
-                                <span class="page-numbers current" aria-current="page"><?php echo e($page); ?></span>
-                            <?php else: ?>
-                                <a href="<?php echo e($url); ?>" class="page-numbers"><?php echo e($page); ?></a>
-                            <?php endif; ?>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+    // Calculate start and end of visible pages
+    $start = max(1, $currentPage - floor($pageWindow / 2));
+    $end = min($lastPage, $start + $pageWindow - 1);
 
-                        <!-- Next Page Link -->
-                        <?php if($products->hasMorePages()): ?>
-                            <a href="<?php echo e($products->nextPageUrl()); ?>" class="next page-numbers"><i
-                                    class='fa fa-chevron-right'></i></a>
-                        <?php else: ?>
-                            <span class="next page-numbers disabled"><i class='fa fa-chevron-right'></i></span>
-                        <?php endif; ?>
-                    </div>
+    // Adjust start if not enough pages at the end
+    if ($end - $start + 1 < $pageWindow) {
+        $start = max(1, $end - $pageWindow + 1);
+    }
+?>
+
+<div class="pagination-area text-center">
+    <!-- Previous Page Link -->
+    <?php if($products->onFirstPage()): ?>
+        <span class="prev page-numbers disabled"><i class='fa fa-chevron-left'></i></span>
+    <?php else: ?>
+        <a href="<?php echo e($products->previousPageUrl()); ?>" class="prev page-numbers"><i class='fa fa-chevron-left'></i></a>
+    <?php endif; ?>
+
+    <!-- Page Numbers (max 8) -->
+    <?php for($page = $start; $page <= $end; $page++): ?>
+        <?php if($page == $products->currentPage()): ?>
+            <span class="page-numbers current" aria-current="page"><?php echo e($page); ?></span>
+        <?php else: ?>
+            <a href="<?php echo e($products->url($page)); ?>" class="page-numbers"><?php echo e($page); ?></a>
+        <?php endif; ?>
+    <?php endfor; ?>
+
+    <!-- Next Page Link -->
+    <?php if($products->hasMorePages()): ?>
+        <a href="<?php echo e($products->nextPageUrl()); ?>" class="next page-numbers"><i class='fa fa-chevron-right'></i></a>
+    <?php else: ?>
+        <span class="next page-numbers disabled"><i class='fa fa-chevron-right'></i></span>
+    <?php endif; ?>
+</div>
+
 
 
                 </div>

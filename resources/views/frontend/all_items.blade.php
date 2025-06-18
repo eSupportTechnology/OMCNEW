@@ -351,32 +351,46 @@
                     </div>
 
 
-                    <div class="pagination-area text-center">
-                        <!-- Previous Page Link -->
-                        @if ($products->onFirstPage())
-                            <span class="prev page-numbers disabled"><i class='fa fa-chevron-left'></i></span>
-                        @else
-                            <a href="{{ $products->previousPageUrl() }}" class="prev page-numbers"><i
-                                    class='fa fa-chevron-left'></i></a>
-                        @endif
+                    @php
+    $currentPage = $products->currentPage();
+    $lastPage = $products->lastPage();
+    $pageWindow = 8;
 
-                        <!-- Page Numbers -->
-                        @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
-                            @if ($page == $products->currentPage())
-                                <span class="page-numbers current" aria-current="page">{{ $page }}</span>
-                            @else
-                                <a href="{{ $url }}" class="page-numbers">{{ $page }}</a>
-                            @endif
-                        @endforeach
+    // Calculate start and end of visible pages
+    $start = max(1, $currentPage - floor($pageWindow / 2));
+    $end = min($lastPage, $start + $pageWindow - 1);
 
-                        <!-- Next Page Link -->
-                        @if ($products->hasMorePages())
-                            <a href="{{ $products->nextPageUrl() }}" class="next page-numbers"><i
-                                    class='fa fa-chevron-right'></i></a>
-                        @else
-                            <span class="next page-numbers disabled"><i class='fa fa-chevron-right'></i></span>
-                        @endif
-                    </div>
+    // Adjust start if not enough pages at the end
+    if ($end - $start + 1 < $pageWindow) {
+        $start = max(1, $end - $pageWindow + 1);
+    }
+@endphp
+
+<div class="pagination-area text-center">
+    <!-- Previous Page Link -->
+    @if ($products->onFirstPage())
+        <span class="prev page-numbers disabled"><i class='fa fa-chevron-left'></i></span>
+    @else
+        <a href="{{ $products->previousPageUrl() }}" class="prev page-numbers"><i class='fa fa-chevron-left'></i></a>
+    @endif
+
+    <!-- Page Numbers (max 8) -->
+    @for ($page = $start; $page <= $end; $page++)
+        @if ($page == $products->currentPage())
+            <span class="page-numbers current" aria-current="page">{{ $page }}</span>
+        @else
+            <a href="{{ $products->url($page) }}" class="page-numbers">{{ $page }}</a>
+        @endif
+    @endfor
+
+    <!-- Next Page Link -->
+    @if ($products->hasMorePages())
+        <a href="{{ $products->nextPageUrl() }}" class="next page-numbers"><i class='fa fa-chevron-right'></i></a>
+    @else
+        <span class="next page-numbers disabled"><i class='fa fa-chevron-right'></i></span>
+    @endif
+</div>
+
 
 
                 </div>
