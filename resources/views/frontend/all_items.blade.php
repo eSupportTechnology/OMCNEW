@@ -1,160 +1,160 @@
 @extends ('frontend.master')
 
 @section('content')
-<style>
-    /* Improved Button Styles */
-    .btn-cart {
-        background-color: white;
-        border: none;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .btn-cart i {
-        font-size: 1.5rem;
-        color: black;
-        transition: color 0.3s ease;
-    }
-
-    .btn-cart:hover {
-        background-color: black;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-
-    .btn-cart:hover i {
-        color: white;
-    }
-
-    /* Color Selection Styles */
-    .color-option {
-        transition: all 0.2s ease;
-    }
-
-    .color-option.selected-color {
-        border: 2px solid #007bff;
-        box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
-        transform: scale(1.1);
-    }
-
-    /* Product Card Enhancements */
-    .single-products-box {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border-radius: 8px;
-        overflow: hidden;
-
-    }
-
-    .single-products-box:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
-
-    .products-image {
-        position: relative;
-        overflow: hidden;
-    }
-
-    .hover-image {
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-    }
-
-    .single-products-box:hover .hover-image {
-        opacity: 1;
-    }
-
-    .single-products-box:hover .main-image {
-        opacity: 0;
-    }
-
-    /* Price Styling */
-    .old-price {
-        text-decoration: line-through;
-        color: #999;
-        margin-right: 8px;
-    }
-
-    .new-price {
-        color: #f55b29;
-        font-weight: 600;
-        margin-right: 80px;
-    }
-
-    /* Filter Widget Styling */
-    .woocommerce-widget {
-        background: #f9f9f9;
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-    }
-
-    .woocommerce-widget-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-        margin-bottom: 15px;
-        color: #333;
-    }
-
-    /* Pagination Styling */
-    .pagination-area .page-numbers {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 40px;
-        height: 40px;
-        margin: 0 5px;
-        border-radius: 50%;
-        background: #f5f5f5;
-        color: #333;
-        transition: all 0.3s ease;
-    }
-
-    .pagination-area .page-numbers:hover,
-    .pagination-area .page-numbers.current {
-        background: #007bff;
-        color: white;
-        font-size: 1.1rem
-    }
-
-    /* Modal Enhancements */
-    .modal-content {
-        border: none;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    }
-
-    .btn-custom-cart {
-        transition: all 0.3s ease;
-        border-radius: 4px;
-        font-weight: 500;
-    }
-
-    .btn-custom-cart:hover {
-        background-color: #0069d9 !important;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 767px) {
-        .products-col-item {
-            margin-bottom: 30px;
+    <style>
+        /* Improved Button Styles */
+        .btn-cart {
+            background-color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        .woocommerce-widget-area {
-            margin-bottom: 30px;
+        .btn-cart i {
+            font-size: 1.5rem;
+            color: black;
+            transition: color 0.3s ease;
         }
-    }
-</style>
+
+        .btn-cart:hover {
+            background-color: black;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-cart:hover i {
+            color: white;
+        }
+
+        /* Color Selection Styles */
+        .color-option {
+            transition: all 0.2s ease;
+        }
+
+        .color-option.selected-color {
+            border: 2px solid #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
+            transform: scale(1.1);
+        }
+
+        /* Product Card Enhancements */
+        .single-products-box {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 8px;
+            overflow: hidden;
+
+        }
+
+        .single-products-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .products-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hover-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .single-products-box:hover .hover-image {
+            opacity: 1;
+        }
+
+        .single-products-box:hover .main-image {
+            opacity: 0;
+        }
+
+        /* Price Styling */
+        .old-price {
+            text-decoration: line-through;
+            color: #999;
+            margin-right: 8px;
+        }
+
+        .new-price {
+            color: #f55b29;
+            font-weight: 600;
+            margin-right: 80px;
+        }
+
+        /* Filter Widget Styling */
+        .woocommerce-widget {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .woocommerce-widget-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        /* Pagination Styling */
+        .pagination-area .page-numbers {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            height: 40px;
+            margin: 0 5px;
+            border-radius: 50%;
+            background: #f5f5f5;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .pagination-area .page-numbers:hover,
+        .pagination-area .page-numbers.current {
+            background: #007bff;
+            color: white;
+            font-size: 1.1rem
+        }
+
+        /* Modal Enhancements */
+        .modal-content {
+            border: none;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-custom-cart {
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .btn-custom-cart:hover {
+            background-color: #0069d9 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 767px) {
+            .products-col-item {
+                margin-bottom: 30px;
+            }
+
+            .woocommerce-widget-area {
+                margin-bottom: 30px;
+            }
+        }
+    </style>
     <!-- Start Page Title -->
     <div class="page-title-area">
         <div class="container">
@@ -352,44 +352,46 @@
 
 
                     @php
-    $currentPage = $products->currentPage();
-    $lastPage = $products->lastPage();
-    $pageWindow = 8;
+                        $currentPage = $products->currentPage();
+                        $lastPage = $products->lastPage();
+                        $pageWindow = 8;
 
-    // Calculate start and end of visible pages
-    $start = max(1, $currentPage - floor($pageWindow / 2));
-    $end = min($lastPage, $start + $pageWindow - 1);
+                        // Calculate start and end of visible pages
+                        $start = max(1, $currentPage - floor($pageWindow / 2));
+                        $end = min($lastPage, $start + $pageWindow - 1);
 
-    // Adjust start if not enough pages at the end
-    if ($end - $start + 1 < $pageWindow) {
-        $start = max(1, $end - $pageWindow + 1);
-    }
-@endphp
+                        // Adjust start if not enough pages at the end
+                        if ($end - $start + 1 < $pageWindow) {
+                            $start = max(1, $end - $pageWindow + 1);
+                        }
+                    @endphp
 
-<div class="pagination-area text-center">
-    <!-- Previous Page Link -->
-    @if ($products->onFirstPage())
-        <span class="prev page-numbers disabled"><i class='fa fa-chevron-left'></i></span>
-    @else
-        <a href="{{ $products->previousPageUrl() }}" class="prev page-numbers"><i class='fa fa-chevron-left'></i></a>
-    @endif
+                    <div class="pagination-area text-center">
+                        <!-- Previous Page Link -->
+                        @if ($products->onFirstPage())
+                            <span class="prev page-numbers disabled"><i class='fa fa-chevron-left'></i></span>
+                        @else
+                            <a href="{{ $products->previousPageUrl() }}" class="prev page-numbers"><i
+                                    class='fa fa-chevron-left'></i></a>
+                        @endif
 
-    <!-- Page Numbers (max 8) -->
-    @for ($page = $start; $page <= $end; $page++)
-        @if ($page == $products->currentPage())
-            <span class="page-numbers current" aria-current="page">{{ $page }}</span>
-        @else
-            <a href="{{ $products->url($page) }}" class="page-numbers">{{ $page }}</a>
-        @endif
-    @endfor
+                        <!-- Page Numbers (max 8) -->
+                        @for ($page = $start; $page <= $end; $page++)
+                            @if ($page == $products->currentPage())
+                                <span class="page-numbers current" aria-current="page">{{ $page }}</span>
+                            @else
+                                <a href="{{ $products->url($page) }}" class="page-numbers">{{ $page }}</a>
+                            @endif
+                        @endfor
 
-    <!-- Next Page Link -->
-    @if ($products->hasMorePages())
-        <a href="{{ $products->nextPageUrl() }}" class="next page-numbers"><i class='fa fa-chevron-right'></i></a>
-    @else
-        <span class="next page-numbers disabled"><i class='fa fa-chevron-right'></i></span>
-    @endif
-</div>
+                        <!-- Next Page Link -->
+                        @if ($products->hasMorePages())
+                            <a href="{{ $products->nextPageUrl() }}" class="next page-numbers"><i
+                                    class='fa fa-chevron-right'></i></a>
+                        @else
+                            <span class="next page-numbers disabled"><i class='fa fa-chevron-right'></i></span>
+                        @endif
+                    </div>
 
 
 
@@ -665,7 +667,8 @@
             });
 
             // Smooth scroll for filter modal
-            const filterLinks = document.querySelectorAll('.collections-list-row a, .size-list-row a, .color-list-row a');
+            const filterLinks = document.querySelectorAll(
+                '.collections-list-row a, .size-list-row a, .color-list-row a');
             filterLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     if (window.innerWidth < 992) {
@@ -714,22 +717,24 @@
 
                 // Check requirements
                 if (hasSizeOptions && !selectedSize) {
-                    toastr.warning('Please select a size option before adding this product to the cart.', 'Size Required', {
-                        positionClass: 'toast-top-right',
-                        timeOut: 3000,
-                        closeButton: true,
-                        progressBar: true
-                    });
+                    toastr.warning('Please select a size option before adding this product to the cart.',
+                        'Size Required', {
+                            positionClass: 'toast-top-right',
+                            timeOut: 3000,
+                            closeButton: true,
+                            progressBar: true
+                        });
                     return;
                 }
 
                 if (hasColorOptions && !selectedColor) {
-                    toastr.warning('Please select a color option before adding this product to the cart.', 'Color Required', {
-                        positionClass: 'toast-top-right',
-                        timeOut: 3000,
-                        closeButton: true,
-                        progressBar: true
-                    });
+                    toastr.warning('Please select a color option before adding this product to the cart.',
+                        'Color Required', {
+                            positionClass: 'toast-top-right',
+                            timeOut: 3000,
+                            closeButton: true,
+                            progressBar: true
+                        });
                     return;
                 }
 
@@ -760,20 +765,25 @@
                                 }, 1000);
                             });
 
-                            toastr.success('Item successfully added to your cart!', 'Added to Cart', {
-                                positionClass: 'toast-top-right',
-                                timeOut: 3000,
-                                closeButton: true,
-                                progressBar: true,
-                                onHidden: function() {
-                                    btn.html('<i class="me-1 fa fa-shopping-basket"></i>Add to cart');
-                                    btn.prop('disabled', false);
-                                }
-                            });
+                            toastr.success('Item successfully added to your cart!',
+                                'Added to Cart', {
+                                    positionClass: 'toast-top-right',
+                                    timeOut: 3000,
+                                    closeButton: true,
+                                    progressBar: true,
+                                    onHidden: function() {
+                                        btn.html(
+                                            '<i class="me-1 fa fa-shopping-basket"></i>Add to cart'
+                                            );
+                                        btn.prop('disabled', false);
+                                    }
+                                });
 
                             // Reset selections
-                            productContainer.find('button.size-option.active').removeClass('active');
-                            productContainer.find('button.color-option.active').removeClass('active');
+                            productContainer.find('button.size-option.active').removeClass(
+                                'active');
+                            productContainer.find('button.color-option.active').removeClass(
+                                'active');
                         },
                         error: function(xhr) {
                             toastr.error('Something went wrong. Please try again.', 'Error', {
