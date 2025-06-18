@@ -161,7 +161,7 @@
             <div class="page-title-content">
                 <h2>All Items</h2>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li>All Items</li>
                 </ul>
             </div>
