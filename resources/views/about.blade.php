@@ -290,7 +290,7 @@
             <h2>Discover OMC – Your Ultimate Online Shopping Destination</h2>
 
             <p>
-                Shop effortlessly at the Online Marketing Complex (OMC)! Explore a wide selection of high-quality products, including fashion, accessories, home goods, electronics, and more. We’re committed to delivering a secure, seamless, and enjoyable shopping experience with fast shipping, personalized recommendations, and exceptional customer service.                
+                Shop effortlessly at the Online Marketing Complex (OMC)! Explore a wide selection of high-quality products, including fashion, accessories, home goods, electronics, and more. We’re committed to delivering a secure, seamless, and enjoyable shopping experience with fast shipping, personalized recommendations, and exceptional customer service.
             </p>
             <p>
                 From trending styles to everyday essentials, OMC is your go-to platform for convenient online shopping, trusted by customers worldwide.
