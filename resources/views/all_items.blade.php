@@ -251,16 +251,23 @@
             @endif
         </div>
 </div>
-<!-- Pagination -->
 @php
     $currentPage = $products->currentPage();
     $lastPage = $products->lastPage();
-    $start = max($currentPage - 2, 1);
-    $end = min($currentPage + 2, $lastPage);
+    $pageWindow = 8;
+
+    $start = max(1, $currentPage - floor($pageWindow / 2));
+    $end = min($lastPage, $start + $pageWindow - 1);
+
+    // Adjust start if at the end
+    if (($end - $start + 1) < $pageWindow) {
+        $start = max(1, $end - $pageWindow + 1);
+    }
 @endphp
 
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-end mb-4" id="pagination">
+        {{-- Previous button --}}
         @if ($currentPage > 1)
             <li class="page-item" id="prevPage">
                 <a class="page-link" href="#" aria-label="Previous" data-page="{{ $currentPage - 1 }}">
@@ -269,34 +276,15 @@
             </li>
         @endif
 
-        {{-- Show First Page Link if not in range --}}
-        @if ($start > 1)
-            <li class="page-item">
-                <a class="page-link" href="#" data-page="1">1</a>
-            </li>
-            @if ($start > 2)
-                <li class="page-item disabled"><span class="page-link">…</span></li>
-            @endif
-        @endif
-
-        {{-- Main Page Loop --}}
+        {{-- Page number links --}}
         @for ($i = $start; $i <= $end; $i++)
             <li class="page-item @if ($i == $currentPage) active @endif">
                 <a class="page-link" href="#" data-page="{{ $i }}">{{ $i }}</a>
             </li>
         @endfor
 
-        {{-- Show Last Page Link if not in range --}}
-        @if ($end < $lastPage)
-            @if ($end < $lastPage - 1)
-                <li class="page-item disabled"><span class="page-link">…</span></li>
-            @endif
-            <li class="page-item">
-                <a class="page-link" href="#" data-page="{{ $lastPage }}">{{ $lastPage }}</a>
-            </li>
-        @endif
-
-        @if ($products->hasMorePages())
+        {{-- Next button --}}
+        @if ($currentPage < $lastPage)
             <li class="page-item" id="nextPage">
                 <a class="page-link" href="#" aria-label="Next" data-page="{{ $currentPage + 1 }}">
                     <span aria-hidden="true">&raquo;</span>
@@ -305,6 +293,7 @@
         @endif
     </ul>
 </nav>
+
 
 
 
