@@ -1,8 +1,4 @@
-@extends('layouts.aff-master')
-
-
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
     .alert-success {
             background-color: #d4edda;
@@ -251,7 +247,7 @@
                                            LOGIN
                                         </div>
                                     </a>
-                                    <a class="text-reset me-3 signup-btn p-2" href="{{ route('register_form') }}">
+                                    <a class="text-reset me-3 signup-btn p-2" href="<?php echo e(route('register_form')); ?>">
                                         <div style="font-weight:500; color:white">
                                             SIGN UP
                                         </div>
@@ -267,12 +263,13 @@
             </div>
 </header>
 
-{{-- Success Message --}}
-    @if (session('status'))
+
+    <?php if(session('status')): ?>
         <div class="alert alert-success">
-            {{ session('status') }}
+            <?php echo e(session('status')); ?>
+
         </div>
-    @endif
+    <?php endif; ?>
 
 
 <section class="about-area mt-5">
@@ -450,26 +447,54 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('aff_login') }}">
-                    @csrf
+                <form method="POST" action="<?php echo e(route('aff_login')); ?>">
+                    <?php echo csrf_field(); ?>
                     <div class="form-group mb-3">
                         <label for="email" class="form-label">Email Address<i class="text-danger">*</i></label>
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                        @error('email')
+                        <input id="email" type="email" class="form-control <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="email" value="<?php echo e(old('email')); ?>" required autocomplete="email" autofocus>
+                        <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                <strong><?php echo e($message); ?></strong>
                             </span>
-                        @enderror
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
                         <label for="password" class="form-label">Password<i class="text-danger">*</i></label>
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                        @error('password')
+                        <input id="password" type="password" class="form-control <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>" name="password" required autocomplete="current-password">
+                        <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
+                                <strong><?php echo e($message); ?></strong>
                             </span>
-                        @enderror
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="text-center">
@@ -484,14 +509,14 @@
 </div>
 <!-- End Login Modal -->
 
-@if ($errors->has('email') || $errors->has('password'))
+<?php if($errors->has('email') || $errors->has('password')): ?>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var affloginModal = new bootstrap.Modal(document.getElementById('affloginModal'));
             affloginModal.show();
         });
     </script>
-@endif
+<?php endif; ?>
 
 
 <!-- Pending Modal -->
@@ -526,20 +551,22 @@
     </div>
 </div>
 
-@if (session('status1') === 'pending')
+<?php if(session('status1') === 'pending'): ?>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var pendingModal = new bootstrap.Modal(document.getElementById('pendingModal'));
             pendingModal.show();
         });
     </script>
-@elseif (session('status1') === 'rejected')
+<?php elseif(session('status1') === 'rejected'): ?>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var rejectedModal = new bootstrap.Modal(document.getElementById('rejectedModal'));
             rejectedModal.show();
         });
     </script>
-@endif
+<?php endif; ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.aff-master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\OMCNEW\resources\views/frontend/aff_home.blade.php ENDPATH**/ ?>

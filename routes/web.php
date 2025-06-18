@@ -165,6 +165,10 @@ Route::post('/dashboard/password/update', [UserDashboardController::class, 'upda
 Route::view('/aff_home', 'frontend.aff_home')->name('aff_home');
 Route::view('/aff_reg', 'frontend.aff_reg')->name('aff_reg');
 Route::post('/aff_reg', [AffiliateCustomerController::class, 'register'])->name('register_form');
+Route::put('/affiliate/update-details', [AffiliateCustomerController::class, 'updateAdditionalDetails'])->name('affiliate.add.details');
+Route::put('/affiliate/update/promotions', [AffiliateCustomerController::class, 'updatePromotions'])->name('affiliate.add.promotions');
+Route::put('/affiliate/update/bank', [AffiliateCustomerController::class, 'updateBank'])->name('affiliate.add.bank');
+
 
 Route::post('/home/affiliate/login', [AffiliateCustomerController::class, 'login'])->name('aff_login');
 Route::get('/affiliate/dashboard', [AffiliateCustomerController::class, 'index'])->name('index');
@@ -214,6 +218,8 @@ Route::get('/affiliate/dashboard/payment/affiliate_rules', [AffiliateRulesContro
 
 Route::post('/affiliate/update-site-info', [AffiliateDashboardController::class, 'updateSiteInfo'])->name('affiliate.updateSiteInfo');
 Route::post('/affiliate/update-basic-info', [AffiliateDashboardController::class, 'updateBasicInfo'])->name('affiliate.updateBasicInfo');
+Route::put('/affiliate/update-bank-info', [AffiliateDashboardController::class, 'updateBankInfo'])->name('affiliate.updateBankInfo');
+
 Route::get('/affiliate/dashboard/account/mywebsites_page', [AffiliateDashboardController::class, 'index'])->name('mywebsites_page');
 
 Route::get('/affiliate/dashboard/account/tracking_id', [AffiliateTrackingController::class, 'index'])->name('tracking_id');

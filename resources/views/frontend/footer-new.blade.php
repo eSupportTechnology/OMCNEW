@@ -588,6 +588,7 @@
                                 <li class="footer-link"><a href="#">Brands</a></li>
                                 <li class="footer-link"><a href="#">Warranty Information</a></li>
                                 <li class="footer-link"><a href="#">Return Products</a></li>
+                                <li class="footer-link"><a href="{{ route('aff_home') }}">Affiliate Login</a></li>
                             </ul>
                         </div>
                     </div>
