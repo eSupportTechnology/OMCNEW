@@ -786,7 +786,7 @@
                                 @elseif($category->parent_category == 'Home & Garden')
 
                                 @elseif($category->parent_category == 'Sports')
-                                    
+
                                 @endif
                                 {{ $category->parent_category }}
 

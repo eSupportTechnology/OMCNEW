@@ -786,7 +786,7 @@
                                 <?php elseif($category->parent_category == 'Home & Garden'): ?>
 
                                 <?php elseif($category->parent_category == 'Sports'): ?>
-                                    
+
                                 <?php endif; ?>
                                 <?php echo e($category->parent_category); ?>
 
