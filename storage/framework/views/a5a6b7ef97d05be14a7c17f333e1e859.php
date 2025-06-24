@@ -1,7 +1,4 @@
-@extends('member_dashboard.user_sidebar')
-
-
-@section('dashboard-content')
+<?php $__env->startSection('dashboard-content'); ?>
 <style>
     .details-container {
         background-color: #f4f6f8;
@@ -337,4 +334,6 @@
 </script>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('member_dashboard.user_sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\ASUS\Desktop\OMC\OMCNEW\resources\views/member_dashboard/returns-details.blade.php ENDPATH**/ ?>

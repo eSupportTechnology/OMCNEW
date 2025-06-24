@@ -1,7 +1,4 @@
-@extends('member_dashboard.user_sidebar')
-
-
-@section('dashboard-content')
+<?php $__env->startSection('dashboard-content'); ?>
 
 <style>
    .returns-container {
@@ -135,7 +132,7 @@
                 <p>Order <a href="#" class="order-link">#209958310692054</a></p>
             </div>
             <div class="more-details">
-                <a href="{{ route('returns.details') }}" class="more-details-link">MORE DETAILS</a>
+                <a href="<?php echo e(route('returns.details')); ?>" class="more-details-link">MORE DETAILS</a>
             </div>
         </div>
 
@@ -171,4 +168,6 @@
 });
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('member_dashboard.user_sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\ASUS\Desktop\OMC\OMCNEW\resources\views/member_dashboard/returns.blade.php ENDPATH**/ ?>

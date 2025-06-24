@@ -685,7 +685,7 @@
         }
 
         .scroll-indicator {
-            position: absolute;
+            position: relative;
             top: 0;
             bottom: 0;
             width: 40px;

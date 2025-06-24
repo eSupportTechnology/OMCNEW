@@ -586,8 +586,8 @@
                             <p class="footer-title">Quick Links</p>
                             <ul>
                                 <li class="footer-link"><a href="#">Brands</a></li>
-                                <li class="footer-link"><a href="#">Warranty Information</a></li>
-                                <li class="footer-link"><a href="#">Return Products</a></li>
+                                <li class="footer-link"><a href="{{ route('warranty') }}">Warranty Information</a></li>
+                                <li class="footer-link"><a href="{{ route('return-product') }}">Return Products</a></li>
                             </ul>
                         </div>
                     </div>

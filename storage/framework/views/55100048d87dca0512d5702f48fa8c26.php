@@ -1,6 +1,4 @@
-@extends ('frontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
     <main class="content-container">
 
 
@@ -113,7 +111,7 @@
                             <div class="main-contact-info">
                                 <p class="contact-title">OMC Duty Free</p>
                                 <p class="contact-txt"><i class="fa-solid fa-phone"></i>+94 75 833 7141</p>
-                                {{-- <p class="contact-txt"><i class="fa-solid fa-phone transparent"></i>+94 75 833 7141</p> --}}
+                                
                             </div>
                         </div>
 
@@ -146,25 +144,15 @@
                             width="100%" height="380" style="border:0;" allowfullscreen="" loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"></iframe>
 
-                        {{-- <a class="find-loc-link" id="redirectButton"><img
-                                class="icon "src="themes/buyabans/assets/images/icon/shop_icon.svg">Find your
-                            store in your location <img class="arrow"
-                                src="themes/buyabans/assets/images/icon/arrow5.webp"></a> --}}
+                        
                     </div>
 
                     <!-- Inquiry Form -->
                     <div class="contact-form">
                         <h3 class="form-title">Service inquiries</h3>
-                        <form novalidate="" id="contactform" action="{{ route('contactus') }}" method="POST">
-                            @csrf
-                            {{-- <div class="form-group">
-                                <label class="form-label">Inquiry Type<span class="required">*</span></label>
-                                <select class="form-control">
-                                    <option value="Feedback">Feedback</option>
-                                    <option value="Complaint">Complaint</option>
-                                    <option value="Question">Question</option>
-                                </select>
-                            </div> --}}
+                        <form novalidate="" id="contactform" action="<?php echo e(route('contactus')); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
+                            
 
                             <div class="form-group">
                                 <label class="form-label">Name<span class="required">*</span></label>
@@ -181,15 +169,7 @@
                                 <textarea class="form-control" name="message" required></textarea>
                             </div>
 
-                            {{-- <div class="recaptcha-container">
-                                <div class="g-recaptcha-wrapper">
-                                    <input type="checkbox" id="robot-check">
-                                    <label for="robot-check" style="font-size: 13px; margin-left: 5px;">I'm not a
-                                        robot</label>
-                                    <img src="https://cdnjs.cloudflare.com/ajax/libs/recaptcha/1.0/recaptcha.min.js"
-                                        alt="reCAPTCHA" style="height: 40px; margin-left: 5px;">
-                                </div>
-                            </div> --}}
+                            
 
                             <button type="submit" class="submit-button btn btn-site-default btn-inq">Submit
                                 Inquiry</button>
@@ -207,15 +187,17 @@
 
     <br>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @if(session('success'))
+    <?php if(session('success')): ?>
     <script>
         Swal.fire({
             icon: 'success',
             title: 'Success!',
-            text: '{{ session('success') }}',
+            text: '<?php echo e(session('success')); ?>',
             confirmButtonText: 'OK'
         });
     </script>
-@endif
+<?php endif; ?>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\ASUS\Desktop\OMC\OMCNEW\resources\views/frontend/contact-us.blade.php ENDPATH**/ ?>
