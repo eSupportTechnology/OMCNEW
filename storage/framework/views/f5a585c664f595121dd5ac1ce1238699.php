@@ -1,5 +1,382 @@
 <?php $__env->startSection('content'); ?>
 
+<style>
+/* Hot Deals Product Grid Styles */
+
+/* Container and Layout */
+.hot-deals-container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.deal-items {
+    position: relative;
+    padding: 1.25rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background: #ffffff;
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.deal-items:hover {
+    border-color: #007bff;
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Checkbox Styling */
+.select-item-checkbox {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    z-index: 2;
+    accent-color: #007bff;
+}
+
+/* Product Image */
+.deal-items img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.deal-items:hover img {
+    transform: scale(1.02);
+}
+
+/* Product Name */
+.deal-items p {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Price Styling */
+.price {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #28a745;
+    margin-bottom: 0.75rem;
+}
+
+/* Commission Styling */
+.commission {
+    font-size: 0.9rem;
+    color: #6c757d;
+    background-color: #f8f9fa;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    border-left: 3px solid #ffc107;
+}
+
+/* Color Options */
+.products-color-switch {
+    margin-bottom: 1rem;
+}
+
+.products-color-switch span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #495057;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.color-options-container {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.color-option {
+    width: 32px;
+    height: 32px;
+    border: 2px solid #dee2e6;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    padding: 0;
+}
+
+.color-option:hover {
+    border-color: #007bff;
+    transform: scale(1.1);
+}
+
+.color-option.selected {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.color-option::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.color-option.selected::after {
+    opacity: 1;
+}
+
+/* Size Options */
+.products-size-wrapper {
+    margin-bottom: 1rem;
+}
+
+.products-size-wrapper span {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #495057;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.products-size-wrapper .list-inline {
+    margin: 0;
+    padding: 0;
+}
+
+.size-option {
+    min-width: 45px;
+    height: 35px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.size-option:hover {
+    border-color: #007bff;
+    background-color: #f8f9ff;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.size-option.selected {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+/* Action Buttons */
+.btn_promote,.btn_promote2
+.btn_add_to_cart_affiliate {
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+.btn_promote,.btn_promote2 {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border: none;
+    margin-bottom: 0.75rem;
+}
+
+.btn_promote:hover,.btn_promote2:hover {
+    background: linear-gradient(135deg, #0056b3, #004085);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.btn_add_to_cart_affiliate {
+    background: linear-gradient(135deg, #28a745, #1e7e34);
+    border: none;
+    margin-top: auto;
+}
+
+.btn_add_to_cart_affiliate:hover {
+    background: linear-gradient(135deg, #1e7e34, #155724);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+/* Modal Styling */
+.modal-content {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-bottom: 1px solid #dee2e6;
+    border-radius: 12px 12px 0 0;
+    padding: 1.25rem 1.5rem;
+}
+
+.modal-title {
+    font-weight: 600;
+    color: #495057;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+/* Product Images in Modal */
+#productImagesContainer img {
+    border-radius: 8px;
+    transition: transform 0.2s ease;
+    border: 2px solid transparent;
+}
+
+#productImagesContainer img:hover {
+    transform: scale(1.05);
+    border-color: #007bff;
+}
+
+.image-wrapper {
+    position: relative;
+}
+
+.image-checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: #007bff;
+}
+
+/* Form Controls */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 0.75rem 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .deal-items {
+        margin-bottom: 1.5rem;
+    }
+    
+    .modal-dialog {
+        margin: 1rem;
+    }
+    
+    .color-options-container {
+        justify-content: center;
+    }
+    
+    .products-size-wrapper .list-inline {
+        text-align: center;
+    }
+    
+    .btn_promote,
+    .btn_add_to_cart_affiliate {
+        font-size: 0.85rem;
+        padding: 0.65rem 0.85rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hot-deals-container {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .deal-items {
+        padding: 1rem;
+    }
+    
+    .deal-items img {
+        height: 180px;
+    }
+    
+    .price {
+        font-size: 1.1rem;
+    }
+    
+    .commission {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.6rem;
+    }
+}
+
+/* Loading States */
+.btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Utility Classes */
+.text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.shadow-hover {
+    transition: box-shadow 0.3s ease;
+}
+
+.shadow-hover:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+    
+</style>
 <main style="margin-top: 58px">
     <div class="container pt-4 px-4">
         <h3 class="py-3">AD Center</h3>
@@ -54,29 +431,88 @@
                         <div class="container mt-6 mb-5">
                             <div class="row">
                                 <?php $__currentLoopData = $hotDeals; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <div class="col-md-3 mb-7">
-                                        <div class="deal-items">
-                                            <input type="checkbox" class="select-item-checkbox" data-product-id="<?php echo e($product->product_id); ?>" style="position: absolute; left: 12px;">
-                                            <a href="#">
+                                   <div class="col-md-3 mb-7">
+                                            <div class="deal-items position-relative p-3 border rounded">
+
+                                                <!-- Checkbox -->
+                                                <input type="checkbox" class="select-item-checkbox" data-product-id="<?php echo e($product->product_id); ?>" style="position: absolute; left: 12px; top: 12px;">
+
+                                                <!-- Product Image and Info -->
                                                 <?php if($product->images->isNotEmpty()): ?>
-                                                    <img src="<?php echo e(asset('storage/' . $product->images->first()->image_path)); ?>" alt="<?php echo e($product->product_name); ?>" class="img-fluid">
+                                                    <img src="<?php echo e(asset('storage/' . $product->images->first()->image_path)); ?>" alt="<?php echo e($product->product_name); ?>" class="img-fluid mb-2">
                                                 <?php else: ?>
-                                                    <img src="<?php echo e(asset('storage/default-image.png')); ?>" alt="Default Image" class="img-fluid">
+                                                    <img src="<?php echo e(asset('storage/default-image.png')); ?>" alt="Default Image" class="img-fluid mb-2">
                                                 <?php endif; ?>
+
                                                 <p><?php echo e($product->product_name); ?></p>
-                                                <div class="price mb-2">Rs.<?php echo e($product->total_price); ?></div>
+                                                <div class="price mb-2">Rs.<?php echo e($product->affiliate_price); ?></div>
+
                                                 <?php
                                                     $commissionPrice = $product->total_price - $product->affiliate_price;
                                                 ?>
                                                 <div class="commission mb-2">
                                                     Est. Commission Rs. <?php echo e($commissionPrice); ?> | <?php echo e($product->commission_percentage); ?>%
                                                 </div>
-                                                <a href="#" class="btn btn-primary btn_promote" data-bs-toggle="modal" data-bs-target="#promoteModal-<?php echo e($product->product_id); ?>">
+
+                                                <!-- Color Options -->
+                                                <?php if($product->variations->where('type', 'Color')->isNotEmpty()): ?>
+                                                    <div class="products-color-switch mb-2">
+                                                        <span>Color:</span>
+                                                        <div class="color-options-container d-flex gap-1 mt-1">
+                                                            <?php $__currentLoopData = $product->variations->where('type', 'Color'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $color): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <?php if($color->quantity > 0): ?>
+                                                                    <button class="color-option btn border rounded-circle"
+                                                                        style="width: 24px; height: 24px; background-color: <?php echo e($color->hex_value); ?>;"
+                                                                        data-color="<?php echo e($color->hex_value); ?>"
+                                                                        data-color-name="<?php echo e($color->value); ?>"
+                                                                        data-product-id="<?php echo e($product->product_id); ?>"
+                                                                        title="<?php echo e($color->value); ?>">
+                                                                    </button>
+                                                                <?php endif; ?>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        </div>
+                                                    </div>
+                                                <?php endif; ?>
+
+                                                <!-- Size Options -->
+                                                <?php if($product->variations->where('type', 'Size')->isNotEmpty()): ?>
+                                                    <div class="products-size-wrapper mb-2">
+                                                        <span>Size:</span>
+                                                        <ul class="list-inline mt-1">
+                                                            <?php $__currentLoopData = $product->variations->where('type', 'Size'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $size): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <?php if($size->quantity > 0): ?>
+                                                                    <li class="list-inline-item me-2">
+                                                                        <a href="javascript:void(0)" class="size-option btn btn-outline-secondary btn-sm"
+                                                                        data-size="<?php echo e($size->value); ?>"
+                                                                        data-product-id="<?php echo e($product->product_id); ?>">
+                                                                            <?php echo e($size->value); ?>
+
+                                                                        </a>
+                                                                    </li>
+                                                                <?php endif; ?>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        </ul>
+                                                    </div>
+                                                <?php endif; ?>
+
+                                                <!-- Hidden inputs for selected values -->
+                                                <input type="hidden" class="selected-color" id="color-<?php echo e($product->product_id); ?>">
+                                                <input type="hidden" class="selected-size" id="size-<?php echo e($product->product_id); ?>">
+
+                                                <!-- Action Buttons -->
+                                                <a href="#" class="btn btn-primary btn_promote w-100 mb-2"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#promoteModal-<?php echo e($product->product_id); ?>">
                                                     Promote Now
                                                 </a>
-                                            </a>
+
+                                                <button class="btn btn-success btn_add_to_cart_affiliate w-100"
+                                                        data-product-id="<?php echo e($product->product_id); ?>">
+                                                    Buy Now
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
+
 
                                     <!-- Promote Modal -->
                                     <div class="modal fade" id="promoteModal-<?php echo e($product->product_id); ?>" tabindex="-1" aria-labelledby="promoteModalLabel-<?php echo e($product->product_id); ?>" aria-hidden="true">
@@ -196,9 +632,59 @@
                                             <div class="commission mb-2">
                                                 Est. Commission Rs. <?php echo e($commissionPrice); ?> | <?php echo e($product->commission_percentage); ?>%
                                             </div>
-                                            <a href="#" class="btn btn-primary btn_promote2" data-bs-toggle="modal" data-bs-target="#promoteModal2-<?php echo e($product->id); ?>">
+                                             <!-- Color Options -->
+                                                <?php if($product->variations->where('type', 'Color')->isNotEmpty()): ?>
+                                                    <div class="products-color-switch mb-2">
+                                                        <span>Color:</span>
+                                                        <div class="color-options-container d-flex gap-1 mt-1">
+                                                            <?php $__currentLoopData = $product->variations->where('type', 'Color'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $color): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <?php if($color->quantity > 0): ?>
+                                                                    <button class="color-option btn border rounded-circle"
+                                                                        style="width: 24px; height: 24px; background-color: <?php echo e($color->hex_value); ?>;"
+                                                                        data-color="<?php echo e($color->hex_value); ?>"
+                                                                        data-color-name="<?php echo e($color->value); ?>"
+                                                                        data-product-id="<?php echo e($product->product_id); ?>"
+                                                                        title="<?php echo e($color->value); ?>">
+                                                                    </button>
+                                                                <?php endif; ?>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        </div>
+                                                    </div>
+                                                <?php endif; ?>
+
+                                                <!-- Size Options -->
+                                                <?php if($product->variations->where('type', 'Size')->isNotEmpty()): ?>
+                                                    <div class="products-size-wrapper mb-2">
+                                                        <span>Size:</span>
+                                                        <ul class="list-inline mt-1">
+                                                            <?php $__currentLoopData = $product->variations->where('type', 'Size'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $size): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                                <?php if($size->quantity > 0): ?>
+                                                                    <li class="list-inline-item me-2">
+                                                                        <a href="javascript:void(0)" class="size-option btn btn-outline-secondary btn-sm"
+                                                                        data-size="<?php echo e($size->value); ?>"
+                                                                        data-product-id="<?php echo e($product->product_id); ?>">
+                                                                            <?php echo e($size->value); ?>
+
+                                                                        </a>
+                                                                    </li>
+                                                                <?php endif; ?>
+                                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                        </ul>
+                                                    </div>
+                                                <?php endif; ?>
+
+                                                <!-- Hidden inputs for selected values -->
+                                                <input type="hidden" class="selected-color" id="color-<?php echo e($product->product_id); ?>">
+                                                <input type="hidden" class="selected-size" id="size-<?php echo e($product->product_id); ?>">
+
+                                            <a href="#" class="btn btn-primary btn_promote w-100 mb-2" data-bs-toggle="modal" data-bs-target="#promoteModal2-<?php echo e($product->id); ?>">
                                                 Promote Now
                                             </a>
+
+                                            <button class="btn btn-success btn_add_to_cart_affiliate w-100"
+                                                        data-product-id="<?php echo e($product->product_id); ?>">
+                                                    Buy Now
+                                                </button>
                                         </a>
                                     </div>
                                 </div>
@@ -482,6 +968,69 @@ document.addEventListener('DOMContentLoaded', function() {
         alert("Promo material copied to clipboard!");
     }
 </script>
+
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // ✅ Handle color selection
+    document.querySelectorAll(".color-option").forEach(btn => {
+        btn.addEventListener("click", function () {
+            const productId = this.dataset.productId;
+            const colorValue = this.dataset.colorName;
+            document.getElementById(`color-${productId}`).value = colorValue;
+
+            // Highlight selected color
+            document.querySelectorAll(`.color-option[data-product-id="${productId}"]`).forEach(b => b.classList.remove("border-3", "border-dark"));
+            this.classList.add("border-3", "border-dark");
+        });
+    });
+
+    // ✅ Handle size selection
+    document.querySelectorAll(".size-option").forEach(btn => {
+        btn.addEventListener("click", function () {
+            const productId = this.dataset.productId;
+            const sizeValue = this.dataset.size;
+            document.getElementById(`size-${productId}`).value = sizeValue;
+
+            // Highlight selected size
+            document.querySelectorAll(`.size-option[data-product-id="${productId}"]`).forEach(b => b.classList.remove("active"));
+            this.classList.add("active");
+        });
+    });
+
+  // Handle "Buy Now" button
+document.querySelectorAll('.btn_add_to_cart_affiliate').forEach(button => {
+    button.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const productId = this.dataset.productId;
+
+        // Get color and size; default to 'no' if empty
+        const selectedColor = document.getElementById(`color-${productId}`).value || 'no';
+        const selectedSize = document.getElementById(`size-${productId}`).value || 'no';
+
+        const url = new URL('/affiliate/checkout', window.location.origin);
+        url.searchParams.set('product_id', productId);
+        url.searchParams.set('color', selectedColor);
+        url.searchParams.set('size', selectedSize);
+
+        window.location.href = url.toString();
+    });
+});
+
+});
+</script>
+
+
+
+
+
+
+
+
 
 
 <?php $__env->stopSection(); ?>

@@ -1,1 +1,0 @@
-<?php /**PATH C:\xampp\htdocs\OMCNEW\resources\views/includes/navbar.blade.php ENDPATH**/ ?>

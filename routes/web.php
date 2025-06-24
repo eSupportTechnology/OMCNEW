@@ -31,11 +31,18 @@ use App\Http\Controllers\AffiliateDashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\FrontendTemplateController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-
+use App\Http\Controllers\AffiliateCartController;
+use App\Http\Controllers\AffiliateCheckoutController;
+use App\Http\Controllers\AffiliateOrderController;
+use App\Http\Controllers\AffiliatePaymentController;
 
 use Illuminate\Http\Request;     //contact form
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/affiliate/checkout', [AffiliateCheckoutController::class, 'showCheckout'])->name('affiliate.checkout');
+Route::get('/affiliate/payment/{order_code}', [AffiliatePaymentController::class, 'payment'])->name('affiliate.payment');
+
+Route::post('/affiliate/buynow/store', [AffiliateOrderController::class, 'buynowstore'])->name('affiliate.buynow.store');
 
 
 Route::get('/signup', [RegisterController::class, 'showSignupForm'])->name('signupForm');
@@ -168,7 +175,7 @@ Route::post('/aff_reg', [AffiliateCustomerController::class, 'register'])->name(
 Route::put('/affiliate/update-details', [AffiliateCustomerController::class, 'updateAdditionalDetails'])->name('affiliate.add.details');
 Route::put('/affiliate/update/promotions', [AffiliateCustomerController::class, 'updatePromotions'])->name('affiliate.add.promotions');
 Route::put('/affiliate/update/bank', [AffiliateCustomerController::class, 'updateBank'])->name('affiliate.add.bank');
-
+Route::post('/affiliate-cart/add', [AffiliateCartController::class, 'addToCart'])->name('affiliate.cart.add');
 
 Route::post('/home/affiliate/login', [AffiliateCustomerController::class, 'login'])->name('aff_login');
 Route::get('/affiliate/dashboard', [AffiliateCustomerController::class, 'index'])->name('index');
@@ -479,6 +486,8 @@ Route::post('/order/store', [CustomerOrderController::class, 'store'])->name('or
 Route::get('/all-items', [ProductController::class, 'show_all_items'])->name('all-items');
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart');
 Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+
+
 Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
 Route::get('/cart/subtotal', [CartController::class, 'getCartSubtotal'])->name('cart.subtotal');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
