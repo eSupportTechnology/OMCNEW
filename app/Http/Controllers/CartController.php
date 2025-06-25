@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\CartItem;
 use App\Models\Address;
 use App\Models\Products;
+use App\Models\AffiliateCartItem;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -70,6 +71,76 @@ class CartController extends Controller
         $cartCount = Auth::check() ? CartItem::where('user_id', Auth::id())->sum('quantity') : array_sum(array_column(session()->get('cart', []), 'quantity'));
         return response()->json(['cart_count' => $cartCount]);
     }
+
+
+
+public function addToCartAffiliate(Request $request)
+{
+    $productId = $request->input('product_id');
+
+    if (!$productId) {
+        return response()->json(['error' => 'Product ID is required.'], 400);
+    }
+
+    $product = Products::where('product_id', $productId)->first();
+
+
+    if (!$product) {
+        return response()->json(['error' => 'Product not found.'], 404);
+    }
+
+    $affiliatePrice = $product->affiliate_price ?? $product->total_price;
+
+    if (Auth::check()) {
+        $user = Auth::user();
+        $item = AffiliateCartItem::where('user_id', $user->id)
+            ->where('product_id', $productId)
+            ->where('is_affiliate', true)
+            ->first();
+
+        if ($item) {
+            $item->quantity += 1;
+            $item->save();
+        } else {
+            AffiliateCartItem::create([
+                'user_id' => $user->id,
+                'product_id' => $productId,
+                'quantity' => 1,
+                'price' => $affiliatePrice,
+                
+            ]);
+        }
+    } else {
+        $cart = session()->get('cart_affiliate', []);
+        $itemFound = false;
+
+        foreach ($cart as &$item) {
+            if ($item['product_id'] === $productId) {
+                $item['quantity'] += 1;
+                $itemFound = true;
+                break;
+            }
+        }
+
+        if (!$itemFound) {
+            $cart[] = [
+                'product_id' => $productId,
+                'quantity' => 1,
+                'price' => $affiliatePrice
+            ];
+        }
+
+        session()->put('cart_affiliate', $cart);
+    }
+
+    $cartCount = Auth::check() 
+        ? CartItem::where('user_id', Auth::id())->where('is_affiliate', true)->sum('quantity') 
+        : array_sum(array_column(session()->get('cart_affiliate', []), 'quantity'));
+
+    return response()->json(['cart_count' => $cartCount]);
+}
+
+
 
 
 
