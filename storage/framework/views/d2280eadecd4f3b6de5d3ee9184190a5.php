@@ -780,13 +780,13 @@
                             <a href="/all-items?category=<?php echo e(urlencode($category->parent_category)); ?>"
                                class="category-link <?php echo e(request('category') == $category->parent_category ? 'active' : ''); ?>">
                                 <?php if($category->parent_category == 'Electronics'): ?>
-                                    <i class="fa fa-laptop"></i>
+
                                 <?php elseif($category->parent_category == 'Fashion'): ?>
-                                    <i class="fa fa-tshirt"></i>
+
                                 <?php elseif($category->parent_category == 'Home & Garden'): ?>
-                                    <i class="fa fa-home"></i>
+
                                 <?php elseif($category->parent_category == 'Sports'): ?>
-                                    <i class="fa fa-football"></i>
+                                    
                                 <?php endif; ?>
                                 <?php echo e($category->parent_category); ?>
 

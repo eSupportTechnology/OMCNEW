@@ -780,13 +780,13 @@
                             <a href="/all-items?category={{ urlencode($category->parent_category) }}"
                                class="category-link {{ request('category') == $category->parent_category ? 'active' : '' }}">
                                 @if($category->parent_category == 'Electronics')
-                                    <i class="fa fa-laptop"></i>
+
                                 @elseif($category->parent_category == 'Fashion')
-                                    <i class="fa fa-tshirt"></i>
+
                                 @elseif($category->parent_category == 'Home & Garden')
-                                    <i class="fa fa-home"></i>
+
                                 @elseif($category->parent_category == 'Sports')
-                                    <i class="fa fa-football"></i>
+                                    
                                 @endif
                                 {{ $category->parent_category }}
 

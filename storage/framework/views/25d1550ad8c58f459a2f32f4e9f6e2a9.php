@@ -1,6 +1,4 @@
-@extends ('frontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <main class="content-container">
 
     <div class="nav-ash">
@@ -23,7 +21,7 @@
                 <p class="common-p">Our services include Architectural Designing, Quantity Surveying, Structural Engineering, Interior Designing, and MEP Services. We have a proven track record of successfully completed residential and commercial projects and have earned a reputation for quality, integrity, and timely delivery.</p>
             </div>
             <div class="col-12 col-xl-6">
-                <img class="about-img" src="{{ asset('themes/buyabans/assets/images/about-img.png') }}" alt="About OMC">
+                <img class="about-img" src="<?php echo e(asset('themes/buyabans/assets/images/about-img.png')); ?>" alt="About OMC">
             </div>
         </div>
 
@@ -36,13 +34,13 @@
         <div class="row">
             <div class="d-flex justify-content-center about-img-set gap-3">
                 <div class="about-box text-right" style="width: 382px; height: 383px;">
-                    <img class="img-fluid w-100 h-100 object-fit-cover" src="{{ asset('themes/buyabans/assets/images/d18.jpg') }}" alt="Expertise">
+                    <img class="img-fluid w-100 h-100 object-fit-cover" src="<?php echo e(asset('themes/buyabans/assets/images/d18.jpg')); ?>" alt="Expertise">
                 </div>
                 <div class="about-box text-center" style="width: 382px; height: 383px;">
-                    <img class="img-fluid w-100 h-100 object-fit-cover" src="{{ asset('themes/buyabans/assets/images/d20.jpg') }}" alt="Projects">
+                    <img class="img-fluid w-100 h-100 object-fit-cover" src="<?php echo e(asset('themes/buyabans/assets/images/d20.jpg')); ?>" alt="Projects">
                 </div>
                 <div class="about-box text-left" style="width: 382px; height: 383px;">
-                    <img class="img-fluid w-100 h-100 object-fit-cover" src="{{ asset('themes/buyabans/assets/images/d30.jpg') }}" alt="Services">
+                    <img class="img-fluid w-100 h-100 object-fit-cover" src="<?php echo e(asset('themes/buyabans/assets/images/d30.jpg')); ?>" alt="Services">
                 </div>
             </div>
 
@@ -56,4 +54,6 @@
 
 </main>
 </br>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\ASUS\Desktop\OMC\OMCNEW\resources\views/frontend/About-us.blade.php ENDPATH**/ ?>
