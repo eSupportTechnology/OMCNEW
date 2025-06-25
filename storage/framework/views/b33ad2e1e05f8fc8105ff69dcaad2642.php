@@ -1,6 +1,4 @@
-@extends('layouts.admin_main.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
 
@@ -11,11 +9,12 @@
 
 <main style="margin-top: 58px">
     <div class="container pt-4 px-4">
-        @if (session('success'))
+        <?php if(session('success')): ?>
             <div class="alert alert-success">
-                {{ session('success') }}
+                <?php echo e(session('success')); ?>
+
             </div>
-        @endif
+        <?php endif; ?>
         <div class="d-flex justify-content-between align-items-center">
             <h3 class="py-3 mb-0">Customers</h3>
         </div>
@@ -37,23 +36,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($customers as $index => $customer)
+                                <?php $__currentLoopData = $customers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $customer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $customer->name }}</td>
-                                    <td>{{ $customer->email }}</td>
-                                    <td>{{ $customer->phone_num }}</td>
-                                    <td>{{ $customer->created_at?->format('Y-m-d') ?? 'N/A' }}</td>
-                                    <td>{{ $customer->customer_orders_count }}</td>
+                                    <td><?php echo e($index + 1); ?></td>
+                                    <td><?php echo e($customer->name); ?></td>
+                                    <td><?php echo e($customer->email); ?></td>
+                                    <td><?php echo e($customer->phone_num); ?></td>
+                                    <td><?php echo e($customer->created_at?->format('Y-m-d') ?? 'N/A'); ?></td>
+                                    <td><?php echo e($customer->customer_orders_count); ?></td>
 
                                     <td class="action-buttons">
-                                        <a href="{{ route('customer-details', $customer->id) }}" class="btn btn-info btn-sm view-btn"
+                                        <a href="<?php echo e(route('customer-details', $customer->id)); ?>" class="btn btn-info btn-sm view-btn"
                                             style="font-size: 0.75rem; padding: 0.25rem 0.5rem;">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                     </td>
                                 </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
                         </table>
                     </div>
@@ -73,4 +72,6 @@
 
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin_main.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\ASUS\Desktop\OMC\OMCNEW\resources\views/admin_dashboard/customers.blade.php ENDPATH**/ ?>
