@@ -1,6 +1,4 @@
-@extends('frontend.master')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <!-- Bootstrap -->
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 
@@ -178,38 +176,38 @@
             <div class="dashboard-sidebar">
                 <ul class="nav flex-column dashboard-nav">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('dashboard') ? 'active' : ''); ?>" href="<?php echo e(route('dashboard')); ?>">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('edit-profile') ? 'active' : '' }}" href="{{ route('edit-profile') }}">Edit Profile</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('edit-profile') ? 'active' : ''); ?>" href="<?php echo e(route('edit-profile')); ?>">Edit Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('myorders') ? 'active' : '' }}" href="{{ route('myorders') }}">My Orders</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('myorders') ? 'active' : ''); ?>" href="<?php echo e(route('myorders')); ?>">My Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('myreviews') ? 'active' : '' }}" href="{{ route('myreviews') }}">My Reviews</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('myreviews') ? 'active' : ''); ?>" href="<?php echo e(route('myreviews')); ?>">My Reviews</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('myinquiries') ? 'active' : '' }}" href="{{ route('myinquiries') }}">Inquiries</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('myinquiries') ? 'active' : ''); ?>" href="<?php echo e(route('myinquiries')); ?>">Inquiries</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('addresses') ? 'active' : '' }}" href="{{ route('addresses') }}">Address Book</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('addresses') ? 'active' : ''); ?>" href="<?php echo e(route('addresses')); ?>">Address Book</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('change-password') ? 'active' : '' }}" href="{{ route('change-password') }}">Password</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('change-password') ? 'active' : ''); ?>" href="<?php echo e(route('change-password')); ?>">Password</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('returns') ? 'active' : '' }}" href="{{ route('returns') }}">Returns</a>
+                        <a class="nav-link <?php echo e(request()->routeIs('returns') ? 'active' : ''); ?>" href="<?php echo e(route('returns')); ?>">Returns</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-danger" href="{{ route('logout') }}"
+                        <a class="nav-link text-danger" href="<?php echo e(route('logout')); ?>"
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Log Out
                         </a>
                     </li>
                 </ul>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
+                <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                    <?php echo csrf_field(); ?>
                 </form>
             </div>
         </div>
@@ -217,7 +215,7 @@
         <!-- Main content -->
         <div class="col-lg-9 col-md-8">
             <div class="dashboard-content">
-                @yield('dashboard-content')
+                <?php echo $__env->yieldContent('dashboard-content'); ?>
             </div>
         </div>
     </div>
@@ -244,4 +242,6 @@
     window.addEventListener('load', checkScreenSize);
     window.addEventListener('resize', checkScreenSize);
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('frontend.master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\ASUS\Desktop\OMC2\OMCNEW\resources\views/member_dashboard/user_sidebar.blade.php ENDPATH**/ ?>
