@@ -107,7 +107,7 @@ public function addToCartAffiliate(Request $request)
                 'product_id' => $productId,
                 'quantity' => 1,
                 'price' => $affiliatePrice,
-                
+
             ]);
         }
     } else {
@@ -133,8 +133,8 @@ public function addToCartAffiliate(Request $request)
         session()->put('cart_affiliate', $cart);
     }
 
-    $cartCount = Auth::check() 
-        ? CartItem::where('user_id', Auth::id())->where('is_affiliate', true)->sum('quantity') 
+    $cartCount = Auth::check()
+        ? CartItem::where('user_id', Auth::id())->where('is_affiliate', true)->sum('quantity')
         : array_sum(array_column(session()->get('cart_affiliate', []), 'quantity'));
 
     return response()->json(['cart_count' => $cartCount]);

@@ -67,24 +67,23 @@
                                 <a href="#" class="mobile-menu-toggle new-mobile-toggle"
                                    onclick="if (!window.__cfRLUnblockHandlers) return false; openMenuMobi()"
                                    data-cf-modified-a071cb3ff60724c4b8f55cf9-="">
-                                    {{--  <img class="mobi-menu-icon"
-                                         src="{{ asset('frontend/newstyle/assets/images/menuLOGO-mbo.png') }}">  --}}
+                                    
                                          <i class="ph ph-list mobile-menu-icon mobi-menu-icon" style="color: #2b96c5; font-size: 24px;"></i>
                                 </a>
                             </div>
 
                             <div class="mobi-logo">
-                                @if ($siteLogo && $siteLogo->image_path)
-                                    <a href="{{ url('/') }}">
-                                        <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}"
+                                <?php if($siteLogo && $siteLogo->image_path): ?>
+                                    <a href="<?php echo e(url('/')); ?>">
+                                        <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>"
                                              alt="Site Logo" class="img-fluid" style="max-height: 60px;">
                                     </a>
-                                @else
+                                <?php else: ?>
                                     <a href="/">
-                                        <img src="{{ asset('frontend/newstyle/assets/images/buyabanslogo-new.png') }}"
+                                        <img src="<?php echo e(asset('frontend/newstyle/assets/images/buyabanslogo-new.png')); ?>"
                                              alt="logo" />
                                     </a>
-                                @endif
+                                <?php endif; ?>
                             </div>
                         </div>
 
@@ -94,21 +93,21 @@
 
                                 <!-- Account Icon -->
                                 <div class="mobile-icon-item">
-                                    @auth
+                                    <?php if(auth()->guard()->check()): ?>
                                         <div class="loged-user">
                                             <div class="log-user-img">
-                                                <a href="{{ route('dashboard') }}">
+                                                <a href="<?php echo e(route('dashboard')); ?>">
                                                     <img src="https://buyabans.com/themes/buyabans/assets/images/icon/dummy-user.png"
                                                          alt="User" class="mobile-account-icon">
                                                 </a>
                                             </div>
                                         </div>
-                                    @else
-                                        <a href="{{ route('login') }}" class="mobile-account-link">
-                                            <img src="{{ asset('frontend/newstyle/assets/images/account-icon.png') }}"
+                                    <?php else: ?>
+                                        <a href="<?php echo e(route('login')); ?>" class="mobile-account-link">
+                                            <img src="<?php echo e(asset('frontend/newstyle/assets/images/account-icon.png')); ?>"
                                                  alt="Account" class="mobile-account-icon">
                                         </a>
-                                    @endauth
+                                    <?php endif; ?>
                                 </div>
 
                                 <!-- Cart Icon -->
@@ -116,7 +115,7 @@
                                     <a href="javascript:void(0)" class="mobile-cart-link">
                                         <div class="mobile-cart-wrapper">
                                             <i class="ph ph-shopping-cart-simple mobile-cart-icon" style="color:#2b96c5"></i>
-                                            <span class="mobile-cart-count" id="cart-count-1">{{ $cartCount ?? 0 }}</span>
+                                            <span class="mobile-cart-count" id="cart-count-1"><?php echo e($cartCount ?? 0); ?></span>
                                         </div>
                                     </a>
                                 </div>
@@ -124,8 +123,7 @@
                                 <!-- Search Icon -->
                                 <div class="mobile-icon-item">
                                     <button class="mobile-search-btn ">
-                                        {{--  <img src="{{ asset('frontend/newstyle/assets/images/icon/mobi-search.png') }}"
-                                             alt="Search" class="mobile-search-icon"  >  --}}
+                                        
                                              <i class="ph ph-magnifying-glass mobile-search-icon" style="color: #2b96c5; font-size: 24px;" ></i>
 
                                     </button>
@@ -354,7 +352,7 @@
 
         <div class="desmain-header">
             <div class="page-loader" hidden>
-                <img src="{{ asset('frontend/newstyle/assets/images/loader.gif') }}" style="display:block">
+                <img src="<?php echo e(asset('frontend/newstyle/assets/images/loader.gif')); ?>" style="display:block">
 
             </div>
 
@@ -366,16 +364,16 @@
                     <div class="site-common-con header-search">
                         <div class="destop-main-header">
                             <div class="des-logo">
-                                @if ($siteLogo && $siteLogo->image_path)
-                                    <a href="{{ url('/') }}">
-                                        <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}"
+                                <?php if($siteLogo && $siteLogo->image_path): ?>
+                                    <a href="<?php echo e(url('/')); ?>">
+                                        <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>"
                                              alt="Site Logo" class="img-fluid">
                                     </a>
-                                @else
+                                <?php else: ?>
                                     <a href="/"><img
-                                            src="{{ asset('frontend/newstyle/assets/images/buyabanslogo-new.png') }}">
+                                            src="<?php echo e(asset('frontend/newstyle/assets/images/buyabanslogo-new.png')); ?>">
                                     </a>
-                                @endif
+                                <?php endif; ?>
 
                             </div>
                             <style>
@@ -454,15 +452,16 @@
 
                                         <a href="javascript:void(0)" class="d-flex">
 
-                                            {{--  <cart-item-count></cart-item-count>  --}}
+                                            
                                             <div class="dt-icon-div">
                                                     <span id="cart-count-3"
                                                           class="w-16 h-16 text-xs text-white flex-center rounded-circle bg-main-two-600 position-absolute top-n6 ">
-                                                        {{ $cartCount ?? 0 }}
+                                                        <?php echo e($cartCount ?? 0); ?>
+
 
                                                     </span>
                                                 <img
-                                                    src=" {{ asset('frontend/newstyle/assets/images/cart-new.png') }}"
+                                                    src=" <?php echo e(asset('frontend/newstyle/assets/images/cart-new.png')); ?>"
                                                     class="cart-img">
                                             </div>
                                             <span class="span-cart">Cart</span>
@@ -489,7 +488,7 @@
 
                                         <!-- Profile Dropdown -->
                                         <div class="profile-dropdown">
-                                            @auth
+                                            <?php if(auth()->guard()->check()): ?>
 
                                                 <div class="auth-container">
                                                     <div class="loged-user d-inline-flex">
@@ -498,13 +497,14 @@
                                                         </div>
                                                         <div class="log-user-data dropdown">
                                                             <div class="user-name">Hi!
-                                                                {{ auth()->user()->name }}
+                                                                <?php echo e(auth()->user()->name); ?>
+
                                                             </div>
                                                             <div class="dropdown-box">
 
                                                                 <ul class="log-popup-links">
                                                                     <li>
-                                                                        <a href="{{ route('dashboard') }}">
+                                                                        <a href="<?php echo e(route('dashboard')); ?>">
                                                                             <img
                                                                                 src="https://buyabans.com/themes/buyabans/assets/images/icon/mini-profile/user.png">My
                                                                             Account
@@ -516,10 +516,10 @@
                                                                             <img
                                                                                 src="https://buyabans.com/themes/buyabans/assets/images/icon/mini-profile/turn-off.png">
                                                                             <form method="POST"
-                                                                                  action="{{ route('logout') }}">
+                                                                                  action="<?php echo e(route('logout')); ?>">
 
 
-                                                                                @csrf
+                                                                                <?php echo csrf_field(); ?>
                                                                                 <button type="submit"
                                                                                         class="dropdown-item w-100">Logout</button>
                                                                             </form>
@@ -533,13 +533,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            @else
+                                            <?php else: ?>
                                                 <!-- Default Profile Icon and Links for Guests -->
                                                 <div class="sign-up d-inline-flex">
                                                     <div>
-                                                        <a href="{{ route('login') }}" class="d-flex">
+                                                        <a href="<?php echo e(route('login')); ?>" class="d-flex">
                                                             <div class="dt-icon-div"><img
-                                                                    src=" {{ asset('frontend/newstyle/assets/images/account-icon.png') }} ">
+                                                                    src=" <?php echo e(asset('frontend/newstyle/assets/images/account-icon.png')); ?> ">
                                                             </div>
                                                             <div>Login</div>
                                                         </a>
@@ -549,7 +549,7 @@
 
                                                     <div>
                                                         <a class="sign-up-link"
-                                                           href="{{ route('signup') }}"><span>Sign
+                                                           href="<?php echo e(route('signup')); ?>"><span>Sign
                                                                     Up</span></a>
                                                     </div>
                                                 </div>
@@ -557,7 +557,7 @@
                                         </div>
 
 
-                                        @endauth
+                                        <?php endif; ?>
                                     </div>
 
                                 </div>
@@ -778,27 +778,28 @@
                 </div>
 
                 <ul class="category-list" id="categoryList">
-                    @foreach ($categories as $category)
+                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li class="category-item">
-                            <a href="/all-items?category={{ urlencode($category->parent_category) }}"
-                               class="category-link {{ request('category') == $category->parent_category ? 'active' : '' }}">
-                                @if($category->parent_category == 'Electronics')
+                            <a href="/all-items?category=<?php echo e(urlencode($category->parent_category)); ?>"
+                               class="category-link <?php echo e(request('category') == $category->parent_category ? 'active' : ''); ?>">
+                                <?php if($category->parent_category == 'Electronics'): ?>
 
-                                @elseif($category->parent_category == 'Fashion')
+                                <?php elseif($category->parent_category == 'Fashion'): ?>
 
-                                @elseif($category->parent_category == 'Home & Garden')
+                                <?php elseif($category->parent_category == 'Home & Garden'): ?>
 
-                                @elseif($category->parent_category == 'Sports')
+                                <?php elseif($category->parent_category == 'Sports'): ?>
 
-                                @endif
-                                {{ $category->parent_category }}
+                                <?php endif; ?>
+                                <?php echo e($category->parent_category); ?>
 
-                                @if($category->is_featured)
+
+                                <?php if($category->is_featured): ?>
                                     <span class="category-badge">HOT</span>
-                                @endif
+                                <?php endif; ?>
                             </a>
                         </li>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </ul>
             </div>
         </div>
@@ -944,15 +945,16 @@
             <h4 style="margin: 0; font-size: 18px;">Shop Categories</h4>
         </div>
         <ul class="category-sidebar-list">
-            @foreach ($categories as $category)
+            <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <li class="category-sidebar-item">
-                    <a href="/all-items?category={{ urlencode($category->parent_category) }}"
+                    <a href="/all-items?category=<?php echo e(urlencode($category->parent_category)); ?>"
                        class="category-sidebar-link">
                         <i class="fa fa-angle-right"></i>
-                        {{ $category->parent_category }}
+                        <?php echo e($category->parent_category); ?>
+
                     </a>
                 </li>
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </ul>
     </div>
 
@@ -1094,13 +1096,13 @@
                     <li class="column-1"><a href="#" title="">Brands</a></li>
 
 
-                    {{-- <li class="column-1"><a href="/shop" title="">Shop</a></li> --}}
+                    
 
-                    <li><a href="{{ route('about') }}" title=""> About Us </a></li>
+                    <li><a href="<?php echo e(route('about')); ?>" title=""> About Us </a></li>
 
-                    <li><a href="{{ route('contac') }}" title="">Contact Us </a></li>
+                    <li><a href="<?php echo e(route('contac')); ?>" title="">Contact Us </a></li>
 
-                    {{-- <li><a href="{{ route('frontend.vendor') }}" title="">Vendors </a></li> --}}
+                    
 
 
                 </ul>
@@ -1119,42 +1121,44 @@
             <div class="tab-pane cat-pane" id="categories">
                 <ul class=" list-unstyled">
 
-                    @foreach ($categories as $category)
+                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <li class="position-relative">
 
                             <!-- Main Category and Toggle -->
                             <div class="d-flex justify-content-between align-items-center ">
-                                <a href="/all-items?category={{ urlencode($category->parent_category) }}"
+                                <a href="/all-items?category=<?php echo e(urlencode($category->parent_category)); ?>"
                                    class="text-dark text-decoration-none fw-semibold" style="line-height: 1.6;">
-                                    {{ $category->parent_category }}
+                                    <?php echo e($category->parent_category); ?>
+
                                 </a>
 
-                                @if ($category->subcategories->isNotEmpty())
+                                <?php if($category->subcategories->isNotEmpty()): ?>
                                     <span class="toggle-btn" onclick="toggleDropdown(this)"
                                           style="cursor: pointer;">
                                             <i class="fa fa-chevron-down text-muted"></i>
                                         </span>
-                                @endif
+                                <?php endif; ?>
                             </div>
 
                             <!-- Subcategory List -->
-                            @if ($category->subcategories->isNotEmpty())
+                            <?php if($category->subcategories->isNotEmpty()): ?>
                                 <ul
                                     class="dropdown subcategory-dropdown bg-light border mt-1 rounded shadow-sm d-none">
-                                    @foreach ($category->subcategories as $subcategory)
+                                    <?php $__currentLoopData = $category->subcategories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $subcategory): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <li>
-                                            <a href="/all-items?subcategory={{ urlencode($subcategory->subcategory) }}"
+                                            <a href="/all-items?subcategory=<?php echo e(urlencode($subcategory->subcategory)); ?>"
                                                class="d-block px-4 py-2 text-dark text-decoration-none"
                                                style="line-height: 1.6;">
-                                                {{ $subcategory->subcategory }}
+                                                <?php echo e($subcategory->subcategory); ?>
+
                                             </a>
                                         </li>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </ul>
-                            @endif
+                            <?php endif; ?>
 
                         </li>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
                 </ul>
             </div>
@@ -1246,7 +1250,7 @@
 
             if (query.length > 0) {
                 $.ajax({
-                    url: "{{ route('searchProducts') }}",
+                    url: "<?php echo e(route('searchProducts')); ?>",
                     method: 'GET',
                     data: {
                         query: query
@@ -1277,7 +1281,7 @@
 
 <script>
     function updateCartCount() {
-        fetch("{{ route('cart.count') }}")
+        fetch("<?php echo e(route('cart.count')); ?>")
             .then(response => response.json())
             .then(data => {
                 const countIds = ['cart-count-1', 'cart-count-2', 'cart-count-3', 'cart-count-4'];
@@ -1606,3 +1610,4 @@
 
 
 </header>
+<?php /**PATH C:\Users\ASUS\Desktop\OMC\OMCNEW\resources\views/frontend/navbar-new.blade.php ENDPATH**/ ?>
