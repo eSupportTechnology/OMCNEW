@@ -681,7 +681,7 @@
         }
 
         .category-scroll-container {
-            position: relative;
+            position: absolute;
         }
 
         .scroll-indicator {
