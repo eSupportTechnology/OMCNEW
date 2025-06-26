@@ -12,7 +12,7 @@ use App\Models\Products;
 use App\Models\AffiliateReferral;
 use Illuminate\Support\Facades\Log;
 use App\Models\PaymentRequest;
-
+use Illuminate\Support\Facades\Auth;
 
 class AffiliateCustomerController extends Controller
 {
@@ -98,24 +98,25 @@ class AffiliateCustomerController extends Controller
         $customer->contactno = $validatedData['phone_num'];
         $customer->email = $validatedData['email'];
         $customer->password = $validatedData['password'];
-        $customer->promotion_method = json_encode($validatedData['promotion_method'] ?? []); 
-        $customer->instagram_url = $validatedData['instagram_url'];
-        $customer->facebook_url = $validatedData['facebook_url'];
-        $customer->tiktok_url = $validatedData['tiktok_url'];
-        $customer->youtube_url = $validatedData['youtube_url'];
-        $customer->content_website_url = $validatedData['content_website_url'];
-        $customer->content_whatsapp_url = $validatedData['content_whatsapp_url'];
-        $customer->bank_name = $validatedData['bank_name'];
-        $customer->branch = $validatedData['branch'];
-        $customer->account_name = $validatedData['account_name'];
-        $customer->account_number = $validatedData['account_number'];
+        $customer->promotion_method = json_encode($validatedData['promotion_method'] ?? []);
+        $customer->instagram_url = $validatedData['instagram_url'] ?? null;
+        $customer->facebook_url = $validatedData['facebook_url'] ?? null;
+        $customer->tiktok_url = $validatedData['tiktok_url'] ?? null;
+        $customer->youtube_url = $validatedData['youtube_url'] ?? null;
+        $customer->content_website_url = $validatedData['content_website_url'] ?? null;
+        $customer->content_whatsapp_url = $validatedData['content_whatsapp_url'] ?? null;
+        $customer->bank_name = $validatedData['bank_name'] ?? null;
+        $customer->branch = $validatedData['branch'] ?? null;
+        $customer->account_name = $validatedData['account_name'] ?? null;
+        $customer->account_number = $validatedData['account_number'] ?? null;   
+
         $customer->status = 'pending';
 
         // Save the customer to the database
         $customer->save();
 
         // Redirect to a success page with a session message
-        return redirect()->route('aff_home')->with('status', 'Affiliate account created successfully!');
+        return redirect()->route('aff_home')->with('status', 'Registered successfully. Your data has been submitted. Within 24 hours, the admin will approve your account. Please wait.');
     }
 
     
@@ -262,6 +263,109 @@ class AffiliateCustomerController extends Controller
         
         return redirect()->route('aff_home');
     }
+
+
+    public function updateAdditionalDetails(Request $request)
+{
+    $validatedData = $request->validate([
+        'promotion_method' => 'nullable|array',
+        'instagram_url' => 'nullable|url',
+        'facebook_url' => 'nullable|url',
+        'tiktok_url' => 'nullable|url',
+        'youtube_url' => 'nullable|url',
+        'content_website_url' => 'nullable|url',
+        'content_whatsapp_url' => 'nullable|url',
+        'bank_name' => 'nullable|string|max:255',
+        'branch' => 'nullable|string|max:255',
+        'account_name' => 'nullable|string|max:255',
+        'account_number' => 'nullable|string|max:255',
+    ]);
+
+    $affiliateId = Session::get('customer_id');
+        $customer = Affiliate_User::where('id', $affiliateId)->first();
+    
+
+    if (!$customer) {
+        return redirect()->back()->withErrors(['error' => 'User not found.']);
+    }
+
+    // Update only the additional fields
+    $customer->promotion_method = json_encode($validatedData['promotion_method'] ?? []);
+    $customer->instagram_url = $validatedData['instagram_url'] ?? null;
+    $customer->facebook_url = $validatedData['facebook_url'] ?? null;
+    $customer->tiktok_url = $validatedData['tiktok_url'] ?? null;
+    $customer->youtube_url = $validatedData['youtube_url'] ?? null;
+    $customer->content_website_url = $validatedData['content_website_url'] ?? null;
+    $customer->content_whatsapp_url = $validatedData['content_whatsapp_url'] ?? null;
+    $customer->bank_name = $validatedData['bank_name'] ?? null;
+    $customer->branch = $validatedData['branch'] ?? null;
+    $customer->account_name = $validatedData['account_name'] ?? null;
+    $customer->account_number = $validatedData['account_number'] ?? null;
+
+    $customer->save();
+
+    return redirect()->back()->with('status', 'Profile updated successfully.');
+}
+
+public function updatePromotions(Request $request)
+{
+    $validated = $request->validate([
+        'promotion_method' => 'nullable|array',
+        'instagram_url' => 'nullable|url',
+        'facebook_url' => 'nullable|url',
+        'tiktok_url' => 'nullable|url',
+        'youtube_url' => 'nullable|url',
+        'content_website_url' => 'nullable|url',
+        'content_whatsapp_url' => 'nullable|url',
+    ]);
+
+    $affiliateId = Session::get('customer_id');
+     $affiliate = Affiliate_User::where('id', $affiliateId)->first();
+
+    if (!$affiliate) {
+        return redirect()->back()->withErrors(['error' => 'User not found.']);
+    }
+
+    $affiliate->promotion_method = json_encode($validated['promotion_method'] ?? []);
+    $affiliate->instagram_url = $validated['instagram_url'] ?? null;
+    $affiliate->facebook_url = $validated['facebook_url'] ?? null;
+    $affiliate->tiktok_url = $validated['tiktok_url'] ?? null;
+    $affiliate->youtube_url = $validated['youtube_url'] ?? null;
+    $affiliate->content_website_url = $validated['content_website_url'] ?? null;
+    $affiliate->content_whatsapp_url = $validated['content_whatsapp_url'] ?? null;
+
+    $affiliate->save();
+
+    return redirect()->back()->with('status', 'Promotional methods updated successfully.');
+}
+
+
+public function updateBank(Request $request)
+{
+    $validated = $request->validate([
+        'bank_name' => 'required|string|max:255',
+        'branch' => 'required|string|max:255',
+        'account_name' => 'required|string|max:255',
+        'account_number' => 'required|string|max:255',
+    ]);
+
+    $affiliateId = Session::get('customer_id');
+     $affiliate = Affiliate_User::where('id', $affiliateId)->first();
+
+    if (!$affiliate) {
+        return redirect()->back()->withErrors(['error' => 'User not found.']);
+    }
+
+    $affiliate->bank_name = $validated['bank_name'];
+    $affiliate->branch = $validated['branch'];
+    $affiliate->account_name = $validated['account_name'];
+    $affiliate->account_number = $validated['account_number'];
+
+    $affiliate->save();
+
+    return redirect()->back()->with('status', 'Bank information updated successfully.');
+}
+
     
 
 

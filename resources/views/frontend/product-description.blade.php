@@ -70,8 +70,193 @@
 
 
 
+.wishlist-toggle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, rgba(var(--secondary-color-rgb, 255, 0, 110), 0.05), rgba(var(--secondary-color-rgb, 255, 0, 110), 0.01));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.wishlist-toggle:hover {
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.wishlist-toggle:hover::before {
+    opacity: 1;
+}
+
+.wishlist-toggle i {
+    font-size: 1.3rem;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.wishlist-toggle span {
+    position: relative;
+    z-index: 1;
+}
+
+.wishlist-toggle:active {
+    transform: translateY(0);
+}
+
+/* Heart animation */
+.wishlist-toggle i.bx-heart {
+    color: var(--light-text);
+}
+
+.wishlist-toggle:hover i.bx-heart {
+    transform: scale(1.15);
+    color: var(--secondary-color);
+}
+
+.wishlist-toggle i.filled,
+.wishlist-toggle i.bxs-heart {
+    color: var(--secondary-color);
+    animation: heartPulse 0.4s ease-out;
+}
+
+/* Tab Content */
+.tab.products-details-tab {
+    margin-top: 40px;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #e8ebec;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tabs li {
+    flex: 1;
+}
+
+.tabs li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 15px;
+    color: var(--dark-text);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    border-bottom: 3px solid transparent;
+}
+
+.tabs li a:hover {
+    color: var(--primary-color);
+}
+
+.tabs li a.active {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+   
+}
 
 
+
+.tab-content {
+    padding: 30px;
+}
+
+.tabs-item {
+    display: none;
+}
+
+.tabs-item.active {
+    display: block;
+}
+
+/* Reviews */
+.review-item {
+    border-bottom: 1px solid #e8ebec;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.review-item:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.review-item h3 {
+    margin: 10px 0;
+    font-size: 1.1rem;
+    color: var(--dark-text);
+}
+
+.review-item span {
+    color: var(--light-text);
+    font-size: 0.9rem;
+}
+
+.review-item p {
+    margin-top: 15px;
+    color: var(--dark-text);
+}
+
+
+/* Availability Badge */
+.availability-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    
+}
+
+.instock {
+    background-color: var(--success-color);
+    color: white
+    
+}
+
+.out-of-stock {
+    background-color: rgba(227, 52, 47, 0.1);
+    color: var(--danger-color);
+}
+
+/* Product Description */
+.product-description {
+    line-height: 1.6;
+    color: var(--dark-text);
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+    .buttons-row {
+        flex-direction: column;
+    }
+    
+    .tabs {
+        flex-direction: column;
+    }
+    
+    .tabs li a {
+        justify-content: flex-start;
+    }
+}
+</style>
 
 
 
@@ -744,9 +929,9 @@
                     </div>
                 </div>
 
-                <div class="col-lg-7 col-md-12">
-                    <div class="products-details-desc">
-                        <h3>{{ $product->product_name }}</h3>
+            <div class="col-lg-7 col-md-12">
+                <div class="products-details-desc">
+                    <h3>{{ $product->product_name }}</h3>
 
                         <div class="price">
                             @if ($sale)

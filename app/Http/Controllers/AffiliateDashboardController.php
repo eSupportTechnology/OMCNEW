@@ -41,6 +41,28 @@ class AffiliateDashboardController extends Controller
         return redirect()->back()->with('success', 'Basic information updated successfully.');
     }
 
+    public function updateBankInfo(Request $request)
+{
+    $request->validate([
+        'bank_name' => 'nullable|string|max:255',
+        'branch' => 'nullable|string|max:255',
+        'account_name' => 'nullable|string|max:255',
+        'account_number' => 'nullable|string|max:255',
+    ]);
+
+     $affiliateId = Session::get('customer_id');
+        $customer = Affiliate_User::where('id', $affiliateId)->first();
+    $customer->update([
+        'bank_name' => $request->bank_name,
+        'branch' => $request->branch,
+        'account_name' => $request->account_name,
+        'account_number' => $request->account_number,
+    ]);
+
+    return redirect()->back()->with('status', 'Bank Information updated successfully.');
+}
+
+
 
 
 

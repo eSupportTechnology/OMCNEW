@@ -31,11 +31,18 @@ use App\Http\Controllers\AffiliateDashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\FrontendTemplateController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
-
+use App\Http\Controllers\AffiliateCartController;
+use App\Http\Controllers\AffiliateCheckoutController;
+use App\Http\Controllers\AffiliateOrderController;
+use App\Http\Controllers\AffiliatePaymentController;
 
 use Illuminate\Http\Request;     //contact form
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/affiliate/checkout', [AffiliateCheckoutController::class, 'showCheckout'])->name('affiliate.checkout');
+Route::get('/affiliate/payment/{order_code}', [AffiliatePaymentController::class, 'payment'])->name('affiliate.payment');
+
+Route::post('/affiliate/buynow/store', [AffiliateOrderController::class, 'buynowstore'])->name('affiliate.buynow.store');
 
 
 Route::get('/signup', [RegisterController::class, 'showSignupForm'])->name('signupForm');
@@ -165,6 +172,10 @@ Route::post('/dashboard/password/update', [UserDashboardController::class, 'upda
 Route::view('/aff_home', 'frontend.aff_home')->name('aff_home');
 Route::view('/aff_reg', 'frontend.aff_reg')->name('aff_reg');
 Route::post('/aff_reg', [AffiliateCustomerController::class, 'register'])->name('register_form');
+Route::put('/affiliate/update-details', [AffiliateCustomerController::class, 'updateAdditionalDetails'])->name('affiliate.add.details');
+Route::put('/affiliate/update/promotions', [AffiliateCustomerController::class, 'updatePromotions'])->name('affiliate.add.promotions');
+Route::put('/affiliate/update/bank', [AffiliateCustomerController::class, 'updateBank'])->name('affiliate.add.bank');
+Route::post('/affiliate-cart/add', [AffiliateCartController::class, 'addToCart'])->name('affiliate.cart.add');
 
 Route::post('/home/affiliate/login', [AffiliateCustomerController::class, 'login'])->name('aff_login');
 Route::get('/affiliate/dashboard', [AffiliateCustomerController::class, 'index'])->name('index');
@@ -214,6 +225,8 @@ Route::get('/affiliate/dashboard/payment/affiliate_rules', [AffiliateRulesContro
 
 Route::post('/affiliate/update-site-info', [AffiliateDashboardController::class, 'updateSiteInfo'])->name('affiliate.updateSiteInfo');
 Route::post('/affiliate/update-basic-info', [AffiliateDashboardController::class, 'updateBasicInfo'])->name('affiliate.updateBasicInfo');
+Route::put('/affiliate/update-bank-info', [AffiliateDashboardController::class, 'updateBankInfo'])->name('affiliate.updateBankInfo');
+
 Route::get('/affiliate/dashboard/account/mywebsites_page', [AffiliateDashboardController::class, 'index'])->name('mywebsites_page');
 
 Route::get('/affiliate/dashboard/account/tracking_id', [AffiliateTrackingController::class, 'index'])->name('tracking_id');
@@ -473,6 +486,8 @@ Route::post('/order/store', [CustomerOrderController::class, 'store'])->name('or
 Route::get('/all-items', [ProductController::class, 'show_all_items'])->name('all-items');
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart');
 Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+
+
 Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
 Route::get('/cart/subtotal', [CartController::class, 'getCartSubtotal'])->name('cart.subtotal');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
