@@ -51,6 +51,8 @@ Route::post('/signup', [RegisterController::class, 'register'])->name('signup');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/verify', [RegisterController::class, 'showVerificationForm'])->name('verify.form');
+Route::post('/verify', [RegisterController::class, 'verifyCode'])->name('verify.code');
 
 Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('lost_password');
 Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');

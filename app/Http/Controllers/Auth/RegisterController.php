@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendVerificationCode;
 
 class RegisterController extends Controller
 {
@@ -55,6 +57,8 @@ class RegisterController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
         ]);
+        $verificationCode = rand(100000, 999999);
+
 
         // Store user data in the database
         $user = new User();
@@ -65,7 +69,12 @@ class RegisterController extends Controller
         $user->phone_num = $validatedData['phone_num'];
         $user->email = $validatedData['email'];
         $user->password = Hash::make($validatedData['password']);
+        $user->verification_code = $verificationCode;
+        $user->is_verified = false;
         $user->save();
+
+        // Send verification code email
+    Mail::to($user->email)->send(new SendVerificationCode($verificationCode));
 
         // ✅ Send SMS to vendor
         try {
@@ -79,6 +88,36 @@ class RegisterController extends Controller
         }
 
         // Redirect to a success page or login
-        return redirect()->route('login')->with('success', 'Account created successfully! You can now log in.');
+        return redirect()->route('verify.form')->with('email', $user->email);
     }
+
+
+    public function showVerificationForm()
+{
+    return view('auth.codeverify'); // create this blade below
+}
+
+public function verifyCode(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'code' => 'required|digits:6',
+    ]);
+
+    $user = User::where('email', $request->email)
+                ->where('verification_code', $request->code)
+                ->first();
+
+    if (!$user) {
+        return back()->withErrors(['code' => 'Invalid verification code']);
+    }
+
+
+    $user->is_verified = true;
+    // $user->verification_code = null;
+    $user->save();
+
+    return redirect()->route('login')->with('success', 'Email verified! You can now login.');
+}
+
 }
