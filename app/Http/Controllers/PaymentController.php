@@ -179,13 +179,13 @@ class PaymentController extends Controller
             $amount   = $order->total_cost; // Amount in LKR
             $currency = 'LKR';
             $hash     = OnepayHelper::generateHash($currency, $amount);
-            $reference = 'DSA_' . uniqid();
+            $reference = 'OMCORD_' . time();
 
             Log::info('Initiating OnePay Payment', [
                 'currency'                 => $currency,
                 'app_id'                   => config('onepay.app_id'),
                 'hash'                     => $hash,
-                'amount'                   => $amount,
+                'amount'                   => number_format($amount, 2, '.', ''),
                 'reference'                => $reference,
                 'customer_first_name'      => $order->customer_fname,
                 'customer_last_name'       => optional($order->user)->name ?? 'Unknown',
@@ -194,7 +194,6 @@ class PaymentController extends Controller
                 'transaction_redirect_url' => route('order.thankyou', ['order_code' => $order_code]),
                 'additional_data'          => $reference,
             ]);
-
             // Make API request to OnePay
             $response = Http::withHeaders([
                 'Authorization' => config('onepay.api_key'),
