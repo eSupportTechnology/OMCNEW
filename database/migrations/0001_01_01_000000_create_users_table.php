@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
-            
+
             // Adding new fields
             $table->string('address')->nullable();
             $table->string('district')->nullable();
@@ -31,6 +31,8 @@ return new class extends Migration
             $table->string('role')->nullable();
             $table->string('profile_image')->nullable();
             $table->string('status')->nullable();
+
+          
 
 
             $table->rememberToken();
@@ -63,4 +65,3 @@ return new class extends Migration
         Schema::dropIfExists('sessions');
     }
 };
-

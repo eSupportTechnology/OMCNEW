@@ -101,7 +101,7 @@
                         <div class="accordion-body">
                             <ul>
                                 <li class="footer-nav"><a href="/about">About Us</a></li>
-                                <li class="footer-nav"><a href="#">Careers</a></li>
+                                
                                 <li class="footer-nav"><a href="/contact">Contact Us</a></li>
 
                             </ul>
@@ -544,7 +544,7 @@
                             <p class="footer-title">About</p>
                             <ul>
                                 <li class="footer-link"><a href="<?php echo e(route('about')); ?>">About Us</a></li>
-                                <li class="footer-link"><a href="#">Careers</a></li>
+                                
                                 <li class="footer-link"><a href="<?php echo e(route('contac')); ?>">Contact Us</a></li>
                             </ul>
                         </div>
@@ -579,7 +579,7 @@
                         <div class="footer-links-set">
                             <p class="footer-title">Quick Links</p>
                             <ul>
-                                <li class="footer-link"><a href="#">Brands</a></li>
+                                <li class="footer-link"><a href="<?php echo e(route('all-items')); ?>">Brands</a></li>
                                 <li class="footer-link"><a href="<?php echo e(route('warranty')); ?>">Warranty Information</a></li>
                                 <li class="footer-link"><a href="<?php echo e(route('return-product')); ?>">Return Products</a></li>
                             </ul>
