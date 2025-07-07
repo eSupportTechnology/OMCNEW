@@ -4208,3 +4208,6 @@ Content-Transfer-Encoding: quoted-printable
 #72 C:\\Users\\ASUS\\Desktop\\OMC2\\OMCNEW\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(23): require_once('C:\\\\Users\\\\ASUS\\\\D...')
 #73 {main}
 "} 
+[2025-07-07 05:26:38] local.ERROR: Failed to send SMS to vendor: SMS Failed: Not enough money in the wallet  
+[2025-07-07 05:34:27] local.ERROR: Failed to send SMS to vendor: SMS Failed: Not enough money in the wallet  
+[2025-07-07 05:40:41] local.ERROR: Failed to send SMS to vendor: SMS Failed: Not enough money in the wallet  
