@@ -397,6 +397,22 @@ $price =
                 }
             });
 
+            // Enable manual input for quantity and update price accordingly
+            $('.quantity-input').off('input').on('input', function() {
+                let value = $(this).val();
+                if (/^[1-9][0-9]*$/.test(value)) {
+                    updatePrice($(this));
+                }
+            });
+            $('.quantity-input').off('change').on('change', function() {
+                let value = parseInt($(this).val());
+                if (isNaN(value) || value < 1) {
+                    $(this).val(1);
+                    value = 1;
+                }
+                updatePrice($(this));
+            });
+
             // Function to update the price when quantity changes
             function updatePrice(element) {
                 // Check if we're in mobile or desktop view

@@ -209,8 +209,12 @@
                     <hr />
                     <div class="product-availability mt-3">
                         <span class="">Availability :</span>
-                        @if($product->quantity > 1)
-                            <span class="ms-1" style="color:#4caf50;">In stock</span>
+                        @if($product->quantity > 100)
+                            <span class="ms-1" style="color:#4caf50;">100+ Available</span>
+                        @elseif($product->quantity < 10 && $product->quantity > 0)
+                            <span class="ms-1" style="color:red;">Only {{ $product->quantity }} left - Very low stock!</span>
+                        @elseif($product->quantity > 0)
+                            <span class="ms-1" style="color:#4caf50;">{{ $product->quantity }} Available</span>
                         @else
                             <span class="ms-1" style="color:red;">Out of stock</span>
                         @endif

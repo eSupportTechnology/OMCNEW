@@ -156,6 +156,8 @@
                 margin-bottom: 30px;
             }
         }
+        .product-availability-on-hover-hide { display: block; transition: opacity 0.2s; }
+        .single-products-box:hover .product-availability-on-hover-hide { display: none; }
     </style>
     <!-- Start Page Title -->
     <div class="page-title-area">
@@ -329,6 +331,19 @@
                                                         {{ number_format($product->normal_price, 2) }}</span>
                                                 @endif
                                             </div>
+                                            <div class="product-availability-on-hover-hide product-availability mt-2 mb-1">
+                                                <span>Availability :</span>
+                                                @if ($product->quantity > 100)
+                                                    <span class="ms-1" style="color:#4caf50;">100+ Available</span>
+                                                @elseif ($product->quantity < 10 && $product->quantity > 0)
+                                                    <span class="ms-1" style="color:red;">Only {{ $product->quantity }} left - Very low stock!</span>
+                                                @elseif ($product->quantity > 0)
+                                                    <span class="ms-1" style="color:#4caf50;">{{ $product->quantity }} Available</span>
+                                                @else
+                                                    <span class="ms-1" style="color:red;">Out of stock</span>
+                                                @endif
+                                            </div>
+
                                             <div class="star-rating" style="margin-right: 10px;">
                                                 @for ($i = 1; $i <= 5; $i++)
                                                     @if ($i <= floor($product->average_rating))
@@ -468,8 +483,12 @@
 
                                 <div class="product-availability mt-3 mb-1">
                                     <span>Availability :</span>
-                                    @if ($product->quantity > 1)
-                                        <span class="ms-1" style="color:#4caf50;">In stock</span>
+                                    @if ($product->quantity > 100)
+                                        <span class="ms-1" style="color:#4caf50;">100+ Available</span>
+                                    @elseif ($product->quantity < 10 && $product->quantity > 0)
+                                        <span class="ms-1" style="color:red;">Only {{ $product->quantity }} left - Very low stock!</span>
+                                    @elseif ($product->quantity > 0)
+                                        <span class="ms-1" style="color:#4caf50;">{{ $product->quantity }} Available</span>
                                     @else
                                         <span class="ms-1" style="color:red;">Out of stock</span>
                                     @endif

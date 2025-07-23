@@ -766,43 +766,47 @@
         }
     </style>
 
-    <div class="category-bar">
+    @if (!Request::is('/'))
+        <div class="category-bar">
 
-        <div class="category-bar-container">
-            <div class="category-scroll-container">
-                <div class="scroll-indicator left" onclick="scrollCategories('left')">
-                    <i class="fa fa-chevron-left"></i>
+            <div class="category-bar-container">
+                <div class="category-scroll-container">
+                    <div class="scroll-indicator left" onclick="scrollCategories('left')">
+                        <i class="fa fa-chevron-left"></i>
+                    </div>
+                    <div class="scroll-indicator right" onclick="scrollCategories('right')">
+                        <i class="fa fa-chevron-right"></i>
+                    </div>
+
+                    <ul class="category-list" id="categoryList">
+                        @foreach ($categories as $category)
+                            <li class="category-item">
+                                <a href="/all-items?category={{ urlencode($category->parent_category) }}"
+                                   class="category-link {{ request('category') == $category->parent_category ? 'active' : '' }}">
+                                    @if($category->parent_category == 'Electronics')
+
+                                    @elseif($category->parent_category == 'Fashion')
+
+                                    @elseif($category->parent_category == 'Home & Garden')
+
+                                    @elseif($category->parent_category == 'Sports')
+
+                                    @endif
+                                    {{ $category->parent_category }}
+
+                                    @if($category->is_featured)
+                                        <span class="category-badge">HOT</span>
+                                    @endif
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </div>
-                <div class="scroll-indicator right" onclick="scrollCategories('right')">
-                    <i class="fa fa-chevron-right"></i>
-                </div>
-
-                <ul class="category-list" id="categoryList">
-                    @foreach ($categories as $category)
-                        <li class="category-item">
-                            <a href="/all-items?category={{ urlencode($category->parent_category) }}"
-                               class="category-link {{ request('category') == $category->parent_category ? 'active' : '' }}">
-                                @if($category->parent_category == 'Electronics')
-
-                                @elseif($category->parent_category == 'Fashion')
-
-                                @elseif($category->parent_category == 'Home & Garden')
-
-                                @elseif($category->parent_category == 'Sports')
-
-                                @endif
-                                {{ $category->parent_category }}
-
-                                @if($category->is_featured)
-                                    <span class="category-badge">HOT</span>
-                                @endif
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
             </div>
         </div>
-    </div>
+    @else
+        {{-- Category bar hidden on homepage --}}
+    @endif
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

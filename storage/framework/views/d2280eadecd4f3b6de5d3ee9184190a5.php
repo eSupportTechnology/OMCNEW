@@ -685,8 +685,9 @@
         }
 
         .scroll-indicator {
-            position: relative;
+            position: absolute;
             top: 0;
+
             bottom: 0;
             width: 40px;
             display: flex;
@@ -701,13 +702,15 @@
         }
 
         .scroll-indicator.left {
-            left: 0;
+            left: 0px;
+            padding-right: 5px;
             background: linear-gradient(270deg, rgba(248,249,250,0) 0%, rgba(248,249,250,1) 100%);
 
         }
 
         .scroll-indicator.right {
-            right: 0;
+            right: 0px;
+            padding-left: 5px;
 
         }
 
@@ -763,44 +766,48 @@
         }
     </style>
 
-    <div class="category-bar">
+    <?php if(!Request::is('/')): ?>
+        <div class="category-bar">
 
-        <div class="category-bar-container">
-            <div class="category-scroll-container">
-                <div class="scroll-indicator left" onclick="scrollCategories('left')">
-                    <i class="fa fa-chevron-left"></i>
+            <div class="category-bar-container">
+                <div class="category-scroll-container">
+                    <div class="scroll-indicator left" onclick="scrollCategories('left')">
+                        <i class="fa fa-chevron-left"></i>
+                    </div>
+                    <div class="scroll-indicator right" onclick="scrollCategories('right')">
+                        <i class="fa fa-chevron-right"></i>
+                    </div>
+
+                    <ul class="category-list" id="categoryList">
+                        <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <li class="category-item">
+                                <a href="/all-items?category=<?php echo e(urlencode($category->parent_category)); ?>"
+                                   class="category-link <?php echo e(request('category') == $category->parent_category ? 'active' : ''); ?>">
+                                    <?php if($category->parent_category == 'Electronics'): ?>
+
+                                    <?php elseif($category->parent_category == 'Fashion'): ?>
+
+                                    <?php elseif($category->parent_category == 'Home & Garden'): ?>
+
+                                    <?php elseif($category->parent_category == 'Sports'): ?>
+
+                                    <?php endif; ?>
+                                    <?php echo e($category->parent_category); ?>
+
+
+                                    <?php if($category->is_featured): ?>
+                                        <span class="category-badge">HOT</span>
+                                    <?php endif; ?>
+                                </a>
+                            </li>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </ul>
                 </div>
-                <div class="scroll-indicator right" onclick="scrollCategories('right')">
-                    <i class="fa fa-chevron-right"></i>
-                </div>
-
-                <ul class="category-list" id="categoryList">
-                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <li class="category-item">
-                            <a href="/all-items?category=<?php echo e(urlencode($category->parent_category)); ?>"
-                               class="category-link <?php echo e(request('category') == $category->parent_category ? 'active' : ''); ?>">
-                                <?php if($category->parent_category == 'Electronics'): ?>
-
-                                <?php elseif($category->parent_category == 'Fashion'): ?>
-
-                                <?php elseif($category->parent_category == 'Home & Garden'): ?>
-
-                                <?php elseif($category->parent_category == 'Sports'): ?>
-
-                                <?php endif; ?>
-                                <?php echo e($category->parent_category); ?>
-
-
-                                <?php if($category->is_featured): ?>
-                                    <span class="category-badge">HOT</span>
-                                <?php endif; ?>
-                            </a>
-                        </li>
-                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                </ul>
             </div>
         </div>
-    </div>
+    <?php else: ?>
+        
+    <?php endif; ?>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

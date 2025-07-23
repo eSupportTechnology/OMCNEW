@@ -19,6 +19,7 @@ class CartController extends Controller
         $productId = $request->input('product_id');
         $size = $request->input('size');
         $color = $request->input('color');
+        $quantity = (int) $request->input('quantity', 1); // Use quantity from request, default 1
 
         if (!$productId) {
             return response()->json(['error' => 'Product ID is missing.'], 400);
@@ -33,13 +34,13 @@ class CartController extends Controller
                 ->first();
 
             if ($item) {
-                $item->quantity += 1;
+                $item->quantity += $quantity;
                 $item->save();
             } else {
                 CartItem::create([
                     'user_id' => $user->id,
                     'product_id' => $productId,
-                    'quantity' => 1,
+                    'quantity' => $quantity,
                     'size' => $size,
                     'color' => $color
                 ]);
@@ -50,7 +51,7 @@ class CartController extends Controller
 
             foreach ($cart as &$item) {
                 if ($item['product_id'] === $productId && $item['size'] === $size && $item['color'] === $color) {
-                    $item['quantity'] += 1; // Increment quantity if the item is already in the cart
+                    $item['quantity'] += $quantity; // Use selected quantity
                     $itemFound = true;
                     break;
                 }
@@ -59,7 +60,7 @@ class CartController extends Controller
             if (!$itemFound) {
                 $cart[] = [
                     'product_id' => $productId,
-                    'quantity' => 1,
+                    'quantity' => $quantity,
                     'size' => $size,
                     'color' => $color
                 ];

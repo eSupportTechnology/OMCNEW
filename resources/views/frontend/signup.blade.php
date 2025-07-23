@@ -149,6 +149,18 @@
             </div>
         </div>
 
+        <!-- Agree to T&C -->
+        <div class="col-12 d-flex justify-content-center">
+            <div class="form-check text-center">
+                <input class="form-check-input @error('terms') is-invalid @enderror" type="checkbox" id="terms" name="terms" required>
+                <label class="form-check-label" for="terms">
+                    I agree to the <a href="{{ url('/terms-condition') }}" target="_blank">Terms & Conditions</a>
+                </label>
+                <div class="invalid-feedback">You must agree to the Terms & Conditions before signing up.</div>
+                @error('terms') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
+            </div>
+        </div>
+
         <!-- Submit -->
         <div class="col-12 text-center mt-3">
             <button type="submit" class="btn btn-primary px-5 py-2">Signup</button>

@@ -966,13 +966,14 @@
                         <ul class="products-info">
                             <li>
                                 <span>Availability:</span>
-                                @if ($product->quantity > 1)
-                                    <span class="availability-badge instock"><i class='fa-solid fa-circle-check'></i> In
-                                        stock</span>
+                                @if ($product->quantity > 100)
+                                    <span class="availability-badge instock"><i class='fa-solid fa-circle-check'></i> 100+ Available</span>
+                                @elseif ($product->quantity < 10 && $product->quantity > 0)
+                                    <span class="availability-badge out-of-stock" style="color:red;"><i class='fa-solid fa-circle-xmark'></i> Only {{ $product->quantity }} left - Very low stock!</span>
+                                @elseif ($product->quantity > 0)
+                                    <span class="availability-badge instock"><i class='fa-solid fa-circle-check'></i> {{ $product->quantity }} Available</span>
                                 @else
-                                    <span class="availability-badge out-of-stock"><i class='fa-solid fa-circle-xmark'></i>
-                                        Out of
-                                        stock</span>
+                                    <span class="availability-badge out-of-stock"><i class='fa-solid fa-circle-xmark'></i> Out of stock</span>
                                 @endif
                             </li>
                             <li>
@@ -1030,19 +1031,37 @@
 
                             <div class="buttons-row">
                                 @auth
-                                    <button class="Add-to-Cart" data-product-id="{{ $product->product_id }}" id="addToCartBtn">
-                                        <i class='fa-solid fa-cart-shopping'></i> Add to Cart
-                                    </button>
-                                    <button class="buy-nowbtn" id="buyNowBtn" data-product-id="{{ $product->product_id }}">
-                                        <i class='fa-solid fa-bag-shopping'></i> Buy Now
-                                    </button>
+                                    @if ($product->quantity <= 0)
+                                        <button class="Add-to-Cart" disabled style="opacity:0.6; cursor:not-allowed;">
+                                            <i class='fa-solid fa-cart-shopping'></i> Out of Stock
+                                        </button>
+                                        <button class="buy-nowbtn" disabled style="opacity:0.6; cursor:not-allowed;">
+                                            <i class='fa-solid fa-bag-shopping'></i> Out of Stock
+                                        </button>
+                                    @else
+                                        <button class="Add-to-Cart" data-product-id="{{ $product->product_id }}" id="addToCartBtn">
+                                            <i class='fa-solid fa-cart-shopping'></i> Add to Cart
+                                        </button>
+                                        <button class="buy-nowbtn" id="buyNowBtn" data-product-id="{{ $product->product_id }}">
+                                            <i class='fa-solid fa-bag-shopping'></i> Buy Now
+                                        </button>
+                                    @endif
                                 @else
-                                    <button class="Add-to-Cart" onclick="alert('Please log in to add to cart.')">
-                                        <i class='fa-solid fa-cart-shopping'></i> Add to Cart
-                                    </button>
-                                    <button class="buy-nowbtn" onclick="alert('Please log in to proceed to checkout.')">
-                                        <i class='fa-solid fa-bag-shopping'></i> Buy Now
-                                    </button>
+                                    @if ($product->quantity <= 0)
+                                        <button class="Add-to-Cart" disabled style="opacity:0.6; cursor:not-allowed;">
+                                            <i class='fa-solid fa-cart-shopping'></i> Out of Stock
+                                        </button>
+                                        <button class="buy-nowbtn" disabled style="opacity:0.6; cursor:not-allowed;">
+                                            <i class='fa-solid fa-bag-shopping'></i> Out of Stock
+                                        </button>
+                                    @else
+                                        <button class="Add-to-Cart" onclick="alert('Please log in to add to cart.')">
+                                            <i class='fa-solid fa-cart-shopping'></i> Add to Cart
+                                        </button>
+                                        <button class="buy-nowbtn" onclick="alert('Please log in to proceed to checkout.')">
+                                            <i class='fa-solid fa-bag-shopping'></i> Buy Now
+                                        </button>
+                                    @endif
                                 @endauth
                             </div>
 
@@ -1400,6 +1419,9 @@
                                 positionClass: 'toast-top-right',
                                 timeOut: 2500
                             });
+
+                            // Refresh the page to update cart summary
+                            location.reload();
                         },
                         error: function(xhr) {
                             console.log(xhr.responseText);
