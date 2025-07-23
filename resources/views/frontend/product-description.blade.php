@@ -1087,8 +1087,8 @@
                             Additional Information
                         </a></li>
 
-                    <li><a href="#why-us-tab">
-                            Why Buy From Us
+                    <li><a href="#qa-tab">
+                            Q&amp;A
                         </a></li>
 
                     <li><a href="#reviews-tab" id="reviews-tab">
@@ -1138,6 +1138,52 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="tabs-item" id="qa-tab">
+                        <div class="products-details-tab-content">
+                            <h3>Product Q&amp;A</h3>
+                            @if (session('success'))
+                                <div class="alert alert-success">{{ session('success') }}</div>
+                            @endif
+                            <div class="qa-list">
+                                @forelse ($questions as $q)
+                                    <div class="qa-item" style="margin-bottom: 1.5em; background: #f8f9fa; border-radius: 10px; padding: 1em 1.2em; box-shadow: 0 2px 8px rgba(0,0,0,0.03);">
+                                        <div style="display: flex; align-items: flex-start; gap: 10px;">
+                                            <div style="font-size: 1.5em; color: #3a86ff;"><i class="fa-solid fa-circle-question"></i></div>
+                                            <div>
+                                                <div style="font-weight: 600; color: #222;">Q: {{ $q->question }}</div>
+                                                <div style="color: #888; font-size: 0.9em;">Asked on {{ $q->created_at->format('M d, Y') }}</div>
+                                            </div>
+                                        </div>
+                                        @if ($q->answer)
+                                            <div style="display: flex; align-items: flex-start; gap: 10px; margin-top: 0.7em;">
+                                                <div style="font-size: 1.5em; color: #11e469;"><i class="fa-solid fa-circle-check"></i></div>
+                                                <div>
+                                                    <div style="font-weight: 600; color: #222;">A: {{ $q->answer }}</div>
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div style="margin-top: 0.7em; color: #aaa; font-style: italic; padding-left: 2.2em;">Awaiting admin response</div>
+                                        @endif
+                                    </div>
+                                @empty
+                                    <p>No questions yet. Be the first to ask about this product!</p>
+                                @endforelse
+                            </div>
+                            <hr style="margin: 2em 0;">
+                            <h4>Ask a Question</h4>
+                            <form method="POST" action="{{ route('product.question.store', $product->product_id) }}">
+                                @csrf
+                                <div class="form-group">
+                                    <textarea name="question" class="form-control" rows="3" placeholder="Type your question here..." required></textarea>
+                                    @error('question')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-2">Submit Question</button>
+                            </form>
                         </div>
                     </div>
 

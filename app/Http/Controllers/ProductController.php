@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Client;
+use App\Models\ProductQuestion;
 
 
 class ProductController extends Controller
@@ -197,8 +198,9 @@ class ProductController extends Controller
 
 
 
-    public function show($product_id)
-    {
+    public function show(
+        $product_id
+    ) {
         $product = Products::with('images')->where('product_id', $product_id)->firstOrFail();
 
         $specialOffer = SpecialOffers::where('product_id', $product_id)
@@ -237,10 +239,51 @@ class ProductController extends Controller
             '1' => Review::where('product_id', $product_id)->where('rating', 1)->count(),
         ];
 
-        return view('frontend.product-description', compact('product', 'relatedProducts', 'reviews', 'averageRating', 'totalReviews', 'ratingsCount', 'specialOffer', 'sale'));
+        $questions = ProductQuestion::where('product_id', $product->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('frontend.product-description', compact('product', 'relatedProducts', 'reviews', 'averageRating', 'totalReviews', 'ratingsCount', 'specialOffer', 'sale', 'questions'));
     }
 
+    // Store a new question from user
+    public function storeQuestion(Request $request, $product_id)
+    {
+        $request->validate([
+            'question' => 'required|string|max:1000',
+        ]);
+        $product = Products::where('product_id', $product_id)->firstOrFail();
+        $question = new ProductQuestion();
+        $question->product_id = $product->id;
+        $question->user_id = auth()->check() ? auth()->id() : null;
+        $question->question = $request->question;
+        $question->status = 'pending';
+        $question->save();
+        return back()->with('success', 'Your question has been submitted and is awaiting admin response.');
+    }
 
+    // Admin: answer a question
+    public function answerQuestion(Request $request, $question_id)
+    {
+        $request->validate([
+            'answer' => 'required|string|max:2000',
+        ]);
+        $question = ProductQuestion::findOrFail($question_id);
+        $question->answer = $request->answer;
+        $question->status = 'answered';
+        $question->save();
+        return back()->with('success', 'Answer submitted successfully.');
+    }
+
+    // Admin: delete product question answer
+    public function deleteAnswer($question_id)
+    {
+        $question = ProductQuestion::findOrFail($question_id);
+        $question->answer = null;
+        $question->status = 'pending';
+        $question->save();
+        return back()->with('success', 'Answer deleted and question set to pending.');
+    }
 
 
     //admin products

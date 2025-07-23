@@ -517,3 +517,15 @@ Route::get('/search-suggestions', [SearchController::class, 'suggestions']);
 Route::get('/brands-data', [BrandController::class, 'getBrands']);
 
 Route::get('/brand/{slug}', [BrandController::class, 'showBrandProducts'])->name('brand.products');
+
+// Q&A routes for product page
+Route::post('/product/{product_id}/question', [ProductController::class, 'storeQuestion'])->name('product.question.store');
+// Admin: answer product question
+Route::post('/admin/product-question/{question_id}/answer', [ProductController::class, 'answerQuestion'])->name('admin.product.question.answer');
+// Admin: delete product question answer
+Route::delete('/admin/product-question/{question_id}/delete', [ProductController::class, 'deleteAnswer'])->name('admin.product.question.delete');
+// Admin Q&A page
+Route::get('/admin/qa', function () {
+    $questions = \App\Models\ProductQuestion::with(['product', 'user'])->orderBy('created_at', 'desc')->get();
+    return view('admin_dashboard.qa', compact('questions'));
+})->name('admin.qa');

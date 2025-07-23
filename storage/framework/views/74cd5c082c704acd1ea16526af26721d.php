@@ -105,6 +105,11 @@
                 data-mdb-ripple-init>
                 <i class="fa-solid fa-comments text-muted"></i><span class="text-muted">Manage Reviews</span>
             </a>
+            <a href="<?php echo e(route('admin.qa')); ?>"
+                class="list-group-item list-group-item-action py-2 <?php echo e(request()->routeIs('admin.qa') ? 'active' : ''); ?>"
+                data-mdb-ripple-init>
+                <i class="fa-solid fa-question-circle text-muted"></i><span class="text-muted">Product Q&amp;A</span>
+            </a>
             <a href="<?php echo e(route('customer_inquiries')); ?>"
                 class="list-group-item list-group-item-action py-2 <?php echo e(request()->routeIs('customer_inquiries') ? 'active' : ''); ?>"
                 data-mdb-ripple-init>

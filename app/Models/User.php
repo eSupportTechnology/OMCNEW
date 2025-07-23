@@ -80,6 +80,10 @@ public function addresses()
     return $this->hasMany(Address::class);  // Adjust as per your actual relationship
 }
 
+public function productQuestions()
+{
+    return $this->hasMany(\App\Models\ProductQuestion::class, 'user_id', 'id');
+}
 
 
 }
