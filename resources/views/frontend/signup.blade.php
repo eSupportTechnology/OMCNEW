@@ -163,9 +163,6 @@
 </section>
 <!-- End SignUP Area -->
 
-
-
-
 <script>
     function togglePassword() {
         var passwordField = document.getElementById("password");
@@ -185,15 +182,33 @@
 // Bootstrap 5 validation
 (() => {
     'use strict';
-    const forms = document.querySelectorAll('.needs-validation');
-    Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-        }, false);
+
+    const form = document.querySelector('.needs-validation');
+
+    // Add input/change listeners to each form field for real-time feedback
+    Array.from(form.elements).forEach(field => {
+        if (field.tagName !== 'BUTTON' && field.type !== 'hidden') {
+            const eventType = ['checkbox', 'radio', 'select-one'].includes(field.type) ? 'change' : 'input';
+            field.addEventListener(eventType, () => {
+                if (field.checkValidity()) {
+                    field.classList.remove('is-invalid');
+                    field.classList.add('is-valid');
+                } else {
+                    field.classList.remove('is-valid');
+                    field.classList.add('is-invalid');
+                }
+            });
+        }
+    });
+
+    // Prevent form submission if any field is invalid
+    form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+
+        form.classList.add('was-validated');
     });
 })();
 
@@ -220,19 +235,21 @@ document.getElementById("phone_num").addEventListener("input", function () {
 });
 
 // Live password validation
-document.getElementById("password").addEventListener("input", function () {
+passwordField.addEventListener("input", function () {
     const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     if (!pattern.test(this.value)) {
         this.setCustomValidity("Weak password: Must be 8+ chars, include upper/lower, number, and symbol.");
     } else {
         this.setCustomValidity("");
     }
+
+    // Re-check confirmation field too
+    confirmPasswordField.dispatchEvent(new Event('input'));
 });
 
 // Confirm password match
-document.getElementById("password_confirmation").addEventListener("input", function () {
-    const pw = document.getElementById("password").value;
-    if (this.value !== pw) {
+confirmPasswordField.addEventListener("input", function () {
+    if (this.value !== passwordField.value) {
         this.setCustomValidity("Passwords do not match.");
     } else {
         this.setCustomValidity("");
@@ -240,13 +257,12 @@ document.getElementById("password_confirmation").addEventListener("input", funct
 });
 
 // Show/hide password
-function togglePassword() {
-    const pw = document.getElementById("password");
-    const confirm = document.getElementById("password_confirmation");
-    const type = pw.type === "password" ? "text" : "password";
-    pw.type = confirm.type = type;
-}
+// function togglePassword() {
+//     const pw = document.getElementById("password");
+//     const confirm = document.getElementById("password_confirmation");
+//     const type = pw.type === "password" ? "text" : "password";
+//     pw.type = confirm.type = type;
+// }
 </script>
-
 
 @endsection

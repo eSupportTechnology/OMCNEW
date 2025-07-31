@@ -149,7 +149,7 @@ class ProductController extends Controller
         if (!empty($request->selectedColors)) {
             $query->whereHas('variations', function ($q) use ($request) {
                 $q->whereIn('hex_value', $request->selectedColors)
-                  ->where('type', 'color');
+                    ->where('type', 'color');
             });
         }
 
@@ -157,8 +157,8 @@ class ProductController extends Controller
         if (!empty($request->selectedRatings)) {
             $query->whereHas('reviews', function ($q) use ($request) {
                 $q->selectRaw('product_id, AVG(rating) as avg_rating')
-                ->groupBy('product_id')
-                ->havingRaw('AVG(rating) >= ?', [min($request->selectedRatings)]);
+                    ->groupBy('product_id')
+                    ->havingRaw('AVG(rating) >= ?', [min($request->selectedRatings)]);
             });
         }
 
@@ -229,13 +229,11 @@ class ProductController extends Controller
         $averageRating = $reviews->avg('rating');
         $totalReviews = $reviews->count();
 
-        $ratingsCount = [
-            '5' => Review::where('product_id', $product_id)->where('rating', 5)->count(),
-            '4' => Review::where('product_id', $product_id)->where('rating', 4)->count(),
-            '3' => Review::where('product_id', $product_id)->where('rating', 3)->count(),
-            '2' => Review::where('product_id', $product_id)->where('rating', 2)->count(),
-            '1' => Review::where('product_id', $product_id)->where('rating', 1)->count(),
-        ];
+        $ratingsCount = Review::with('media')
+            ->where('product_id', $product_id)
+            ->where('status', 'published')
+            ->get();
+
 
         return view('frontend.product-description', compact('product', 'relatedProducts', 'reviews', 'averageRating', 'totalReviews', 'ratingsCount', 'specialOffer', 'sale'));
     }
@@ -291,151 +289,151 @@ class ProductController extends Controller
             'affiliateProduct' => $request->has('affiliateProduct') ? true : false,
         ]);
 
-            $validatedData = $request->validate([
-                'productName' => 'required|string|max:255',
-                'productDesc' => 'required|string',
-                'productImages.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'normalPrice' => 'required|numeric|min:0',
-                'affiliateProduct' => 'nullable|boolean',
-                'affiliatePrice' => 'nullable|numeric|min:0',
-                'commissionPercentage' => 'nullable|numeric|min:0|max:100',
-                'totalPrice' => 'required|numeric|min:0',
-                'quantity' => 'nullable|numeric|min:0',
-                'category' => 'required|integer|exists:categories,id',
-                'subcategory' => 'nullable|integer|exists:subcategories,id',
-                'subsubcategory' => 'nullable|integer|exists:sub_subcategories,id',
-                'deleteImages' => 'nullable|array',
-                'deleteImages.*' => 'nullable|numeric|exists:product_images,id',
-                'variation' => 'nullable|array',
-                'variation.*.id' => 'nullable|integer|exists:variations,id',
-                'variation.*.type' => 'nullable|string',
-                'variation.*.value' => 'nullable|string',
-                'variation.*.quantity' => 'nullable|numeric|min:0',
-                'tags' => 'nullable|string',
-                'brand_id' => 'nullable',
-            ]);
+        $validatedData = $request->validate([
+            'productName' => 'required|string|max:255',
+            'productDesc' => 'required|string',
+            'productImages.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'normalPrice' => 'required|numeric|min:0',
+            'affiliateProduct' => 'nullable|boolean',
+            'affiliatePrice' => 'nullable|numeric|min:0',
+            'commissionPercentage' => 'nullable|numeric|min:0|max:100',
+            'totalPrice' => 'required|numeric|min:0',
+            'quantity' => 'nullable|numeric|min:0',
+            'category' => 'required|integer|exists:categories,id',
+            'subcategory' => 'nullable|integer|exists:subcategories,id',
+            'subsubcategory' => 'nullable|integer|exists:sub_subcategories,id',
+            'deleteImages' => 'nullable|array',
+            'deleteImages.*' => 'nullable|numeric|exists:product_images,id',
+            'variation' => 'nullable|array',
+            'variation.*.id' => 'nullable|integer|exists:variations,id',
+            'variation.*.type' => 'nullable|string',
+            'variation.*.value' => 'nullable|string',
+            'variation.*.quantity' => 'nullable|numeric|min:0',
+            'tags' => 'nullable|string',
+            'brand_id' => 'nullable',
+        ]);
 
-            $request->merge([
-                'tags' => $request->input('tags') ? implode(',', array_map('trim', explode(',', $request->input('tags')))) : '',
-            ]);
+        $request->merge([
+            'tags' => $request->input('tags') ? implode(',', array_map('trim', explode(',', $request->input('tags')))) : '',
+        ]);
 
-            $product = Products::findOrFail($id);
+        $product = Products::findOrFail($id);
 
-            $categoryName = Category::find($validatedData['category'])->parent_category ?? '';
-            $subcategoryName = Subcategory::find($validatedData['subcategory'])->subcategory ?? '';
-            $subsubcategoryName = SubSubcategory::find($validatedData['subsubcategory'])->sub_subcategory ?? '';
+        $categoryName = Category::find($validatedData['category'])->parent_category ?? '';
+        $subcategoryName = Subcategory::find($validatedData['subcategory'])->subcategory ?? '';
+        $subsubcategoryName = SubSubcategory::find($validatedData['subsubcategory'])->sub_subcategory ?? '';
 
-            $product->update([
-                'product_name' => $validatedData['productName'],
-                'product_description' => $validatedData['productDesc'],
-                'normal_price' => $validatedData['normalPrice'],
-                'is_affiliate' => $request->input('affiliateProduct'),
-                'affiliate_price' => $validatedData['affiliatePrice'] ?? null,
-                'commission_percentage' => $validatedData['commissionPercentage'] ?? null,
-                'total_price' => $validatedData['totalPrice'],
-                'quantity' => $validatedData['quantity'],
-                'tags' => $validatedData['tags'],
-                'product_category' => $categoryName,
-                'subcategory' => $subcategoryName,
-                'sub_subcategory' => $subsubcategoryName,
-                'brand_id' => $validatedData['brand_id'],
-            ]);
+        $product->update([
+            'product_name' => $validatedData['productName'],
+            'product_description' => $validatedData['productDesc'],
+            'normal_price' => $validatedData['normalPrice'],
+            'is_affiliate' => $request->input('affiliateProduct'),
+            'affiliate_price' => $validatedData['affiliatePrice'] ?? null,
+            'commission_percentage' => $validatedData['commissionPercentage'] ?? null,
+            'total_price' => $validatedData['totalPrice'],
+            'quantity' => $validatedData['quantity'],
+            'tags' => $validatedData['tags'],
+            'product_category' => $categoryName,
+            'subcategory' => $subcategoryName,
+            'sub_subcategory' => $subsubcategoryName,
+            'brand_id' => $validatedData['brand_id'],
+        ]);
 
-            // Handle image deletions
-            if ($request->has('deleteImages')) {
-                foreach ($request->input('deleteImages') as $imageId) {
-                    $image = ProductImage::find($imageId);
-                    if ($image) {
-                        if (Storage::exists('public/' . $image->image_path)) {
-                            Storage::delete('public/' . $image->image_path);
-                        }
-                        $image->delete();
+        // Handle image deletions
+        if ($request->has('deleteImages')) {
+            foreach ($request->input('deleteImages') as $imageId) {
+                $image = ProductImage::find($imageId);
+                if ($image) {
+                    if (Storage::exists('public/' . $image->image_path)) {
+                        Storage::delete('public/' . $image->image_path);
                     }
+                    $image->delete();
                 }
             }
+        }
 
-            // Handle new images
-            if ($request->hasFile('productImages')) {
-                foreach ($request->file('productImages') as $image) {
-                    $imageName = time() . '_' . $image->getClientOriginalName();
-                    $imagePath = $image->storeAs('product_images', $imageName, 'public');
+        // Handle new images
+        if ($request->hasFile('productImages')) {
+            foreach ($request->file('productImages') as $image) {
+                $imageName = time() . '_' . $image->getClientOriginalName();
+                $imagePath = $image->storeAs('product_images', $imageName, 'public');
 
-                    ProductImage::create([
-                        'product_id' => $product->product_id,
-                        'image_path' => $imagePath,
-                    ]);
-                }
+                ProductImage::create([
+                    'product_id' => $product->product_id,
+                    'image_path' => $imagePath,
+                ]);
             }
-            // Handle variations
-            $existingVariationIds = $product->variations->pluck('id')->toArray();
-            $submittedVariationIds = array_column($request->input('variation', []), 'id');
+        }
+        // Handle variations
+        $existingVariationIds = $product->variations->pluck('id')->toArray();
+        $submittedVariationIds = array_column($request->input('variation', []), 'id');
 
-            $client = new Client();
+        $client = new Client();
 
-            foreach ($request->input('variation', []) as $variation) {
-                if ($variation['type'] === 'Color') {
-                    $hexValue = $variation['value'];
-                    $colorName = 'Unknown Color';
+        foreach ($request->input('variation', []) as $variation) {
+            if ($variation['type'] === 'Color') {
+                $hexValue = $variation['value'];
+                $colorName = 'Unknown Color';
 
 
-                        $response = $client->get('https://www.thecolorapi.com/id?hex=' . ltrim($hexValue, '#'));
-                        $data = json_decode($response->getBody(), true);
-                        $colorName = $data['name']['value'] ?? 'Unknown Color';
+                $response = $client->get('https://www.thecolorapi.com/id?hex=' . ltrim($hexValue, '#'));
+                $data = json_decode($response->getBody(), true);
+                $colorName = $data['name']['value'] ?? 'Unknown Color';
 
-                    // Check for existing variation and update
-                    if (isset($variation['id']) && in_array($variation['id'], $existingVariationIds)) {
-                        $existingVariation = Variation::find($variation['id']);
-                        if ($existingVariation) {
-                            $existingVariation->update([
-                                'type' => $variation['type'],
-                                'value' => $colorName,
-                                'hex_value' => $hexValue,
-                                'quantity' => $variation['quantity'],
-                            ]);
-                        }
-                    } else {
-                        if (isset($variation['quantity']) && $variation['quantity'] > 0) {
-                            Variation::create([
-                                'product_id' => $product->product_id,
-                                'type' => $variation['type'],
-                                'value' => $colorName,
-                                'hex_value' => $hexValue,
-                                'quantity' => $variation['quantity'],
-                            ]);
-                        }
+                // Check for existing variation and update
+                if (isset($variation['id']) && in_array($variation['id'], $existingVariationIds)) {
+                    $existingVariation = Variation::find($variation['id']);
+                    if ($existingVariation) {
+                        $existingVariation->update([
+                            'type' => $variation['type'],
+                            'value' => $colorName,
+                            'hex_value' => $hexValue,
+                            'quantity' => $variation['quantity'],
+                        ]);
                     }
                 } else {
-                    // Handle non-color variations
-                    if (isset($variation['id']) && in_array($variation['id'], $existingVariationIds)) {
-                        $existingVariation = Variation::find($variation['id']);
-                        if ($existingVariation) {
-                            $existingVariation->update([
-                                'type' => $variation['type'],
-                                'value' => $variation['value'],
-                                'hex_value' => null,
-                                'quantity' => $variation['quantity'],
-                            ]);
-                        }
-                    } else {
-                        // Create a new variation for non-colors
-                        if (isset($variation['quantity']) && $variation['quantity'] > 0) {
-                            Variation::create([
-                                'product_id' => $product->product_id,
-                                'type' => $variation['type'],
-                                'value' => $variation['value'],
-                                'hex_value' => null,
-                                'quantity' => $variation['quantity'],
-                            ]);
-                        }
+                    if (isset($variation['quantity']) && $variation['quantity'] > 0) {
+                        Variation::create([
+                            'product_id' => $product->product_id,
+                            'type' => $variation['type'],
+                            'value' => $colorName,
+                            'hex_value' => $hexValue,
+                            'quantity' => $variation['quantity'],
+                        ]);
+                    }
+                }
+            } else {
+                // Handle non-color variations
+                if (isset($variation['id']) && in_array($variation['id'], $existingVariationIds)) {
+                    $existingVariation = Variation::find($variation['id']);
+                    if ($existingVariation) {
+                        $existingVariation->update([
+                            'type' => $variation['type'],
+                            'value' => $variation['value'],
+                            'hex_value' => null,
+                            'quantity' => $variation['quantity'],
+                        ]);
+                    }
+                } else {
+                    // Create a new variation for non-colors
+                    if (isset($variation['quantity']) && $variation['quantity'] > 0) {
+                        Variation::create([
+                            'product_id' => $product->product_id,
+                            'type' => $variation['type'],
+                            'value' => $variation['value'],
+                            'hex_value' => null,
+                            'quantity' => $variation['quantity'],
+                        ]);
                     }
                 }
             }
+        }
 
 
-            $variationsToDelete = array_diff($existingVariationIds, $submittedVariationIds);
-            Variation::whereIn('id', $variationsToDelete)->delete();
+        $variationsToDelete = array_diff($existingVariationIds, $submittedVariationIds);
+        Variation::whereIn('id', $variationsToDelete)->delete();
 
-            return redirect()->route('products')->with('status', 'Product updated successfully!');
+        return redirect()->route('products')->with('status', 'Product updated successfully!');
     }
 
 
@@ -504,37 +502,37 @@ class ProductController extends Controller
             }
         }
 
-    $variations = $request->input('variation', []);
-    $client = new Client();
+        $variations = $request->input('variation', []);
+        $client = new Client();
 
-    foreach ($variations as $variation) {
-        if ($variation['type'] === 'Color') {
-            $hexValue = $variation['value'];
+        foreach ($variations as $variation) {
+            if ($variation['type'] === 'Color') {
+                $hexValue = $variation['value'];
 
                 $response = $client->get('https://www.thecolorapi.com/id?hex=' . ltrim($hexValue, '#'));
                 $data = json_decode($response->getBody(), true);
                 $colorName = $data['name']['value'] ?? 'Unknown Color';
 
-            if (isset($variation['quantity']) && $variation['quantity'] > 0) {
-                Variation::create([
-                    'product_id' => $product->product_id,
-                    'type' => $variation['type'],
-                    'value' => $colorName,
-                    'hex_value' => $hexValue,
-                    'quantity' => $variation['quantity'],
-                ]);
+                if (isset($variation['quantity']) && $variation['quantity'] > 0) {
+                    Variation::create([
+                        'product_id' => $product->product_id,
+                        'type' => $variation['type'],
+                        'value' => $colorName,
+                        'hex_value' => $hexValue,
+                        'quantity' => $variation['quantity'],
+                    ]);
+                }
+            } else {
+                if (isset($variation['quantity']) && $variation['quantity'] > 0) {
+                    Variation::create([
+                        'product_id' => $product->product_id,
+                        'type' => $variation['type'],
+                        'value' => $variation['value'],
+                        'hex_value' => null,
+                        'quantity' => $variation['quantity'],
+                    ]);
+                }
             }
-        } else {
-            if (isset($variation['quantity']) && $variation['quantity'] > 0) {
-                Variation::create([
-                    'product_id' => $product->product_id,
-                    'type' => $variation['type'],
-                    'value' => $variation['value'],
-                    'hex_value' => null,
-                    'quantity' => $variation['quantity'],
-                ]);
-            }
-        }
         }
 
         return redirect()->route('products')->with('status', 'Product added successfully!');
@@ -584,44 +582,41 @@ class ProductController extends Controller
 
 
     public function showSearchResults(Request $request)
-{
-    $query = $request->get('query', '');
-    $products = [];
+    {
+        $query = $request->get('query', '');
+        $products = [];
 
-    if (!empty($query)) {
-        $searchTerms = explode(' ', $query);
+        if (!empty($query)) {
+            $searchTerms = explode(' ', $query);
 
-        $products = Products::with(['Sale', 'specialOffer', 'images', 'category', 'category.subcategories', 'category.subcategories.subSubcategories'])
-            ->where(function ($q) use ($searchTerms) {
-                foreach ($searchTerms as $term) {
-                    $q->where('product_name', 'LIKE', '%' . $term . '%') // Search in product name
-                      ->orWhere('tags', 'LIKE', '%' . $term . '%')     // Search in tags
-                      ->orWhereHas('category', function ($categoryQuery) use ($term) {
-                          $categoryQuery->where('parent_category', 'LIKE', '%' . $term . '%'); // Search in parent category name
-                      })
-                      ->orWhereHas('category.subcategories', function ($subcategoryQuery) use ($term) {
-                          $subcategoryQuery->where('subcategory', 'LIKE', '%' . $term . '%'); // Search in subcategory name
-                      })
-                      ->orWhereHas('category.subcategories.subSubcategories', function ($subSubcategoryQuery) use ($term) {
-                          $subSubcategoryQuery->where('sub_subcategory', 'LIKE', '%' . $term . '%'); // Search in sub-subcategory name
-                      });
-                }
-            })
-            ->select('id', 'product_name', 'product_id', 'normal_price')
-            ->paginate(10) // Paginate the results
-            ->through(function ($product) {
-                // Add the average rating and rating count to each product
-                $product->average_rating = $product->reviews()->where('status', 'published')->avg('rating');
-                $product->rating_count = $product->reviews()->where('status', 'published')->count();
-                return $product;
-            });
+            $products = Products::with(['Sale', 'specialOffer', 'images', 'category', 'category.subcategories', 'category.subcategories.subSubcategories'])
+                ->where(function ($q) use ($searchTerms) {
+                    foreach ($searchTerms as $term) {
+                        $q->where('subcategory', 'LIKE', '%' . $term . '%') // Search in product name
+                            ->orWhere('tags', 'LIKE', '%' . $term . '%')     // Search in tags
+                            ->orWhereHas('category', function ($categoryQuery) use ($term) {
+                                $categoryQuery->where('parent_category', 'LIKE', '%' . $term . '%'); // Search in parent category name
+                            })
+                            ->orWhereHas('category.subcategories', function ($subcategoryQuery) use ($term) {
+                                $subcategoryQuery->where('subcategory', 'LIKE', '%' . $term . '%'); // Search in subcategory name
+                            })
+                            ->orWhereHas('category.subcategories.subSubcategories', function ($subSubcategoryQuery) use ($term) {
+                                $subSubcategoryQuery->where('sub_subcategory', 'LIKE', '%' . $term . '%'); // Search in sub-subcategory name
+                            });
+                    }
+                })
+                ->select('id', 'subcategory', 'product_id', 'normal_price')
+                ->paginate(10) // Paginate the results
+                ->through(function ($product) {
+                    // Add the average rating and rating count to each product
+                    $product->average_rating = $product->reviews()->where('status', 'published')->avg('rating');
+                    $product->rating_count = $product->reviews()->where('status', 'published')->count();
+                    return $product;
+                });
+        }
+
+        return view('frontend.search_results', compact('products', 'query'));
     }
-
-    return view('frontend.search_results', compact('products', 'query'));
-}
-
-
-
 
 
     public function searchProducts(Request $request)
@@ -647,10 +642,4 @@ class ProductController extends Controller
 
         return response()->json($products);
     }
-
-
-
-
-
 }
-

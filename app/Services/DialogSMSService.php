@@ -5,17 +5,20 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class DialogSMSService
 {
     protected $username;
     protected $password;
 
+
     public function __construct()
     {
-        $this->username = env('SMS_USERNAME');
-        $this->password = env('SMS_PASSWORD');
+        $this->username = config('sms.username');
+        $this->password = config('sms.password');
     }
+
 
     public function getToken()
     {
@@ -24,6 +27,12 @@ class DialogSMSService
                 'username' => $this->username,
                 'password' => $this->password
             ]);
+            Log::info('Dialog SMS Auth Attempt', [
+                'username' => $this->username,
+                'password' => $this->password,
+            ]);
+
+            Log::error('Dialog Login Response', $response->json());
 
             if ($response->successful() && $response->json('status') === 'success') {
                 return $response->json('token');
@@ -42,7 +51,7 @@ class DialogSMSService
             "msisdn" => [
                 ["mobile" => ltrim($mobile, '0')] // should be 7XXXXXXXX
             ],
-            "sourceAddress" => env('SMS_SOURCE_ADDRESS'), // use your mask here or leave blank
+            "sourceAddress" => "",
             "message" => $message,
             "transaction_id" => $transactionId
         ];

@@ -150,6 +150,7 @@
 
         .product-image-container {
             position: relative;
+            left: -0.7rem;
             background: var(--white);
             padding: 20px;
             text-align: center;
@@ -158,7 +159,7 @@
             align-items: center;
             justify-content: center;
             margin-top: 50px;
-            margin-right: 10px;
+            /* margin-right: 10px; */
 
         }
 

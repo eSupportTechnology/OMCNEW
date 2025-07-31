@@ -1,33 +1,32 @@
 @extends ('frontend.master')
 
 @section('content')
-
-       
-       <!-- Start Page Title -->
-        <div class="page-title-area">
-            <div class="container">
-                <div class="page-title-content">
-                    <h2>Checkout</h2>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li>Checkout</li>
-                    </ul>
-                </div>
+    <!-- Start Page Title -->
+    <div class="page-title-area">
+        <div class="container">
+            <div class="page-title-content">
+                <h2>Checkout</h2>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li>Checkout</li>
+                </ul>
             </div>
         </div>
-        <!-- End Page Title -->
+    </div>
+    <!-- End Page Title -->
 
-        <!-- Start Checkout Area -->
-		<section class="checkout-area ptb-100">
-            <div class="container">
+    <!-- Start Checkout Area -->
+    <section class="checkout-area ptb-100">
+        <div class="container">
             <form action="{{ route('buynoworder.store') }}" method="POST">
-            @csrf
-            <input type="hidden" name="product_id" value="{{ $productData['product_id'] }}">
-    
-            <!-- Hidden fields for size, color, and quantity -->
-            <input type="hidden" name="size" id="size" value="{{ old('size', $productData['size'] ?? '') }}">
-            <input type="hidden" name="color" id="color" value="{{ old('color', $productData['color'] ?? '') }}">
-            <input type="hidden" name="quantity" id="quantity" value="{{ old('quantity', $productData['quantity'] ?? 1) }}">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $productData['product_id'] }}">
+
+                <!-- Hidden fields for size, color, and quantity -->
+                <input type="hidden" name="size" id="size" value="{{ old('size', $productData['size'] ?? '') }}">
+                <input type="hidden" name="color" id="color" value="{{ old('color', $productData['color'] ?? '') }}">
+                <input type="hidden" name="quantity" id="quantity"
+                    value="{{ old('quantity', $productData['quantity'] ?? 1) }}">
 
 
                 <div class="row justify-content-center">
@@ -38,56 +37,56 @@
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
                                         <label>Name <span class="required">*</span></label>
-                                        <input type="text" class="form-control" name="first_name" id="firstName" 
+                                        <input type="text" class="form-control" name="first_name" id="firstName"
                                             value="{{ old('first_name', optional($defaultAddress)->full_name ?? '') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12">
                                     <div class="form-group">
                                         <label>Company Name (Optional)</label>
-                                        <input type="text" class="form-control" name="company_name" 
+                                        <input type="text" class="form-control" name="company_name"
                                             value="{{ old('company_name', optional($defaultAddress)->company_name ?? '') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-6">
                                     <div class="form-group">
                                         <label>Street Address <span class="required">*</span></label>
-                                        <input type="text" class="form-control" name="address" 
+                                        <input type="text" class="form-control" name="address"
                                             value="{{ old('address', optional($defaultAddress)->address ?? '') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-6">
                                     <div class="form-group">
                                         <label>Apartment, Suite, unit etc.(Optional)</label>
-                                        <input type="text" class="form-control" name="apartment" 
-                                        value="{{ old('apartment', optional($defaultAddress)->apartment ?? '') }}">
+                                        <input type="text" class="form-control" name="apartment"
+                                            value="{{ old('apartment', optional($defaultAddress)->apartment ?? '') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
                                         <label>City <span class="required">*</span></label>
-                                        <input type="text" class="form-control" name="city" 
+                                        <input type="text" class="form-control" name="city"
                                             value="{{ old('city', optional($defaultAddress)->city ?? '') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
                                         <label>Postcode / Zip <span class="required">*</span></label>
-                                        <input type="text" class="form-control" name="postal_code" 
+                                        <input type="text" class="form-control" name="postal_code"
                                             value="{{ old('postal_code', optional($defaultAddress)->postal_code ?? '') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
                                         <label>Email Address <span class="required">*</span></label>
-                                        <input type="email" class="form-control" name="email" 
-                                            value="{{ old('email', optional($defaultAddress)->email ?? '') }}" >
+                                        <input type="email" class="form-control" name="email"
+                                            value="{{ old('email', optional($defaultAddress)->email ?? '') }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6">
                                     <div class="form-group">
                                         <label>Phone <span class="required">*</span></label>
-                                        <input type="text" class="form-control" name="phone" 
+                                        <input type="text" class="form-control" name="phone"
                                             value="{{ old('phone', optional($defaultAddress)->phone_num ?? '') }}">
                                     </div>
                                 </div>
@@ -109,14 +108,16 @@
                                     </thead>
 
                                     <tbody>
-                                        @if($productData)
+                                        @if ($productData)
                                             <tr>
                                                 <td class="product-name">
-                                                    <a href="#">{{ $productData['product_name'] }} x {{ $productData['quantity'] }}</a>
+                                                    <a href="#">{{ $productData['product_name'] }} x
+                                                        {{ $productData['quantity'] }}</a>
                                                 </td>
                                                 <td class="product-total">
                                                     <span class="subtotal-amount">
-                                                        Rs. {{ number_format($productData['price'] * $productData['quantity'], 2) }}
+                                                        Rs.
+                                                        {{ number_format($productData['price'] * $productData['quantity'], 2) }}
                                                     </span>
                                                 </td>
                                             </tr>
@@ -136,14 +137,16 @@
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <p>Delivery Fee:</p>
-                                    <p>Rs. 300.00</p>
+                                    <p>Rs. {{ number_format($deliveryFee, 2) }}</p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h5>Total:</h5>
                                     <h5 class="fw-bold">
-                                        Rs. {{ number_format(($productData['price'] * $productData['quantity']) + 300, 2) }}
+                                        Rs.
+                                        {{ number_format($productData['price'] * $productData['quantity'] + $deliveryFee, 2) }}
                                     </h5>
                                 </div>
+
 
                                 <button type="submit" class="default-btn w-100">Proceed to Pay</button>
                             </div>
@@ -152,10 +155,7 @@
                 </div>
             </form>
 
-            </div>
-        </section>
-		<!-- End Checkout Area -->
-
-      
-        
-@endsection  
+        </div>
+    </section>
+    <!-- End Checkout Area -->
+@endsection

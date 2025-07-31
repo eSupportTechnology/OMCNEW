@@ -9,54 +9,50 @@ use Illuminate\Http\Request;
 class SearchController extends Controller
 {
     public function suggestions(Request $request)
-    {
-        $query = $request->input('q');
+{
+    $query = $request->input('q');
 
-        $products = Products::where('product_name', 'like', "%{$query}%")
-            ->with(['images', 'category'])
-            ->limit(10)
-            ->get()
-            ->map(function ($product) {
-                return [
-                    'name' => $product->product_name,
-                    'image' => $product->images->first() ? asset('storage/' . $product->images->first()->image_path) : 'default.jpg',
-                    'url' => url('/product-description/' . $product->product_id),
-                    'category' => $product->product_category ?? 'Unnamed',
-                    'category_url' => url('/all-items?category=' . urlencode($product->product_category)),
-                ];
-            });
+    $products = Products::where(function ($q) use ($query) {
+            $q->where('product_name', 'like', "%{$query}%")
+              ->orWhere('subcategory', 'like', "%{$query}%")
+              ->orWhere('product_category', 'like', "%{$query}%")
+              ->orWhere('sub_subcategory', 'like', "%{$query}%");
+        })
+        ->with(['images', 'category'])
+        ->limit(10)
+        ->get()
+        ->map(function ($product) {
+            return [
+                'name' => $product->product_name,
+                'image' => $product->images->first() ? asset('storage/' . $product->images->first()->image_path) : 'default.jpg',
+                'url' => url('/product-description/' . $product->product_id),
+                'category' => $product->product_category ?? 'Unnamed',
+                'category_url' => url('/all-items?category=' . urlencode($product->product_category)),
+            ];
+        });
 
-        // 2. Get Categories that have matching products
-        // $categories = Category::whereHas('products', function ($q) use ($query) {
-        //     $q->where('product_name', 'like', '%' . $query . '%');
-        // })
-        //     ->limit(8)
-        //     ->get()
-        //     ->map(function ($cat) {
-        //         return [
-        //             'name' => $cat->parent_category ?? 'Unnamed',
-        //             'url' => url('/all-items?category=' . urlencode($cat->parent_category)),
-        //         ];
-        //     });
+    // Optional: Suggest unique categories based on search
+    $categories = Products::where(function ($q) use ($query) {
+            $q->where('product_name', 'like', "%{$query}%")
+              ->orWhere('subcategory', 'like', "%{$query}%")
+              ->orWhere('product_category', 'like', "%{$query}%")
+              ->orWhere('sub_subcategory', 'like', "%{$query}%");
+        })
+        ->limit(10)
+        ->get()
+        ->map(function ($product) {
+            return [
+                'name' => $product->product_category ?? 'Unnamed',
+                'url' => url('/all-items?category=' . urlencode($product->product_category)),
+            ];
+        })
+        ->unique('name')
+        ->values();
 
-        $categories = Products::where('product_name', 'like', "%{$query}%")
-            ->with(['images', 'category'])
-            ->limit(10)
-            ->get()
-            ->map(function ($product) {
-                return [
-                    'name' => $product->product_category ?? 'Unnamed',
-                    'url' => url('/all-items?category=' . urlencode($product->product_category)),
-                ];
-            })
-            ->unique('name') // Remove duplicates based on category name
-            ->values(); // Reset array keys
+    return response()->json([
+        'products' => $products,
+        'categories' => $categories,
+    ]);
+}
 
-
-
-        return response()->json([
-            'products' => $products,
-            'categories' => $categories,
-        ]);
-    }
 }

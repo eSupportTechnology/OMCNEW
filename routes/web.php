@@ -49,10 +49,12 @@ Route::get('/signup', [RegisterController::class, 'showSignupForm'])->name('sign
 Route::post('/signup', [RegisterController::class, 'register'])->name('signup');
 
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('showlogin');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/verify', [RegisterController::class, 'showVerificationForm'])->name('verify.form');
 Route::post('/verify', [RegisterController::class, 'verifyCode'])->name('verify.code');
+Route::get('/sms-verify', [RegisterController::class, 'showSmsVerificationForm'])->name('sms-verify.form');
+Route::post('/sms-verify', [RegisterController::class, 'smsverifyCode'])->name('sms-verify.code');
 
 Route::get('forgot-password', [ForgotPasswordController::class, 'showForgotPasswordForm'])->name('lost_password');
 Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
@@ -184,7 +186,7 @@ Route::get('/affiliate/dashboard', [AffiliateCustomerController::class, 'index']
 Route::post('/affiliate/logout', [AffiliateCustomerController::class, 'logout'])->name('aff_logout');
 Route::get('/affiliate/dashboard/ad_center', [AffiliateProductController::class, 'showAdCenter'])->name('ad_center');
 Route::post('/affiliate/promo/maritial/genaratr', [AffiliateCustomerController::class, 'promomatirials'])->name('promo_matirials');
-Route::get('/affiliate/dashboard/ad_center/{product_id}/promote-modal', [AffiliateProductController::class, 'showPromoteModal'])->name('products.promoteModal');
+Route::get('/affiliate/dashboard/ad_center/{product_id}/promote-modal', [AffiliateProductController::class, 'showPromoteModal'])->name('products.promoteModals');
 Route::get('/affiliate/dashboard/ad_center/download-images', [AffiliateProductController::class, 'downloadImages'])->name('products.downloadImages');
 Route::get('/affiliate/dashboard/ad_center/{id}/promote-modal', [AffiliateProductController::class, 'showPromoteModal'])->name('products.promoteModal');
 Route::get('/affiliate/dashboard/ad_center/download-images', [AffiliateProductController::class, 'downloadImages'])->name('products.downloadImages');
@@ -252,6 +254,7 @@ use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\ShippingChargeController;
 use App\Http\Middleware\AdminAuth;
 
 
@@ -282,7 +285,7 @@ Route::delete('/admin/special_offers/delete/{id}', [SpecialOffersController::cla
 Route::get('/admin/add_sales', [SalesController::class, 'createsales'])->name('add_sales');
 Route::post('/admin/store_sales', [SalesController::class, 'storeSales'])->name('store_sales');
 Route::get('/admin/flash_sales', [SalesController::class, 'showSales'])->name('flash_sales');
-Route::post('/sales/store', [SalesController::class, 'storeSale'])->name('store_sales');
+Route::post('/sales/store', [SalesController::class, 'storeSale'])->name('store_sale');
 Route::get('/admin/edit_sales/{id}', [SalesController::class, 'edit'])->name('edit_sales');
 Route::delete('/admin/destroy_sales/{id}', [SalesController::class, 'destroy'])->name('destroy_sales');
 Route::post('/admin/update-sale/{id}', [SalesController::class, 'update'])->name('update_sale');
@@ -379,6 +382,12 @@ Route::get('/admin/customer_inquiries', [InquiryController::class, 'showCustomer
 Route::post('/inquiries/{id}/response', [InquiryController::class, 'submitResponse'])->name('inquiries.response');
 Route::post('/inquiries/{id}/resolve', [InquiryController::class, 'resolveInquiry'])->name('inquiries.resolve');
 
+Route::get('/admin/shipping-charges', [ShippingChargeController::class, 'index'])->name('shipping-charges.index');
+Route::post('/admin/shipping-charges', [ShippingChargeController::class, 'store'])->name('shipping-charges.store');
+Route::get('/admin/shipping-charges/create', [ShippingChargeController::class, 'create'])->name('shipping-charges.create');
+Route::get('/admin/shipping-charges/{id}/edit', [ShippingChargeController::class, 'edit'])->name('shipping-charges.edit');
+Route::put('/admin/shipping-charges/{id}', [ShippingChargeController::class, 'update'])->name('shipping-charges.update');
+Route::delete('/admin/shipping-charges/{id}', [ShippingChargeController::class, 'destroy'])->name('shipping-charges.destroy');
 
 //about
 Route::get('/about-us', function () {
@@ -470,9 +479,9 @@ Route::get('/faq', function () {
     return view('frontend.faq');
 })->name('faq');
 
-Route::get('/login', function () {
-    return view('frontend.login');
-})->name('login');
+// Route::get('/login', function () {
+//     return view('frontend.login');
+// })->name('login');
 
 // Route::get('/privacy_policy', function () {
 //     return view('frontend.privacy_policy');

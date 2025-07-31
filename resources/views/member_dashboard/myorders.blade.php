@@ -3,24 +3,24 @@
 @section('dashboard-content')
 <style>
 .custom-select {
-    border: 1px solid #ced4da; 
-    border-radius: 5px; 
-    padding: 4px 13px; 
-    background-color: #ffffff; 
-    font-size: 14px; 
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 4px 13px;
+    background-color: #ffffff;
+    font-size: 14px;
     width: 150px;
-    color: #495057; 
+    color: #495057;
     transition: border-color 0.2s ease-in-out;
 }
 
 .custom-select:focus {
     border-color: #80bdff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25); 
-    outline: none; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+    outline: none;
 }
 
 .custom-select option {
-    color: #495057; 
+    color: #495057;
 }
 
 </style>
@@ -237,16 +237,16 @@
                             $itemCount = $order->items->count();
                             $itemsToShow = $order->items->take(3);
                         @endphp
-                        
+
                         @foreach($itemsToShow as $item)
                             {{ $item->product->product_name }}{{ !$loop->last ? ' | ' : '' }}
                         @endforeach
-                        
+
                         @if($itemCount > 3)
                             <strong style="font-weight: 500;">& {{ $itemCount - 3 }} more items</strong>
                         @endif
                     </p>
-                    
+
                     <h6 class="order-price">Rs {{ $order->total_cost }}</h6>
                 </div>
                     <div style="text-align: right; margin-top: 10px;">
@@ -289,23 +289,23 @@
             <div class="order-info">
                 <h6 class="order-id">Order ID: {{ $order->order_code }}</h6>
                 <h6 class="order-date">Order date: {{ $order->date }}</h6>
-                
+
                 <!-- Product Summary -->
                 <p class="order-summary">
                     @php
                         $itemCount = $order->items->count();
                         $itemsToShow = $order->items->take(3);
                     @endphp
-                    
+
                     @foreach($itemsToShow as $item)
                         {{ $item->product->product_name }}{{ !$loop->last ? ' | ' : '' }}
                     @endforeach
-                    
+
                     @if($itemCount > 3)
                         <strong style="font-weight: 500;">& {{ $itemCount - 3 }} more items</strong>
                     @endif
                 </p>
-                
+
                 <h6 class="order-price">Rs {{ $order->total_cost }}</h6>
             </div>
         </div>
@@ -373,7 +373,7 @@ let orderToCancel = '';
 
 function openCancelModal(orderCode) {
     orderToCancel = orderCode;
-    $('#cancel-confirmation-modal').modal('show'); 
+    $('#cancel-confirmation-modal').modal('show');
 }
 
 document.getElementById('confirm-cancel').onclick = function() {
@@ -382,23 +382,33 @@ document.getElementById('confirm-cancel').onclick = function() {
 
 function updateOrderStatus(orderCode, status) {
     fetch(`/order/cancel/${orderCode}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify({ status: status })
-    })
-    .then(response => response.json())
-    .then(data => {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+    },
+    body: JSON.stringify({ status: status })
+})
+.then(async response => {
+    const contentType = response.headers.get("content-type");
+
+    if (contentType && contentType.includes("application/json")) {
+        const data = await response.json();
         if (data.success) {
             location.reload();
         } else {
-            alert('Failed to cancel the order. Please try again.');
+            alert(data.message || 'Failed to cancel order.');
         }
-    })
-    .catch(error => console.error('Error:', error));
+    } else {
+        const text = await response.text();
+        console.error("Non-JSON response:", text);
+        alert('Unexpected error occurred. Check console.');
+    }
+})
+.catch(error => console.error('Fetch error:', error));
+
 }
+
 
 </script>
 <script>
@@ -411,7 +421,7 @@ function openConfirmDeliveryModal(orderCode) {
 
 $('#confirmDeliveryBtn').on('click', function() {
     console.log("Confirm delivery button clicked!");
-    
+
     $.ajax({
         url: '{{ route("confirm-delivery") }}',
         type: 'POST',

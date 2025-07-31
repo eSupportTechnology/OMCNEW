@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Container\Attributes\Tag;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -51,6 +52,17 @@ class Products extends Model
     }
 
 
+    public function subcategory()
+    {
+        return $this->belongsTo(Subcategory::class);
+    }
+
+    public function subSubcategory()
+    {
+        return $this->belongsTo(SubSubcategory::class);
+    }
+
+
     public function variations()
     {
         return $this->hasMany(Variation::class, 'product_id', 'product_id');
@@ -87,4 +99,3 @@ class Products extends Model
         return $this->belongsTo(Brand::class);
     }
 }
-

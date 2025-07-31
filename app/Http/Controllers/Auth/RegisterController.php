@@ -47,7 +47,7 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
-        // Validate the request data
+        // 1. Validate the request data
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
@@ -57,67 +57,102 @@ class RegisterController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
         ]);
-        $verificationCode = rand(100000, 999999);
 
+        // 2. Generate separate OTPs
+        $emailOtp = rand(100000, 999999);
+        $smsOtp = rand(100000, 999999);
 
-        // Store user data in the database
+        // 3. Store user data (use email OTP or store both in separate fields if needed)
         $user = new User();
-        $user->name = $validatedData['name'];;
+        $user->name = $validatedData['name'];
         $user->address = $validatedData['address'];
         $user->district = $validatedData['district'];
         $user->date_of_birth = $validatedData['DOB'];
         $user->phone_num = $validatedData['phone_num'];
         $user->email = $validatedData['email'];
         $user->password = Hash::make($validatedData['password']);
-        $user->verification_code = $verificationCode;
+        $user->verification_code = $emailOtp; // storing email OTP
+        $user->sms_code = $smsOtp; // storing SMS OTP
         $user->is_verified = false;
         $user->save();
 
-        // Send verification code email
-    Mail::to($user->email)->send(new SendVerificationCode($verificationCode));
+        // 4. Send verification email
+        Mail::to($user->email)->send(new SendVerificationCode($emailOtp));
+        session(['email' => $user->email]);
+        Log::info("📧 Email OTP sent | Email: {$user->email} | Code: {$emailOtp}");
 
-        // ✅ Send SMS to vendor
+        // 5. Send SMS OTP (but not stored)
         try {
+            session(['phone' => $user->phone_num]);
             $smsService = new DialogSMSService();
-            $vendorMobile = env('SMS_PHONE_NUMBER'); // Change this to your vendor's actual mobile number
-            $message = "New User is registed:\nUser Name: {$user->name}\nEmail: Rs. {$user->email}";
+            $smsMessage = "Your SMS verification code is: {$smsOtp}";
+            $smsService->sendSMS($user->phone_num, $smsMessage);
 
-            $smsService->sendSMS($vendorMobile, $message);
+            Log::info("📱 SMS OTP sent | Phone: {$user->phone_num} | Code: {$smsOtp}");
         } catch (\Exception $e) {
-            Log::error('Failed to send SMS to vendor: ' . $e->getMessage());
+            Log::warning("⚠️ SMS OTP FAILED | Phone: {$user->phone_num} | Code: {$smsOtp}");
+            Log::error('❌ SMS sending error: ' . $e->getMessage());
         }
 
-        // Redirect to a success page or login
+
         return redirect()->route('verify.form')->with('email', $user->email);
     }
 
 
+
     public function showVerificationForm()
-{
-    return view('auth.codeverify'); // create this blade below
-}
-
-public function verifyCode(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'code' => 'required|digits:6',
-    ]);
-
-    $user = User::where('email', $request->email)
-                ->where('verification_code', $request->code)
-                ->first();
-
-    if (!$user) {
-        return back()->withErrors(['code' => 'Invalid verification code']);
+    {
+        return view('auth.codeverify'); // create this blade below
+    }
+    public function showSmsVerificationForm()
+    {
+        return view('auth.smscodeverify'); // create this blade below
     }
 
+    public function verifyCode(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'code' => 'required|digits:6',
+        ]);
 
-    $user->is_verified = true;
-    // $user->verification_code = null;
-    $user->save();
+        $user = User::where('email', $request->email)
+            ->where('verification_code', $request->code)
+            ->first();
 
-    return redirect()->route('login')->with('success', 'Email verified! You can now login.');
-}
+        if (!$user) {
+            return back()->withErrors(['code' => 'Invalid verification code']);
+        }
 
+        return redirect()->route('sms-verify.form')->with('success', 'Email verified! You can now login.');
+    }
+
+    public function smsverifyCode(Request $request)
+    {
+        // dd($request->all());
+        // Validate input
+        $request->validate([
+            'phone' => 'required|string|regex:/^\+?[0-9]{7,15}$/',
+            'code' => 'required|digits:6',
+        ]);
+
+        // Find user by phone number and verification code
+        $user = User::where('phone_num', $request->phone)
+            ->where('sms_code', $request->code)
+            ->first();
+
+        if (!$user) {
+            Log::warning('User not found or code mismatch', ['phone' => $request->phone, 'code' => $request->code]);
+            return back()->withErrors(['code' => 'Invalid or expired sms code.']);
+        }
+        Log::info('User verified', ['user_id' => $user->id]);
+
+
+        // Update user as verified
+        $user->is_verified = true;
+        $user->sms_code = null; // optional, clears OTP
+        $user->save();
+
+        return redirect()->route('login')->with('success', 'SMS verified! You can now log in.');
+    }
 }

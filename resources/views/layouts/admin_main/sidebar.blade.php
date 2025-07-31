@@ -142,6 +142,13 @@
                 data-mdb-ripple-init>
                 <i class="fas fa-image text-muted"></i><span class="text-muted">Logo Management</span>
             </a>
+
+            <a href="{{ route('shipping-charges.index') }}"
+                class="list-group-item list-group-item-action py-2 {{ request()->routeIs('shipping-charges.index') ? 'active' : '' }}"
+                data-mdb-ripple-init>
+                <i class="fas fa-image text-muted"></i><span class="text-muted">Shipping Management</span>
+            </a>
+
         </div>
     </div>
 </nav>

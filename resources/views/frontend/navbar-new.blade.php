@@ -429,21 +429,7 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
                             </div>
 
 
@@ -723,6 +709,70 @@
             color: #666;
         }
 
+        .category-sidebar {
+            position: fixed;
+            left: 0;
+            top: 60px;
+            bottom: 0;
+            width: 250px;
+            background: #fff;
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+            z-index: 900;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .category-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .category-sidebar-toggle {
+            position: fixed;
+            left: 10px;
+            top: 70px;
+            background: #2b96c5;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            z-index: 901;
+            display: none;
+        }
+
+        .category-sidebar-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .category-sidebar-item {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .category-sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .category-sidebar-link:hover {
+            background: #f8f9fa;
+            color: #2b96c5;
+            padding-left: 25px;
+        }
+
+        .category-sidebar-link i {
+            margin-right: 12px;
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
 
         @media (max-width: 768px) {
             .category-bar {
@@ -868,72 +918,6 @@
             }
         });
     </script>
-
-    <style>
-        .category-sidebar {
-            position: fixed;
-            left: 0;
-            top: 60px;
-            bottom: 0;
-            width: 250px;
-            background: #fff;
-            border-right: 1px solid #e0e0e0;
-            overflow-y: auto;
-            z-index: 900;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-        }
-
-        .category-sidebar.open {
-            transform: translateX(0);
-        }
-
-        .category-sidebar-toggle {
-            position: fixed;
-            left: 10px;
-            top: 70px;
-            background: #2b96c5;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 0 5px 5px 0;
-            cursor: pointer;
-            z-index: 901;
-            display: none;
-        }
-
-        .category-sidebar-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .category-sidebar-item {
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .category-sidebar-link {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            color: #333;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .category-sidebar-link:hover {
-            background: #f8f9fa;
-            color: #2b96c5;
-            padding-left: 25px;
-        }
-
-        .category-sidebar-link i {
-            margin-right: 12px;
-            font-size: 18px;
-            width: 24px;
-            text-align: center;
-        }
-    </style>
 
     <button class="category-sidebar-toggle" onclick="toggleSidebar()">
         <i class="fa fa-bars"></i> Categories
@@ -1185,37 +1169,6 @@
             </style>
 
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </div>
 </div>
 <!-- End of Mobile Menu -->
