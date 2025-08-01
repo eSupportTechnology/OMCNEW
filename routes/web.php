@@ -495,6 +495,8 @@ Route::get('/cart/checkout', [CartController::class, 'checkout'])->name('checkou
 Route::post('/order/store', [CustomerOrderController::class, 'store'])->name('order.store');
 
 Route::get('/all-items', [ProductController::class, 'show_all_items'])->name('all-items');
+Route::get('/api/filter-options', [ProductController::class, 'getFilterOptions'])->name('filter.options');
+Route::get('/api/price-range', [ProductController::class, 'getPriceRange'])->name('price.range');
 Route::get('/cart', [CartController::class, 'showCart'])->name('cart');
 Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 

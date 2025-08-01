@@ -59,65 +59,306 @@ class ProductController extends Controller
 
 
     public function show_all_items(Request $request)
-    {
-        $perPage = 15;
-        // Get categories for the filter
-        $categories = Category::all();
+{
+    $perPage = 15;
 
-        $query = Products::with('images', 'specialOffer', 'Sale');
+    // Get categories for the filter
+    $categories = Category::all();
 
-        // Apply category filter
-        if ($request->has('category')) {
-            $category = $request->input('category');
-            $query->where('product_category', $category);
-        }
+    $query = Products::with('images', 'specialOffer', 'Sale');
 
-        // Apply subcategory filter
-        if ($request->has('subcategory')) {
-            $subcategory = $request->input('subcategory');
-            $query->where('subcategory', $subcategory);
-        }
-
-        // Apply subsubcategory filter
-        if ($request->has('subsubcategory')) {
-            $subsubcategory = $request->input('subsubcategory');
-            $query->where('sub_subcategory', $subsubcategory);
-        }
-
-        // Apply other filters (color, size, price)
-        if ($request->has('color')) {
-            $color = $request->input('color');
-            $query->whereHas('variations', function ($q) use ($color) {
-                $q->where('type', 'color')->where('value', $color);
-            });
-        }
-
-        if ($request->has('size')) {
-            $size = $request->input('size');
-            $query->whereHas('variations', function ($q) use ($size) {
-                $q->where('type', 'size')->where('value', $size);
-            });
-        }
-
-        if ($request->has('price')) {
-            $priceRange = explode('-', $request->input('price'));
-            $minPrice = $priceRange[0];
-            $maxPrice = $priceRange[1];
-            $query->whereBetween('normal_price', [$minPrice, $maxPrice]);
-        }
-
-        // Paginate the results
-        $products = $query->paginate($perPage)->through(function ($product) {
-            $product->average_rating = $product->reviews()->where('status', 'published')->avg('rating');
-            $product->rating_count = $product->reviews()->where('status', 'published')->count();
-            return $product;
-        });
-
-        $sizes = Variation::where('type', 'size')->distinct()->get(['value']);
-        $colors = Variation::where('type', 'color')->distinct()->get(['value', 'hex_value']);
-
-        return view('frontend.all_items', compact('products', 'categories', 'sizes', 'colors'));
+    // Apply category filter
+    if ($request->has('category') && !empty($request->input('category'))) {
+        $category = $request->input('category');
+        $query->where('product_category', $category);
     }
+
+    // Apply subcategory filter
+    if ($request->has('subcategory') && !empty($request->input('subcategory'))) {
+        $subcategory = $request->input('subcategory');
+        $query->where('subcategory', $subcategory);
+    }
+
+    // Apply subsubcategory filter
+    if ($request->has('subsubcategory') && !empty($request->input('subsubcategory'))) {
+        $subsubcategory = $request->input('subsubcategory');
+        $query->where('sub_subcategory', $subsubcategory);
+    }
+
+    // Apply color filter
+    if ($request->has('color') && !empty($request->input('color'))) {
+        $color = $request->input('color');
+        $query->whereHas('variations', function ($q) use ($color) {
+            $q->where('type', 'Color')->where('value', $color)->where('quantity', '>', 0);
+        });
+    }
+
+    // Apply size filter
+    if ($request->has('size') && !empty($request->input('size'))) {
+        $size = $request->input('size');
+        $query->whereHas('variations', function ($q) use ($size) {
+            $q->where('type', 'Size')->where('value', $size)->where('quantity', '>', 0);
+        });
+    }
+
+    // Apply price range filter
+    if ($request->has('min_price') && $request->has('max_price')) {
+        $minPrice = $request->input('min_price');
+        $maxPrice = $request->input('max_price');
+
+        if (!empty($minPrice) && !empty($maxPrice)) {
+            $query->where(function ($q) use ($minPrice, $maxPrice) {
+                $q->where(function ($subQ) use ($minPrice, $maxPrice) {
+                    // Check normal price when no active sale or special offer
+                    $subQ->whereBetween('normal_price', [$minPrice, $maxPrice])
+                         ->whereDoesntHave('sale', function ($saleQ) {
+                             $saleQ->where('status', 'active');
+                         })
+                         ->whereDoesntHave('specialOffer', function ($offerQ) {
+                             $offerQ->where('status', 'active');
+                         });
+                })
+                ->orWhere(function ($subQ) use ($minPrice, $maxPrice) {
+                    // Check sale price when sale is active
+                    $subQ->whereHas('sale', function ($saleQ) use ($minPrice, $maxPrice) {
+                        $saleQ->where('status', 'active')
+                              ->whereBetween('sale_price', [$minPrice, $maxPrice]);
+                    });
+                })
+                ->orWhere(function ($subQ) use ($minPrice, $maxPrice) {
+                    // Check special offer price when special offer is active
+                    $subQ->whereHas('specialOffer', function ($offerQ) use ($minPrice, $maxPrice) {
+                        $offerQ->where('status', 'active')
+                               ->whereBetween('offer_price', [$minPrice, $maxPrice]);
+                    });
+                });
+            });
+        }
+    }
+
+    // Apply sorting
+    if ($request->has('sort') && !empty($request->input('sort'))) {
+        $sort = $request->input('sort');
+
+        switch ($sort) {
+            case 'price_low_high':
+                $query->leftJoin('sales', function ($join) {
+                    $join->on('products.product_id', '=', 'sales.product_id')
+                         ->where('sales.status', '=', 'active');
+                })
+                ->leftJoin('special_offers', function ($join) {
+                    $join->on('products.product_id', '=', 'special_offers.product_id')
+                         ->where('special_offers.status', '=', 'active');
+                })
+                ->orderByRaw('
+                    CASE
+                        WHEN sales.status = "active" THEN sales.sale_price
+                        WHEN special_offers.status = "active" THEN special_offers.offer_price
+                        ELSE products.normal_price
+                    END ASC
+                ')
+                ->select('products.*');
+                break;
+
+            case 'price_high_low':
+                $query->leftJoin('sales', function ($join) {
+                    $join->on('products.product_id', '=', 'sales.product_id')
+                         ->where('sales.status', '=', 'active');
+                })
+                ->leftJoin('special_offers', function ($join) {
+                    $join->on('products.product_id', '=', 'special_offers.product_id')
+                         ->where('special_offers.status', '=', 'active');
+                })
+                ->orderByRaw('
+                    CASE
+                        WHEN sales.status = "active" THEN sales.sale_price
+                        WHEN special_offers.status = "active" THEN special_offers.offer_price
+                        ELSE products.normal_price
+                    END DESC
+                ')
+                ->select('products.*');
+                break;
+
+            case 'name_a_z':
+                $query->orderBy('product_name', 'asc');
+                break;
+
+            case 'name_z_a':
+                $query->orderBy('product_name', 'desc');
+                break;
+
+            case 'newest':
+                $query->orderBy('created_at', 'desc');
+                break;
+
+            case 'oldest':
+                $query->orderBy('created_at', 'asc');
+                break;
+
+            case 'rating_high_low':
+                $query->leftJoin('reviews', function ($join) {
+                    $join->on('products.product_id', '=', 'reviews.product_id')
+                         ->where('reviews.status', '=', 'published');
+                })
+                ->groupBy('products.product_id')
+                ->orderByRaw('AVG(reviews.rating) DESC NULLS LAST')
+                ->select('products.*');
+                break;
+
+            default:
+                $query->orderBy('created_at', 'desc');
+                break;
+        }
+    } else {
+        $query->orderBy('created_at', 'desc');
+    }
+
+    // Paginate the results and preserve query parameters
+    $products = $query->paginate($perPage)->through(function ($product) {
+        $product->average_rating = $product->reviews()->where('status', 'published')->avg('rating') ?? 0;
+        $product->rating_count = $product->reviews()->where('status', 'published')->count();
+        return $product;
+    });
+
+    // Append query parameters to pagination links
+    $products->appends($request->query());
+
+    // Get available filter options based on current filters
+    $sizes = $this->getAvailableSizes($request);
+    $colors = $this->getAvailableColors($request);
+    $priceRange = $this->getPriceRange($request);
+
+    // Get active filters for display
+    $activeFilters = $this->getActiveFilters($request);
+
+    return view('frontend.all_items', compact(
+        'products',
+        'categories',
+        'sizes',
+        'colors',
+        'priceRange',
+        'activeFilters'
+    ));
+}
+
+private function getAvailableSizes(Request $request)
+{
+    $query = Products::query();
+
+    // Apply all filters except size
+    if ($request->has('category') && !empty($request->input('category'))) {
+        $query->where('product_category', $request->input('category'));
+    }
+
+    if ($request->has('color') && !empty($request->input('color'))) {
+        $query->whereHas('variations', function ($q) use ($request) {
+            $q->where('type', 'Color')->where('value', $request->input('color'));
+        });
+    }
+
+    return Variation::where('type', 'Size')
+        ->where('quantity', '>', 0)
+        ->whereHas('product', function ($q) use ($query) {
+            $q->whereIn('product_id', $query->pluck('product_id'));
+        })
+        ->distinct()
+        ->get(['value']);
+}
+
+private function getAvailableColors(Request $request)
+{
+    $query = Products::query();
+
+    // Apply all filters except color
+    if ($request->has('category') && !empty($request->input('category'))) {
+        $query->where('product_category', $request->input('category'));
+    }
+
+    if ($request->has('size') && !empty($request->input('size'))) {
+        $query->whereHas('variations', function ($q) use ($request) {
+            $q->where('type', 'Size')->where('value', $request->input('size'));
+        });
+    }
+
+    return Variation::where('type', 'Color')
+        ->where('quantity', '>', 0)
+        ->whereHas('product', function ($q) use ($query) {
+            $q->whereIn('product_id', $query->pluck('product_id'));
+        })
+        ->distinct()
+        ->get(['value', 'hex_value']);
+}
+
+private function getPriceRange(Request $request)
+{
+    $query = Products::with(['sale' => function ($q) {
+        $q->where('status', 'active');
+    }, 'specialOffer' => function ($q) {
+        $q->where('status', 'active');
+    }]);
+
+    // Apply current filters except price
+    if ($request->has('category') && !empty($request->input('category'))) {
+        $query->where('product_category', $request->input('category'));
+    }
+
+    if ($request->has('color') && !empty($request->input('color'))) {
+        $query->whereHas('variations', function ($q) use ($request) {
+            $q->where('type', 'Color')->where('value', $request->input('color'));
+        });
+    }
+
+    if ($request->has('size') && !empty($request->input('size'))) {
+        $query->whereHas('variations', function ($q) use ($request) {
+            $q->where('type', 'Size')->where('value', $request->input('size'));
+        });
+    }
+
+    $products = $query->get();
+    $prices = [];
+
+    foreach ($products as $product) {
+        if ($product->sale && $product->sale->status === 'active') {
+            $prices[] = $product->sale->sale_price;
+        } elseif ($product->specialOffer && $product->specialOffer->status === 'active') {
+            $prices[] = $product->specialOffer->offer_price;
+        } else {
+            $prices[] = $product->normal_price;
+        }
+    }
+
+    return [
+        'min' => !empty($prices) ? min($prices) : 0,
+        'max' => !empty($prices) ? max($prices) : 10000
+    ];
+}
+
+private function getActiveFilters(Request $request)
+{
+    $filters = [];
+
+    if ($request->has('category') && !empty($request->input('category'))) {
+        $filters['category'] = $request->input('category');
+    }
+
+    if ($request->has('color') && !empty($request->input('color'))) {
+        $filters['color'] = $request->input('color');
+    }
+
+    if ($request->has('size') && !empty($request->input('size'))) {
+        $filters['size'] = $request->input('size');
+    }
+
+    if ($request->has('min_price') && $request->has('max_price')) {
+        $minPrice = $request->input('min_price');
+        $maxPrice = $request->input('max_price');
+        if (!empty($minPrice) && !empty($maxPrice)) {
+            $filters['price'] = "Rs. {$minPrice} - Rs. {$maxPrice}";
+        }
+    }
+
+    return $filters;
+}
 
 
 
@@ -192,7 +433,41 @@ class ProductController extends Controller
     }
 
 
+public function getFilterOptions(Request $request)
+{
+    $sizes = $this->getAvailableSizes($request);
+    $colors = $this->getAvailableColors($request);
+    $priceRange = $this->getPriceRange($request);
 
+    return response()->json([
+        'sizes' => $sizes,
+        'colors' => $colors,
+        'priceRange' => $priceRange
+    ]);
+}
+
+// Method to handle URL building with multiple parameters
+public static function buildFilterUrl($baseUrl, $newParams = [], $removeParams = [])
+{
+    $currentParams = request()->query();
+
+    // Remove specified parameters
+    foreach ($removeParams as $param) {
+        unset($currentParams[$param]);
+    }
+
+    // Add new parameters
+    foreach ($newParams as $key => $value) {
+        if ($value !== null && $value !== '') {
+            $currentParams[$key] = $value;
+        }
+    }
+
+    // Remove page parameter when filters change
+    unset($currentParams['page']);
+
+    return $baseUrl . '?' . http_build_query($currentParams);
+}
 
 
 
