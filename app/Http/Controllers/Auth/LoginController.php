@@ -41,8 +41,13 @@ class LoginController extends Controller
                 'email' => 'User not found.',
             ])->withInput();
         }
-        
+
         if($user->is_verified == 0){
+            return back()->withErrors([
+                'email' => 'Your account is not verified. Please check your sms for verification instructions.',
+            ])->withInput();
+        }
+        if($user->is_email_verified == 0){
             return back()->withErrors([
                 'email' => 'Your account is not verified. Please check your email for verification instructions.',
             ])->withInput();

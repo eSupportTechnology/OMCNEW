@@ -124,7 +124,11 @@ class RegisterController extends Controller
             return back()->withErrors(['code' => 'Invalid verification code']);
         }
 
-        return redirect()->route('sms-verify.form')->with('success', 'Email verified! You can now login.');
+        $user->is_email_verified = true;
+        $user->verification_code = null;
+        $user->save();
+
+        return redirect()->route('sms-verify.form')->with('success', 'Email verified!');
     }
 
     public function smsverifyCode(Request $request)
@@ -150,7 +154,7 @@ class RegisterController extends Controller
 
         // Update user as verified
         $user->is_verified = true;
-        $user->sms_code = null; // optional, clears OTP
+        $user->sms_code = null;
         $user->save();
 
         return redirect()->route('login')->with('success', 'SMS verified! You can now log in.');
