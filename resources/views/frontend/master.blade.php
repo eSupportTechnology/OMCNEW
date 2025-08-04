@@ -123,6 +123,9 @@
             integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+            <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+
 
         <title>OMC - Online Marketing Complex</title>
 

@@ -502,18 +502,21 @@
                                             </div>
                                             <div class="star-rating" style="margin-right: 10px;">
                                                 <div class="rating">
-                                        @for ($i = 1; $i <= 5; $i++)
-                                            @if ($averageRating >= $i)
-                                                <i class="fa-solid fa-star text-yellow-500"></i> <!-- Full star -->
-                                            @elseif ($averageRating >= $i - 0.5)
-                                                <i class="fa-solid fa-star-half-stroke text-yellow-500"></i>
-                                                <!-- Half star -->
-                                            @else
-                                                <i class="fa-regular fa-star text-yellow-500"></i> <!-- Empty star -->
-                                            @endif
-                                        @endfor
-                                    </div>
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($product->average_rating >= $i)
+                                                            <i class="fa-solid fa-star text-yellow-500"></i>
+                                                            <!-- Full star -->
+                                                        @elseif ($product->average_rating >= $i - 0.5)
+                                                            <i class="fa-solid fa-star-half-stroke text-yellow-500"></i>
+                                                            <!-- Half star -->
+                                                        @else
+                                                            <i class="fa-regular fa-star text-yellow-500"></i>
+                                                            <!-- Empty star -->
+                                                        @endif
+                                                    @endfor
+                                                </div>
                                             </div>
+
 
                                             <a href="" class="add-to-cart" data-bs-toggle="modal"
                                                 data-bs-target="#cartModal_{{ $product->product_id }}">Add to Cart</a>
@@ -612,9 +615,9 @@
                                 <div class="d-flex flex-row my-3">
                                     <div class="rating">
                                         @for ($i = 1; $i <= 5; $i++)
-                                            @if ($averageRating >= $i)
+                                            @if ($product->average_rating >= $i)
                                                 <i class="fa-solid fa-star text-yellow-500"></i> <!-- Full star -->
-                                            @elseif ($averageRating >= $i - 0.5)
+                                            @elseif ($product->average_rating >= $i - 0.5)
                                                 <i class="fa-solid fa-star-half-stroke text-yellow-500"></i>
                                                 <!-- Half star -->
                                             @else
@@ -965,7 +968,7 @@
                                     onHidden: function() {
                                         btn.html(
                                             '<i class="me-1 fa fa-shopping-basket"></i>Add to cart'
-                                            );
+                                        );
                                         btn.prop('disabled', false);
                                     }
                                 });
@@ -1977,7 +1980,7 @@
                                     onHidden: function() {
                                         btn.html(
                                             '<i class="me-1 fa fa-shopping-basket"></i>Add to cart'
-                                            );
+                                        );
                                         btn.prop('disabled', false);
                                     }
                                 });

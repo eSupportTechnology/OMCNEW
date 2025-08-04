@@ -218,6 +218,7 @@ class ProductController extends Controller
         $products = $query->paginate($perPage)->through(function ($product) {
             $product->average_rating = $product->reviews()->where('status', 'published')->avg('rating') ?? 0;
             $product->rating_count = $product->reviews()->where('status', 'published')->count();
+            
             return $product;
         });
 
@@ -923,7 +924,7 @@ class ProductController extends Controller
                 ->through(function ($product) {
                     $product->average_rating = $product->reviews()->where('status', 'published')->avg('rating');
                     $product->rating_count = $product->reviews()->where('status', 'published')->count();
-                        $product->published_reviews = $product->reviews->where('status', 'published'); 
+                        $product->published_reviews = $product->reviews->where('status', 'published');
                     return $product;
                 });
         }

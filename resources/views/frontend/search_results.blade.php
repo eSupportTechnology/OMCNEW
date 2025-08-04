@@ -1,6 +1,8 @@
 @extends ('frontend.master')
 
 @section('content')
+{{-- <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"> --}}
+
     <style>
         .search-items {
             text-align: center;
