@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Affiliate_User;
 use Carbon\Carbon;
 use App\Models\PaymentRequest;
+use App\Models\ShippingCharge;
 use App\Services\DialogSMSService;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -24,83 +25,56 @@ use Illuminate\Support\Facades\Session;
 class PaymentController extends Controller
 {
 
-    // public function payment($order_code)
-    // {
-
-    //     if (Auth::check()) {
-    //         $cart = CartItem::with('product')->where('user_id', Auth::id())->get();
-    //     } else {
-    //         $cartItems = session()->get('cart', []);
-    //         $cart = collect($cartItems)->map(function ($item) {
-    //             $product = Products::where('product_id', $item['product_id'])->first();
-    //             $item['product'] = $product;
-    //             return (object) $item;
-    //         });
-    //     }
-    //     return view('frontend.payment', compact('cart', 'order_code'));
-    // }
-
-    // public function payment($order_code)
-    // {
-
-    //     $deliveryFee = 300;
-    //     $subtotal = 0;
-
-    //     if (Auth::check()) {
-    //         $cart = CartItem::with(['product.sale', 'product.specialOffer'])
-    //             ->where('user_id', Auth::id())->get();
-    //     } else {
-    //         $cartItems = session()->get('cart', []);
-    //         $cart = collect($cartItems)->map(function ($item) {
-    //             $product = Products::with(['sale', 'specialOffer'])->where('product_id', $item['product_id'])->first();
-    //             $item['product'] = $product;
-    //             return (object) $item;
-    //         });
-    //     }
-
-    //     foreach ($cart as $item) {
-    //         $price = $item->product->sale && $item->product->sale->status === 'active'
-    //             ? $item->product->sale->sale_price
-    //             : ($item->product->specialOffer && $item->product->specialOffer->status === 'active'
-    //                 ? $item->product->specialOffer->offer_price
-    //                 : $item->product->normal_price);
-
-    //         $subtotal += $price * ($item->quantity ?? 1);
-    //     }
-
-    //     $total = $subtotal + $deliveryFee;
-
-    //     return view('frontend.payment', compact('cart', 'order_code', 'subtotal', 'deliveryFee', 'total'));
-    // }
-
     public function payment($order_code)
-    {
-
-        $deliveryFee = 300;
-        $subtotal = 0;
-
-        if (Auth::check()) {
-            $customerOrder = CustomerOrder::where('order_code', $order_code)->where('user_id', Auth::id())->first();
-            if ($customerOrder) {
-                $cart = $customerOrder->items()->with(['product.sale', 'product.specialOffer'])->get();
-            } else {
-                return redirect()->route('home');
-            }
-
-            $total= $customerOrder->total_cost;
-            $subtotal = $customerOrder->items()
-                ->select(DB::raw('SUM(cost * quantity) as subtotal'))
-                ->value('subtotal');
-
-            $deliveryFee = $total - $subtotal;
-        } else {
-            return redirect()->route('login');
-        }
-
-
-
-        return view('frontend.payment', compact('customerOrder', 'order_code', 'subtotal', 'deliveryFee', 'total'));
+{
+    if (!Auth::check()) {
+        return redirect()->route('login');
     }
+
+    $customerOrder = CustomerOrder::where('order_code', $order_code)
+        ->where('user_id', Auth::id())
+        ->first();
+
+    if (!$customerOrder) {
+        return redirect()->route('home');
+    }
+
+    // Fetch order items with product sale/offer info
+    $cart = $customerOrder->items()->with(['product.sale', 'product.specialOffer'])->get();
+
+    // Calculate subtotal (sum of cost * quantity)
+    $subtotal = $cart->sum(function ($item) {
+        return $item->cost * $item->quantity;
+    });
+
+    // Calculate total quantity of all items
+    $totalQuantity = $cart->sum('quantity');
+
+    // Get delivery fee based on total quantity
+    $shippingCharge = ShippingCharge::where('min_quantity', '<=', $totalQuantity)
+        ->where('max_quantity', '>=', $totalQuantity)
+        ->first();
+
+    $deliveryFee = $shippingCharge->charge ?? 0;
+
+    // Total = subtotal + delivery
+    $total = $subtotal + $deliveryFee;
+
+    // ✅ Update the order with calculated values
+    $customerOrder->update([
+        'total_cost'   => $total,
+        'delivery_fee' => $deliveryFee,
+    ]);
+
+    return view('frontend.payment', compact(
+        'customerOrder',
+        'order_code',
+        'subtotal',
+        'deliveryFee',
+        'total'
+    ));
+}
+
 
 
 
@@ -142,43 +116,44 @@ class PaymentController extends Controller
             ->with('success', 'Order confirmed successfully with Cash on Delivery.');
     }
 
-    // public function confirmcardOrder($order_code)
-    // {
-    //     try {
-    //         $order = CustomerOrder::where('order_code', $order_code)->where('user_id', Auth::id())->firstOrFail();
-
-    //         // Update the payment method and payment status
-    //         $order->update([
-    //             'payment_method' => 'Card',
-    //             'payment_status' => 'Paid',
-    //         ]);
-
-    //         return redirect()->route('order.thankyou', ['order_code' => $order_code])
-    //             ->with('success', 'Order confirmed successfully!');
-    //     } catch (\Exception $e) {
-    //         return redirect()->back()->with('error', 'Failed to confirm order. Please try again.');
-    //     }
-    // }
-
     public function confirmcardOrder($order_code)
     {
         try {
-            // Load the order with its related user (eager load to avoid lazy call)
-            $order = CustomerOrder::with('user')
+            $order = CustomerOrder::with(['user', 'items.product.sale', 'items.product.specialOffer'])
                 ->where('order_code', $order_code)
                 ->where('user_id', Auth::id())
                 ->firstOrFail();
 
-            // Update the payment method and payment status
+            // 1. Calculate subtotal (cost * quantity for each item)
+            $subtotal = $order->items->sum(function ($item) {
+                return $item->cost * $item->quantity;
+            });
+
+            // 2. Calculate total quantity for shipping fee lookup
+            $totalQuantity = $order->items->sum('quantity');
+
+            // 3. Get delivery fee
+            $shippingCharge = ShippingCharge::where('min_quantity', '<=', $totalQuantity)
+                ->where('max_quantity', '>=', $totalQuantity)
+                ->first();
+
+            $deliveryFee = $shippingCharge->charge ?? 0;
+
+            // 4. Calculate final total
+            $total = $subtotal + $deliveryFee;
+
+            // 5. Update order total_cost and fees
             $order->update([
                 'payment_method' => 'Card',
                 'payment_status' => 'Pending',
+                'total_cost'     => $total,
+                'delivery_fee'   => $deliveryFee,
             ]);
 
-            // Payment details
-            $amount   = $order->total_cost; // Amount in LKR
-            $currency = 'LKR';
-            $hash     = OnepayHelper::generateHash($currency, $amount);
+            // 6. Prepare for payment
+            $amount    = $total;
+            $currency  = 'LKR';
+            $hash      = OnepayHelper::generateHash($currency, $amount);
             $reference = 'OMCORD_' . time();
 
             Log::info('Initiating OnePay Payment', [
@@ -194,7 +169,7 @@ class PaymentController extends Controller
                 'transaction_redirect_url' => route('order.thankyou', ['order_code' => $order_code]),
                 'additional_data'          => $reference,
             ]);
-            // Make API request to OnePay
+
             $response = Http::withHeaders([
                 'Authorization' => config('onepay.api_key'),
             ])->post(config('onepay.base_url') . '/checkout/link/', [
@@ -221,17 +196,13 @@ class PaymentController extends Controller
 
                 Log::info('Redirecting to OnePay', ['url' => $redirectUrl]);
 
-                // Save transaction ID
                 $order->update([
-                    'payment_method'  => 'Card',
-                    'payment_status'  => 'Pending',
-                    'transaction_id'  => $reference,
+                    'transaction_id' => $reference,
                 ]);
 
                 return redirect()->away($redirectUrl);
             }
 
-            // Log unsuccessful response
             Log::error('OnePay payment failed or missing redirect URL', [
                 'status' => $response->status(),
                 'body'   => $response->body(),
@@ -239,7 +210,6 @@ class PaymentController extends Controller
 
             return redirect()->back()->with('error', 'Payment initiation failed. Please try again.');
         } catch (\Exception $e) {
-            // Log exception with detail
             Log::error('Error in confirmcardOrder', [
                 'message' => $e->getMessage(),
                 'line'    => $e->getLine(),
@@ -249,6 +219,7 @@ class PaymentController extends Controller
             return redirect()->back()->with('error', 'Failed to confirm order. Please try again.');
         }
     }
+
 
 
     public function getOrderDetails($order_code)
@@ -265,7 +236,7 @@ class PaymentController extends Controller
             ]);
         }
 
-        if($order->payment_status != "Paid"){
+        if ($order->payment_status != "Paid") {
             return redirect()->route('order.payment-fail')->with('error', 'Order not found.');
         }
         return view('frontend.order_received', [

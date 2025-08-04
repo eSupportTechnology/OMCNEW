@@ -10,6 +10,17 @@
                 <div class="product-title">{{ Str::limit($item['name'], 10) }}</div>
                 <div class="product-title">Qty: {{ $item['quantity'] }}</div>
                 <div class="product-title">Rs. {{ $item['subtotal'] }}</div>
+                <div class="product-title btn-delete-item remove">
+                    <form action="{{ route('cart.remove', $item['product_id']) }}" method="POST"
+                        style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
+                            <i class="fa fa-trash" style="color: red;"></i>
+                        </button>
+                    </form>
+                </div>
+
             </div>
         </div>
     @empty

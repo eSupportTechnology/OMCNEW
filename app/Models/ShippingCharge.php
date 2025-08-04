@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class ShippingCharge extends Model
 {
-    protected $fillable = ['min_quantity', 'max_quantity', 'charge'];
+    protected $fillable = ['product_id','min_quantity', 'max_quantity', 'charge'];
 }

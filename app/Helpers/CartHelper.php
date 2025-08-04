@@ -42,6 +42,7 @@ class CartHelper
                     'image' => $product->images->first()?->image_path ?? null,
                     'quantity' => $item->quantity,
                     'subtotal' => round($price, 2),
+                    'product_id' => $product->product_id
                 ];
             }
         }

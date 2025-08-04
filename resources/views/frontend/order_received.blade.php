@@ -50,7 +50,7 @@
           <h4 style="color: orange;">Thank You for Your Purchase!</h4>
           <h6 class="mt-4">Your order has been confirmed. Your order code is: <strong>{{ $order_code }}</strong></h6>
           <p class="mt-4">You has been paid :.</p>
-          <h5 style="color: orange;">Rs.{{ $total_cost }}</h5>
+          <h5 style="color: orange;">Rs.{{ $total }}</h5>
         </div>
       </div>
     </div>

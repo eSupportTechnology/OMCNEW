@@ -62,14 +62,14 @@
                                                 <span class="unit-amount">
                                                     @php
                                                         // Check if there's an active special offer, otherwise check for sale, else use normal price
-$price =
-    $item->product->specialOffer &&
-    $item->product->specialOffer->status === 'active'
-        ? $item->product->specialOffer->offer_price
-        : ($item->product->sale &&
-        $item->product->sale->status === 'active'
-                                                                    ? $item->product->sale->sale_price
-                                                                    : $item->product->normal_price);
+                                                    $price =
+                                                        $item->product->specialOffer &&
+                                                        $item->product->specialOffer->status === 'active'
+                                                            ? $item->product->specialOffer->offer_price
+                                                            : ($item->product->sale &&
+                                                            $item->product->sale->status === 'active'
+                                                            ? $item->product->sale->sale_price
+                                                            : $item->product->normal_price);
                                                     @endphp
                                                     LKR {{ number_format($price, 2) }}
                                                 </span>

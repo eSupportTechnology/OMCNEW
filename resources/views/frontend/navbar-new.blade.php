@@ -405,32 +405,37 @@
 
 
                             <div class="search-con">
-                                <div class="top-search search-container">
-                                    <input type="text" class="form-control main-search  top-search-suggestion-desk"
-                                           placeholder="Search for products, categories and more">
-                                    <button type="button" class="btn btn-primary submit-search"><i
-                                            class="fa-solid fa-magnifying-glass"></i></button>
-                                    <div id="suggestions-box-display"
-                                         class="suggestions-box suggestions-box-display" style="display: none;">
-                                        <div class="left-suggestion-no-products" hidden>
-                                            <p>No results found.</p>
-                                        </div>
+    <div class="top-search search-container">
+        <form action="{{ route('searchResults') }}" method="GET" class="d-flex w-100 align-items-center">
+            <input type="text" name="query"
+                class="form-control main-search top-search-suggestion-desk"
+                placeholder="Search for products, categories and more">
+            <button type="submit" class="btn btn-primary submit-search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
 
-                                        <div class="left-suggestion-main-con">
-                                            <!-- JS will inject products here -->
-                                        </div>
+        <div id="suggestions-box-display" class="suggestions-box suggestions-box-display" style="display: none;">
+            <div class="left-suggestion-no-products" hidden>
+                <p>No results found.</p>
+            </div>
 
-                                        <div class="right-suggestion-main-con">
-                                            <div>
-                                                <h4 class="headding search-category-title">Categories</h4>
-                                                <ul class="category-list">
-                                                    <!-- JS will inject categories here -->
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="left-suggestion-main-con">
+                <!-- JS will inject products here -->
+            </div>
+
+            <div class="right-suggestion-main-con">
+                <div>
+                    <h4 class="headding search-category-title">Categories</h4>
+                    <ul class="category-list">
+                        <!-- JS will inject categories here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -1555,6 +1560,7 @@
                 });
         });
     });
+
 </script>
 
 

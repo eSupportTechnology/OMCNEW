@@ -30,6 +30,7 @@ class CustomerOrder extends Model
         'payment_status',
         'discount',
         'transaction_id',
+        'delivery_fee'
     ];
 
 

@@ -1459,6 +1459,9 @@
                                 positionClass: 'toast-top-right',
                                 timeOut: 2500
                             });
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000);
                         },
                         error: function(xhr) {
                             console.log(xhr.responseText);

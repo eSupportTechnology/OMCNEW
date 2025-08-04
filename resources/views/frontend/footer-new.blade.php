@@ -301,7 +301,7 @@
 
 
                     <div>
-                        <a href="{{ route('cart') }}" class="btn btn-site-default w-100 mt-4">View Cart</a>
+                        <a href="{{ route('cart') }}" class="btn btn-primary w-100 mt-4">View Cart</a>
                     </div>
                 </div>
             </div>

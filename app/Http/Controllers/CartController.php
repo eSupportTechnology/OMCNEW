@@ -317,6 +317,6 @@ public function addToCartAffiliate(Request $request)
         }
 
         $cartCount = Auth::check() ? CartItem::where('user_id', Auth::id())->sum('quantity') : count(session()->get('cart', []));
-        return response()->json(['cart_count' => $cartCount]);
+        return redirect()->back();
     }
 }
