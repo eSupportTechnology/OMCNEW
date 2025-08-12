@@ -880,6 +880,9 @@
             }
 
 
+
+
+
         }
     </style>
 
@@ -1076,12 +1079,32 @@
                             </div>
                         @endif
 
+                        {{-- <!-- Material Options -->
+                        @if ($product->variations->where('type', 'Material')->isNotEmpty())
+                            <div class="products-size-wrapper">
+                                <span>Material</span>
+                                <ul>
+                                    @foreach ($product->variations->where('type', 'Material') as $material)
+                                        @if ($material->quantity > 0)
+                                            <li>
+                                                <a href="javascript:void(0)" class="size-option"
+                                                    data-size="{{ $material->value }}">
+                                                    {{ $material->value }}
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif --}}
+
                         <div class="products-add-to-cart">
                             <div class="input-counter">
                                 <span class="minus-btn">
                                     <us class="fa-solid fa-minus"></us>
                                 </span>
-                                <input type="number" id="quantity" value="1" min="1" max="{{ $product->quantity }}">
+                                <input type="number" id="quantity" value="1" min="1"
+                                    max="{{ $product->quantity }}">
                                 <span class="plus-btn"><i class="fa-solid fa-plus"></i></span>
                             </div>
 
@@ -1102,6 +1125,9 @@
                                     </button>
                                 @endauth
                             </div>
+
+
+
 
 
                             {{-- <a href="javascript:void(0)" class="wishlist-toggle"
@@ -1172,6 +1198,17 @@
                                                 @endforeach
                                             </td>
                                         </tr>
+                                        {{-- <tr>
+                                            <td>Material:</td>
+                                            <td>
+                                                @foreach ($product->variations->where('type', 'Material') as $material)
+                                                    @if ($material->quantity > 0)
+                                                        <span
+                                                            class="badge bg-light text-dark me-1">{{ $material->value }}</span>
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                        </tr> --}}
 
                                     </tbody>
                                 </table>
@@ -1343,6 +1380,19 @@
                 });
             });
 
+            // // Material selction
+            // $('.material-option').on('click', function(e) {
+            //     e.preventDefault();
+            //     $('.material-option').removeClass('selected');
+            //     $(this).addClass('selected');
+
+            //     const material = $(this).data('material');
+            //     toastr.info(`Selected material: ${material}`, '', {
+            //         positionClass: 'toast-top-right',
+            //         timeOut: 1500
+            //     });
+            // })
+
             // Wishlist toggle
             $('.wishlist-toggle').on('click', function(e) {
                 e.preventDefault();
@@ -1385,115 +1435,118 @@
 
             // Add to Cart Button
             // Add to Cart Button - Fixed Version
-// Add to Cart Button - Fixed Version
-$('#addToCartBtn').on('click', function(e) {
-    e.preventDefault();
+            // Add to Cart Button - Fixed Version
+            $('#addToCartBtn').on('click', function(e) {
+                e.preventDefault();
 
-    const productId = $(this).data('product-id');
-    const isAuth = "{{ Auth::check() ? 'true' : 'false' }}";
-    const selectedSize = $('.size-option.selected').data('size');
-    const selectedColor = $('.color-option.selected').data('color-name');
+                const productId = $(this).data('product-id');
+                const isAuth = "{{ Auth::check() ? 'true' : 'false' }}";
+                const selectedSize = $('.size-option.selected').data('size');
+                const selectedColor = $('.color-option.selected').data('color-name');
 
-    // Parse quantity as integer and ensure it's valid
-    let quantity = parseInt($('#quantity').val());
-    console.log('Raw quantity value:', $('#quantity').val());
-    console.log('Parsed quantity:', quantity);
+                // Parse quantity as integer and ensure it's valid
+                let quantity = parseInt($('#quantity').val());
+                console.log('Raw quantity value:', $('#quantity').val());
+                console.log('Parsed quantity:', quantity);
 
-    if (isNaN(quantity) || quantity < 1) {
-        quantity = 1;
-        console.log('Invalid quantity detected, defaulting to 1');
-    }
+                if (isNaN(quantity) || quantity < 1) {
+                    quantity = 1;
+                    console.log('Invalid quantity detected, defaulting to 1');
+                }
 
-    // Check if there are size or color options for this product
-    const hasSize = $('.size-option').length > 0;
-    const hasColor = $('.color-option').length > 0;
+                // Check if there are size or color options for this product
+                const hasSize = $('.size-option').length > 0;
+                const hasColor = $('.color-option').length > 0;
+                // const hasMaterial = $('.material-option').length > 0;
 
-    // If the product has size options, check if size is selected
-    if (hasSize && !selectedSize) {
-        toastr.warning('Please select a size before adding to cart', '', {
-            positionClass: 'toast-top-right',
-            timeOut: 2500
-        });
-        return;
-    }
+                // If the product has size options, check if size is selected
+                if (hasSize && !selectedSize) {
+                    toastr.warning('Please select a size before adding to cart', '', {
+                        positionClass: 'toast-top-right',
+                        timeOut: 2500
+                    });
+                    return;
+                }
 
-    // If the product has color options, check if color is selected
-    if (hasColor && !selectedColor) {
-        toastr.warning('Please select a color before adding to cart', '', {
-            positionClass: 'toast-top-right',
-            timeOut: 2500
-        });
-        return;
-    }
+                // If the product has color options, check if color is selected
+                if (hasColor && !selectedColor) {
+                    toastr.warning('Please select a color before adding to cart', '', {
+                        positionClass: 'toast-top-right',
+                        timeOut: 2500
+                    });
+                    return;
+                }
 
-    // Proceed to add product to cart
-    if (isAuth === 'true') {
-        // Add button animation
-        const btn = $(this);
-        btn.prop('disabled', true);
-        btn.html('<i class="bx bx-loader-alt bx-spin"></i> Adding...');
+                // Proceed to add product to cart
+                if (isAuth === 'true') {
+                    // Add button animation
+                    const btn = $(this);
+                    btn.prop('disabled', true);
+                    btn.html('<i class="bx bx-loader-alt bx-spin"></i> Adding...');
 
-        // Debug: Log the data being sent
-        console.log('Sending cart data:', {
-            product_id: productId,
-            size: selectedSize || null,
-            color: selectedColor || null,
-            quantity: quantity
-        });
+                    // Debug: Log the data being sent
+                    console.log('Sending cart data:', {
+                        product_id: productId,
+                        size: selectedSize || null,
+                        color: selectedColor || null,
+                        // material: selectedMaterial || null,
+                        quantity: quantity
+                    });
 
-        $.ajax({
-            url: "{{ route('cart.add') }}",
-            method: 'POST',
-            data: {
-                _token: "{{ csrf_token() }}",
-                product_id: productId,
-                size: selectedSize || null,
-                color: selectedColor || null,
-                quantity: quantity
-            },
-            success: function(response) {
-                // Debug: Log server response
-                console.log('Server response:', response);
+                    $.ajax({
+                        url: "{{ route('cart.add') }}",
+                        method: 'POST',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            product_id: productId,
+                            size: selectedSize || null,
+                            color: selectedColor || null,
+                            // material: selectedMaterial || null,
+                            quantity: quantity
+                        },
+                        success: function(response) {
+                            // Debug: Log server response
+                            console.log('Server response:', response);
 
-                // Update cart count
-                $.get("{{ route('cart.count') }}", function(data) {
-                    $('#cart-count').text(data.cart_count);
-                });
+                            // Update cart count
+                            $.get("{{ route('cart.count') }}", function(data) {
+                                $('#cart-count').text(data.cart_count);
+                            });
 
-                // Reset button
-                btn.prop('disabled', false);
-                btn.html('<i class="bx bx-cart-add"></i> Add to Cart');
+                            // Reset button
+                            btn.prop('disabled', false);
+                            btn.html('<i class="bx bx-cart-add"></i> Add to Cart');
 
-                // Show success message
-                toastr.success('Item added to your cart!', '', {
-                    positionClass: 'toast-top-right',
-                    timeOut: 2500
-                });
+                            // Show success message
+                            toastr.success('Item added to your cart!', '', {
+                                positionClass: 'toast-top-right',
+                                timeOut: 2500
+                            });
 
-                setTimeout(function() {
-                    location.reload();
-                }, 1000);
-            },
-            error: function(xhr) {
-                console.log('Error response:', xhr.responseText);
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1000);
+                        },
+                        error: function(xhr) {
+                            console.log('Error response:', xhr.responseText);
 
-                // Reset button
-                btn.prop('disabled', false);
-                btn.html('<i class="bx bx-cart-add"></i> Add to Cart');
+                            // Reset button
+                            btn.prop('disabled', false);
+                            btn.html('<i class="bx bx-cart-add"></i> Add to Cart');
 
-                toastr.error('Something went wrong. Please try again.', '', {
-                    positionClass: 'toast-top-right',
-                    timeOut: 2500
-                });
-            }
-        });
-    } else {
-        toastr.warning('Please log in to add items to your cart', '', {
-            positionClass: 'toast-top-right',
-            timeOut: 2500
-        });
-    }
-});
+                            toastr.error('Something went wrong. Please try again.', '', {
+                                positionClass: 'toast-top-right',
+                                timeOut: 2500
+                            });
+                        }
+                    });
+                } else {
+                    toastr.warning('Please log in to add items to your cart', '', {
+                        positionClass: 'toast-top-right',
+                        timeOut: 2500
+                    });
+                }
+            });
 
             // Buy Now Button
             $('#buyNowBtn').on('click', function(e) {
@@ -1503,11 +1556,13 @@ $('#addToCartBtn').on('click', function(e) {
                 const isAuth = "{{ Auth::check() ? 'true' : 'false' }}";
                 const selectedSize = $('.size-option.selected').data('size');
                 const selectedColor = $('.color-option.selected').data('color-name');
+                // const selectedMaterial = $('.material-option.selected').data('material-name');
                 const quantity = $('#quantity').val() || 1;
 
                 // Check if there are size or color options for this product
                 const hasSize = $('.size-option').length > 0;
                 const hasColor = $('.color-option').length > 0;
+                // const hasMaterial = $('.material-option').length > 0;
 
                 // If the product has size options, check if size is selected
                 if (hasSize && !selectedSize) {
@@ -1542,6 +1597,7 @@ $('#addToCartBtn').on('click', function(e) {
                             product_id: productId,
                             size: selectedSize || null,
                             color: selectedColor || null,
+                            // material: selectedMaterial || null,
                             quantity: quantity
                         },
                         success: function(response) {

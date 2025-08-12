@@ -7,7 +7,7 @@
             <div class="page-title-content">
                 <h2>Cart</h2>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li>Cart</li>
                 </ul>
             </div>
@@ -62,12 +62,12 @@
                                                 <span class="unit-amount">
                                                     @php
                                                         // Check if there's an active special offer, otherwise check for sale, else use normal price
-$price =
-    $item->product->specialOffer &&
-    $item->product->specialOffer->status === 'active'
-        ? $item->product->specialOffer->offer_price
-        : ($item->product->sale &&
-        $item->product->sale->status === 'active'
+                                                    $price =
+                                                        $item->product->specialOffer &&
+                                                        $item->product->specialOffer->status === 'active'
+                                                            ? $item->product->specialOffer->offer_price
+                                                            : ($item->product->sale &&
+                                                            $item->product->sale->status === 'active'
                                                                     ? $item->product->sale->sale_price
                                                                     : $item->product->normal_price);
                                                     @endphp
@@ -378,181 +378,15 @@ $price =
 
     <script>
         $(document).ready(function() {
-            // Store current delivery fee for immediate updates
-            let currentDeliveryFee = {{ $deliveryFee }};
+    let shippingUpdateTimeout;
 
-            // Debounce function to prevent excessive AJAX calls
-            let shippingUpdateTimeout;
+    $('.plus-btn, .minus-btn').off('click').on('click', function() {
+        const quantityInput = $(this).siblings('.quantity-input');
+        let currentValue = parseInt(quantityInput.val());
+        const maxValue = parseInt(quantityInput.data('max')) || 999;
 
-            // Ensure no duplicate event bindings
-            $('.plus-btn, .minus-btn').off('click').on('click', function() {
-                const quantityInput = $(this).siblings('.quantity-input');
-                let currentValue = parseInt(quantityInput.val());
-
-                if (!isNaN(currentValue)) {
-                    if ($(this).hasClass('plus-btn')) {
-                        quantityInput.val(currentValue + 1);
-                    } else if ($(this).hasClass('minus-btn') && currentValue > 1) {
-                        quantityInput.val(currentValue - 1);
-                    }
-
-                    updatePrice($(this));
-                }
-            });
-
-            function updatePrice(element) {
-                let isMobile = window.innerWidth < 768;
-                let cartItem, productId, quantity;
-
-                if (isMobile) {
-                    cartItem = element.closest('.cart-item-mobile');
-                    productId = element.data('product-id');
-                    quantity = parseInt(cartItem.find('.quantity-input').val());
-
-                    let priceText = cartItem.find('.unit-amount').text();
-                    let cleanedPrice = priceText.replace(/[^\d.]/g, '');
-                    let price = parseFloat(cleanedPrice);
-
-                    let subtotal = quantity * price;
-                    cartItem.find('.subtotal-amount').text('LKR ' + subtotal.toFixed(2).replace(
-                        /\B(?=(\d{3})+(?!\d))/g, ","));
-                } else {
-                    cartItem = element.closest('tr');
-                    productId = element.data('product-id');
-                    quantity = parseInt(cartItem.find('.quantity-input').val());
-
-                    let priceText = cartItem.find('.product-price .unit-amount').text();
-                    let cleanedPrice = priceText.replace(/[^\d.]/g, '');
-                    let price = parseFloat(cleanedPrice);
-
-                    let subtotal = quantity * price;
-                    cartItem.find('.product-subtotal .subtotal-amount').text('LKR ' + subtotal.toFixed(2).replace(
-                        /\B(?=(\d{3})+(?!\d))/g, ","));
-                }
-
-                // First update totals with current delivery fee for immediate feedback
-                updateCartTotalsDisplay();
-
-                // Then recalculate shipping charges with debouncing
-                clearTimeout(shippingUpdateTimeout);
-                shippingUpdateTimeout = setTimeout(() => {
-                    recalculateShippingCharges();
-                }, 300); // Wait 300ms before making the AJAX call
-
-                // AJAX update to backend for cart quantity
-                updateCartQuantityOnServer(productId, quantity);
-            }
-
-            function updateCartTotalsDisplay() {
-                let subtotal = 0;
-                let isMobile = window.innerWidth < 768;
-
-                if (isMobile) {
-                    $('.mobile-cart .subtotal-amount').each(function() {
-                        let text = $(this).text().replace(/[^\d.]/g, '');
-                        subtotal += parseFloat(text) || 0;
-                    });
-                } else {
-                    $('.cart-table .product-subtotal .subtotal-amount').each(function() {
-                        let text = $(this).text().replace(/[^\d.]/g, '');
-                        subtotal += parseFloat(text) || 0;
-                    });
-                }
-
-                // Update subtotal display
-                $('.cart-totals li:contains("Subtotal") span').text('LKR ' + subtotal.toFixed(2).replace(
-                    /\B(?=(\d{3})+(?!\d))/g, ","));
-
-                // Update total with current delivery fee
-                let finalTotal = subtotal + currentDeliveryFee;
-                $('.cart-totals li:contains("Total") span').text('LKR ' + finalTotal.toFixed(2).replace(
-                    /\B(?=(\d{3})+(?!\d))/g, ","));
-            }
-
-            function recalculateShippingCharges() {
-                let totalQuantity = 0;
-                let isMobile = window.innerWidth < 768;
-
-                if (isMobile) {
-                    $('.mobile-cart .quantity-input').each(function() {
-                        totalQuantity += parseInt($(this).val()) || 0;
-                    });
-                } else {
-                    $('.cart-table .quantity-input').each(function() {
-                        totalQuantity += parseInt($(this).val()) || 0;
-                    });
-                }
-
-                // Show loading indicator (optional)
-                $('.cart-totals li:contains("Shipping Charges") span').html(
-                    '<i class="fa fa-spinner fa-spin"></i>');
-
-                // Calculate shipping charges based on total quantity
-                $.ajax({
-                    url: '{{ route('cart.calculateShipping') }}',
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        total_quantity: totalQuantity
-                    },
-                    timeout: 5000, // 5 second timeout
-                    success: function(response) {
-                        currentDeliveryFee = parseFloat(response.delivery_fee) || 0;
-
-                        // Update shipping charges display
-                        $('.cart-totals li:contains("Shipping Charges") span').text('Rs. ' +
-                            currentDeliveryFee.toFixed(2).replace(
-                                /\B(?=(\d{3})+(?!\d))/g, ","));
-
-                        // Recalculate and update final total
-                        updateCartTotalsDisplay();
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error calculating shipping:', error);
-
-                        // Restore shipping charges display on error
-                        $('.cart-totals li:contains("Shipping Charges") span').text('Rs. ' +
-                            currentDeliveryFee.toFixed(2).replace(
-                                /\B(?=(\d{3})+(?!\d))/g, ","));
-
-                        // Show user-friendly error message
-                        if (status === 'timeout') {
-                            console.warn('Shipping calculation timed out, using current rate');
-                        } else {
-                            console.warn('Failed to update shipping charges, using current rate');
-                        }
-                    }
-                });
-            }
-
-            function updateCartQuantityOnServer(productId, quantity) {
-                $.ajax({
-                    url: '{{ route('cart.update') }}',
-                    method: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        product_id: productId,
-                        quantity: quantity
-                    },
-                    success: function(response) {
-                        if (response.success) {
-                            console.log('Cart updated successfully');
-                        }
-                    },
-                    error: function(xhr) {
-                        console.error('Error updating cart:', xhr.responseText);
-                        // Optionally show user notification about update failure
-                    }
-                });
-            }
-
-            $(document).off('click', '.plus-btn').on('click', '.plus-btn', function(e) {
-                e.preventDefault(); // stop default
-                var input = $(this).siblings('.quantity-input');
-                var currentValue = parseInt(input.val(), 10) || 0;
-                var maxValue = parseInt(input.data('max'), 10) || 0;
-
-                // If already at max, show modal and STOP execution
+        if (!isNaN(currentValue)) {
+            if ($(this).hasClass('plus-btn')) {
                 if (currentValue >= maxValue) {
                     Swal.fire({
                         icon: 'warning',
@@ -560,61 +394,198 @@ $price =
                         text: 'Cannot increase beyond available stock (' + maxValue + ').',
                         confirmButtonText: 'OK'
                     });
-                    return; // **THIS stops incrementing**
+                    return;
+                }
+                quantityInput.val(currentValue + 1);
+            } else if ($(this).hasClass('minus-btn') && currentValue > 1) {
+                quantityInput.val(currentValue - 1);
+            }
+            handleQuantityChange(quantityInput);
+        }
+    });
+
+    $(document).off('input change', '.quantity-input').on('input change', '.quantity-input', function() {
+        let val = parseInt($(this).val());
+        const maxValue = parseInt($(this).data('max')) || 999;
+
+        if (isNaN(val) || val < 1) {
+            $(this).val(1);
+            val = 1;
+        } else if (val > maxValue) {
+            $(this).val(maxValue);
+            val = maxValue;
+            Swal.fire({
+                icon: 'warning',
+                title: 'Stock Limit',
+                text: 'Quantity adjusted to maximum available stock (' + maxValue + ').',
+                confirmButtonText: 'OK'
+            });
+        }
+        handleQuantityChange($(this));
+    });
+
+    function handleQuantityChange(quantityInput) {
+        const productId = getProductIdFromElement(quantityInput);
+        const quantity = parseInt(quantityInput.val());
+
+        // Clear any pending refresh
+        clearTimeout(shippingUpdateTimeout);
+
+        // Update quantity on server, then refresh totals after success
+        updateCartQuantityOnServer(productId, quantity, function() {
+            shippingUpdateTimeout = setTimeout(() => {
+                refreshCartTotals();
+            }, 300);
+        });
+    }
+
+    function getProductIdFromElement(element) {
+        let productId = element.data('product-id');
+        if (!productId) {
+            productId = element.siblings('.plus-btn, .minus-btn').first().data('product-id');
+        }
+        if (!productId) {
+            const container = element.closest('.cart-item-mobile, tr');
+            productId = container.find('.plus-btn, .minus-btn').first().data('product-id');
+        }
+        return productId;
+    }
+
+    function updateCartQuantityOnServer(productId, quantity, callback) {
+        $.ajax({
+            url: '{{ route('cart.update') }}',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                product_id: productId,
+                quantity: quantity
+            },
+            success: function() {
+                if (callback) callback();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error updating cart quantity:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Update Failed',
+                    text: 'Failed to update cart. Please try again.',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+    }
+
+    function refreshCartTotals() {
+        $.ajax({
+            url: '{{ route('cart.calculateShipping') }}',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                items: collectCartItems()
+            },
+            success: function(response) {
+                updateCartDisplay(response);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error refreshing cart totals:', error);
+            }
+        });
+    }
+
+    function collectCartItems() {
+        let items = [];
+        let isMobile = window.innerWidth < 768;
+
+        if (isMobile) {
+            $('.mobile-cart .cart-item-mobile').each(function() {
+                const productId = $(this).find('.plus-btn, .minus-btn').first().data('product-id');
+                const quantity = parseInt($(this).find('.quantity-input').val()) || 0;
+                if (productId && quantity > 0) {
+                    items.push({ product_id: productId, quantity: quantity });
                 }
             });
-
-            $(document).off('click', '.minus-btn').on('click', '.minus-btn', function(e) {
-                e.preventDefault();
-                var input = $(this).siblings('.quantity-input');
-                var currentValue = parseInt(input.val(), 10) || 0;
-
-                if (currentValue > 1) {
-                    input.val(currentValue).trigger('change');
+        } else {
+            $('.cart-table tbody tr').each(function() {
+                const productId = $(this).find('.plus-btn, .minus-btn').first().data('product-id');
+                const quantity = parseInt($(this).find('.quantity-input').val()) || 0;
+                if (productId && quantity > 0) {
+                    items.push({ product_id: productId, quantity: quantity });
                 }
             });
+        }
+        return items;
+    }
+
+    function updateCartDisplay(response) {
+        if (response.item_totals) updateItemTotals(response.item_totals);
+        if (response.subtotal !== undefined) $('.cart-totals li:contains("Subtotal") span').text('LKR ' + formatNumber(response.subtotal));
+        if (response.delivery_fee !== undefined) $('.cart-totals li:contains("Shipping Charges") span').text('Rs. ' + response.delivery_fee);
+        if (response.total !== undefined) $('.cart-totals li:contains("Total") span').text('LKR ' + formatNumber(response.total));
+    }
+
+    function updateItemTotals(itemTotals) {
+        let isMobile = window.innerWidth < 768;
+        if (isMobile) {
+            $('.mobile-cart .cart-item-mobile').each(function() {
+                const productId = $(this).find('.plus-btn, .minus-btn').first().data('product-id');
+                if (itemTotals[productId] !== undefined) {
+                    $(this).find('.subtotal-amount').text('LKR ' + formatNumber(itemTotals[productId]));
+                }
+            });
+        } else {
+            $('.cart-table tbody tr').each(function() {
+                const productId = $(this).find('.plus-btn, .minus-btn').first().data('product-id');
+                if (itemTotals[productId] !== undefined) {
+                    $(this).find('.subtotal-amount').text('LKR ' + formatNumber(itemTotals[productId]));
+                }
+            });
+        }
+    }
 
 
+            function formatNumber(number) {
+                return parseFloat(number).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
+
+            // Remove item functionality
             $(document).on('click', '.btn-delete-item', function(e) {
                 e.preventDefault();
+                const btn = $(this);
+                const productId = btn.data('product-id');
+                const url = "{{ url('cart') }}/" + productId;
+                const originalHtml = btn.html();
 
-                var btn = $(this);
-                var productId = btn.data('product-id');
-
-                // build URL (adjust if your route path differs)
-                var url = "{{ url('cart') }}/" + productId;
-
-                // save original HTML for restore on error
-                var originalHtml = btn.html();
-                btn.html('<i class="fa fa-spinner fa-spin"></i>');
+                btn.html('<i class="fa fa-spinner fa-spin"></i>').prop('disabled', true);
 
                 $.ajax({
                     url: url,
-                    type: 'DELETE', // or method: 'DELETE'
+                    type: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function(response) {
-                        // either remove the item from DOM or reload
-                        // btn.closest('.cart-item').remove();
+                    success: function() {
                         location.reload();
                     },
-                    error: function(xhr) {
-                        console.error(xhr.responseText);
-                        alert('Something went wrong. Please try again.');
-                        btn.html(originalHtml);
+                    error: function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Something went wrong. Please try again.',
+                            confirmButtonText: 'OK'
+                        });
+                        btn.html(originalHtml).prop('disabled', false);
                     }
                 });
             });
 
-
-            // Handle responsive recalculation when window resizes
+            // Handle window resize to ensure proper display updates
             $(window).resize(function() {
-                updateCartTotalsDisplay();
+                // Trigger a cart refresh on window resize to handle mobile/desktop switching
+                clearTimeout(shippingUpdateTimeout);
+                shippingUpdateTimeout = setTimeout(() => {
+                    refreshCartTotals();
+                }, 300);
             });
-
-            // Initial setup - ensure totals are calculated correctly on page load
-            updateCartTotalsDisplay();
         });
     </script>
 @endsection

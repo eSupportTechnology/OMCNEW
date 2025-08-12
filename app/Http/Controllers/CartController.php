@@ -17,65 +17,65 @@ class CartController extends Controller
 
 
     public function addToCart(Request $request)
-{
-    Log::info('Cart add request data:', $request->all());
+    {
+        Log::info('Cart add request data:', $request->all());
 
-    $productId = $request->input('product_id');
-    $size = $request->input('size');
-    $color = $request->input('color');
-    $quantity = $request->input('quantity', 1); // Add this line to get the quantity
+        $productId = $request->input('product_id');
+        $size = $request->input('size');
+        $color = $request->input('color');
+        $quantity = $request->input('quantity', 1); // Add this line to get the quantity
 
-    if (!$productId) {
-        return response()->json(['error' => 'Product ID is missing.'], 400);
-    }
-
-    if (Auth::check()) {
-        $user = Auth::user();
-        $item = CartItem::where('user_id', $user->id)
-            ->where('product_id', $productId)
-            ->where('size', $size)
-            ->where('color', $color)
-            ->first();
-
-        if ($item) {
-            $item->quantity += $quantity; // Use the selected quantity
-            $item->save();
-        } else {
-            CartItem::create([
-                'user_id' => $user->id,
-                'product_id' => $productId,
-                'quantity' => $quantity, // Use the selected quantity
-                'size' => $size,
-                'color' => $color
-            ]);
+        if (!$productId) {
+            return response()->json(['error' => 'Product ID is missing.'], 400);
         }
-    } else {
-        $cart = session()->get('cart', []);
-        $itemFound = false;
 
-        foreach ($cart as &$item) {
-            if ($item['product_id'] === $productId && $item['size'] === $size && $item['color'] === $color) {
-                $item['quantity'] += $quantity; // Use the selected quantity
-                $itemFound = true;
-                break;
+        if (Auth::check()) {
+            $user = Auth::user();
+            $item = CartItem::where('user_id', $user->id)
+                ->where('product_id', $productId)
+                ->where('size', $size)
+                ->where('color', $color)
+                ->first();
+
+            if ($item) {
+                $item->quantity += $quantity; // Use the selected quantity
+                $item->save();
+            } else {
+                CartItem::create([
+                    'user_id' => $user->id,
+                    'product_id' => $productId,
+                    'quantity' => $quantity, // Use the selected quantity
+                    'size' => $size,
+                    'color' => $color
+                ]);
             }
+        } else {
+            $cart = session()->get('cart', []);
+            $itemFound = false;
+
+            foreach ($cart as &$item) {
+                if ($item['product_id'] === $productId && $item['size'] === $size && $item['color'] === $color) {
+                    $item['quantity'] += $quantity; // Use the selected quantity
+                    $itemFound = true;
+                    break;
+                }
+            }
+
+            if (!$itemFound) {
+                $cart[] = [
+                    'product_id' => $productId,
+                    'quantity' => $quantity, // Use the selected quantity
+                    'size' => $size,
+                    'color' => $color
+                ];
+            }
+
+            session()->put('cart', $cart);
         }
 
-        if (!$itemFound) {
-            $cart[] = [
-                'product_id' => $productId,
-                'quantity' => $quantity, // Use the selected quantity
-                'size' => $size,
-                'color' => $color
-            ];
-        }
-
-        session()->put('cart', $cart);
+        $cartCount = Auth::check() ? CartItem::where('user_id', Auth::id())->sum('quantity') : array_sum(array_column(session()->get('cart', []), 'quantity'));
+        return response()->json(['cart_count' => $cartCount]);
     }
-
-    $cartCount = Auth::check() ? CartItem::where('user_id', Auth::id())->sum('quantity') : array_sum(array_column(session()->get('cart', []), 'quantity'));
-    return response()->json(['cart_count' => $cartCount]);
-}
 
 
 
@@ -223,54 +223,127 @@ class CartController extends Controller
 
 
     public function showCart()
-{
-    if (Auth::check()) {
-        $cart = CartItem::with([
-            'product.images',
-            'product.specialOffer' => function ($query) {
-                $query->where('status', 'active');
-            },
-            'product.sale' => function ($query) {
-                $query->where('status', 'active');
-            }
-        ])->where('user_id', Auth::id())->get();
+    {
+        if (Auth::check()) {
+            $cart = CartItem::with([
+                'product.images',
+                'product.specialOffer' => function ($query) {
+                    $query->where('status', 'active');
+                },
+                'product.sale' => function ($query) {
+                    $query->where('status', 'active');
+                }
+            ])->where('user_id', Auth::id())->get();
+        } else {
+            $cart = session()->get('cart', []);
+            $cart = collect($cart);
+        }
 
-        // Calculate total quantity
-        $totalQuantity = $cart->sum('quantity');
-    } else {
-        $cart = session()->get('cart', []);
+        $deliveryFee = $this->calculateTotalDeliveryFee($cart);
 
-        // Calculate total quantity for guest cart
-        $totalQuantity = collect($cart)->sum('quantity');
+        return view('frontend.cart', compact('cart', 'deliveryFee'));
     }
-
-    // Shipping charge
-    $shippingCharge = ShippingCharge::where('min_quantity', '<=', $totalQuantity)
-        ->where('max_quantity', '>=', $totalQuantity)
-        ->first();
-
-    $deliveryFee = $shippingCharge->charge ?? 0;
-
-    return view('frontend.cart', compact('cart', 'deliveryFee'));
-}
 
     public function calculateShipping(Request $request)
     {
-        $totalQuantity = $request->input('total_quantity');
+        $items = $request->input('items', []);
+        $totalDeliveryFee = 0;
 
-        // Cache key based on quantity to avoid repeated database queries
-        $cacheKey = "shipping_charge_{$totalQuantity}";
+        foreach ($items as $item) {
+            $productId = $item['product_id'];
+            $quantity = $item['quantity'];
 
-        $shippingCharge = Cache::remember($cacheKey, 300, function () use ($totalQuantity) {
-            return ShippingCharge::where('min_quantity', '<=', $totalQuantity)
-                ->where('max_quantity', '>=', $totalQuantity)
+            $allShippingCharges = ShippingCharge::where('product_id', $productId)->get();
+
+            // Get the shipping charge for this specific product and quantity
+            $shippingCharge = ShippingCharge::where('product_id', $productId)
+                ->where('min_quantity', '<=', $quantity)
+                ->where('max_quantity', '>=', $quantity)
                 ->first();
-        });
+
+            if ($shippingCharge) {
+                $productDeliveryFee = $shippingCharge->charge;
+                $totalDeliveryFee += $productDeliveryFee;
+
+            } else {
+                Log::warning("No shipping charge found for Product ID: {$productId}, Quantity: {$quantity}");
+            }
+        }
 
         return response()->json([
-            'delivery_fee' => $shippingCharge->charge ?? 0
+            'delivery_fee' => $totalDeliveryFee
         ]);
     }
+    private function calculateTotalDeliveryFee($cart)
+    {
+        $totalDeliveryFee = 0;
+
+        foreach ($cart as $item) {
+            $productId = isset($item->product_id) ? $item->product_id : $item['product_id'];
+            $quantity = isset($item->quantity) ? $item->quantity : $item['quantity'];
+
+            $allChargesForProduct = ShippingCharge::where('product_id', $productId)->get();
+
+            $shippingCharge = ShippingCharge::where('product_id', $productId)
+                ->where('min_quantity', '<=', $quantity)
+                ->where('max_quantity', '>=', $quantity)
+                ->first();
+
+            if ($shippingCharge) {
+                $productDeliveryFee = $shippingCharge->charge;
+                $totalDeliveryFee += $productDeliveryFee;
+
+            } else {
+                Log::warning("No matching shipping charge found for Product ID: {$productId}, Quantity: {$quantity}");
+            }
+        }
+
+        return $totalDeliveryFee;
+    }
+    private function calculateTotalDeliveryFeeAlternative($cart)
+    {
+        $totalDeliveryFee = 0;
+
+        $groupedCart = $cart->groupBy(function ($item) {
+            return isset($item->product_id) ? $item->product_id : $item['product_id'];
+        });
+
+        foreach ($groupedCart as $productId => $items) {
+            $totalQuantity = $items->sum(function ($item) {
+                return isset($item->quantity) ? $item->quantity : $item['quantity'];
+            });
+            $shippingCharge = ShippingCharge::where('product_id', $productId)
+                ->where('min_quantity', '<=', $totalQuantity)
+                ->where('max_quantity', '>=', $totalQuantity)
+                ->first();
+
+            if (!$shippingCharge) {
+                $product = Products::find($productId);
+                if ($product && $product->category_id) {
+                    $shippingCharge = ShippingCharge::where('category_id', $product->category_id)
+                        ->where('min_quantity', '<=', $totalQuantity)
+                        ->where('max_quantity', '>=', $totalQuantity)
+                        ->first();
+                }
+            }
+
+            if (!$shippingCharge) {
+                $shippingCharge = ShippingCharge::whereNull('product_id')
+                    ->whereNull('category_id')
+                    ->where('min_quantity', '<=', $totalQuantity)
+                    ->where('max_quantity', '>=', $totalQuantity)
+                    ->first();
+            }
+
+            if ($shippingCharge) {
+                $productDeliveryFee = $shippingCharge->charge * $totalQuantity;
+                $totalDeliveryFee += $productDeliveryFee;
+            }
+        }
+
+        return $totalDeliveryFee;
+    }
+
 
     public function checkout()
     {
@@ -287,11 +360,7 @@ class CartController extends Controller
                 return (object) $item;
             });
         }
-        $shippingCharge = ShippingCharge::where('min_quantity', '<=', $cart->sum('quantity'))
-            ->where('max_quantity', '>=', $cart->sum('quantity'))
-            ->first();
-
-        $deliveryFee = $shippingCharge->charge ?? 0;
+        $deliveryFee = $this->calculateTotalDeliveryFee($cart);
 
         return view('frontend.checkout', compact('cart', 'defaultAddress', 'user', 'deliveryFee'));
     }
