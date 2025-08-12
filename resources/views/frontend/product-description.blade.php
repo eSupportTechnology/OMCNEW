@@ -1027,21 +1027,36 @@
                         <ul class="products-info">
                             <li>
                                 <span>Availability:</span>
-                                @if ($product->quantity > 1)
-                                    <span class="availability-badge instock"><i class='fa-solid fa-circle-check'></i> In
-                                        stock</span>
+                                @if ($product->quantity > 0)
+                                    @if ($product->quantity > 100)
+                                        <span class="availability-badge instock">
+                                            <i class='fa-solid fa-circle-check'></i> 100+ Available
+                                        </span>
+                                    @elseif ($product->quantity < 10)
+                                        <span class="availability-badge instock" style="color: red; font-weight: bold;">
+                                            <i class='fa-solid fa-circle-exclamation'></i> {{ $product->quantity }}
+                                            Available - Very low stock!
+                                        </span>
+                                    @else
+                                        <span class="availability-badge instock">
+                                            <i class='fa-solid fa-circle-check'></i> {{ $product->quantity }} Available
+                                        </span>
+                                    @endif
                                 @else
-                                    <span class="availability-badge out-of-stock"><i class='fa-solid fa-circle-xmark'></i>
-                                        Out of
-                                        stock</span>
+                                    <span class="availability-badge out-of-stock">
+                                        <i class='fa-solid fa-circle-xmark'></i> Out of stock
+                                    </span>
                                 @endif
                             </li>
+
                             <li>
                                 <span>Description:</span>
-                                <span
-                                    class="product-description">{{ Str::limit(strip_tags($product->product_description), 150) }}</span>
+                                <span class="product-description">
+                                    {{ Str::limit(strip_tags($product->product_description), 150) }}
+                                </span>
                             </li>
                         </ul>
+
 
                         <!-- Color Options -->
                         @if ($product->variations->where('type', 'Color')->isNotEmpty())
@@ -1110,10 +1125,13 @@
 
                             <div class="buttons-row">
                                 @auth
-                                    <button class="Add-to-Cart" data-product-id="{{ $product->product_id }}" id="addToCartBtn">
+                                    <button class="Add-to-Cart" data-product-id="{{ $product->product_id }}" id="addToCartBtn"
+                                        @if ($product->quantity <= 0) disabled @endif>
                                         <i class='fa-solid fa-cart-shopping'></i> Add to Cart
                                     </button>
-                                    <button class="buy-nowbtn" id="buyNowBtn" data-product-id="{{ $product->product_id }}">
+
+                                    <button class="buy-nowbtn" id="buyNowBtn" data-product-id="{{ $product->product_id }}"
+                                        @if ($product->quantity <= 0) disabled @endif>
                                         <i class='fa-solid fa-bag-shopping'></i> Buy Now
                                     </button>
                                 @else
