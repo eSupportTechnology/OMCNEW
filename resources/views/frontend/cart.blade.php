@@ -62,14 +62,14 @@
                                                 <span class="unit-amount">
                                                     @php
                                                         // Check if there's an active special offer, otherwise check for sale, else use normal price
-                                                    $price =
-                                                        $item->product->specialOffer &&
-                                                        $item->product->specialOffer->status === 'active'
-                                                            ? $item->product->specialOffer->offer_price
-                                                            : ($item->product->sale &&
-                                                            $item->product->sale->status === 'active'
-                                                            ? $item->product->sale->sale_price
-                                                            : $item->product->normal_price);
+$price =
+    $item->product->specialOffer &&
+    $item->product->specialOffer->status === 'active'
+        ? $item->product->specialOffer->offer_price
+        : ($item->product->sale &&
+        $item->product->sale->status === 'active'
+                                                                    ? $item->product->sale->sale_price
+                                                                    : $item->product->normal_price);
                                                     @endphp
                                                     LKR {{ number_format($price, 2) }}
                                                 </span>
@@ -79,8 +79,10 @@
                                                 <div class="input-counter">
                                                     <span class="minus-btn" data-product-id="{{ $item->product_id }}"><i
                                                             class='fa fa-minus'></i></span>
-                                                    <input type="text" min="1" value="{{ $item->quantity }}"
+                                                    <input type="text" min="1" max="{{ $item->product->quantity }}"
+                                                        value="{{ $item->quantity }}" data-max="{{ $item->product->quantity }}"
                                                         name="quantity[{{ $item->id }}]" class="quantity-input">
+
                                                     <span class="plus-btn" data-product-id="{{ $item->product_id }}"><i
                                                             class='fa fa-plus'></i></span>
                                                 </div>
@@ -163,6 +165,7 @@
                                             <div class="quantity-info text-right">
                                                 <div style="padding-right: 20px"><strong>Quantity:</strong></div>
                                                 <div class="input-counter" style="float: right;">
+
                                                     <span class="minus-btn" data-product-id="{{ $item->product_id }}">
                                                         <i class='fa fa-minus'></i>
                                                     </span>
@@ -225,7 +228,7 @@
                                         ) }}</span>
                                 </li>
 
-                                <li>Shipping <span>LKR 300.00</span></li>
+                                <li>Shipping Charges<span>Rs. {{ number_format($deliveryFee, 2) }}</span></li>
 
                                 <li>Total <span>LKR
                                         {{ number_format(
@@ -238,7 +241,7 @@
                                                             ? $item->product->sale->sale_price
                                                             : $item->product->normal_price);
                                                 return $price * $item->quantity;
-                                            }) + 300,
+                                            }) + $deliveryFee,
                                             2,
                                         ) }}</span>
                                 </li>
@@ -375,70 +378,154 @@
 
     <script>
         $(document).ready(function() {
+            // Store current delivery fee for immediate updates
+            let currentDeliveryFee = {{ $deliveryFee }};
+
+            // Debounce function to prevent excessive AJAX calls
+            let shippingUpdateTimeout;
+
             // Ensure no duplicate event bindings
             $('.plus-btn, .minus-btn').off('click').on('click', function() {
-                const quantityInput = $(this).siblings(
-                    '.quantity-input'); // Get the corresponding input field
+                const quantityInput = $(this).siblings('.quantity-input');
                 let currentValue = parseInt(quantityInput.val());
 
-                // Ensure the current value is a number
                 if (!isNaN(currentValue)) {
-                    // For the plus button, increase the value by 1
                     if ($(this).hasClass('plus-btn')) {
                         quantityInput.val(currentValue + 1);
-                    }
-                    // For the minus button, decrease the value by 1 (avoid going below 1)
-                    else if ($(this).hasClass('minus-btn') && currentValue > 1) {
+                    } else if ($(this).hasClass('minus-btn') && currentValue > 1) {
                         quantityInput.val(currentValue - 1);
                     }
 
-                    // Update price and totals after quantity change
                     updatePrice($(this));
                 }
             });
 
-            // Function to update the price when quantity changes
             function updatePrice(element) {
-                // Check if we're in mobile or desktop view
                 let isMobile = window.innerWidth < 768;
                 let cartItem, productId, quantity;
 
                 if (isMobile) {
-                    // For mobile view
                     cartItem = element.closest('.cart-item-mobile');
                     productId = element.data('product-id');
                     quantity = parseInt(cartItem.find('.quantity-input').val());
 
-                    // Get and clean the price string
                     let priceText = cartItem.find('.unit-amount').text();
                     let cleanedPrice = priceText.replace(/[^\d.]/g, '');
                     let price = parseFloat(cleanedPrice);
 
-                    // Update subtotal for the item
                     let subtotal = quantity * price;
                     cartItem.find('.subtotal-amount').text('LKR ' + subtotal.toFixed(2).replace(
                         /\B(?=(\d{3})+(?!\d))/g, ","));
                 } else {
-                    // For desktop view
                     cartItem = element.closest('tr');
                     productId = element.data('product-id');
                     quantity = parseInt(cartItem.find('.quantity-input').val());
 
-                    // Get and clean the price string
                     let priceText = cartItem.find('.product-price .unit-amount').text();
                     let cleanedPrice = priceText.replace(/[^\d.]/g, '');
                     let price = parseFloat(cleanedPrice);
 
-                    // Update subtotal for the item
                     let subtotal = quantity * price;
                     cartItem.find('.product-subtotal .subtotal-amount').text('LKR ' + subtotal.toFixed(2).replace(
                         /\B(?=(\d{3})+(?!\d))/g, ","));
                 }
 
-                // Recalculate cart total
-                recalculateCartTotals();
+                // First update totals with current delivery fee for immediate feedback
+                updateCartTotalsDisplay();
 
-                // AJAX update to backend
+                // Then recalculate shipping charges with debouncing
+                clearTimeout(shippingUpdateTimeout);
+                shippingUpdateTimeout = setTimeout(() => {
+                    recalculateShippingCharges();
+                }, 300); // Wait 300ms before making the AJAX call
+
+                // AJAX update to backend for cart quantity
+                updateCartQuantityOnServer(productId, quantity);
+            }
+
+            function updateCartTotalsDisplay() {
+                let subtotal = 0;
+                let isMobile = window.innerWidth < 768;
+
+                if (isMobile) {
+                    $('.mobile-cart .subtotal-amount').each(function() {
+                        let text = $(this).text().replace(/[^\d.]/g, '');
+                        subtotal += parseFloat(text) || 0;
+                    });
+                } else {
+                    $('.cart-table .product-subtotal .subtotal-amount').each(function() {
+                        let text = $(this).text().replace(/[^\d.]/g, '');
+                        subtotal += parseFloat(text) || 0;
+                    });
+                }
+
+                // Update subtotal display
+                $('.cart-totals li:contains("Subtotal") span').text('LKR ' + subtotal.toFixed(2).replace(
+                    /\B(?=(\d{3})+(?!\d))/g, ","));
+
+                // Update total with current delivery fee
+                let finalTotal = subtotal + currentDeliveryFee;
+                $('.cart-totals li:contains("Total") span').text('LKR ' + finalTotal.toFixed(2).replace(
+                    /\B(?=(\d{3})+(?!\d))/g, ","));
+            }
+
+            function recalculateShippingCharges() {
+                let totalQuantity = 0;
+                let isMobile = window.innerWidth < 768;
+
+                if (isMobile) {
+                    $('.mobile-cart .quantity-input').each(function() {
+                        totalQuantity += parseInt($(this).val()) || 0;
+                    });
+                } else {
+                    $('.cart-table .quantity-input').each(function() {
+                        totalQuantity += parseInt($(this).val()) || 0;
+                    });
+                }
+
+                // Show loading indicator (optional)
+                $('.cart-totals li:contains("Shipping Charges") span').html(
+                    '<i class="fa fa-spinner fa-spin"></i>');
+
+                // Calculate shipping charges based on total quantity
+                $.ajax({
+                    url: '{{ route('cart.calculateShipping') }}',
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        total_quantity: totalQuantity
+                    },
+                    timeout: 5000, // 5 second timeout
+                    success: function(response) {
+                        currentDeliveryFee = parseFloat(response.delivery_fee) || 0;
+
+                        // Update shipping charges display
+                        $('.cart-totals li:contains("Shipping Charges") span').text('Rs. ' +
+                            currentDeliveryFee.toFixed(2).replace(
+                                /\B(?=(\d{3})+(?!\d))/g, ","));
+
+                        // Recalculate and update final total
+                        updateCartTotalsDisplay();
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error calculating shipping:', error);
+
+                        // Restore shipping charges display on error
+                        $('.cart-totals li:contains("Shipping Charges") span').text('Rs. ' +
+                            currentDeliveryFee.toFixed(2).replace(
+                                /\B(?=(\d{3})+(?!\d))/g, ","));
+
+                        // Show user-friendly error message
+                        if (status === 'timeout') {
+                            console.warn('Shipping calculation timed out, using current rate');
+                        } else {
+                            console.warn('Failed to update shipping charges, using current rate');
+                        }
+                    }
+                });
+            }
+
+            function updateCartQuantityOnServer(productId, quantity) {
                 $.ajax({
                     url: '{{ route('cart.update') }}',
                     method: 'POST',
@@ -449,66 +536,85 @@
                     },
                     success: function(response) {
                         if (response.success) {
-                            console.log(response.message);
+                            console.log('Cart updated successfully');
                         }
                     },
                     error: function(xhr) {
                         console.error('Error updating cart:', xhr.responseText);
+                        // Optionally show user notification about update failure
                     }
                 });
             }
 
-            // Function to recalculate cart totals
-            function recalculateCartTotals() {
-                let total = 0;
-                let isMobile = window.innerWidth < 768;
+            $(document).off('click', '.plus-btn').on('click', '.plus-btn', function(e) {
+                e.preventDefault(); // stop default
+                var input = $(this).siblings('.quantity-input');
+                var currentValue = parseInt(input.val(), 10) || 0;
+                var maxValue = parseInt(input.data('max'), 10) || 0;
 
-                if (isMobile) {
-                    // Calculate from mobile view
-                    $('.mobile-cart .subtotal-amount').each(function() {
-                        let text = $(this).text().replace(/[^\d.]/g, '');
-                        total += parseFloat(text);
+                // If already at max, show modal and STOP execution
+                if (currentValue >= maxValue) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Stock Limit',
+                        text: 'Cannot increase beyond available stock (' + maxValue + ').',
+                        confirmButtonText: 'OK'
                     });
-                } else {
-                    // Calculate from desktop view
-                    $('.cart-table .product-subtotal .subtotal-amount').each(function() {
-                        let text = $(this).text().replace(/[^\d.]/g, '');
-                        total += parseFloat(text);
-                    });
+                    return; // **THIS stops incrementing**
                 }
+            });
 
-                // Update subtotal and total with shipping
-                $('.cart-totals li:contains("Subtotal") span').text('LKR ' + total.toFixed(2).replace(
-                    /\B(?=(\d{3})+(?!\d))/g, ","));
-                $('.cart-totals li:contains("Total") span').text('LKR ' + (total + 300).toFixed(2).replace(
-                    /\B(?=(\d{3})+(?!\d))/g, ",")); // Shipping = 300
-            }
+            $(document).off('click', '.minus-btn').on('click', '.minus-btn', function(e) {
+                e.preventDefault();
+                var input = $(this).siblings('.quantity-input');
+                var currentValue = parseInt(input.val(), 10) || 0;
 
-            $('.btn-delete-item').off('click').on('click', function(e) {
+                if (currentValue > 1) {
+                    input.val(currentValue).trigger('change');
+                }
+            });
+
+
+            $(document).on('click', '.btn-delete-item', function(e) {
                 e.preventDefault();
 
-                const productId = $(this).data('product-id');
+                var btn = $(this);
+                var productId = btn.data('product-id');
+
+                // build URL (adjust if your route path differs)
+                var url = "{{ url('cart') }}/" + productId;
+
+                // save original HTML for restore on error
+                var originalHtml = btn.html();
+                btn.html('<i class="fa fa-spinner fa-spin"></i>');
 
                 $.ajax({
-                    url: `{{ route('cart.remove', '') }}/${productId}`,
-                    method: 'DELETE',
-                    data: {
-                        _token: "{{ csrf_token() }}"
+                    url: url,
+                    type: 'DELETE', // or method: 'DELETE'
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(response) {
-                        location.reload(); // Reload the page after deleting an item
+                        // either remove the item from DOM or reload
+                        // btn.closest('.cart-item').remove();
+                        location.reload();
                     },
                     error: function(xhr) {
-                        console.log(xhr.responseText);
+                        console.error(xhr.responseText);
                         alert('Something went wrong. Please try again.');
+                        btn.html(originalHtml);
                     }
                 });
             });
+
 
             // Handle responsive recalculation when window resizes
             $(window).resize(function() {
-                recalculateCartTotals();
+                updateCartTotalsDisplay();
             });
+
+            // Initial setup - ensure totals are calculated correctly on page load
+            updateCartTotalsDisplay();
         });
     </script>
 @endsection

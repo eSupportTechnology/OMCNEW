@@ -80,8 +80,8 @@ class CheckoutController extends Controller
 
     // Find matching shipping charge
     $shippingCharge = ShippingCharge::where('min_quantity', '<=', $quantity)
-                    ->where('max_quantity', '>=', $quantity)
-                    ->first();
+        ->where('max_quantity', '>=', $quantity)
+        ->first();
 
     $deliveryFee = $shippingCharge->charge ?? 0;
 
