@@ -1094,7 +1094,7 @@
                             </div>
                         @endif
 
-                        {{-- <!-- Material Options -->
+                        <!-- Material Options -->
                         @if ($product->variations->where('type', 'Material')->isNotEmpty())
                             <div class="products-size-wrapper">
                                 <span>Material</span>
@@ -1102,8 +1102,8 @@
                                     @foreach ($product->variations->where('type', 'Material') as $material)
                                         @if ($material->quantity > 0)
                                             <li>
-                                                <a href="javascript:void(0)" class="size-option"
-                                                    data-size="{{ $material->value }}">
+                                                <a href="javascript:void(0)" class="material-option"
+                                                    data-material="{{ $material->value }}">
                                                     {{ $material->value }}
                                                 </a>
                                             </li>
@@ -1111,7 +1111,7 @@
                                     @endforeach
                                 </ul>
                             </div>
-                        @endif --}}
+                        @endif
 
                         <div class="products-add-to-cart">
                             <div class="input-counter">
@@ -1216,7 +1216,7 @@
                                                 @endforeach
                                             </td>
                                         </tr>
-                                        {{-- <tr>
+                                        <tr>
                                             <td>Material:</td>
                                             <td>
                                                 @foreach ($product->variations->where('type', 'Material') as $material)
@@ -1226,7 +1226,7 @@
                                                     @endif
                                                 @endforeach
                                             </td>
-                                        </tr> --}}
+                                        </tr>
 
                                     </tbody>
                                 </table>
@@ -1398,18 +1398,18 @@
                 });
             });
 
-            // // Material selction
-            // $('.material-option').on('click', function(e) {
-            //     e.preventDefault();
-            //     $('.material-option').removeClass('selected');
-            //     $(this).addClass('selected');
+            // Material selction
+            $('.material-option').on('click', function(e) {
+                e.preventDefault();
+                $('.material-option').removeClass('selected');
+                $(this).addClass('selected');
 
-            //     const material = $(this).data('material');
-            //     toastr.info(`Selected material: ${material}`, '', {
-            //         positionClass: 'toast-top-right',
-            //         timeOut: 1500
-            //     });
-            // })
+                const material = $(this).data('material');
+                toastr.info(`Selected material: ${material}`, '', {
+                    positionClass: 'toast-top-right',
+                    timeOut: 1500
+                });
+            })
 
             // Wishlist toggle
             $('.wishlist-toggle').on('click', function(e) {
@@ -1461,6 +1461,7 @@
                 const isAuth = "{{ Auth::check() ? 'true' : 'false' }}";
                 const selectedSize = $('.size-option.selected').data('size');
                 const selectedColor = $('.color-option.selected').data('color-name');
+                const selectedMaterial = $('.material-option.selected').data('material');
 
                 // Parse quantity as integer and ensure it's valid
                 let quantity = parseInt($('#quantity').val());
@@ -1475,7 +1476,7 @@
                 // Check if there are size or color options for this product
                 const hasSize = $('.size-option').length > 0;
                 const hasColor = $('.color-option').length > 0;
-                // const hasMaterial = $('.material-option').length > 0;
+                const hasMaterial = $('.material-option').length > 0;
 
                 // If the product has size options, check if size is selected
                 if (hasSize && !selectedSize) {
@@ -1507,7 +1508,7 @@
                         product_id: productId,
                         size: selectedSize || null,
                         color: selectedColor || null,
-                        // material: selectedMaterial || null,
+                        material: selectedMaterial || null,
                         quantity: quantity
                     });
 
@@ -1519,7 +1520,7 @@
                             product_id: productId,
                             size: selectedSize || null,
                             color: selectedColor || null,
-                            // material: selectedMaterial || null,
+                            material: selectedMaterial || null,
                             quantity: quantity
                         },
                         success: function(response) {
@@ -1574,13 +1575,13 @@
                 const isAuth = "{{ Auth::check() ? 'true' : 'false' }}";
                 const selectedSize = $('.size-option.selected').data('size');
                 const selectedColor = $('.color-option.selected').data('color-name');
-                // const selectedMaterial = $('.material-option.selected').data('material-name');
+                const selectedMaterial = $('.material-option.selected').data('material-name');
                 const quantity = $('#quantity').val() || 1;
 
                 // Check if there are size or color options for this product
                 const hasSize = $('.size-option').length > 0;
                 const hasColor = $('.color-option').length > 0;
-                // const hasMaterial = $('.material-option').length > 0;
+                const hasMaterial = $('.material-option').length > 0;
 
                 // If the product has size options, check if size is selected
                 if (hasSize && !selectedSize) {
@@ -1615,7 +1616,7 @@
                             product_id: productId,
                             size: selectedSize || null,
                             color: selectedColor || null,
-                            // material: selectedMaterial || null,
+                            material: selectedMaterial || null,
                             quantity: quantity
                         },
                         success: function(response) {

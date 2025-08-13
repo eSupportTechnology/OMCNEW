@@ -24,6 +24,7 @@ class CartController extends Controller
         $productId = $request->input('product_id');
         $size = $request->input('size');
         $color = $request->input('color');
+        $material = $request->input('material');
         $quantity = $request->input('quantity', 1); // Add this line to get the quantity
 
         if (!$productId) {
@@ -36,6 +37,7 @@ class CartController extends Controller
                 ->where('product_id', $productId)
                 ->where('size', $size)
                 ->where('color', $color)
+                ->where('material',$material)
                 ->first();
 
             if ($item) {
@@ -47,7 +49,8 @@ class CartController extends Controller
                     'product_id' => $productId,
                     'quantity' => $quantity, // Use the selected quantity
                     'size' => $size,
-                    'color' => $color
+                    'color' => $color,
+                    'material' => $material
                 ]);
             }
         } else {
@@ -55,7 +58,7 @@ class CartController extends Controller
             $itemFound = false;
 
             foreach ($cart as &$item) {
-                if ($item['product_id'] === $productId && $item['size'] === $size && $item['color'] === $color) {
+                if ($item['product_id'] === $productId && $item['size'] === $size && $item['color'] === $color && $item['material'] === $material) {
                     $item['quantity'] += $quantity; // Use the selected quantity
                     $itemFound = true;
                     break;
@@ -67,7 +70,8 @@ class CartController extends Controller
                     'product_id' => $productId,
                     'quantity' => $quantity, // Use the selected quantity
                     'size' => $size,
-                    'color' => $color
+                    'color' => $color,
+                    'material' => $material
                 ];
             }
 

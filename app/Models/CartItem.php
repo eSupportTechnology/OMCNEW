@@ -14,6 +14,7 @@ class CartItem extends Model
         'quantity',
         'size',
         'color',
+        'material',
         'image',
     ];
 
