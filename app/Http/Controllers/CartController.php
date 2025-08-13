@@ -8,6 +8,7 @@ use App\Models\Address;
 use App\Models\Products;
 use App\Models\AffiliateCartItem;
 use App\Models\ShippingCharge;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -245,61 +246,133 @@ class CartController extends Controller
     }
 
     public function calculateShipping(Request $request)
-    {
+{
+    try {
         $items = $request->input('items', []);
+        $subtotal = 0;
         $totalDeliveryFee = 0;
+        $itemTotals = [];
 
-        foreach ($items as $item) {
-            $productId = $item['product_id'];
-            $quantity = $item['quantity'];
+        Log::info('Cart calculation request', ['items' => $items]);
 
-            $allShippingCharges = ShippingCharge::where('product_id', $productId)->get();
+        // Get current cart items with product relationships
+        if (Auth::check()) {
+            $cart = CartItem::with([
+                'product.images',
+                'product.specialOffer' => function ($query) {
+                    $query->where('status', 'active');
+                },
+                'product.sale' => function ($query) {
+                    $query->where('status', 'active');
+                }
+            ])->where('user_id', Auth::id())->get();
+        } else {
+            $cart = collect(session()->get('cart', []));
+        }
 
-            // Get the shipping charge for this specific product and quantity
-            $shippingCharge = ShippingCharge::where('product_id', $productId)
-                ->where('min_quantity', '<=', $quantity)
-                ->where('max_quantity', '>=', $quantity)
-                ->first();
+        foreach ($items as $requestItem) {
+            $productId = $requestItem['product_id'];
+            $newQuantity = $requestItem['quantity'];
 
-            if ($shippingCharge) {
-                $productDeliveryFee = $shippingCharge->charge;
-                $totalDeliveryFee += $productDeliveryFee;
+            // Find the cart item that matches this product_id
+            $cartItem = $cart->first(function ($item) use ($productId) {
+                return (isset($item->product_id) ? $item->product_id : $item['product_id']) === $productId;
+            });
 
+            if ($cartItem && isset($cartItem->product)) {
+                // Use centralized price calculation method
+                $price = $this->calculateItemPrice($cartItem->product);
+
+                $itemTotal = $price * $newQuantity;
+                $itemTotals[$productId] = $itemTotal;
+                $subtotal += $itemTotal;
+
+                Log::info('Product calculation', [
+                    'product_id' => $productId,
+                    'price' => $price,
+                    'quantity' => $newQuantity,
+                    'item_total' => $itemTotal
+                ]);
+
+                // Calculate shipping charge using the actual product database ID
+                $deliveryFee = $this->calculateTotalDeliveryFee($cart);
             } else {
-                Log::warning("No shipping charge found for Product ID: {$productId}, Quantity: {$quantity}");
+                Log::warning('Cart item not found for product_id', ['product_id' => $productId]);
             }
         }
+
+        $response = [
+            'delivery_fee' => number_format($deliveryFee, 2),
+            'subtotal' => number_format($subtotal, 2),
+            'total' => number_format($subtotal + $deliveryFee, 2),
+            'item_totals' => array_map(function($total) {
+                return number_format($total, 2);
+            }, $itemTotals),
+            'success' => true
+        ];
+
+        Log::info('Cart calculation response', $response);
+
+        return response()->json($response);
+
+    } catch (Exception $e) {
+        Log::error('Error calculating cart shipping', [
+            'error' => $e->getMessage(),
+            'items' => $request->input('items', [])
+        ]);
 
         return response()->json([
-            'delivery_fee' => $totalDeliveryFee
-        ]);
+            'error' => 'Failed to calculate shipping',
+            'success' => false
+        ], 500);
     }
-    private function calculateTotalDeliveryFee($cart)
-    {
-        $totalDeliveryFee = 0;
+}
 
-        foreach ($cart as $item) {
-            $productId = isset($item->product_id) ? $item->product_id : $item['product_id'];
-            $quantity = isset($item->quantity) ? $item->quantity : $item['quantity'];
+/**
+ * Centralized method to calculate item price with consistent logic
+ */
+private function calculateItemPrice($product)
+{
+    // Check if there's an active special offer first
+    if ($product->specialOffer && $product->specialOffer->status === 'active') {
+        return $product->specialOffer->offer_price;
+    }
 
-            $allChargesForProduct = ShippingCharge::where('product_id', $productId)->get();
+    // Check if there's an active sale
+    if ($product->sale && $product->sale->status === 'active') {
+        return $product->sale->sale_price;
+    }
 
-            $shippingCharge = ShippingCharge::where('product_id', $productId)
-                ->where('min_quantity', '<=', $quantity)
-                ->where('max_quantity', '>=', $quantity)
-                ->first();
+    // Default to normal price
+    return $product->normal_price;
+}
 
-            if ($shippingCharge) {
-                $productDeliveryFee = $shippingCharge->charge;
-                $totalDeliveryFee += $productDeliveryFee;
+/**
+ * Updated method to use consistent delivery fee calculation
+ */
+private function calculateTotalDeliveryFee($cart)
+{
+    $totalDeliveryFee = 0;
 
-            } else {
-                Log::warning("No matching shipping charge found for Product ID: {$productId}, Quantity: {$quantity}");
-            }
+    foreach ($cart as $item) {
+        $productId = isset($item->product_id) ? $item->product_id : $item['product_id'];
+        $quantity = isset($item->quantity) ? $item->quantity : $item['quantity'];
+
+        $shippingCharge = ShippingCharge::where('product_id', $productId)
+            ->where('min_quantity', '<=', $quantity)
+            ->where('max_quantity', '>=', $quantity)
+            ->first();
+
+        if ($shippingCharge) {
+            $productDeliveryFee = $shippingCharge->charge;
+            $totalDeliveryFee += $productDeliveryFee;
+        } else {
+            Log::warning("No matching shipping charge found for Product ID: {$productId}, Quantity: {$quantity}");
         }
-
-        return $totalDeliveryFee;
     }
+
+    return $totalDeliveryFee;
+}
     private function calculateTotalDeliveryFeeAlternative($cart)
     {
         $totalDeliveryFee = 0;

@@ -377,7 +377,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        $(document).ready(function() {
+       $(document).ready(function() {
     let shippingUpdateTimeout;
 
     $('.plus-btn, .minus-btn').off('click').on('click', function() {
@@ -433,8 +433,9 @@
 
         // Update quantity on server, then refresh totals after success
         updateCartQuantityOnServer(productId, quantity, function() {
+            // Refresh cart totals and shipping calculations from server
             shippingUpdateTimeout = setTimeout(() => {
-                refreshCartTotals();
+                refreshCartTotalsFromServer();
             }, 300);
         });
     }
@@ -475,19 +476,28 @@
         });
     }
 
-    function refreshCartTotals() {
+    function refreshCartTotalsFromServer() {
+        console.log('Refreshing cart totals from server...');
+
+        const items = collectCartItems();
+        console.log('Collected items:', items);
+
         $.ajax({
             url: '{{ route('cart.calculateShipping') }}',
             method: 'POST',
             data: {
                 _token: '{{ csrf_token() }}',
-                items: collectCartItems()
+                items: items
             },
             success: function(response) {
-                updateCartDisplay(response);
+                console.log('Server response:', response);
+                if (response.success) {
+                    updateCartTotalsFromServerResponse(response);
+                }
             },
             error: function(xhr, status, error) {
                 console.error('Error refreshing cart totals:', error);
+                console.error('XHR:', xhr.responseText);
             }
         });
     }
@@ -501,7 +511,10 @@
                 const productId = $(this).find('.plus-btn, .minus-btn').first().data('product-id');
                 const quantity = parseInt($(this).find('.quantity-input').val()) || 0;
                 if (productId && quantity > 0) {
-                    items.push({ product_id: productId, quantity: quantity });
+                    items.push({
+                        product_id: productId,
+                        quantity: quantity
+                    });
                 }
             });
         } else {
@@ -509,83 +522,98 @@
                 const productId = $(this).find('.plus-btn, .minus-btn').first().data('product-id');
                 const quantity = parseInt($(this).find('.quantity-input').val()) || 0;
                 if (productId && quantity > 0) {
-                    items.push({ product_id: productId, quantity: quantity });
+                    items.push({
+                        product_id: productId,
+                        quantity: quantity
+                    });
                 }
             });
         }
         return items;
     }
 
-    function updateCartDisplay(response) {
-        if (response.item_totals) updateItemTotals(response.item_totals);
-        if (response.subtotal !== undefined) $('.cart-totals li:contains("Subtotal") span').text('LKR ' + formatNumber(response.subtotal));
-        if (response.delivery_fee !== undefined) $('.cart-totals li:contains("Shipping Charges") span').text('Rs. ' + response.delivery_fee);
-        if (response.total !== undefined) $('.cart-totals li:contains("Total") span').text('LKR ' + formatNumber(response.total));
+    function updateCartTotalsFromServerResponse(response) {
+        console.log('Updating cart display with server response:', response);
+
+        // Update shipping charges
+        if (response.delivery_fee !== undefined) {
+            $('.cart-totals li:contains("Shipping Charges") span').text('Rs. ' + response.delivery_fee);
+        }
+
+        // Update subtotal
+        if (response.subtotal !== undefined) {
+            $('.cart-totals li:contains("Subtotal") span').text('LKR ' + response.subtotal);
+        }
+
+        // Update final total
+        if (response.total !== undefined) {
+            $('.cart-totals li:contains("Total") span').text('LKR ' + response.total);
+        }
+
+        // Update individual line item totals
+        if (response.item_totals) {
+            updateIndividualItemTotals(response.item_totals);
+        }
     }
 
-    function updateItemTotals(itemTotals) {
+    function updateIndividualItemTotals(itemTotals) {
         let isMobile = window.innerWidth < 768;
+
         if (isMobile) {
             $('.mobile-cart .cart-item-mobile').each(function() {
                 const productId = $(this).find('.plus-btn, .minus-btn').first().data('product-id');
                 if (itemTotals[productId] !== undefined) {
-                    $(this).find('.subtotal-amount').text('LKR ' + formatNumber(itemTotals[productId]));
+                    $(this).find('.subtotal-amount').text('LKR ' + itemTotals[productId]);
                 }
             });
         } else {
             $('.cart-table tbody tr').each(function() {
                 const productId = $(this).find('.plus-btn, .minus-btn').first().data('product-id');
                 if (itemTotals[productId] !== undefined) {
-                    $(this).find('.subtotal-amount').text('LKR ' + formatNumber(itemTotals[productId]));
+                    $(this).find('.subtotal-amount').text('LKR ' + itemTotals[productId]);
                 }
             });
         }
     }
 
+    // Remove item functionality
+    $(document).on('click', '.btn-delete-item', function(e) {
+        e.preventDefault();
+        const btn = $(this);
+        const productId = btn.data('product-id');
+        const url = "{{ url('cart') }}/" + productId;
+        const originalHtml = btn.html();
 
-            function formatNumber(number) {
-                return parseFloat(number).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            }
+        btn.html('<i class="fa fa-spinner fa-spin"></i>').prop('disabled', true);
 
-            // Remove item functionality
-            $(document).on('click', '.btn-delete-item', function(e) {
-                e.preventDefault();
-                const btn = $(this);
-                const productId = btn.data('product-id');
-                const url = "{{ url('cart') }}/" + productId;
-                const originalHtml = btn.html();
-
-                btn.html('<i class="fa fa-spinner fa-spin"></i>').prop('disabled', true);
-
-                $.ajax({
-                    url: url,
-                    type: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function() {
-                        location.reload();
-                    },
-                    error: function() {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'Something went wrong. Please try again.',
-                            confirmButtonText: 'OK'
-                        });
-                        btn.html(originalHtml).prop('disabled', false);
-                    }
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function() {
+                location.reload();
+            },
+            error: function() {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Something went wrong. Please try again.',
+                    confirmButtonText: 'OK'
                 });
-            });
-
-            // Handle window resize to ensure proper display updates
-            $(window).resize(function() {
-                // Trigger a cart refresh on window resize to handle mobile/desktop switching
-                clearTimeout(shippingUpdateTimeout);
-                shippingUpdateTimeout = setTimeout(() => {
-                    refreshCartTotals();
-                }, 300);
-            });
+                btn.html(originalHtml).prop('disabled', false);
+            }
         });
+    });
+
+    // Handle window resize
+    $(window).resize(function() {
+        clearTimeout(shippingUpdateTimeout);
+        shippingUpdateTimeout = setTimeout(() => {
+            refreshCartTotalsFromServer();
+        }, 300);
+    });
+});
     </script>
 @endsection
