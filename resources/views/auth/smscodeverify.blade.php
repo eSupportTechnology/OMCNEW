@@ -8,7 +8,8 @@
 <body class="bg-light d-flex align-items-center justify-content-center" style="height:100vh;">
 
     <div class="card shadow-sm p-4" style="width: 100%; max-width: 400px;">
-        <h4 class="mb-3 text-center">Verify Your SMS</h4>
+        <h4 class="mb-3 text-center">Verify Your Mobile Number</h4>
+            <p> To keep your account secure, please verify your mobile number. We’ll send you a verification code via SMS to confirm it’s really you.  </p>
 
         {{-- Success and Error Messages --}}
         @if(session('success'))

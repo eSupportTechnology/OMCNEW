@@ -39,7 +39,10 @@ class Products extends Model
         });
     }
 
-
+    public function qas()
+{
+    return $this->hasMany(QA::class, 'product_id');
+}
 
     public function images()
     {

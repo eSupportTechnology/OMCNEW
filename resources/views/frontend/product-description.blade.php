@@ -1235,10 +1235,22 @@
                     </div>
 
                     <div class="tabs-item" id="QA-tab">
-                        <div class="products-details-tab-content">
-                            <p>There are no Q & A available for this product.</p>
-                        </div>
+    <div class="products-details-tab-content">
+        @if($faqs->count())
+            <div class="list-group">
+                @foreach($faqs as $faq)
+                    <div class="list-group-item mb-3">
+                        <p><strong>Q:</strong> {{ $faq->question }}</p>
+                        <p><strong>A:</strong> {{ $faq->answer }}</p>
                     </div>
+                @endforeach
+            </div>
+        @else
+            <p>There are no Q & A available for this product.</p>
+        @endif
+    </div>
+</div>
+
 
                     <div class="tabs-item" id="reviews-tab">
                         <div class="products-details-tab-content">

@@ -9,6 +9,7 @@
 
     <div class="card shadow-sm p-4" style="width: 100%; max-width: 400px;">
         <h4 class="mb-3 text-center">Verify Your Email</h4>
+            <p> To keep your account secure, please verify your email. We’ll send you a verification code via email to confirm it’s really you.  </p>
 
         @if(session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>

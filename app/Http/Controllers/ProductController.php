@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Products;
 use App\Models\ProductImage;
 use App\Models\Category;
+use App\Models\QA;
 use App\Models\SpecialOffers;
 use App\Models\Review;
 use App\Models\Sale;
@@ -496,45 +497,57 @@ class ProductController extends Controller
 
 
     public function show($product_id)
-    {
-        $product = Products::with('images')->where('product_id', $product_id)->firstOrFail();
+{
+    $product = Products::with('images')->where('product_id', $product_id)->firstOrFail();
 
-        $specialOffer = SpecialOffers::where('product_id', $product_id)
+    $specialOffer = SpecialOffers::where('product_id', $product_id)
+        ->where('status', 'active')
+        ->first();
+
+    $sale = Sale::where('product_id', $product_id)
+        ->where('status', 'active')
+        ->first();
+
+    $relatedProducts = Products::where('product_category', $product->product_category)
+        ->where('product_id', '!=', $product->product_id)
+        ->take(15)
+        ->get();
+
+    foreach ($relatedProducts as $relatedProduct) {
+        $offer = SpecialOffers::where('product_id', $relatedProduct->product_id)
             ->where('status', 'active')
             ->first();
 
-        $sale = Sale::where('product_id', $product_id)
-            ->where('status', 'active')
-            ->first();
-
-        $relatedProducts = Products::where('product_category', $product->product_category)
-            ->where('product_id', '!=', $product->product_id)
-            ->take(15)
-            ->get();
-
-        foreach ($relatedProducts as $relatedProduct) {
-            $offer = SpecialOffers::where('product_id', $relatedProduct->product_id)
-                ->where('status', 'active')
-                ->first();
-
-            $relatedProduct->offer_price = $offer ? $offer->offer_price : null;
-        }
-
-        $reviews = Review::with('media')->where('product_id', $product_id)
-            ->where('status', 'published')
-            ->get();
-
-        $averageRating = $reviews->avg('rating');
-        $totalReviews = $reviews->count();
-
-        $ratingsCount = Review::with('media')
-            ->where('product_id', $product_id)
-            ->where('status', 'published')
-            ->get();
-
-
-        return view('frontend.product-description', compact('product', 'relatedProducts', 'reviews', 'averageRating', 'totalReviews', 'ratingsCount', 'specialOffer', 'sale'));
+        $relatedProduct->offer_price = $offer ? $offer->offer_price : null;
     }
+
+    $reviews = Review::with('media')->where('product_id', $product_id)
+        ->where('status', 'published')
+        ->get();
+
+    $averageRating = $reviews->avg('rating');
+    $totalReviews = $reviews->count();
+
+    $ratingsCount = Review::with('media')
+        ->where('product_id', $product_id)
+        ->where('status', 'published')
+        ->get();
+
+    $faqs = QA::where('product_id', $product->id)->get();
+
+    return view('frontend.product-description', compact(
+        'product',
+        'relatedProducts',
+        'reviews',
+        'averageRating',
+        'totalReviews',
+        'ratingsCount',
+        'specialOffer',
+        'sale',
+        'faqs'
+    ));
+}
+
 
 
 
@@ -551,37 +564,37 @@ class ProductController extends Controller
 
 
 
-   public function edit($id)
-{
-    $product = Products::findOrFail($id);
-    $categories = Category::all();
+    public function edit($id)
+    {
+        $product = Products::findOrFail($id);
+        $categories = Category::all();
 
-    $selectedCategoryId = Category::where('parent_category', $product->product_category)->value('id');
-    $selectedSubcategoryId = Subcategory::where('subcategory', $product->subcategory)->value('id');
-    $subcategories = $selectedCategoryId
-        ? Subcategory::where('category_id', $selectedCategoryId)->get()
-        : collect();
-    $subSubcategories = $selectedSubcategoryId
-        ? SubSubcategory::where('subcategory_id', $selectedSubcategoryId)->get()
-        : collect();
+        $selectedCategoryId = Category::where('parent_category', $product->product_category)->value('id');
+        $selectedSubcategoryId = Subcategory::where('subcategory', $product->subcategory)->value('id');
+        $subcategories = $selectedCategoryId
+            ? Subcategory::where('category_id', $selectedCategoryId)->get()
+            : collect();
+        $subSubcategories = $selectedSubcategoryId
+            ? SubSubcategory::where('subcategory_id', $selectedSubcategoryId)->get()
+            : collect();
 
-    $variations = Variation::where('product_id', $product->id)->get(); // fixed
-    $shippingCharges = ShippingCharge::where('product_id', $product->id)->get(); // fixed
+        $variations = Variation::where('product_id', $product->id)->get(); // fixed
+        $shippingCharges = ShippingCharge::where('product_id', $product->id)->get(); // fixed
 
-    $brands = Brand::all();
+        $brands = Brand::all();
 
-    return view('admin_dashboard.edit_products', compact(
-        'product',
-        'categories',
-        'subcategories',
-        'subSubcategories',
-        'selectedCategoryId',
-        'selectedSubcategoryId',
-        'variations',
-        'brands',
-        'shippingCharges'
-    ));
-}
+        return view('admin_dashboard.edit_products', compact(
+            'product',
+            'categories',
+            'subcategories',
+            'subSubcategories',
+            'selectedCategoryId',
+            'selectedSubcategoryId',
+            'variations',
+            'brands',
+            'shippingCharges'
+        ));
+    }
 
 
 
@@ -627,10 +640,13 @@ class ProductController extends Controller
             'variation.*.quantity' => 'nullable|numeric|min:0',
             'tags' => 'nullable|string',
             'brand_id' => 'nullable',
-             'shipping_charges' => 'nullable|array',
-        'shipping_charges.*.min_quantity' => 'required|numeric|min:0',
-        'shipping_charges.*.max_quantity' => 'required|numeric|min:0',
-        'shipping_charges.*.charge' => 'required|numeric|min:0',
+            'shipping_charges' => 'nullable|array',
+            'shipping_charges.*.min_quantity' => 'required|numeric|min:0',
+            'shipping_charges.*.max_quantity' => 'required|numeric|min:0',
+            'shipping_charges.*.charge' => 'required|numeric|min:0',
+            'faqs' => 'nullable|array',
+            'faqs.*.question' => 'required|string',
+            'faqs.*.answer' => 'required|string',
         ]);
 
         $request->merge([
@@ -748,21 +764,50 @@ class ProductController extends Controller
                 }
             }
         }
-$product->shippingCharges()->delete();
+        $product->shippingCharges()->delete();
 
-    // Insert new shipping charges if present
-    if ($request->has('shipping_charges')) {
-        foreach ($request->input('shipping_charges') as $chargeData) {
-            $product->shippingCharges()->create([
-                'min_quantity' => $chargeData['min_quantity'],
-                'max_quantity' => $chargeData['max_quantity'],
-                'charge' => $chargeData['charge'],
-            ]);
+        // Insert new shipping charges if present
+        if ($request->has('shipping_charges')) {
+            foreach ($request->input('shipping_charges') as $chargeData) {
+                $product->shippingCharges()->create([
+                    'min_quantity' => $chargeData['min_quantity'],
+                    'max_quantity' => $chargeData['max_quantity'],
+                    'charge' => $chargeData['charge'],
+                ]);
+            }
         }
-    }
 
         $variationsToDelete = array_diff($existingVariationIds, $submittedVariationIds);
         Variation::whereIn('id', $variationsToDelete)->delete();
+
+        // Handle FAQs
+        $existingFaqIds = $product->qas->pluck('id')->toArray();
+        $submittedFaqIds = array_column($request->input('faqs', []), 'id');
+
+        // Update or create FAQs
+        foreach ($request->input('faqs', []) as $faq) {
+            if (isset($faq['id']) && in_array($faq['id'], $existingFaqIds)) {
+                // Update existing FAQ
+                $existingFaq = QA::find($faq['id']);
+                if ($existingFaq) {
+                    $existingFaq->update([
+                        'question' => $faq['question'],
+                        'answer'   => $faq['answer'],
+                    ]);
+                }
+            } else {
+                // Create new FAQ
+                QA::create([
+                    'product_id' => $product->id,   // ✅ Use id (integer PK), not product_id string
+                    'question'   => $faq['question'],
+                    'answer'     => $faq['answer'],
+                ]);
+            }
+        }
+
+        // Delete removed FAQs
+        $faqsToDelete = array_diff($existingFaqIds, array_filter($submittedFaqIds));
+        QA::whereIn('id', $faqsToDelete)->delete();
 
         return redirect()->route('products')->with('status', 'Product updated successfully!');
     }
@@ -801,6 +846,9 @@ $product->shippingCharges()->delete();
             'shipping.*.min_quantity' => 'nullable|integer|min:1',
             'shipping..max_quantity' => 'nullable|integer|gte:shipping..min_quantity',
             'shipping.*.charge' => 'nullable|numeric|min:0',
+            'faq' => 'nullable|array',
+            'faq.*.question' => 'nullable|string',
+            'faq.*.answer' => 'nullable|string',
 
         ]);
 
@@ -888,6 +936,17 @@ $product->shippingCharges()->delete();
             }
         }
 
+        if ($request->filled('faq')) {
+            foreach ($request->faq as $faq) {
+                QA::create([
+                    'product_id' => $product->id,
+                    'question'   => $faq['question'] ?? null,
+                    'answer'     => $faq['answer'] ?? null,
+                ]);
+            }
+        }
+
+
         return redirect()->route('products')->with('status', 'Product added successfully!');
     }
 
@@ -962,7 +1021,7 @@ $product->shippingCharges()->delete();
                 ->through(function ($product) {
                     $product->average_rating = $product->reviews()->where('status', 'published')->avg('rating');
                     $product->rating_count = $product->reviews()->where('status', 'published')->count();
-                        $product->published_reviews = $product->reviews->where('status', 'published');
+                    $product->published_reviews = $product->reviews->where('status', 'published');
                     return $product;
                 });
         }

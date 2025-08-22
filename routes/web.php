@@ -262,13 +262,7 @@ Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name
 Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login.post');
 
 Route::middleware([App\Http\Middleware\AdminAuth::class])->group(function () {
-    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.index');
-    // other routes
-});
-
-
-Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
-
+Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])->name('admin.index');
 Route::get('/admin/profile', [AdminProfileController::class, 'showProfile'])->name('admin.profile');
 Route::post('/admin/profile/update', [AdminProfileController::class, 'updateProfile'])->name('admin.profile.update');
 Route::post('/admin/profile/password', [AdminProfileController::class, 'updatePassword'])->name('admin.profile.password.update');
@@ -281,33 +275,21 @@ Route::post('/admin/store_offers', [SpecialOffersController::class, 'storeOffer'
 Route::get('/admin/special_offers', [SpecialOffersController::class, 'showOffers'])->name('special_offers');
 Route::delete('/admin/special_offers/delete/{id}', [SpecialOffersController::class, 'destroy'])->name('delete_offer');
 
-
 Route::get('/admin/add_sales', [SalesController::class, 'createsales'])->name('add_sales');
 Route::post('/admin/store_sales', [SalesController::class, 'storeSales'])->name('store_sales');
 Route::get('/admin/flash_sales', [SalesController::class, 'showSales'])->name('flash_sales');
-Route::post('/sales/store', [SalesController::class, 'storeSale'])->name('store_sale');
 Route::get('/admin/edit_sales/{id}', [SalesController::class, 'edit'])->name('edit_sales');
 Route::delete('/admin/destroy_sales/{id}', [SalesController::class, 'destroy'])->name('destroy_sales');
 Route::post('/admin/update-sale/{id}', [SalesController::class, 'update'])->name('update_sale');
 Route::delete('admin/delete-sale/{id}', [SalesController::class, 'destroy'])->name('delete_sale');
 
-Route::get('/home/flash_sales', [SalesController::class, 'saleProducts'])->name('sale_products');
-
-
 Route::get('/admin/products', [ProductController::class, 'showProducts'])->name('products');
-Route::get('/subcategories/{categoryId}', [ProductController::class, 'getSubcategories']);
-Route::get('/sub-subcategories/{subcategoryId}', [ProductController::class, 'getSubSubcategories']);
 Route::get('/admin/products/add_products', [ProductController::class, 'showCategory'])->name('add_products');
 Route::post('/admin/products/add_products', [ProductController::class, 'store'])->name('store_product');
 Route::get('/admin/products/edit/{id}', [ProductController::class, 'edit'])->name('edit_product');
 Route::put('/admin/products/{id}', [ProductController::class, 'update'])->name('update_product');
 Route::delete('/admin/products/delete/{id}', [ProductController::class, 'destroy'])->name('delete_product');
 Route::get('/admin/product-details/{id}', [ProductController::class, 'showProductDetails'])->name('product-details');
-
-
-
-
-
 
 Route::get('/admin/affiliate_rules', [AffiliateRulesController::class, 'index'])->name('affiliate_rules');
 Route::post('/admin/affiliate_rules', [AffiliateRulesController::class, 'store'])->name('admin_rules.store');
@@ -330,13 +312,9 @@ Route::delete('/admin/users/{id}', [UserController::class, 'destroy'])->name('de
 Route::get('/admin/users/{id}', [UserController::class, 'getUserDetails']);
 Route::post('/admin/users', [UserController::class, 'store'])->name('admin_users.store');
 
-
-
 Route::get('/admin/category', [CategoryController::class, 'showCategories'])->name('category');
 Route::post('/admin/category/add', [CategoryController::class, 'store'])->name('category_add');
 Route::delete('/admin/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
-Route::get('category/edit/{id}', [CategoryController::class, 'edit'])->name('edit_category');
-Route::put('category/update/{id}', [CategoryController::class, 'update'])->name('update_category');
 
 Route::get('/admin/brands_list', [BrandController::class, 'showbrands'])->name('brand_list');
 Route::post('/admin/brands_list', [BrandController::class, 'store'])->name('brands.store');
@@ -344,25 +322,20 @@ Route::get('/admin/brands_list/{brand}/edit', [BrandController::class, 'edit'])-
 Route::delete('/admin/brands_list/{brand}', [BrandController::class, 'destroy'])->name('brands.destroy');
 Route::put('/admin/brands_list/{brand}', [BrandController::class, 'update'])->name('brands.update');
 
-
 Route::get('/admin/carousel', [CarouselController::class, 'showCarousels'])->name('carousel');
 Route::post('/admin/carousel/add', [CarouselController::class, 'store'])->name('carousel_add');
 Route::delete('/admin/carousel/{id}', [CarouselController::class, 'destroy'])->name('carousel.destroy');
-Route::get('carousel/edit/{id}', [CarouselController::class, 'edit'])->name('edit_carousel');
-Route::put('carousel/update/{id}', [CarouselController::class, 'update'])->name('update_carousel');
 
 Route::get('/admin/banner', [BannerController::class, 'showBanners'])->name('banner');
 Route::post('/admin/banner/add', [BannerController::class, 'store'])->name('banner_add');
 Route::delete('/admin/banner/{id}', [BannerController::class, 'destroy'])->name('banner.destroy');
-Route::get('banner/edit/{id}', [BannerController::class, 'edit'])->name('edit_banner');
-Route::put('banner/update/{id}', [BannerController::class, 'update'])->name('update_banner');
 
 Route::get('/admin/logo', [LogoController::class, 'showLogo'])->name('logo');
 Route::put('admin/logo', [LogoController::class, 'insertOrUpdateLogo'])->name('insert_or_update_logo');
 
 Route::get('/admin/orders', [OrderController::class, 'index'])->name('orders');
 Route::get('/admin/order-details', [OrderController::class, 'show'])->name('customerorder_details');
-Route::post('/set-order-code', [OrderController::class, 'setOrderCode'])->name('set-order-code');
+
 Route::delete('/admin/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 
 Route::put('/admin/orders/{id}/status', [OrderController::class, 'updateOrderStatus'])->name('update_order_status');
@@ -375,12 +348,7 @@ Route::get('/admin/manage_reviews', [ReviewController::class, 'index'])->name('m
 Route::get('/admin/manage_reviews/{id}/edit', [ReviewController::class, 'edit'])->name('reviews.edit');
 Route::post('/admin/manage_reviews/{id}/approve', [ReviewController::class, 'approve'])->name('reviews.approve');
 Route::delete('/admin/manage_reviews/{id}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
-
-Route::post('/inquiry', [InquiryController::class, 'store'])->name('inquiry.store');
-
 Route::get('/admin/customer_inquiries', [InquiryController::class, 'showCustomerInquiries'])->name('customer_inquiries');
-Route::post('/inquiries/{id}/response', [InquiryController::class, 'submitResponse'])->name('inquiries.response');
-Route::post('/inquiries/{id}/resolve', [InquiryController::class, 'resolveInquiry'])->name('inquiries.resolve');
 
 Route::get('/admin/shipping-charges', [ShippingChargeController::class, 'index'])->name('shipping-charges.index');
 Route::post('/admin/shipping-charges', [ShippingChargeController::class, 'store'])->name('shipping-charges.store');
@@ -388,6 +356,43 @@ Route::get('/admin/shipping-charges/create', [ShippingChargeController::class, '
 Route::get('/admin/shipping-charges/{id}/edit', [ShippingChargeController::class, 'edit'])->name('shipping-charges.edit');
 Route::put('/admin/shipping-charges/{id}', [ShippingChargeController::class, 'update'])->name('shipping-charges.update');
 Route::delete('/admin/shipping-charges/{id}', [ShippingChargeController::class, 'destroy'])->name('shipping-charges.destroy');
+
+
+});
+
+
+Route::post('/admin/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
+
+Route::post('/sales/store', [SalesController::class, 'storeSale'])->name('store_sale');
+
+Route::get('/home/flash_sales', [SalesController::class, 'saleProducts'])->name('sale_products');
+
+
+Route::get('/subcategories/{categoryId}', [ProductController::class, 'getSubcategories']);
+Route::get('/sub-subcategories/{subcategoryId}', [ProductController::class, 'getSubSubcategories']);
+
+Route::get('category/edit/{id}', [CategoryController::class, 'edit'])->name('edit_category');
+Route::put('category/update/{id}', [CategoryController::class, 'update'])->name('update_category');
+
+
+Route::get('carousel/edit/{id}', [CarouselController::class, 'edit'])->name('edit_carousel');
+Route::put('carousel/update/{id}', [CarouselController::class, 'update'])->name('update_carousel');
+
+
+Route::get('banner/edit/{id}', [BannerController::class, 'edit'])->name('edit_banner');
+Route::put('banner/update/{id}', [BannerController::class, 'update'])->name('update_banner');
+
+
+Route::post('/set-order-code', [OrderController::class, 'setOrderCode'])->name('set-order-code');
+
+
+Route::post('/inquiry', [InquiryController::class, 'store'])->name('inquiry.store');
+
+
+Route::post('/inquiries/{id}/response', [InquiryController::class, 'submitResponse'])->name('inquiries.response');
+Route::post('/inquiries/{id}/resolve', [InquiryController::class, 'resolveInquiry'])->name('inquiries.resolve');
+
+
 
 //about
 Route::get('/about-us', function () {

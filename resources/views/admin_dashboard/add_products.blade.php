@@ -194,9 +194,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="quantity">Total Quantity</label>
+                                        <label for="quantity">Total Quantity<span class="text-danger">*</span></label>
                                         <input type="number" id="quantity" name="quantity" class="form-control"
-                                            placeholder="Enter quantity">
+                                            placeholder="Enter quantity" required>
                                     </div>
 
                                     <div class="form-group">
@@ -289,7 +289,7 @@
                                         <div class="card-body">
                                             <h5>Shipping Charges</h5>
                                             <div class="form-group">
-                                                <label for="shipping_charges">Add Shipping Charges</label>
+                                                <label for="shipping_charges">Add Shipping Charges<span class="text-danger">*</span></label>
                                                 <div id="shipping-charges-container">
                                                     <div class="shipping-row row mb-3" data-index="0">
                                                         <div class="col-md-3">
@@ -315,6 +315,37 @@
                                                 </div>
                                                 <button type="button" class="btn btn-secondary mt-3" id="addShippingBtn"
                                                     style="width: 30%;">+ Add another shipping charge</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card1 px-2 py-2 mt-4">
+                                        <div class="card-body">
+                                            <h5>Q & A</h5>
+                                            <div class="form-group">
+                                                <label for="faq">Add Q & A</label>
+                                                <div id="faq-container">
+                                                    <div class="faq-row row mb-3" data-index="0">
+                                                        <div class="col-md-4">
+                                                            <input type="text" class="form-control"
+                                                                name="faq[0][question]" placeholder="Question">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input type="text" class="form-control"
+                                                                name="faq[0][answer]" placeholder="Answer">
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <button type="button" class="btn remove-btn"
+                                                                onclick="removeFaqRow(this)">X</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <button type="button" class="btn btn-secondary mt-3" id="addFaqBtn"
+                                                    style="width: 30%;">+ Add another Q & A</button>
                                             </div>
                                         </div>
                                     </div>
@@ -618,4 +649,38 @@ document.addEventListener('DOMContentLoaded', function() {
             row.remove();
         }
     </script>
+
+    <script>
+    let faqIndex = 1; // start from 1 since you already have [0]
+
+    document.getElementById('addFaqBtn').addEventListener('click', function () {
+        const container = document.getElementById('faq-container');
+        const newRow = document.createElement('div');
+        newRow.classList.add('faq-row', 'row', 'mb-3');
+        newRow.setAttribute('data-index', faqIndex);
+
+        newRow.innerHTML = `
+            <div class="col-md-6">
+                <input type="text" class="form-control"
+                    name="faq[${faqIndex}][question]" placeholder="Question">
+            </div>
+            <div class="col-md-6">
+                <input type="text" class="form-control"
+                    name="faq[${faqIndex}][answer]" placeholder="Answer">
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn remove-btn" onclick="removeFaqRow(this)">X</button>
+            </div>
+        `;
+
+        container.appendChild(newRow);
+        faqIndex++;
+    });
+
+    function removeFaqRow(button) {
+        const row = button.closest('.faq-row');
+        row.remove();
+    }
+</script>
+
 @endsection

@@ -325,68 +325,119 @@
                             </div>
 
                             <div class="card1 px-2 py-2 mt-4">
-    <div class="card-body">
-        <h5>Shipping Charges</h5>
-        <div class="form-group">
-            <label for="shipping">Add Shipping Charges</label>
-            <div id="shipping-charges-container">
-                @foreach ($shippingCharges as $index => $charge)
-                    <div class="shipping-row row mb-3" data-index="{{ $index }}">
-                        <div class="col-md-3">
-                            <input type="number" class="form-control"
-                                name="shipping[{{ $index }}][min_quantity]"
-                                placeholder="Min Qty"
-                                value="{{ $charge->min_quantity }}">
-                        </div>
-                        <div class="col-md-3">
-                            <input type="number" class="form-control"
-                                name="shipping[{{ $index }}][max_quantity]"
-                                placeholder="Max Qty"
-                                value="{{ $charge->max_quantity }}">
-                        </div>
-                        <div class="col-md-3">
-                            <input type="number" class="form-control"
-                                name="shipping[{{ $index }}][charge]"
-                                placeholder="Charge (LKR)"
-                                step="0.01"
-                                value="{{ $charge->charge }}">
-                        </div>
-                        <div class="col-md-1">
-                            <button type="button" class="btn remove-btn" onclick="removeShippingRow(this)">X</button>
-                        </div>
-                    </div>
-                @endforeach
+                                <div class="card-body">
+                                    <h5>Shipping Charges</h5>
+                                    <div class="form-group">
+                                        <label for="shipping">Add Shipping Charges</label>
+                                        <div id="shipping-charges-container">
+                                            @foreach ($shippingCharges as $index => $charge)
+                                                <div class="shipping-row row mb-3" data-index="{{ $index }}">
+                                                    <div class="col-md-3">
+                                                        <input type="number" class="form-control"
+                                                            name="shipping[{{ $index }}][min_quantity]"
+                                                            placeholder="Min Qty" value="{{ $charge->min_quantity }}">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="number" class="form-control"
+                                                            name="shipping[{{ $index }}][max_quantity]"
+                                                            placeholder="Max Qty" value="{{ $charge->max_quantity }}">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="number" class="form-control"
+                                                            name="shipping[{{ $index }}][charge]"
+                                                            placeholder="Charge (LKR)" step="0.01"
+                                                            value="{{ $charge->charge }}">
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <button type="button" class="btn remove-btn"
+                                                            onclick="removeShippingRow(this)">X</button>
+                                                    </div>
+                                                </div>
+                                            @endforeach
 
-                {{-- If there are no existing shipping charges, show one empty row --}}
-                @if ($shippingCharges->isEmpty())
-                    <div class="shipping-row row mb-3" data-index="0">
-                        <div class="col-md-3">
-                            <input type="number" class="form-control"
-                                name="shipping[0][min_quantity]"
-                                placeholder="Min Qty">
-                        </div>
-                        <div class="col-md-3">
-                            <input type="number" class="form-control"
-                                name="shipping[0][max_quantity]"
-                                placeholder="Max Qty">
-                        </div>
-                        <div class="col-md-3">
-                            <input type="number" class="form-control"
-                                name="shipping[0][charge]"
-                                placeholder="Charge (LKR)" step="0.01">
-                        </div>
-                        <div class="col-md-1">
-                            <button type="button" class="btn remove-btn" onclick="removeShippingRow(this)">X</button>
-                        </div>
-                    </div>
-                @endif
-            </div>
+                                            {{-- If there are no existing shipping charges, show one empty row --}}
+                                            @if ($shippingCharges->isEmpty())
+                                                <div class="shipping-row row mb-3" data-index="0">
+                                                    <div class="col-md-3">
+                                                        <input type="number" class="form-control"
+                                                            name="shipping[0][min_quantity]" placeholder="Min Qty">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="number" class="form-control"
+                                                            name="shipping[0][max_quantity]" placeholder="Max Qty">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="number" class="form-control"
+                                                            name="shipping[0][charge]" placeholder="Charge (LKR)"
+                                                            step="0.01">
+                                                    </div>
+                                                    <div class="col-md-1">
+                                                        <button type="button" class="btn remove-btn"
+                                                            onclick="removeShippingRow(this)">X</button>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
 
-            <button type="button" class="btn btn-secondary mt-3" id="addShippingBtn" style="width: 30%;">+ Add another shipping charge</button>
-        </div>
-    </div>
-</div>
+                                        <button type="button" class="btn btn-secondary mt-3" id="addShippingBtn"
+                                            style="width: 30%;">+ Add another shipping charge</button>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class="card1 px-2 py-2 mt-4">
+                                <div class="card-body">
+                                    <h5>Q & A</h5>
+                                    <div class="form-group">
+                                        <label for="faq">Add Q & A</label>
+                                        <div id="faq-container">
+                                            @foreach ($product->qas as $index => $faq)
+                                                <div class="faq-row row mb-3" data-index="{{ $index }}">
+                                                    {{-- Hidden field for existing FAQ id --}}
+                                                    <input type="hidden" name="faqs[{{ $index }}][id]"
+                                                        value="{{ $faq->id }}">
+
+                                                    <div class="col-md-5">
+                                                        <input type="text" class="form-control"
+                                                            name="faqs[{{ $index }}][question]"
+                                                            placeholder="Question" value="{{ $faq->question }}">
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <input type="text" class="form-control"
+                                                            name="faqs[{{ $index }}][answer]" placeholder="Answer"
+                                                            value="{{ $faq->answer }}">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button type="button" class="btn remove-btn"
+                                                            onclick="removeFaqRow(this)">X</button>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+
+                                            {{-- If no existing FAQs, show one empty row --}}
+                                            @if ($product->qas->isEmpty())
+                                                <div class="faq-row row mb-3" data-index="0">
+                                                    <div class="col-md-5">
+                                                        <input type="text" class="form-control"
+                                                            name="faqs[0][question]" placeholder="Question">
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <input type="text" class="form-control" name="faqs[0][answer]"
+                                                            placeholder="Answer">
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button type="button" class="btn remove-btn"
+                                                            onclick="removeFaqRow(this)">X</button>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        <button type="button" class="btn btn-secondary mt-3" id="addFaqBtn"
+                                            style="width: 30%;">+ Add another Q & A</button>
+                                    </div>
+                                </div>
+                            </div>
 
 
 
@@ -712,6 +763,36 @@
         function removeShippingRow(button) {
             button.closest(".shipping-row").remove();
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+    let index = document.querySelectorAll("#faq-container .faq-row").length;
+
+    document.getElementById("addFaqBtn").addEventListener("click", function() {
+        let container = document.getElementById("faq-container");
+
+        let row = document.createElement("div");
+        row.classList.add("faq-row", "row", "mb-3");
+        row.setAttribute("data-index", index);
+
+        row.innerHTML = `
+            <div class="col-md-5">
+                <input type="text" class="form-control" name="faqs[${index}][question]" placeholder="Question" required>
+            </div>
+            <div class="col-md-5">
+                <input type="text" class="form-control" name="faqs[${index}][answer]" placeholder="Answer" required>
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn remove-btn" onclick="removeFaqRow(this)">X</button>
+            </div>
+        `;
+        container.appendChild(row);
+        index++;
+    });
+});
+
+function removeFaqRow(button) {
+    button.closest(".faq-row").remove();
+}
     </script>
 
 @endsection
