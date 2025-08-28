@@ -180,6 +180,23 @@
                             </div>
                         </div>
 
+                        <!-- Agree to Terms and Conditions -->
+                        <div class="col-12">
+                            <div class="form-check">
+                                <input class="form-check-input @error('terms') is-invalid @enderror" type="checkbox"
+                                    value="1" id="terms" name="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    I agree to the <a href="{{ route('terms-condition') }}" target="_blank">Terms and
+                                        Conditions</a>
+                                </label>
+                                <div class="invalid-feedback">You must agree before submitting.</div>
+                                @error('terms')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+
                         <!-- Submit -->
                         <div class="col-12 text-center mt-3">
                             <button type="submit" class="btn btn-primary px-5 py-2">Signup</button>
@@ -195,109 +212,129 @@
     <!-- End SignUP Area -->
 
     <script>
-    function togglePassword() {
-        var passwordField = document.getElementById("password");
-        var confirmPasswordField = document.getElementById("password_confirmation");
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            var confirmPasswordField = document.getElementById("password_confirmation");
 
-        // Toggle visibility of password fields
-        if (document.getElementById("show_password").checked) {
-            passwordField.type = "text";
-            confirmPasswordField.type = "text";
-        } else {
-            passwordField.type = "password";
-            confirmPasswordField.type = "password";
+            // Toggle visibility of password fields
+            if (document.getElementById("show_password").checked) {
+                passwordField.type = "text";
+                confirmPasswordField.type = "text";
+            } else {
+                passwordField.type = "password";
+                confirmPasswordField.type = "password";
+            }
         }
-    }
-</script>
+    </script>
 
-<script>
-    // Bootstrap 5 validation
+    <script>
+        // Bootstrap 5 validation
+        (() => {
+            'use strict';
+
+            const form = document.querySelector('.needs-validation');
+            const passwordField = document.getElementById("password");
+            const confirmPasswordField = document.getElementById("password_confirmation");
+
+            // Add input/change listeners to each form field for real-time feedback
+            Array.from(form.elements).forEach(field => {
+                if (field.tagName !== 'BUTTON' && field.type !== 'hidden') {
+                    const eventType = ['checkbox', 'radio', 'select-one'].includes(field.type) ? 'change' :
+                        'input';
+                    field.addEventListener(eventType, () => {
+                        if (field.checkValidity()) {
+                            field.classList.remove('is-invalid');
+                            field.classList.add('is-valid');
+                        } else {
+                            field.classList.remove('is-valid');
+                            field.classList.add('is-invalid');
+                        }
+                    });
+                }
+            });
+
+            // Prevent form submission if any field is invalid
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            });
+
+            // Restrict Full Name to letters and space
+            document.getElementById("name").addEventListener("input", function() {
+                this.value = this.value.replace(/[^A-Za-z\s]/g, '');
+            });
+
+            // Validate DOB (must be past)
+            document.getElementById("DOB").addEventListener("input", function() {
+                const inputDate = new Date(this.value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                if (inputDate > today) {
+                    this.setCustomValidity("Date of Birth must be in the past.");
+                } else {
+                    this.setCustomValidity("");
+                }
+            });
+
+            // Restrict phone to digits and max 10
+            document.getElementById("phone_num").addEventListener("input", function() {
+                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+            });
+
+            // Live password validation
+            passwordField.addEventListener("input", function() {
+                const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+                if (!pattern.test(this.value)) {
+                    this.setCustomValidity(
+                        "Weak password: Must be 8+ chars, include upper/lower, number, and symbol.");
+                    this.classList.remove('is-valid');
+                    this.classList.add('is-invalid');
+                } else {
+                    this.setCustomValidity("");
+                    this.classList.remove('is-invalid');
+                    this.classList.add('is-valid');
+                }
+
+                // Re-check confirmation field when password changes
+                if (confirmPasswordField.value) {
+                    confirmPasswordField.dispatchEvent(new Event('input'));
+                }
+            });
+
+            // Confirm password match validation
+            confirmPasswordField.addEventListener("input", function() {
+                if (this.value !== passwordField.value || this.value === "") {
+                    this.setCustomValidity("Passwords do not match.");
+                    this.classList.remove('is-valid');
+                    this.classList.add('is-invalid');
+                } else {
+                    this.setCustomValidity("");
+                    this.classList.remove('is-invalid');
+                    this.classList.add('is-valid');
+                }
+            });
+
+        })();
+    </script>
+
+    <script>
+    // Bootstrap validation
     (() => {
-        'use strict';
-
-        const form = document.querySelector('.needs-validation');
-        const passwordField = document.getElementById("password");
-        const confirmPasswordField = document.getElementById("password_confirmation");
-
-        // Add input/change listeners to each form field for real-time feedback
-        Array.from(form.elements).forEach(field => {
-            if (field.tagName !== 'BUTTON' && field.type !== 'hidden') {
-                const eventType = ['checkbox', 'radio', 'select-one'].includes(field.type) ? 'change' : 'input';
-                field.addEventListener(eventType, () => {
-                    if (field.checkValidity()) {
-                        field.classList.remove('is-invalid');
-                        field.classList.add('is-valid');
-                    } else {
-                        field.classList.remove('is-valid');
-                        field.classList.add('is-invalid');
-                    }
-                });
-            }
-        });
-
-        // Prevent form submission if any field is invalid
-        form.addEventListener('submit', event => {
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-        });
-
-        // Restrict Full Name to letters and space
-        document.getElementById("name").addEventListener("input", function() {
-            this.value = this.value.replace(/[^A-Za-z\s]/g, '');
-        });
-
-        // Validate DOB (must be past)
-        document.getElementById("DOB").addEventListener("input", function() {
-            const inputDate = new Date(this.value);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            if (inputDate > today) {
-                this.setCustomValidity("Date of Birth must be in the past.");
-            } else {
-                this.setCustomValidity("");
-            }
-        });
-
-        // Restrict phone to digits and max 10
-        document.getElementById("phone_num").addEventListener("input", function() {
-            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
-        });
-
-        // Live password validation
-        passwordField.addEventListener("input", function() {
-            const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-            if (!pattern.test(this.value)) {
-                this.setCustomValidity("Weak password: Must be 8+ chars, include upper/lower, number, and symbol.");
-                this.classList.remove('is-valid');
-                this.classList.add('is-invalid');
-            } else {
-                this.setCustomValidity("");
-                this.classList.remove('is-invalid');
-                this.classList.add('is-valid');
-            }
-
-            // Re-check confirmation field when password changes
-            if (confirmPasswordField.value) {
-                confirmPasswordField.dispatchEvent(new Event('input'));
-            }
-        });
-
-        // Confirm password match validation
-        confirmPasswordField.addEventListener("input", function() {
-            if (this.value !== passwordField.value || this.value === "") {
-                this.setCustomValidity("Passwords do not match.");
-                this.classList.remove('is-valid');
-                this.classList.add('is-invalid');
-            } else {
-                this.setCustomValidity("");
-                this.classList.remove('is-invalid');
-                this.classList.add('is-valid');
-            }
-        });
-
-    })();
+        'use strict'
+        const forms = document.querySelectorAll('.needs-validation')
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
 </script>
+
 @endsection

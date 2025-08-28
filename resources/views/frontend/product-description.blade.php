@@ -878,6 +878,11 @@
             .page-title-area {
                 display: none;
             }
+
+
+
+
+
         }
     </style>
 
@@ -1022,21 +1027,36 @@
                         <ul class="products-info">
                             <li>
                                 <span>Availability:</span>
-                                @if ($product->quantity > 1)
-                                    <span class="availability-badge instock"><i class='fa-solid fa-circle-check'></i> In
-                                        stock</span>
+                                @if ($product->quantity > 0)
+                                    @if ($product->quantity > 100)
+                                        <span class="availability-badge instock">
+                                            <i class='fa-solid fa-circle-check'></i> 100+ Available
+                                        </span>
+                                    @elseif ($product->quantity < 10)
+                                        <span class="availability-badge instock" style="color: red; font-weight: bold;">
+                                            <i class='fa-solid fa-circle-exclamation'></i> {{ $product->quantity }}
+                                            Available - Very low stock!
+                                        </span>
+                                    @else
+                                        <span class="availability-badge instock">
+                                            <i class='fa-solid fa-circle-check'></i> {{ $product->quantity }} Available
+                                        </span>
+                                    @endif
                                 @else
-                                    <span class="availability-badge out-of-stock"><i class='fa-solid fa-circle-xmark'></i>
-                                        Out of
-                                        stock</span>
+                                    <span class="availability-badge out-of-stock">
+                                        <i class='fa-solid fa-circle-xmark'></i> Out of stock
+                                    </span>
                                 @endif
                             </li>
+
                             <li>
                                 <span>Description:</span>
-                                <span
-                                    class="product-description">{{ Str::limit(strip_tags($product->product_description), 150) }}</span>
+                                <span class="product-description">
+                                    {{ Str::limit(strip_tags($product->product_description), 150) }}
+                                </span>
                             </li>
                         </ul>
+
 
                         <!-- Color Options -->
                         @if ($product->variations->where('type', 'Color')->isNotEmpty())
@@ -1074,22 +1094,44 @@
                             </div>
                         @endif
 
+                        <!-- Material Options -->
+                        @if ($product->variations->where('type', 'Material')->isNotEmpty())
+                            <div class="products-size-wrapper">
+                                <span>Material</span>
+                                <ul>
+                                    @foreach ($product->variations->where('type', 'Material') as $material)
+                                        @if ($material->quantity > 0)
+                                            <li>
+                                                <a href="javascript:void(0)" class="material-option"
+                                                    data-material="{{ $material->value }}">
+                                                    {{ $material->value }}
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
                         <div class="products-add-to-cart">
                             <div class="input-counter">
                                 <span class="minus-btn">
                                     <us class="fa-solid fa-minus"></us>
                                 </span>
-                                <input type="text" id="quantity" value="1" min="1"
+                                <input type="number" id="quantity" value="1" min="1"
                                     max="{{ $product->quantity }}">
                                 <span class="plus-btn"><i class="fa-solid fa-plus"></i></span>
                             </div>
 
                             <div class="buttons-row">
                                 @auth
-                                    <button class="Add-to-Cart" data-product-id="{{ $product->product_id }}" id="addToCartBtn">
+                                    <button class="Add-to-Cart" data-product-id="{{ $product->product_id }}" id="addToCartBtn"
+                                        @if ($product->quantity <= 0) disabled @endif>
                                         <i class='fa-solid fa-cart-shopping'></i> Add to Cart
                                     </button>
-                                    <button class="buy-nowbtn" id="buyNowBtn" data-product-id="{{ $product->product_id }}">
+
+                                    <button class="buy-nowbtn" id="buyNowBtn" data-product-id="{{ $product->product_id }}"
+                                        @if ($product->quantity <= 0) disabled @endif>
                                         <i class='fa-solid fa-bag-shopping'></i> Buy Now
                                     </button>
                                 @else
@@ -1101,6 +1143,9 @@
                                     </button>
                                 @endauth
                             </div>
+
+
+
 
 
                             {{-- <a href="javascript:void(0)" class="wishlist-toggle"
@@ -1124,13 +1169,16 @@
                             Additional Information
                         </a></li>
 
-                    <li><a href="#why-us-tab">
-                            Why Buy From Us
-                        </a></li>
+                    <li>
+                        <a href="#QA-tab">
+                            Q & A
+                        </a>
+                    </li>
 
-                    <li><a href="#reviews-tab" id="reviews-tab">
+                    <li><a href="#reviews-tab">
                             Reviews
-                        </a></li>
+                        </a>
+                    </li>
                 </ul>
 
                 <div class="tab-content">
@@ -1169,31 +1217,26 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Shipping:</td>
-                                            <td>LKR 300.00</td>
+                                            <td>Material:</td>
+                                            <td>
+                                                @foreach ($product->variations->where('type', 'Material') as $material)
+                                                    @if ($material->quantity > 0)
+                                                        <span
+                                                            class="badge bg-light text-dark me-1">{{ $material->value }}</span>
+                                                    @endif
+                                                @endforeach
+                                            </td>
                                         </tr>
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
 
-                    <div class="tabs-item" id="why-us-tab">
+                    <div class="tabs-item" id="QA-tab">
                         <div class="products-details-tab-content">
-                            <p>Here are 5 more great reasons to buy from us:</p>
-
-                            <ol>
-                                <li><strong>Wide Range of Products</strong> – From electronics to fashion, we offer a vast
-                                    selection of high-quality items for all your needs.</li>
-                                <li><strong>Affordable Prices</strong> – Enjoy competitive pricing and amazing discounts on
-                                    top-rated products.</li>
-                                <li><strong>Convenient Shopping Experience</strong> – Our easy-to-navigate website ensures a
-                                    seamless shopping experience from browsing to checkout.</li>
-                                <li><strong>Secure Payment Options</strong> – Shop with confidence using our safe and
-                                    reliable payment methods.</li>
-                                <li><strong>Fast and Reliable Delivery</strong> – We guarantee quick delivery, ensuring your
-                                    orders reach you on time, every time.</li>
-                            </ol>
+                            <p>There are no Q & A available for this product.</p>
                         </div>
                     </div>
 
@@ -1355,6 +1398,19 @@
                 });
             });
 
+            // Material selction
+            $('.material-option').on('click', function(e) {
+                e.preventDefault();
+                $('.material-option').removeClass('selected');
+                $(this).addClass('selected');
+
+                const material = $(this).data('material');
+                toastr.info(`Selected material: ${material}`, '', {
+                    positionClass: 'toast-top-right',
+                    timeOut: 1500
+                });
+            })
+
             // Wishlist toggle
             $('.wishlist-toggle').on('click', function(e) {
                 e.preventDefault();
@@ -1396,6 +1452,8 @@
             });
 
             // Add to Cart Button
+            // Add to Cart Button - Fixed Version
+            // Add to Cart Button - Fixed Version
             $('#addToCartBtn').on('click', function(e) {
                 e.preventDefault();
 
@@ -1403,11 +1461,22 @@
                 const isAuth = "{{ Auth::check() ? 'true' : 'false' }}";
                 const selectedSize = $('.size-option.selected').data('size');
                 const selectedColor = $('.color-option.selected').data('color-name');
-                const quantity = $('#quantity').val() || 1;
+                const selectedMaterial = $('.material-option.selected').data('material');
+
+                // Parse quantity as integer and ensure it's valid
+                let quantity = parseInt($('#quantity').val());
+                console.log('Raw quantity value:', $('#quantity').val());
+                console.log('Parsed quantity:', quantity);
+
+                if (isNaN(quantity) || quantity < 1) {
+                    quantity = 1;
+                    console.log('Invalid quantity detected, defaulting to 1');
+                }
 
                 // Check if there are size or color options for this product
                 const hasSize = $('.size-option').length > 0;
                 const hasColor = $('.color-option').length > 0;
+                const hasMaterial = $('.material-option').length > 0;
 
                 // If the product has size options, check if size is selected
                 if (hasSize && !selectedSize) {
@@ -1434,6 +1503,15 @@
                     btn.prop('disabled', true);
                     btn.html('<i class="bx bx-loader-alt bx-spin"></i> Adding...');
 
+                    // Debug: Log the data being sent
+                    console.log('Sending cart data:', {
+                        product_id: productId,
+                        size: selectedSize || null,
+                        color: selectedColor || null,
+                        material: selectedMaterial || null,
+                        quantity: quantity
+                    });
+
                     $.ajax({
                         url: "{{ route('cart.add') }}",
                         method: 'POST',
@@ -1442,9 +1520,13 @@
                             product_id: productId,
                             size: selectedSize || null,
                             color: selectedColor || null,
+                            material: selectedMaterial || null,
                             quantity: quantity
                         },
                         success: function(response) {
+                            // Debug: Log server response
+                            console.log('Server response:', response);
+
                             // Update cart count
                             $.get("{{ route('cart.count') }}", function(data) {
                                 $('#cart-count').text(data.cart_count);
@@ -1459,12 +1541,13 @@
                                 positionClass: 'toast-top-right',
                                 timeOut: 2500
                             });
+
                             setTimeout(function() {
                                 location.reload();
                             }, 1000);
                         },
                         error: function(xhr) {
-                            console.log(xhr.responseText);
+                            console.log('Error response:', xhr.responseText);
 
                             // Reset button
                             btn.prop('disabled', false);
@@ -1492,11 +1575,13 @@
                 const isAuth = "{{ Auth::check() ? 'true' : 'false' }}";
                 const selectedSize = $('.size-option.selected').data('size');
                 const selectedColor = $('.color-option.selected').data('color-name');
+                const selectedMaterial = $('.material-option.selected').data('material-name');
                 const quantity = $('#quantity').val() || 1;
 
                 // Check if there are size or color options for this product
                 const hasSize = $('.size-option').length > 0;
                 const hasColor = $('.color-option').length > 0;
+                const hasMaterial = $('.material-option').length > 0;
 
                 // If the product has size options, check if size is selected
                 if (hasSize && !selectedSize) {
@@ -1531,6 +1616,7 @@
                             product_id: productId,
                             size: selectedSize || null,
                             color: selectedColor || null,
+                            material: selectedMaterial || null,
                             quantity: quantity
                         },
                         success: function(response) {

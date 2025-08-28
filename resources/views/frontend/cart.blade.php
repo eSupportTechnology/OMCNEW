@@ -7,7 +7,7 @@
             <div class="page-title-content">
                 <h2>Cart</h2>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li>Cart</li>
                 </ul>
             </div>
@@ -49,27 +49,44 @@
 
                                             <td class="product-name">
                                                 <a
-                                                    href="{{ route('product-description', ['product_id' => $item->product_id]) }}">{{ $item->product->product_name }}</a>
+                                                    href="{{ route('product-description', ['product_id' => $item->product_id]) }}">
+                                                    {{ $item->product->product_name }}
+                                                </a>
                                                 <ul>
-                                                    <li>Color: <span
-                                                            style="background-color: {{ $item->color }}; width: 15px; height: 15px; display: inline-block; border-radius: 50%; margin-left: 5px; vertical-align: middle;"></span>
+                                                    <li>Color:
+                                                        <span
+                                                            style="background-color:
+                {{ \App\Models\Variation::where('product_id', $item->product_id)->where('type', 'Color')->where('value', $item->color)->value('hex_value') ?? '#000' }};
+                width: 15px; height: 15px; display: inline-block; border-radius: 50%; margin-left: 5px; vertical-align: middle;">
+                                                        </span>
                                                     </li>
-                                                    <li>Size: <span>{{ $item->size }}</span></li>
+                                                    <li>Size:
+                                                        <span>
+                                                            {{ \App\Models\Variation::where('product_id', $item->product_id)->where('type', 'Size')->where('value', $item->size)->value('value') ?? '-' }}
+                                                        </span>
+                                                    </li>
+                                                    <li>Material:
+                                                        <span>
+                                                            {{ \App\Models\Variation::where('product_id', $item->product_id)->where('type', 'Material')->where('value', $item->material)->value('value') ?? '-' }}
+                                                        </span>
+                                                    </li>
                                                 </ul>
                                             </td>
+
+
 
                                             <td class="product-price">
                                                 <span class="unit-amount">
                                                     @php
                                                         // Check if there's an active special offer, otherwise check for sale, else use normal price
-                                                    $price =
-                                                        $item->product->specialOffer &&
-                                                        $item->product->specialOffer->status === 'active'
-                                                            ? $item->product->specialOffer->offer_price
-                                                            : ($item->product->sale &&
-                                                            $item->product->sale->status === 'active'
-                                                            ? $item->product->sale->sale_price
-                                                            : $item->product->normal_price);
+$price =
+    $item->product->specialOffer &&
+    $item->product->specialOffer->status === 'active'
+        ? $item->product->specialOffer->offer_price
+        : ($item->product->sale &&
+        $item->product->sale->status === 'active'
+                                                                    ? $item->product->sale->sale_price
+                                                                    : $item->product->normal_price);
                                                     @endphp
                                                     LKR {{ number_format($price, 2) }}
                                                 </span>
@@ -79,8 +96,11 @@
                                                 <div class="input-counter">
                                                     <span class="minus-btn" data-product-id="{{ $item->product_id }}"><i
                                                             class='fa fa-minus'></i></span>
-                                                    <input type="text" min="1" value="{{ $item->quantity }}"
+                                                    <input type="text" min="1" max="{{ $item->product->quantity }}"
+                                                        value="{{ $item->quantity }}"
+                                                        data-max="{{ $item->product->quantity }}"
                                                         name="quantity[{{ $item->id }}]" class="quantity-input">
+
                                                     <span class="plus-btn" data-product-id="{{ $item->product_id }}"><i
                                                             class='fa fa-plus'></i></span>
                                                 </div>
@@ -135,6 +155,7 @@
                                                             style="background-color: {{ $item->color }}; width: 15px; height: 15px; display: inline-block; border-radius: 50%; margin-left: 5px; vertical-align: middle;"></span>
                                                     </div>
                                                     <div>Size: <span>{{ $item->size }}</span></div>
+                                                    <div>Material: <span>{{ $item->material }}</span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -163,6 +184,7 @@
                                             <div class="quantity-info text-right">
                                                 <div style="padding-right: 20px"><strong>Quantity:</strong></div>
                                                 <div class="input-counter" style="float: right;">
+
                                                     <span class="minus-btn" data-product-id="{{ $item->product_id }}">
                                                         <i class='fa fa-minus'></i>
                                                     </span>
@@ -225,7 +247,7 @@
                                         ) }}</span>
                                 </li>
 
-                                <li>Shipping <span>LKR 300.00</span></li>
+                                <li>Shipping Charges<span>Rs. {{ number_format($deliveryFee, 2) }}</span></li>
 
                                 <li>Total <span>LKR
                                         {{ number_format(
@@ -238,7 +260,7 @@
                                                             ? $item->product->sale->sale_price
                                                             : $item->product->normal_price);
                                                 return $price * $item->quantity;
-                                            }) + 300,
+                                            }) + $deliveryFee,
                                             2,
                                         ) }}</span>
                                 </li>
@@ -375,70 +397,81 @@
 
     <script>
         $(document).ready(function() {
-            // Ensure no duplicate event bindings
-            $('.plus-btn, .minus-btn').off('click').on('click', function() {
-                const quantityInput = $(this).siblings(
-                    '.quantity-input'); // Get the corresponding input field
-                let currentValue = parseInt(quantityInput.val());
+            let shippingUpdateTimeout;
 
-                // Ensure the current value is a number
+            $('.plus-btn, .minus-btn').off('click').on('click', function() {
+                const quantityInput = $(this).siblings('.quantity-input');
+                let currentValue = parseInt(quantityInput.val());
+                const maxValue = parseInt(quantityInput.data('max')) || 999;
+
                 if (!isNaN(currentValue)) {
-                    // For the plus button, increase the value by 1
                     if ($(this).hasClass('plus-btn')) {
+                        if (currentValue >= maxValue) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'Stock Limit',
+                                text: 'Cannot increase beyond available stock (' + maxValue + ').',
+                                confirmButtonText: 'OK'
+                            });
+                            return;
+                        }
                         quantityInput.val(currentValue + 1);
-                    }
-                    // For the minus button, decrease the value by 1 (avoid going below 1)
-                    else if ($(this).hasClass('minus-btn') && currentValue > 1) {
+                    } else if ($(this).hasClass('minus-btn') && currentValue > 1) {
                         quantityInput.val(currentValue - 1);
                     }
-
-                    // Update price and totals after quantity change
-                    updatePrice($(this));
+                    handleQuantityChange(quantityInput);
                 }
             });
 
-            // Function to update the price when quantity changes
-            function updatePrice(element) {
-                // Check if we're in mobile or desktop view
-                let isMobile = window.innerWidth < 768;
-                let cartItem, productId, quantity;
+            $(document).off('input change', '.quantity-input').on('input change', '.quantity-input', function() {
+                let val = parseInt($(this).val());
+                const maxValue = parseInt($(this).data('max')) || 999;
 
-                if (isMobile) {
-                    // For mobile view
-                    cartItem = element.closest('.cart-item-mobile');
-                    productId = element.data('product-id');
-                    quantity = parseInt(cartItem.find('.quantity-input').val());
-
-                    // Get and clean the price string
-                    let priceText = cartItem.find('.unit-amount').text();
-                    let cleanedPrice = priceText.replace(/[^\d.]/g, '');
-                    let price = parseFloat(cleanedPrice);
-
-                    // Update subtotal for the item
-                    let subtotal = quantity * price;
-                    cartItem.find('.subtotal-amount').text('LKR ' + subtotal.toFixed(2).replace(
-                        /\B(?=(\d{3})+(?!\d))/g, ","));
-                } else {
-                    // For desktop view
-                    cartItem = element.closest('tr');
-                    productId = element.data('product-id');
-                    quantity = parseInt(cartItem.find('.quantity-input').val());
-
-                    // Get and clean the price string
-                    let priceText = cartItem.find('.product-price .unit-amount').text();
-                    let cleanedPrice = priceText.replace(/[^\d.]/g, '');
-                    let price = parseFloat(cleanedPrice);
-
-                    // Update subtotal for the item
-                    let subtotal = quantity * price;
-                    cartItem.find('.product-subtotal .subtotal-amount').text('LKR ' + subtotal.toFixed(2).replace(
-                        /\B(?=(\d{3})+(?!\d))/g, ","));
+                if (isNaN(val) || val < 1) {
+                    $(this).val(1);
+                    val = 1;
+                } else if (val > maxValue) {
+                    $(this).val(maxValue);
+                    val = maxValue;
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Stock Limit',
+                        text: 'Quantity adjusted to maximum available stock (' + maxValue + ').',
+                        confirmButtonText: 'OK'
+                    });
                 }
+                handleQuantityChange($(this));
+            });
 
-                // Recalculate cart total
-                recalculateCartTotals();
+            function handleQuantityChange(quantityInput) {
+                const productId = getProductIdFromElement(quantityInput);
+                const quantity = parseInt(quantityInput.val());
 
-                // AJAX update to backend
+                // Clear any pending refresh
+                clearTimeout(shippingUpdateTimeout);
+
+                // Update quantity on server, then refresh totals after success
+                updateCartQuantityOnServer(productId, quantity, function() {
+                    // Refresh cart totals and shipping calculations from server
+                    shippingUpdateTimeout = setTimeout(() => {
+                        refreshCartTotalsFromServer();
+                    }, 300);
+                });
+            }
+
+            function getProductIdFromElement(element) {
+                let productId = element.data('product-id');
+                if (!productId) {
+                    productId = element.siblings('.plus-btn, .minus-btn').first().data('product-id');
+                }
+                if (!productId) {
+                    const container = element.closest('.cart-item-mobile, tr');
+                    productId = container.find('.plus-btn, .minus-btn').first().data('product-id');
+                }
+                return productId;
+            }
+
+            function updateCartQuantityOnServer(productId, quantity, callback) {
                 $.ajax({
                     url: '{{ route('cart.update') }}',
                     method: 'POST',
@@ -447,67 +480,158 @@
                         product_id: productId,
                         quantity: quantity
                     },
-                    success: function(response) {
-                        if (response.success) {
-                            console.log(response.message);
-                        }
+                    success: function() {
+                        if (callback) callback();
                     },
-                    error: function(xhr) {
-                        console.error('Error updating cart:', xhr.responseText);
+                    error: function(xhr, status, error) {
+                        console.error('Error updating cart quantity:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Update Failed',
+                            text: 'Failed to update cart. Please try again.',
+                            confirmButtonText: 'OK'
+                        });
                     }
                 });
             }
 
-            // Function to recalculate cart totals
-            function recalculateCartTotals() {
-                let total = 0;
+            function refreshCartTotalsFromServer() {
+                console.log('Refreshing cart totals from server...');
+
+                const items = collectCartItems();
+                console.log('Collected items:', items);
+
+                $.ajax({
+                    url: '{{ route('cart.calculateShipping') }}',
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        items: items
+                    },
+                    success: function(response) {
+                        console.log('Server response:', response);
+                        if (response.success) {
+                            updateCartTotalsFromServerResponse(response);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error refreshing cart totals:', error);
+                        console.error('XHR:', xhr.responseText);
+                    }
+                });
+            }
+
+            function collectCartItems() {
+                let items = [];
                 let isMobile = window.innerWidth < 768;
 
                 if (isMobile) {
-                    // Calculate from mobile view
-                    $('.mobile-cart .subtotal-amount').each(function() {
-                        let text = $(this).text().replace(/[^\d.]/g, '');
-                        total += parseFloat(text);
+                    $('.mobile-cart .cart-item-mobile').each(function() {
+                        const productId = $(this).find('.plus-btn, .minus-btn').first().data('product-id');
+                        const quantity = parseInt($(this).find('.quantity-input').val()) || 0;
+                        if (productId && quantity > 0) {
+                            items.push({
+                                product_id: productId,
+                                quantity: quantity
+                            });
+                        }
                     });
                 } else {
-                    // Calculate from desktop view
-                    $('.cart-table .product-subtotal .subtotal-amount').each(function() {
-                        let text = $(this).text().replace(/[^\d.]/g, '');
-                        total += parseFloat(text);
+                    $('.cart-table tbody tr').each(function() {
+                        const productId = $(this).find('.plus-btn, .minus-btn').first().data('product-id');
+                        const quantity = parseInt($(this).find('.quantity-input').val()) || 0;
+                        if (productId && quantity > 0) {
+                            items.push({
+                                product_id: productId,
+                                quantity: quantity
+                            });
+                        }
                     });
                 }
-
-                // Update subtotal and total with shipping
-                $('.cart-totals li:contains("Subtotal") span').text('LKR ' + total.toFixed(2).replace(
-                    /\B(?=(\d{3})+(?!\d))/g, ","));
-                $('.cart-totals li:contains("Total") span').text('LKR ' + (total + 300).toFixed(2).replace(
-                    /\B(?=(\d{3})+(?!\d))/g, ",")); // Shipping = 300
+                return items;
             }
 
-            $('.btn-delete-item').off('click').on('click', function(e) {
-                e.preventDefault();
+            function updateCartTotalsFromServerResponse(response) {
+                console.log('Updating cart display with server response:', response);
 
-                const productId = $(this).data('product-id');
+                // Update shipping charges
+                if (response.delivery_fee !== undefined) {
+                    $('.cart-totals li:contains("Shipping Charges") span').text('Rs. ' + response.delivery_fee);
+                }
+
+                // Update subtotal
+                if (response.subtotal !== undefined) {
+                    $('.cart-totals li:contains("Subtotal") span').text('LKR ' + response.subtotal);
+                }
+
+                // Update final total
+                if (response.total !== undefined) {
+                    $('.cart-totals li:contains("Total") span').text('LKR ' + response.total);
+                }
+
+                // Update individual line item totals
+                if (response.item_totals) {
+                    updateIndividualItemTotals(response.item_totals);
+                }
+            }
+
+            function updateIndividualItemTotals(itemTotals) {
+                let isMobile = window.innerWidth < 768;
+
+                if (isMobile) {
+                    $('.mobile-cart .cart-item-mobile').each(function() {
+                        const productId = $(this).find('.plus-btn, .minus-btn').first().data('product-id');
+                        if (itemTotals[productId] !== undefined) {
+                            $(this).find('.subtotal-amount').text('LKR ' + itemTotals[productId]);
+                        }
+                    });
+                } else {
+                    $('.cart-table tbody tr').each(function() {
+                        const productId = $(this).find('.plus-btn, .minus-btn').first().data('product-id');
+                        if (itemTotals[productId] !== undefined) {
+                            $(this).find('.subtotal-amount').text('LKR ' + itemTotals[productId]);
+                        }
+                    });
+                }
+            }
+
+            // Remove item functionality
+            $(document).on('click', '.btn-delete-item', function(e) {
+                e.preventDefault();
+                const btn = $(this);
+                const productId = btn.data('product-id');
+                const url = "{{ url('cart') }}/" + productId;
+                const originalHtml = btn.html();
+
+                btn.html('<i class="fa fa-spinner fa-spin"></i>').prop('disabled', true);
 
                 $.ajax({
-                    url: `{{ route('cart.remove', '') }}/${productId}`,
-                    method: 'DELETE',
-                    data: {
-                        _token: "{{ csrf_token() }}"
+                    url: url,
+                    type: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function(response) {
-                        location.reload(); // Reload the page after deleting an item
+                    success: function() {
+                        location.reload();
                     },
-                    error: function(xhr) {
-                        console.log(xhr.responseText);
-                        alert('Something went wrong. Please try again.');
+                    error: function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Something went wrong. Please try again.',
+                            confirmButtonText: 'OK'
+                        });
+                        btn.html(originalHtml).prop('disabled', false);
                     }
                 });
             });
 
-            // Handle responsive recalculation when window resizes
+            // Handle window resize
             $(window).resize(function() {
-                recalculateCartTotals();
+                clearTimeout(shippingUpdateTimeout);
+                shippingUpdateTimeout = setTimeout(() => {
+                    refreshCartTotalsFromServer();
+                }, 300);
             });
         });
     </script>

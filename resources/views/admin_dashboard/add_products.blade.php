@@ -370,16 +370,20 @@
 </script>
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const affiliateCheckbox = document.getElementById('affiliateProduct');
-        const affiliatePriceGroup = document.getElementById('affiliatePriceGroup');
-        const commissionGroup = document.getElementById('commissionGroup');
-        const normalPriceInput = document.getElementById('normalPrice');
-        const affiliatePriceInput = document.getElementById('affiliatePrice');
-        const commissionPercentageInput = document.getElementById('commissionPercentage');
-        const totalPriceInput = document.getElementById('totalPrice');
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    /** ---------------------------
+     * Affiliate Price Logic
+     * -------------------------- */
+    const affiliateCheckbox = document.getElementById('affiliateProduct');
+    const affiliatePriceGroup = document.getElementById('affiliatePriceGroup');
+    const commissionGroup = document.getElementById('commissionGroup');
+    const normalPriceInput = document.getElementById('normalPrice');
+    const affiliatePriceInput = document.getElementById('affiliatePrice');
+    const commissionPercentageInput = document.getElementById('commissionPercentage');
+    const totalPriceInput = document.getElementById('totalPrice');
 
+    if (affiliateCheckbox) {
         affiliateCheckbox.addEventListener('change', function() {
             if (affiliateCheckbox.checked) {
                 affiliatePriceGroup.style.display = 'flex';
@@ -392,159 +396,147 @@
                 updateTotalPrice();
             }
         });
+    }
 
-        function updateTotalPrice() {
-            let normalPrice = parseFloat(normalPriceInput.value) || 0;
-            let affiliatePrice = parseFloat(affiliatePriceInput.value) || 0;
-            let commissionPercentage = parseFloat(commissionPercentageInput.value) || 0;
-            let totalPrice = normalPrice;
+    function updateTotalPrice() {
+        let normalPrice = parseFloat(normalPriceInput?.value) || 0;
+        let affiliatePrice = parseFloat(affiliatePriceInput?.value) || 0;
+        let commissionPercentage = parseFloat(commissionPercentageInput?.value) || 0;
+        let totalPrice = normalPrice;
 
-            if (affiliateCheckbox.checked) {
-                totalPrice = affiliatePrice + (affiliatePrice * (commissionPercentage / 100));
-            }
-
-            totalPriceInput.value = totalPrice.toFixed(2);
+        if (affiliateCheckbox?.checked) {
+            totalPrice = affiliatePrice + (affiliatePrice * (commissionPercentage / 100));
         }
+        if (totalPriceInput) totalPriceInput.value = totalPrice.toFixed(2);
+    }
 
-        normalPriceInput.addEventListener('input', updateTotalPrice);
-        affiliatePriceInput.addEventListener('input', updateTotalPrice);
-        commissionPercentageInput.addEventListener('input', updateTotalPrice);
+    normalPriceInput?.addEventListener('input', updateTotalPrice);
+    affiliatePriceInput?.addEventListener('input', updateTotalPrice);
+    commissionPercentageInput?.addEventListener('input', updateTotalPrice);
+
+    /** ---------------------------
+     * Product Image Upload & Preview
+     * -------------------------- */
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('productImages');
+    const previewContainer = document.getElementById('imagePreview');
+    let selectedFiles = [];
+
+    dropZone?.addEventListener('click', () => fileInput.click());
+
+    dropZone?.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('dragover');
     });
 
-
-
-    //add images
-    document.addEventListener('DOMContentLoaded', function() {
-        const dropZone = document.getElementById('dropZone');
-        const fileInput = document.getElementById('productImages');
-        const previewContainer = document.getElementById('imagePreview');
-        let selectedFiles = [];
-
-        dropZone.addEventListener('click', function(e) {
-            e.stopPropagation();
-            fileInput.click();
-        });
-
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            dropZone.classList.add('dragover');
-        });
-
-        dropZone.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            dropZone.classList.remove('dragover');
-        });
-
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            dropZone.classList.remove('dragover');
-            const files = Array.from(e.dataTransfer.files);
-            handleFiles(files);
-        });
-
-        fileInput.addEventListener('change', (e) => {
-            const files = Array.from(e.target.files);
-            handleFiles(files);
-        });
-
-        function handleFiles(files) {
-            files.forEach(file => {
-                selectedFiles.push(file);
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.style.maxWidth = '100px';
-                    img.style.maxHeight = '100px';
-                    img.style.margin = '5px';
-
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.textContent = 'X';
-                    deleteBtn.className = 'delete-btn';
-                    deleteBtn.addEventListener('click', () => {
-                        img.remove();
-                        deleteBtn.remove();
-                        selectedFiles = selectedFiles.filter(f => f !== file);
-                        updateFileInput();
-                    });
-
-                    const container = document.createElement('div');
-                    container.style.position = 'relative';
-                    container.appendChild(img);
-                    container.appendChild(deleteBtn);
-                    previewContainer.appendChild(container);
-                };
-                reader.readAsDataURL(file);
-            });
-
-            updateFileInput();
-        }
-
-        function updateFileInput() {
-            const dataTransfer = new DataTransfer();
-            selectedFiles.forEach(file => dataTransfer.items.add(file));
-            fileInput.files = dataTransfer.files;
-        }
+    dropZone?.addEventListener('dragleave', () => {
+        dropZone.classList.remove('dragover');
     });
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const categorySelect = document.getElementById('category');
-        const subcategorySelect = document.getElementById('subcategory');
-        const subsubcategorySelect = document.getElementById('subsubcategory');
+    dropZone?.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        handleFiles(Array.from(e.dataTransfer.files));
+    });
 
-        function updateSubcategories(categoryId) {
-            fetch(`/subcategories/${categoryId}`)
-                .then(response => response.json())
-                .then(data => {
-                    subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
-                    data.subcategories.forEach(subcategory => {
-                        subcategorySelect.innerHTML +=
-                            `<option value="${subcategory.id}">${subcategory.name}</option>`;
-                    });
-                    subsubcategorySelect.innerHTML = '<option value="">Select Sub-Subcategory</option>';
+    fileInput?.addEventListener('change', (e) => {
+        handleFiles(Array.from(e.target.files));
+    });
+
+    function handleFiles(files) {
+        files.forEach(file => {
+            if (!file.type.startsWith('image/')) return;
+
+            // Avoid duplicates
+            if (selectedFiles.some(f => f.name === file.name && f.size === file.size)) return;
+
+            selectedFiles.push(file);
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'X';
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.addEventListener('click', () => {
+                    container.remove();
+                    selectedFiles = selectedFiles.filter(f => f !== file);
+                    updateFileInput();
                 });
-        }
 
+                const container = document.createElement('div');
+                container.className = 'image-container';
+                container.appendChild(img);
+                container.appendChild(deleteBtn);
 
-        function updateSubSubcategories(subcategoryId) {
-            fetch(`/sub-subcategories/${subcategoryId}`)
-                .then(response => response.json())
-                .then(data => {
-                    subsubcategorySelect.innerHTML = '<option value="">Select Sub-Subcategory</option>';
-                    data.sub_subcategories.forEach(subsubcategory => {
-                        subsubcategorySelect.innerHTML +=
-                            `<option value="${subsubcategory.id}">${subsubcategory.name}</option>`;
-                    });
-                });
-        }
+                previewContainer.appendChild(container);
+            };
+            reader.readAsDataURL(file);
+        });
 
+        updateFileInput();
+    }
 
-        categorySelect.addEventListener('change', function() {
-            const categoryId = this.value;
-            if (categoryId) {
-                updateSubcategories(categoryId);
-            } else {
+    function updateFileInput() {
+        const dataTransfer = new DataTransfer();
+        selectedFiles.forEach(file => dataTransfer.items.add(file));
+        fileInput.files = dataTransfer.files;
+    }
+
+    /** ---------------------------
+     * Category / Subcategory Logic
+     * -------------------------- */
+    const categorySelect = document.getElementById('category');
+    const subcategorySelect = document.getElementById('subcategory');
+    const subsubcategorySelect = document.getElementById('subsubcategory');
+
+    function updateSubcategories(categoryId) {
+        fetch(`/subcategories/${categoryId}`)
+            .then(response => response.json())
+            .then(data => {
                 subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
+                data.subcategories.forEach(subcategory => {
+                    subcategorySelect.innerHTML += `<option value="${subcategory.id}">${subcategory.name}</option>`;
+                });
                 subsubcategorySelect.innerHTML = '<option value="">Select Sub-Subcategory</option>';
-            }
-        });
+            });
+    }
 
-        subcategorySelect.addEventListener('change', function() {
-            const subcategoryId = this.value;
-            if (subcategoryId) {
-                updateSubSubcategories(subcategoryId);
-            } else {
+    function updateSubSubcategories(subcategoryId) {
+        fetch(`/sub-subcategories/${subcategoryId}`)
+            .then(response => response.json())
+            .then(data => {
                 subsubcategorySelect.innerHTML = '<option value="">Select Sub-Subcategory</option>';
-            }
-        });
+                data.sub_subcategories.forEach(subsubcategory => {
+                    subsubcategorySelect.innerHTML += `<option value="${subsubcategory.id}">${subsubcategory.name}</option>`;
+                });
+            });
+    }
 
-
+    categorySelect?.addEventListener('change', function() {
+        const categoryId = this.value;
+        if (categoryId) {
+            updateSubcategories(categoryId);
+        } else {
+            subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
+            subsubcategorySelect.innerHTML = '<option value="">Select Sub-Subcategory</option>';
+        }
     });
+
+    subcategorySelect?.addEventListener('change', function() {
+        const subcategoryId = this.value;
+        if (subcategoryId) {
+            updateSubSubcategories(subcategoryId);
+        } else {
+            subsubcategorySelect.innerHTML = '<option value="">Select Sub-Subcategory</option>';
+        }
+    });
+
+});
 </script>
+
 
 
 <script>

@@ -618,20 +618,9 @@
         <!--    category begin -->
 
         <style>
-            .category-bar {
-                background: #f8f9fa;
-                border-bottom: 1px solid #e0e0e0;
-                position: sticky;
-                top: 60px;
-                z-index: 900;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            }
 
-            .category-bar-container {
-                max-width: 1200px;
-                margin: 0 auto;
-                padding: 0 15px;
-            }
+
+
 
             .category-list {
                 display: flex;
@@ -788,9 +777,7 @@
 
 
             @media (max-width: 768px) {
-                .category-bar {
-                    top: 50px;
-                }
+
 
                 .category-link {
                     padding: 12px 15px;
@@ -802,16 +789,7 @@
                 }
             }
 
-            .category-bar-header {
-                background: #2b96c5;
-                color: white;
-                padding: 10px 0;
-                text-align: center;
-                font-size: 12px;
-                font-weight: 600;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-            }
+
 
             .category-link i {
                 margin-right: 8px;
@@ -829,7 +807,7 @@
             }
         </style>
 
-        <div class="category-bar">
+        {{-- <div class="category-bar">
 
             <div class="category-bar-container">
                 <div class="category-scroll-container">
@@ -863,7 +841,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {

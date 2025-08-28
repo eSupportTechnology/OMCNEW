@@ -50,12 +50,7 @@ class PaymentController extends Controller
     // Calculate total quantity of all items
     $totalQuantity = $cart->sum('quantity');
 
-    // Get delivery fee based on total quantity
-    $shippingCharge = ShippingCharge::where('min_quantity', '<=', $totalQuantity)
-        ->where('max_quantity', '>=', $totalQuantity)
-        ->first();
-
-    $deliveryFee = $shippingCharge->charge ?? 0;
+    $deliveryFee = $this->calculateTotalDeliveryFee($cart);
 
     // Total = subtotal + delivery
     $total = $subtotal + $deliveryFee;
@@ -380,5 +375,32 @@ class PaymentController extends Controller
     public function paymentFail()
     {
         return view('frontend.payment-fail');
+    }
+
+    private function calculateTotalDeliveryFee($cart)
+    {
+        $totalDeliveryFee = 0;
+
+        foreach ($cart as $item) {
+            $productId = isset($item->product_id) ? $item->product_id : $item['product_id'];
+            $quantity = isset($item->quantity) ? $item->quantity : $item['quantity'];
+
+            $allChargesForProduct = ShippingCharge::where('product_id', $productId)->get();
+
+            $shippingCharge = ShippingCharge::where('product_id', $productId)
+                ->where('min_quantity', '<=', $quantity)
+                ->where('max_quantity', '>=', $quantity)
+                ->first();
+
+            if ($shippingCharge) {
+                $productDeliveryFee = $shippingCharge->charge;
+                $totalDeliveryFee += $productDeliveryFee;
+
+            } else {
+                Log::warning("No matching shipping charge found for Product ID: {$productId}, Quantity: {$quantity}");
+            }
+        }
+
+        return $totalDeliveryFee;
     }
 }

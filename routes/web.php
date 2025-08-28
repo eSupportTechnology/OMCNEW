@@ -504,7 +504,7 @@ Route::post('cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('/cart/count', [CartController::class, 'getCartCount'])->name('cart.count');
 Route::get('/cart/subtotal', [CartController::class, 'getCartSubtotal'])->name('cart.subtotal');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
-Route::delete('/cart/remove/{index}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::delete('/cart/{product}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
 Route::get('/product-description/{product_id?}', [ProductController::class, 'show'])->name('product-description');
 
@@ -517,6 +517,7 @@ Route::delete('/wishlist/{id}', [WishListController::class, 'remove'])->name('wi
 Route::get('/wishlist/count', [WishListController::class, 'getWishlistCount'])->name('wishlist.count');
 Route::post('/wishlist/toggle', [WishListController::class, 'toggleWishlist'])->name('wishlist.toggle');
 Route::post('/wishlist/check-multiple', [WishListController::class, 'checkMultipleWishlist'])->name('wishlist.checkMultiple');
+Route::post('/cart/calculate-shipping', [CartController::class, 'calculateShipping'])->name('cart.calculateShipping');
 
 
 Route::post('/buynow_checkout', [CheckoutController::class, 'buyNowCheckout'])->name('buynow.checkout');

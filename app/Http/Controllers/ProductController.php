@@ -102,6 +102,9 @@ class ProductController extends Controller
             });
         }
 
+
+
+
         // Apply price range filter
         if ($request->has('min_price') && $request->has('max_price')) {
             $minPrice = $request->input('min_price');
@@ -218,7 +221,7 @@ class ProductController extends Controller
         $products = $query->paginate($perPage)->through(function ($product) {
             $product->average_rating = $product->reviews()->where('status', 'published')->avg('rating') ?? 0;
             $product->rating_count = $product->reviews()->where('status', 'published')->count();
-            
+
             return $product;
         });
 
@@ -228,6 +231,7 @@ class ProductController extends Controller
         // Get available filter options based on current filters
         $sizes = $this->getAvailableSizes($request);
         $colors = $this->getAvailableColors($request);
+
         $priceRange = $this->getPriceRange($request);
 
         // Get active filters for display
@@ -251,6 +255,7 @@ class ProductController extends Controller
             'categories',
             'sizes',
             'colors',
+
             'priceRange',
             'activeFilters',
             'averageRating',
@@ -546,21 +551,39 @@ class ProductController extends Controller
 
 
 
-    public function edit($id)
-    {
-        $product = Products::findOrFail($id);
-        $categories = Category::all();
+   public function edit($id)
+{
+    $product = Products::findOrFail($id);
+    $categories = Category::all();
 
-        $selectedCategoryId = Category::where('parent_category', $product->product_category)->value('id');
-        $selectedSubcategoryId = Subcategory::where('subcategory', $product->subcategory)->value('id');
-        $subcategories = $selectedCategoryId ? Subcategory::where('category_id', $selectedCategoryId)->get() : collect();
-        $subSubcategories = $selectedSubcategoryId ? SubSubcategory::where('subcategory_id', $selectedSubcategoryId)->get() : collect();
+    $selectedCategoryId = Category::where('parent_category', $product->product_category)->value('id');
+    $selectedSubcategoryId = Subcategory::where('subcategory', $product->subcategory)->value('id');
+    $subcategories = $selectedCategoryId
+        ? Subcategory::where('category_id', $selectedCategoryId)->get()
+        : collect();
+    $subSubcategories = $selectedSubcategoryId
+        ? SubSubcategory::where('subcategory_id', $selectedSubcategoryId)->get()
+        : collect();
 
-        $variations = Variation::where('product_id', $product->product_id)->get();
+    $variations = Variation::where('product_id', $product->id)->get(); // fixed
+    $shippingCharges = ShippingCharge::where('product_id', $product->id)->get(); // fixed
 
-        $brands = Brand::all();
-        return view('admin_dashboard.edit_products', compact('product', 'categories', 'subcategories', 'subSubcategories', 'selectedCategoryId', 'selectedSubcategoryId', 'variations', 'brands'));
-    }
+    $brands = Brand::all();
+
+    return view('admin_dashboard.edit_products', compact(
+        'product',
+        'categories',
+        'subcategories',
+        'subSubcategories',
+        'selectedCategoryId',
+        'selectedSubcategoryId',
+        'variations',
+        'brands',
+        'shippingCharges'
+    ));
+}
+
+
 
 
 
@@ -604,6 +627,10 @@ class ProductController extends Controller
             'variation.*.quantity' => 'nullable|numeric|min:0',
             'tags' => 'nullable|string',
             'brand_id' => 'nullable',
+             'shipping_charges' => 'nullable|array',
+        'shipping_charges.*.min_quantity' => 'required|numeric|min:0',
+        'shipping_charges.*.max_quantity' => 'required|numeric|min:0',
+        'shipping_charges.*.charge' => 'required|numeric|min:0',
         ]);
 
         $request->merge([
@@ -721,7 +748,18 @@ class ProductController extends Controller
                 }
             }
         }
+$product->shippingCharges()->delete();
 
+    // Insert new shipping charges if present
+    if ($request->has('shipping_charges')) {
+        foreach ($request->input('shipping_charges') as $chargeData) {
+            $product->shippingCharges()->create([
+                'min_quantity' => $chargeData['min_quantity'],
+                'max_quantity' => $chargeData['max_quantity'],
+                'charge' => $chargeData['charge'],
+            ]);
+        }
+    }
 
         $variationsToDelete = array_diff($existingVariationIds, $submittedVariationIds);
         Variation::whereIn('id', $variationsToDelete)->delete();

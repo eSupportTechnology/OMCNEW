@@ -98,4 +98,8 @@ class Products extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+    public function shippingCharges()
+    {
+        return $this->hasMany(ShippingCharge::class, 'product_id', 'product_id');
+    }
 }

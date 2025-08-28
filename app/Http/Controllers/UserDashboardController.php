@@ -10,6 +10,7 @@ use App\Models\Review;
 use App\Models\ReviewMedia;
 use App\Models\Products;
 use App\Models\Address;
+use App\Models\ShippingCharge;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
@@ -89,13 +90,26 @@ class UserDashboardController extends Controller
 
 
     public function orderDetails($order_code)
-    {
-        $order = CustomerOrder::with(['items.product'])->where('order_code', $order_code)->first();
-        if (!$order) {
-            return redirect()->route('myorders')->with('error', 'Order not found');
-        }
-        return view('member_dashboard.order-details', compact('order'));
+{
+    $order = CustomerOrder::with(['items.product'])->where('order_code', $order_code)->first();
+
+    if (!$order) {
+        return redirect()->route('myorders')->with('error', 'Order not found');
     }
+
+    // Calculate total quantity of all items in the order
+    $totalQuantity = $order->items->sum('quantity');
+
+    // Get the shipping charge based on total quantity
+    $shippingCharge = ShippingCharge::where('min_quantity', '<=', $totalQuantity)
+        ->where('max_quantity', '>=', $totalQuantity)
+        ->first();
+
+    $deliveryFee = $shippingCharge->charge ?? 0;
+
+    return view('member_dashboard.order-details', compact('order', 'deliveryFee'));
+}
+
 
     public function showInquiries()
     {

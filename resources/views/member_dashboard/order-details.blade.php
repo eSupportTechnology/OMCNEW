@@ -5,9 +5,9 @@
 
 <style>
     .card-order {
-        margin: 10px; 
+        margin: 10px;
         padding: 15px;
-        display: flex; 
+        display: flex;
         flex-direction: column;
         justify-content: space-between;
     }
@@ -24,7 +24,7 @@
     }
 
     .orderdetail-cards-row .card {
-        width: 48%; 
+        width: 48%;
     }
 
 
@@ -107,14 +107,21 @@
     </div>
 
     <div class="card card-order" style="height: auto; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);">
-        <i class="fa-solid fa-clipboard-list fa-2x" style="position: absolute; top: 10px; right: 20px; color: #0056b3"></i>
-        <div class="card-body p-0">
-            <p class="mb-1">Payment Method: {{ $order->payment_method }}</p>
-            <p class="mb-1">Sub Total: Rs {{ number_format($order->total_cost - 300, 2) }}</p>
-            <p class="mb-1">Delivery Charge: Rs 300.00</p>
-            <p class="mb-1">Total: Rs {{ number_format($order->total_cost, 2) }}</p>
-        </div>
+    <i class="fa-solid fa-clipboard-list fa-2x" style="position: absolute; top: 10px; right: 20px; color: #0056b3"></i>
+    <div class="card-body p-0">
+        <p class="mb-1">Payment Method: {{ $order->payment_method }}</p>
+        <p class="mb-1">
+            Sub Total: Rs {{ number_format($order->total_cost - $deliveryFee, 2) }}
+        </p>
+        <p class="mb-1">
+            Delivery Charge: Rs {{ number_format($deliveryFee, 2) }}
+        </p>
+        <p class="mb-1">
+            Total: Rs {{ number_format($order->total_cost, 2) }}
+        </p>
     </div>
+</div>
+
 </div>
 
 <div class="order-items mt-3">
@@ -132,8 +139,8 @@
                     <div class="d-flex align-items-center">
                         @if($item->color)
                             <span class="d-flex align-items-center me-2">
-                                <strong>Color:</strong> 
-                                <span style="display: inline-block; background-color: {{ $item->color }}; border: 1px solid #e8ebec; height: 15px; width: 15px; border-radius: 50%;" 
+                                <strong>Color:</strong>
+                                <span style="display: inline-block; background-color: {{ $item->color }}; border: 1px solid #e8ebec; height: 15px; width: 15px; border-radius: 50%;"
                                     title="{{ $item->color }}"></span>
                             </span>
                             |
@@ -141,13 +148,13 @@
                         @if($item->size)
                             <span class="me-2 ms-2">Size: <span style="font-weight: 600;">{{ $item->size ? $item->size : '-' }}</span></span>
                             |
-                        @endif 
+                        @endif
                         @if($item->quantity)
                         <span class="ms-2">Qty: <span style="font-weight: 600;">{{ $item->quantity }}</span></span>
                         @endif
                     </div>
 
-                    <h6 class="mt-2" style="font-weight: bold;">Rs {{ number_format($item->cost, 2) }}</h6>  
+                    <h6 class="mt-2" style="font-weight: bold;">Rs {{ number_format($item->cost, 2) }}</h6>
                 </div>
             </div>
         @endforeach
