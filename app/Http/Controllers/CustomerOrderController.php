@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Str;
@@ -19,36 +20,36 @@ class CustomerOrderController extends Controller
 {
 
 
-    public function trackReferral($tracking_id, $product_id)
+    public function trackReferral($tracking_id, $product_id, $quantity = 1)
     {
         // Find the raffle ticket by the tracking ID
         $raffleTicket = RaffleTicket::where('token', $tracking_id)->first();
 
         if ($raffleTicket) {
-            // Find the specific referral record by raffle_ticket_id and product_id
             $referral = AffiliateReferral::where('raffle_ticket_id', $raffleTicket->id)
-                                        ->where('product_url', 'like', '%' . $product_id . '%')
-                                        ->first();
+                ->where('product_url', 'like', '%' . $product_id . '%')
+                ->first();
 
             if ($referral) {
-                // Retrieve the product details to get the affiliate price
+                // Retrieve the product details
                 $product = Products::where('product_id', $product_id)->first();
 
                 if ($product && $product->affiliate_price) {
-                    // Increment the referral count
+                    // Commission calculation (based on product settings)
+                    $commission = ($product->commission_percentage / 100) * $product->affiliate_price;
+
+                    // Increment referral count
                     $referral->increment('referral_count');
 
-                    // Calculate and add the affiliate commission based on affiliate price
-                    $referral->total_affiliate_price += $referral->affiliate_commission;
-                    $referral->save(); // Save the updated referral with the new commission
+                    // Add commission * quantity
+                    $referral->total_affiliate_price += ($commission * $quantity);
+
+                    $referral->save();
                 }
             }
         }
     }
 
-    
-    
-   
     public function store(Request $request)
     {
 
@@ -64,19 +65,19 @@ class CustomerOrderController extends Controller
         ]);
 
         $cart = Auth::check() ? CartItem::where('user_id', Auth::id())->with('product')->get() : collect(session('cart', []));
-        
+
         // Check if cart is empty
         if ($cart->isEmpty()) {
             return redirect()->back()->with('error', 'Your cart is empty. Add some items to proceed.');
         }
 
         $cartArray = $cart->map(function ($item) {
-            $price = $item->product->sale && $item->product->sale->status === 'active' 
-                ? $item->product->sale->sale_price 
+            $price = $item->product->sale && $item->product->sale->status === 'active'
+                ? $item->product->sale->sale_price
                 : ($item->product->specialOffer && $item->product->specialOffer->status === 'active'
                     ? $item->product->specialOffer->offer_price
                     : $item->product->normal_price);
-    
+
             return [
                 'product_id' => $item->product_id,
                 'price' => $price,
@@ -114,7 +115,7 @@ class CustomerOrderController extends Controller
         foreach ($cartArray as $item) {
 
             $tracking_id = session('tracking_id'); // Retrieve the tracking ID from session
-            $this->trackReferral($tracking_id, $item['product_id']);
+            $this->trackReferral($tracking_id, $item['product_id'], $item['quantity']);
 
             CustomerOrderItems::create([
                 'order_code' => $orderCode,
@@ -159,7 +160,6 @@ class CustomerOrderController extends Controller
 
 
         return redirect()->route('payment', ['order_code' => $orderCode]);
- 
     }
 
 
@@ -179,14 +179,14 @@ class CustomerOrderController extends Controller
                 'postal_code' => 'required|string|max:10',
                 'company_name' => 'nullable|string|max:255',
                 'apartment' => 'nullable|string|max:255',
-                'size' => 'nullable|string|max:255',  
-                'color' => 'nullable|string|max:255', 
-                'quantity' => 'required|integer|min:1',  
+                'size' => 'nullable|string|max:255',
+                'color' => 'nullable|string|max:255',
+                'quantity' => 'required|integer|min:1',
             ]);
-    
+
             // Find the product
             $product = Products::where('product_id', $request->product_id)->first();
-    
+
             // Set quantity and price
             $quantity = $request->input('quantity', 1);
             $price = $product->sale && $product->sale->status === 'active'
@@ -194,14 +194,14 @@ class CustomerOrderController extends Controller
                 : ($product->specialOffer && $product->specialOffer->status === 'active'
                     ? $product->specialOffer->offer_price
                     : $product->normal_price);
-    
+
             $subtotal = $price * $quantity;
             $shipping = 300;
             $total = $subtotal + $shipping;
-    
+
             // Generate order code
             $orderCode = 'ORD-' . substr((string) Str::uuid(), 0, 8);
-    
+
             // Order data
             $orderData = [
                 'order_code' => $orderCode,
@@ -219,10 +219,10 @@ class CustomerOrderController extends Controller
                 'user_id' => Auth::id(),
                 'status' => 'Confirmed',
             ];
-    
+
             // Create the order
             $order = CustomerOrder::create($orderData);
-    
+
             // Insert the order item into the order items table
             CustomerOrderItems::create([
                 'order_code' => $orderCode,
@@ -233,17 +233,17 @@ class CustomerOrderController extends Controller
                 'size' => $request->input('size'),
                 'color' => $request->input('color'),
             ]);
-    
+
             // Reduce product quantity in the Products table
             $product->quantity -= $quantity;
             $product->save();
-    
+
             // Handle size variation (if applicable)
             $sizeVariation = Variation::where('product_id', $product->product_id)
                 ->where('type', 'size')
                 ->where('value', $request->input('size'))
                 ->first();
-    
+
             if ($sizeVariation && $sizeVariation->quantity >= $quantity) {
                 $sizeVariation->quantity -= $quantity;
                 $sizeVariation->save();
@@ -255,13 +255,13 @@ class CustomerOrderController extends Controller
                     'available_quantity' => $sizeVariation->quantity
                 ]);
             }
-    
+
             // Handle color variation (if applicable)
             $colorVariation = Variation::where('product_id', $product->product_id)
                 ->where('type', 'color')
                 ->where('value', $request->input('color'))
                 ->first();
-    
+
             if ($colorVariation && $colorVariation->quantity >= $quantity) {
                 $colorVariation->quantity -= $quantity;
                 $colorVariation->save();
@@ -273,22 +273,18 @@ class CustomerOrderController extends Controller
                     'available_quantity' => $colorVariation->quantity
                 ]);
             }
-    
+            $this->trackReferral(session('tracking_id'), $product->product_id, $quantity);
             // Redirect to payment
             return redirect()->route('payment', ['order_code' => $orderCode]);
-    
         } catch (\Exception $e) {
             // Log the error
             Log::error('Error processing Buy Now order', [
                 'exception' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
             ]);
-    
+
             // Redirect with error message
             return redirect()->back()->with('error', 'An error occurred while processing your order. Please try again.');
         }
     }
-    
 }
-
-

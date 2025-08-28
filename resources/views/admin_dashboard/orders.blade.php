@@ -3,8 +3,7 @@
 @section('content')
 
 <style>
-
-    .action-buttons  {
+    .action-buttons {
         padding: 5px;
         width: 35px;
     }
@@ -12,16 +11,14 @@
     .tab-content .table {
         margin-top: 20px;
     }
-
-   
 </style>
 
 <main style="margin-top: 58px">
-    <div class="container pt-4 px-4"> 
+    <div class="container pt-4 px-4">
         @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
         @endif
 
         <div class="d-flex justify-content-between align-items-center">
@@ -70,27 +67,27 @@
                                 </thead>
                                 <tbody>
                                     @foreach($allOrders as $order)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $order->order_code }}</td>
-                                            <td>{{ $order->customer_fname }} {{ $order->customer_lname }}</td>
-                                            <td>{{ $order->date }}</td>
-                                            <td><span class="status {{ strtolower(str_replace(' ', '-', $order->status)) }}">
-                                                    {{ $order->status }}
-                                                </span></td>
-                                            <td>{{ $order->total_cost }}</td>
-                                            <td>{{ $order->payment_method }}</td>
-                                            <td class="action-buttons">
-                                                <button class="btn btn-info btn-sm" onclick="setOrderCode('{{ $order->order_code }}')"><i class="fas fa-eye"></i></button>
-                                                <form id="delete-form-{{ $order->id }}" action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('delete-form-{{ $order->id }}', 'Do you want to delete this order?')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $order->order_code }}</td>
+                                        <td>{{ $order->customer_fname }} {{ $order->customer_lname }}</td>
+                                        <td>{{ $order->date }}</td>
+                                        <td><span class="status {{ strtolower(str_replace(' ', '-', $order->status)) }}">
+                                                {{ $order->status }}
+                                            </span></td>
+                                        <td>{{ $order->total_cost }}</td>
+                                        <td>{{ $order->payment_method }}</td>
+                                        <td class="action-buttons">
+                                            <button class="btn btn-info btn-sm" onclick="setOrderCode('{{ $order->order_code }}')"><i class="fas fa-eye"></i></button>
+                                            <form id="delete-form-{{ $order->id }}" action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('delete-form-{{ $order->id }}', 'Do you want to delete this order?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -99,7 +96,7 @@
                 </div>
             </div>
 
-           
+
 
             <!-- In Progress Orders Tab -->
             <div class="tab-pane fade" id="inprogress" role="tabpanel" aria-labelledby="inprogress-tab">
@@ -120,24 +117,24 @@
                                 </thead>
                                 <tbody>
                                     @foreach($inProgressOrders as $order)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $order->order_code }}</td>
-                                            <td>{{ $order->customer_fname }} {{ $order->customer_lname }}</td>
-                                            <td>{{ $order->date }}</td>
-                                            <td>{{ $order->total_cost }}</td>
-                                            <td>{{ $order->payment_method }}</td>
-                                            <td class="action-buttons">
-                                                <button class="btn btn-info btn-sm" onclick="setOrderCode('{{ $order->order_code }}')"><i class="fas fa-eye"></i></button>
-                                                <form id="delete-form-{{ $order->id }}" action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('delete-form-{{ $order->id }}', 'Do you want to delete this order?')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $order->order_code }}</td>
+                                        <td>{{ $order->customer_fname }} {{ $order->customer_lname }}</td>
+                                        <td>{{ $order->date }}</td>
+                                        <td>{{ $order->total_cost }}</td>
+                                        <td>{{ $order->payment_method }}</td>
+                                        <td class="action-buttons">
+                                            <button class="btn btn-info btn-sm" onclick="setOrderCode('{{ $order->order_code }}')"><i class="fas fa-eye"></i></button>
+                                            <form id="delete-form-{{ $order->id }}" action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('delete-form-{{ $order->id }}', 'Do you want to delete this order?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -146,7 +143,7 @@
                 </div>
             </div>
 
-             <!-- Paid Tab -->
+            <!-- Paid Tab -->
             <div class="tab-pane fade" id="paid" role="tabpanel" aria-labelledby="paid-tab">
                 <div class="card mt-1">
                     <div class="card-body">
@@ -165,24 +162,24 @@
                                 </thead>
                                 <tbody>
                                     @foreach($paidOrders as $order)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $order->order_code }}</td>
-                                            <td>{{ $order->customer_fname }} {{ $order->customer_lname }}</td>
-                                            <td>{{ $order->date }}</td>
-                                            <td>{{ $order->total_cost }}</td>
-                                            <td>{{ $order->payment_method }}</td>
-                                            <td class="action-buttons">
-                                                <button class="btn btn-info btn-sm" onclick="setOrderCode('{{ $order->order_code }}')"><i class="fas fa-eye"></i></button>
-                                                <form id="delete-form-{{ $order->id }}" action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('delete-form-{{ $order->id }}', 'Do you want to delete this order?')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $order->order_code }}</td>
+                                        <td>{{ $order->customer_fname }} {{ $order->customer_lname }}</td>
+                                        <td>{{ $order->date }}</td>
+                                        <td>{{ $order->total_cost }}</td>
+                                        <td>{{ $order->payment_method }}</td>
+                                        <td class="action-buttons">
+                                            <button class="btn btn-info btn-sm" onclick="setOrderCode('{{ $order->order_code }}')"><i class="fas fa-eye"></i></button>
+                                            <form id="delete-form-{{ $order->id }}" action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('delete-form-{{ $order->id }}', 'Do you want to delete this order?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -211,24 +208,24 @@
                                 </thead>
                                 <tbody>
                                     @foreach($shippedOrders as $order)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $order->order_code }}</td>
-                                            <td>{{ $order->customer_fname }} {{ $order->customer_lname }}</td>
-                                            <td>{{ $order->date }}</td>
-                                            <td>{{ $order->total_cost }}</td>
-                                            <td>{{ $order->payment_method }}</td>
-                                            <td class="action-buttons">
-                                                <button class="btn btn-info btn-sm" onclick="setOrderCode('{{ $order->order_code }}')"><i class="fas fa-eye"></i></button>
-                                                <form id="delete-form-{{ $order->id }}" action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('delete-form-{{ $order->id }}', 'Do you want to delete this order?')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $order->order_code }}</td>
+                                        <td>{{ $order->customer_fname }} {{ $order->customer_lname }}</td>
+                                        <td>{{ $order->date }}</td>
+                                        <td>{{ $order->total_cost }}</td>
+                                        <td>{{ $order->payment_method }}</td>
+                                        <td class="action-buttons">
+                                            <button class="btn btn-info btn-sm" onclick="setOrderCode('{{ $order->order_code }}')"><i class="fas fa-eye"></i></button>
+                                            <form id="delete-form-{{ $order->id }}" action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('delete-form-{{ $order->id }}', 'Do you want to delete this order?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -236,7 +233,7 @@
                     </div>
                 </div>
             </div>
-            
+
 
             <!-- Delivered Orders Tab -->
             <div class="tab-pane fade" id="delivered" role="tabpanel" aria-labelledby="delivered-tab">
@@ -257,24 +254,24 @@
                                 </thead>
                                 <tbody>
                                     @foreach($deliveredOrders as $order)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $order->order_code }}</td>
-                                            <td>{{ $order->customer_fname }} {{ $order->customer_lname }}</td>
-                                            <td>{{ $order->date }}</td>
-                                            <td>{{ $order->total_cost }}</td>
-                                            <td>{{ $order->payment_method }}</td>
-                                            <td class="action-buttons">
-                                                <button class="btn btn-info btn-sm" onclick="setOrderCode('{{ $order->order_code }}')"><i class="fas fa-eye"></i></button>
-                                                <form id="delete-form-{{ $order->id }}" action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('delete-form-{{ $order->id }}', 'Do you want to delete this order?')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $order->order_code }}</td>
+                                        <td>{{ $order->customer_fname }} {{ $order->customer_lname }}</td>
+                                        <td>{{ $order->date }}</td>
+                                        <td>{{ $order->total_cost }}</td>
+                                        <td>{{ $order->payment_method }}</td>
+                                        <td class="action-buttons">
+                                            <button class="btn btn-info btn-sm" onclick="setOrderCode('{{ $order->order_code }}')"><i class="fas fa-eye"></i></button>
+                                            <form id="delete-form-{{ $order->id }}" action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('delete-form-{{ $order->id }}', 'Do you want to delete this order?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -302,24 +299,24 @@
                                 </thead>
                                 <tbody>
                                     @foreach($cancelledOrders as $order)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $order->order_code }}</td>
-                                            <td>{{ $order->customer_fname }} {{ $order->customer_lname }}</td>
-                                            <td>{{ $order->date }}</td>
-                                            <td>{{ $order->total_cost }}</td>
-                                            <td>{{ $order->payment_method }}</td>
-                                            <td class="action-buttons">
-                                                <button class="btn btn-info btn-sm" onclick="setOrderCode('{{ $order->order_code }}')"><i class="fas fa-eye"></i></button>
-                                                <form id="delete-form-{{ $order->id }}" action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('delete-form-{{ $order->id }}', 'Do you want to delete this order?')">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $order->order_code }}</td>
+                                        <td>{{ $order->customer_fname }} {{ $order->customer_lname }}</td>
+                                        <td>{{ $order->date }}</td>
+                                        <td>{{ $order->total_cost }}</td>
+                                        <td>{{ $order->payment_method }}</td>
+                                        <td class="action-buttons">
+                                            <button class="btn btn-info btn-sm" onclick="setOrderCode('{{ $order->order_code }}')"><i class="fas fa-eye"></i></button>
+                                            <form id="delete-form-{{ $order->id }}" action="{{ route('orders.destroy', $order->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('delete-form-{{ $order->id }}', 'Do you want to delete this order?')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -333,21 +330,25 @@
 
 
 <script>
-function setOrderCode(orderCode) {
-    fetch('{{ route('set-order-code') }}', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify({ order_code: orderCode })
-    }).then(response => {
-        if (response.ok) {
-            window.location.href = '{{ route('customerorder_details') }}';
-        } else {
-            alert('Failed to set order code');
-        }
-    });
-}
+    function setOrderCode(orderCode) {
+        fetch("{{ route('set-order-code') }}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({
+                    order_code: orderCode
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = "{{ route('customerorder_details') }}";
+                } else {
+                    alert("Failed to set order code");
+                }
+            })
+            .catch(error => console.error("Error:", error));
+    }
 </script>
 @endsection
