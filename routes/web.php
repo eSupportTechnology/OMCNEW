@@ -283,7 +283,7 @@ Route::delete('/admin/special_offers/delete/{id}', [SpecialOffersController::cla
 
 
 Route::get('/admin/add_sales', [SalesController::class, 'createsales'])->name('add_sales');
-Route::post('/admin/store_sales', [SalesController::class, 'storeSales'])->name('store_sales');
+Route::post('/admin/store_sales', [SalesController::class, 'storeSale'])->name('store_sales');
 Route::get('/admin/flash_sales', [SalesController::class, 'showSales'])->name('flash_sales');
 Route::post('/sales/store', [SalesController::class, 'storeSale'])->name('store_sale');
 Route::get('/admin/edit_sales/{id}', [SalesController::class, 'edit'])->name('edit_sales');
