@@ -255,6 +255,7 @@ use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShippingChargeController;
+use App\Http\Controllers\SocialController;
 use App\Http\Middleware\AdminAuth;
 
 
@@ -529,3 +530,9 @@ Route::get('/search-suggestions', [SearchController::class, 'suggestions']);
 Route::get('/brands-data', [BrandController::class, 'getBrands']);
 
 Route::get('/brand/{slug}', [BrandController::class, 'showBrandProducts'])->name('brand.products');
+
+Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback'])->name('google.callback');
+
+Route::get('auth/facebook', [SocialController::class, 'redirectToFacebook'])->name('facebook.login');
+Route::get('auth/facebook/callback', [SocialController::class, 'handleFacebookCallback'])->name('facebook.callback');

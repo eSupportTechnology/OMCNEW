@@ -149,17 +149,20 @@
     }
 
     .product-image-container {
-        position: relative;
+        width: 100%;
+        height: 100%;
         left: -0.7rem;
-        background: var(--white);
-        padding: 20px;
         text-align: center;
-        height: 200px;
+
+
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
+        background: var(--white);
+        padding: 10px;
+        position: relative;
         margin-top: 50px;
-        /* margin-right: 10px; */
 
     }
 
@@ -245,6 +248,7 @@
         border-radius: 6px;
         font-size: 0.7rem;
         font-weight: 600;
+        z-index: 2;
     }
 
     .section-navigation {
@@ -412,8 +416,12 @@
 
     <div class="section-header">Special Offers</div>
     <div class="products-container">
-        <div class="owl-carousel special-offer-slider owl-theme  ">
-
+        @if($specialOffers->isEmpty())
+        <div style="text-align: center; padding: 40px 0; font-size: 1rem; color: var(--text-light);">
+            No offer available
+        </div>
+        @else
+        <div class="owl-carousel special-offer-slider owl-theme">
             @foreach ($specialOffers->slice(0, 8) as $product)
             <div class="product-card">
                 @if ($product->product->specialOffer && $product->product->specialOffer->status === 'active')
@@ -422,7 +430,7 @@
 
                 <div class="product-image-container">
                     <button class="wishlist-btn heart-icon" id="wishlist-icon-{{ $product->product_id }}"
-                        onclick="toggleWishlist(this, {{ $product->product_id }})">
+                        onclick="toggleWishlist(this,'{{ $product->product_id }}')">
                         <i class="fa-regular fa-heart"></i>
                     </button>
 
@@ -453,12 +461,17 @@
                 </div>
             </div>
             @endforeach
-
         </div>
+        @endif
     </div>
 
     <div class="section-header">Top Selling</div>
     <div class="products-container">
+        @if($orderedProducts->isEmpty())
+        <div style="text-align: center; padding: 40px 0; font-size: 1rem; color: var(--text-light);">
+            No products available
+        </div>
+        @else
         <div class="owl-carousel special-offer-slider owl-theme">
             @foreach ($orderedProducts->slice(0, 8) as $product)
             <div class="product-card">
@@ -468,7 +481,7 @@
 
                 <div class="product-image-container">
                     <button class="wishlist-btn heart-icon" id="wishlist-icon-{{ $product->product_id }}"
-                        onclick="toggleWishlist(this, {{ $product->product_id }})">
+                        onclick="toggleWishlist(this, '{{ $product->product_id }}')">
                         <i class="fa-regular fa-heart"></i>
                     </button>
 
@@ -503,15 +516,17 @@
             </div>
             @endforeach
         </div>
-
-        {{-- <div class="section-navigation">
-                <button class="nav-btn " id="customPrevBtn2" >Previous</button>
-        <button class="nav-btn" id="customNextBtn2" >Next</button>
-            </div>  --}}
+        @endif
     </div>
+
 
     <div class="section-header">Flash Sale</div>
     <div class="products-container">
+        @if($flashSales->isEmpty())
+        <div style="text-align: center; padding: 40px 0; font-size: 1rem; color: var(--text-light);">
+            No offers available
+        </div>
+        @else
         <div class="owl-carousel special-offer-slider owl-theme">
             @foreach ($flashSales as $sale)
             @php $product = $sale->product; @endphp
@@ -545,14 +560,14 @@
                 @endif
             </div>
             @endforeach
-
         </div>
-
-        {{-- <div class="section-navigation">
+        @endif
+          {{-- <div class="section-navigation">
                 <button class="nav-btn " id="customPrevBtn" >Previous</button>
         <button class="nav-btn" id="customNextBtn" >Next</button>
             </div>  --}}
     </div>
+
 </div>
 
 
@@ -589,7 +604,8 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         const productIds = [...document.querySelectorAll('.heart-icon')].map(button =>
-            button.id.replace('wishlist-icon-', ''));
+            button.id.replace('wishlist-icon-', '')
+        );
 
         if (productIds.length > 0) {
             fetch('/wishlist/check-multiple', {
@@ -605,7 +621,7 @@
                 .then(response => response.json())
                 .then(data => {
                     data.wishlist.forEach(productId => {
-                        const heartIcon = document.querySelector(`#wishlist-icon-${productId}`);
+                        const heartIcon = document.getElementById(`wishlist-icon-${productId}`);
                         if (heartIcon) {
                             heartIcon.classList.add('active');
                             const icon = heartIcon.querySelector('i');
@@ -614,6 +630,16 @@
                                 icon.style.color = 'red';
                             }
                         }
+
+                        const clonedHearts = document.querySelectorAll(`.owl-item .heart-icon[id="wishlist-icon-${productId}"]`);
+                        clonedHearts.forEach(clone => {
+                            clone.classList.add('active');
+                            const icon = clone.querySelector('i');
+                            if (icon) {
+                                icon.classList.replace('fa-regular', 'fa-solid');
+                                icon.style.color = 'red';
+                            }
+                        });
                     });
                 })
                 .catch(error => console.error('Error:', error));
