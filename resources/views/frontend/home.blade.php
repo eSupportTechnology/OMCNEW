@@ -463,6 +463,10 @@
             @endforeach
         </div>
         @endif
+        {{-- <div class="section-navigation">
+                <button class="nav-btn " id="customPrevBtn2" >Previous</button>
+        <button class="nav-btn" id="customNextBtn2" >Next</button>
+            </div>  --}}
     </div>
 
     <div class="section-header">Top Selling</div>
@@ -562,7 +566,7 @@
             @endforeach
         </div>
         @endif
-          {{-- <div class="section-navigation">
+        {{-- <div class="section-navigation">
                 <button class="nav-btn " id="customPrevBtn" >Previous</button>
         <button class="nav-btn" id="customNextBtn" >Next</button>
             </div>  --}}
