@@ -15,73 +15,90 @@ use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
-
-
     public function addToCart(Request $request)
     {
-        Log::info('Cart add request data:', $request->all());
+        Log::info('Add to Cart request:', $request->all());
 
         $productId = $request->input('product_id');
         $size = $request->input('size');
         $color = $request->input('color');
         $material = $request->input('material');
-        $quantity = $request->input('quantity', 1); // Add this line to get the quantity
+        $quantity = $request->input('quantity', 1);
 
         if (!$productId) {
-            return response()->json(['error' => 'Product ID is missing.'], 400);
+            return response()->json(['error' => 'Product ID missing'], 400);
         }
 
+        $product = Products::with('variations')->where('product_id', $productId)->first();
+        if (!$product) {
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+
+        // ✅ Check each variation independently
+        $sizeVar = $size ? $product->variations()->where('type', 'Size')->where('value', $size)->first() : null;
+        $colorVar = $color ? $product->variations()->where('type', 'Color')->where('value', $color)->first() : null;
+        $materialVar = $material ? $product->variations()->where('type', 'Material')->where('value', $material)->first() : null;
+
+        if (($sizeVar && $sizeVar->quantity < $quantity) ||
+            ($colorVar && $colorVar->quantity < $quantity) ||
+            ($materialVar && $materialVar->quantity < $quantity) ||
+            (!$sizeVar && !$colorVar && !$materialVar && $product->quantity < $quantity)
+        ) {
+            return response()->json(['error' => 'Requested quantity not available'], 422);
+        }
+
+        // Add to cart for logged in users
         if (Auth::check()) {
             $user = Auth::user();
-            $item = CartItem::where('user_id', $user->id)
+            $cartItem = CartItem::where('user_id', $user->id)
                 ->where('product_id', $productId)
                 ->where('size', $size)
                 ->where('color', $color)
-                ->where('material',$material)
+                ->where('material', $material)
                 ->first();
 
-            if ($item) {
-                $item->quantity += $quantity; // Use the selected quantity
-                $item->save();
+            if ($cartItem) {
+                $cartItem->quantity += $quantity;
+                $cartItem->save();
             } else {
                 CartItem::create([
                     'user_id' => $user->id,
                     'product_id' => $productId,
-                    'quantity' => $quantity, // Use the selected quantity
                     'size' => $size,
                     'color' => $color,
-                    'material' => $material
+                    'material' => $material,
+                    'quantity' => $quantity
                 ]);
             }
         } else {
+            // Guest cart in session
             $cart = session()->get('cart', []);
-            $itemFound = false;
-
+            $found = false;
             foreach ($cart as &$item) {
                 if ($item['product_id'] === $productId && $item['size'] === $size && $item['color'] === $color && $item['material'] === $material) {
-                    $item['quantity'] += $quantity; // Use the selected quantity
-                    $itemFound = true;
+                    $item['quantity'] += $quantity;
+                    $found = true;
                     break;
                 }
             }
-
-            if (!$itemFound) {
+            if (!$found) {
                 $cart[] = [
                     'product_id' => $productId,
-                    'quantity' => $quantity, // Use the selected quantity
                     'size' => $size,
                     'color' => $color,
-                    'material' => $material
+                    'material' => $material,
+                    'quantity' => $quantity
                 ];
             }
-
             session()->put('cart', $cart);
         }
 
-        $cartCount = Auth::check() ? CartItem::where('user_id', Auth::id())->sum('quantity') : array_sum(array_column(session()->get('cart', []), 'quantity'));
+        $cartCount = Auth::check()
+            ? CartItem::where('user_id', Auth::id())->sum('quantity')
+            : array_sum(array_column(session()->get('cart', []), 'quantity'));
+
         return response()->json(['cart_count' => $cartCount]);
     }
-
 
 
     public function addToCartAffiliate(Request $request)
@@ -250,133 +267,132 @@ class CartController extends Controller
     }
 
     public function calculateShipping(Request $request)
-{
-    try {
-        $items = $request->input('items', []);
-        $subtotal = 0;
-        $totalDeliveryFee = 0;
-        $itemTotals = [];
+    {
+        try {
+            $items = $request->input('items', []);
+            $subtotal = 0;
+            $totalDeliveryFee = 0;
+            $itemTotals = [];
 
-        Log::info('Cart calculation request', ['items' => $items]);
+            Log::info('Cart calculation request', ['items' => $items]);
 
-        // Get current cart items with product relationships
-        if (Auth::check()) {
-            $cart = CartItem::with([
-                'product.images',
-                'product.specialOffer' => function ($query) {
-                    $query->where('status', 'active');
-                },
-                'product.sale' => function ($query) {
-                    $query->where('status', 'active');
+            // Get current cart items with product relationships
+            if (Auth::check()) {
+                $cart = CartItem::with([
+                    'product.images',
+                    'product.specialOffer' => function ($query) {
+                        $query->where('status', 'active');
+                    },
+                    'product.sale' => function ($query) {
+                        $query->where('status', 'active');
+                    }
+                ])->where('user_id', Auth::id())->get();
+            } else {
+                $cart = collect(session()->get('cart', []));
+            }
+
+            foreach ($items as $requestItem) {
+                $productId = $requestItem['product_id'];
+                $newQuantity = $requestItem['quantity'];
+
+                // Find the cart item that matches this product_id
+                $cartItem = $cart->first(function ($item) use ($productId) {
+                    return (isset($item->product_id) ? $item->product_id : $item['product_id']) === $productId;
+                });
+
+                if ($cartItem && isset($cartItem->product)) {
+                    // Use centralized price calculation method
+                    $price = $this->calculateItemPrice($cartItem->product);
+
+                    $itemTotal = $price * $newQuantity;
+                    $itemTotals[$productId] = $itemTotal;
+                    $subtotal += $itemTotal;
+
+                    Log::info('Product calculation', [
+                        'product_id' => $productId,
+                        'price' => $price,
+                        'quantity' => $newQuantity,
+                        'item_total' => $itemTotal
+                    ]);
+
+                    // Calculate shipping charge using the actual product database ID
+                    $deliveryFee = $this->calculateTotalDeliveryFee($cart);
+                } else {
+                    Log::warning('Cart item not found for product_id', ['product_id' => $productId]);
                 }
-            ])->where('user_id', Auth::id())->get();
-        } else {
-            $cart = collect(session()->get('cart', []));
+            }
+
+            $response = [
+                'delivery_fee' => number_format($deliveryFee, 2),
+                'subtotal' => number_format($subtotal, 2),
+                'total' => number_format($subtotal + $deliveryFee, 2),
+                'item_totals' => array_map(function ($total) {
+                    return number_format($total, 2);
+                }, $itemTotals),
+                'success' => true
+            ];
+
+            Log::info('Cart calculation response', $response);
+
+            return response()->json($response);
+        } catch (Exception $e) {
+            Log::error('Error calculating cart shipping', [
+                'error' => $e->getMessage(),
+                'items' => $request->input('items', [])
+            ]);
+
+            return response()->json([
+                'error' => 'Failed to calculate shipping',
+                'success' => false
+            ], 500);
+        }
+    }
+
+    /**
+     * Centralized method to calculate item price with consistent logic
+     */
+    private function calculateItemPrice($product)
+    {
+        // Check if there's an active special offer first
+        if ($product->specialOffer && $product->specialOffer->status === 'active') {
+            return $product->specialOffer->offer_price;
         }
 
-        foreach ($items as $requestItem) {
-            $productId = $requestItem['product_id'];
-            $newQuantity = $requestItem['quantity'];
+        // Check if there's an active sale
+        if ($product->sale && $product->sale->status === 'active') {
+            return $product->sale->sale_price;
+        }
 
-            // Find the cart item that matches this product_id
-            $cartItem = $cart->first(function ($item) use ($productId) {
-                return (isset($item->product_id) ? $item->product_id : $item['product_id']) === $productId;
-            });
+        // Default to normal price
+        return $product->normal_price;
+    }
 
-            if ($cartItem && isset($cartItem->product)) {
-                // Use centralized price calculation method
-                $price = $this->calculateItemPrice($cartItem->product);
+    /**
+     * Updated method to use consistent delivery fee calculation
+     */
+    private function calculateTotalDeliveryFee($cart)
+    {
+        $totalDeliveryFee = 0;
 
-                $itemTotal = $price * $newQuantity;
-                $itemTotals[$productId] = $itemTotal;
-                $subtotal += $itemTotal;
+        foreach ($cart as $item) {
+            $productId = isset($item->product_id) ? $item->product_id : $item['product_id'];
+            $quantity = isset($item->quantity) ? $item->quantity : $item['quantity'];
 
-                Log::info('Product calculation', [
-                    'product_id' => $productId,
-                    'price' => $price,
-                    'quantity' => $newQuantity,
-                    'item_total' => $itemTotal
-                ]);
+            $shippingCharge = ShippingCharge::where('product_id', $productId)
+                ->where('min_quantity', '<=', $quantity)
+                ->where('max_quantity', '>=', $quantity)
+                ->first();
 
-                // Calculate shipping charge using the actual product database ID
-                $deliveryFee = $this->calculateTotalDeliveryFee($cart);
+            if ($shippingCharge) {
+                $productDeliveryFee = $shippingCharge->charge;
+                $totalDeliveryFee += $productDeliveryFee;
             } else {
-                Log::warning('Cart item not found for product_id', ['product_id' => $productId]);
+                Log::warning("No matching shipping charge found for Product ID: {$productId}, Quantity: {$quantity}");
             }
         }
 
-        $response = [
-            'delivery_fee' => number_format($deliveryFee, 2),
-            'subtotal' => number_format($subtotal, 2),
-            'total' => number_format($subtotal + $deliveryFee, 2),
-            'item_totals' => array_map(function($total) {
-                return number_format($total, 2);
-            }, $itemTotals),
-            'success' => true
-        ];
-
-        Log::info('Cart calculation response', $response);
-
-        return response()->json($response);
-
-    } catch (Exception $e) {
-        Log::error('Error calculating cart shipping', [
-            'error' => $e->getMessage(),
-            'items' => $request->input('items', [])
-        ]);
-
-        return response()->json([
-            'error' => 'Failed to calculate shipping',
-            'success' => false
-        ], 500);
+        return $totalDeliveryFee;
     }
-}
-
-/**
- * Centralized method to calculate item price with consistent logic
- */
-private function calculateItemPrice($product)
-{
-    // Check if there's an active special offer first
-    if ($product->specialOffer && $product->specialOffer->status === 'active') {
-        return $product->specialOffer->offer_price;
-    }
-
-    // Check if there's an active sale
-    if ($product->sale && $product->sale->status === 'active') {
-        return $product->sale->sale_price;
-    }
-
-    // Default to normal price
-    return $product->normal_price;
-}
-
-/**
- * Updated method to use consistent delivery fee calculation
- */
-private function calculateTotalDeliveryFee($cart)
-{
-    $totalDeliveryFee = 0;
-
-    foreach ($cart as $item) {
-        $productId = isset($item->product_id) ? $item->product_id : $item['product_id'];
-        $quantity = isset($item->quantity) ? $item->quantity : $item['quantity'];
-
-        $shippingCharge = ShippingCharge::where('product_id', $productId)
-            ->where('min_quantity', '<=', $quantity)
-            ->where('max_quantity', '>=', $quantity)
-            ->first();
-
-        if ($shippingCharge) {
-            $productDeliveryFee = $shippingCharge->charge;
-            $totalDeliveryFee += $productDeliveryFee;
-        } else {
-            Log::warning("No matching shipping charge found for Product ID: {$productId}, Quantity: {$quantity}");
-        }
-    }
-
-    return $totalDeliveryFee;
-}
     private function calculateTotalDeliveryFeeAlternative($cart)
     {
         $totalDeliveryFee = 0;

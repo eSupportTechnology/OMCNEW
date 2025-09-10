@@ -1064,12 +1064,13 @@
                         <span>Color:</span>
                         <div class="color-options-container">
                             @foreach ($product->variations->where('type', 'Color') as $color)
-                            @if ($color->quantity > 0)
-                            <button class="color-option" style="background-color: {{ $color->hex_value }};"
-                                data-color="{{ $color->hex_value }}" data-color-name="{{ $color->value }}"
+                            <button class="color-option"
+                                style="background-color: {{ $color->hex_value }};"
+                                data-color-name="{{ $color->value }}"
+                                data-stock="{{ $color->quantity }}"
                                 title="{{ $color->value }}">
                             </button>
-                            @endif
+                            <span class="color-stock-info" style="display:none; font-size:12px; color:red;"></span>
                             @endforeach
                         </div>
                     </div>
@@ -1080,19 +1081,23 @@
                     <div class="products-size-wrapper">
                         <span>Size:</span>
                         <ul>
-                            @foreach ($product->variations->where('type', 'Size') as $size)
-                            @if ($size->quantity > 0)
+                            @foreach ($product->variations->where('type', 'Size') as $size) <!-- *** FIXED *** -->
                             <li>
-                                <a href="javascript:void(0)" class="size-option"
-                                    data-size="{{ $size->value }}">
+                                <a href="javascript:void(0)"
+                                    class="size-option"
+                                    data-size="{{ $size->value }}"
+                                    data-stock="{{ $size->quantity }}"
+                                    style="display:inline-block; margin-right:10px;">
                                     {{ $size->value }}
                                 </a>
+                                <span class="size-stock-info" style="display:none; font-size:12px; color:red;"></span>
                             </li>
-                            @endif
                             @endforeach
                         </ul>
                     </div>
                     @endif
+
+
 
                     <!-- Material Options -->
                     @if ($product->variations->where('type', 'Material')->isNotEmpty())
@@ -1357,6 +1362,7 @@
 
             if (currentVal < max) {
                 quantityInput.val(currentVal + 1);
+                quantityInput.trigger('change'); // *** ADDED: Update stock display ***
             } else {
                 toastr.warning('Maximum quantity reached', 'Warning', {
                     positionClass: 'toast-top-right',
@@ -1371,6 +1377,7 @@
 
             if (currentVal > 1) {
                 quantityInput.val(currentVal - 1);
+                quantityInput.trigger('change'); // *** ADDED: Update stock display ***
             }
         });
 
@@ -1384,6 +1391,19 @@
                 positionClass: 'toast-top-right',
                 timeOut: 1500
             });
+
+            // *** ADDED: Show stock dynamically ***
+            const colorStock = parseInt($(this).data('stock')) || 0;
+            const quantity = parseInt($('#quantity').val()) || 1;
+            const stockInfo = $(this).next('.color-stock-info');
+            $('.color-stock-info').hide(); // hide others
+            if (colorStock <= 0) {
+                stockInfo.text('Out of stock').show();
+            } else if (quantity > colorStock) {
+                stockInfo.text(`Only ${colorStock} item(s) available`).show();
+            } else {
+                stockInfo.hide();
+            }
         });
 
         // Size selection
@@ -1397,9 +1417,22 @@
                 positionClass: 'toast-top-right',
                 timeOut: 1500
             });
+
+            // *** ADDED: Show stock dynamically ***
+            const sizeStock = parseInt($(this).data('stock')) || 0;
+            const quantity = parseInt($('#quantity').val()) || 1;
+            const stockInfo = $(this).siblings('.size-stock-info');
+            $('.size-stock-info').hide(); // hide others
+            if (sizeStock <= 0) {
+                stockInfo.text('Out of stock').show();
+            } else if (quantity > sizeStock) {
+                stockInfo.text(`Only ${sizeStock} item(s) available`).show();
+            } else {
+                stockInfo.hide();
+            }
         });
 
-        // Material selction
+        // Material selection
         $('.material-option').on('click', function(e) {
             e.preventDefault();
             $('.material-option').removeClass('selected');
@@ -1410,7 +1443,7 @@
                 positionClass: 'toast-top-right',
                 timeOut: 1500
             });
-        })
+        });
 
         // Wishlist toggle
         $('.wishlist-toggle').on('click', function(e) {
@@ -1420,8 +1453,7 @@
             const heartIcon = $(this).find('i');
 
             $.ajax({
-                url: '{{ route('
-                wishlist.toggle ') }}',
+                url: "{{ route('wishlist.toggle') }}",
                 method: 'POST',
                 data: {
                     product_id: productId,
@@ -1453,9 +1485,40 @@
             });
         });
 
+        // *** ADDED: Update stock display when quantity changes dynamically ***
+        $('#quantity').on('input change', function() {
+            const quantity = parseInt($(this).val()) || 1;
+
+            // Color stock update
+            const selectedColor = $('.color-option.selected');
+            if (selectedColor.length) {
+                const stock = parseInt(selectedColor.data('stock')) || 0;
+                const info = selectedColor.next('.color-stock-info');
+                if (stock <= 0) {
+                    info.text('Out of stock').show();
+                } else if (quantity > stock) {
+                    info.text(`Only ${stock} item(s) available`).show();
+                } else {
+                    info.hide();
+                }
+            }
+
+            // Size stock update
+            const selectedSize = $('.size-option.selected');
+            if (selectedSize.length) {
+                const stock = parseInt(selectedSize.data('stock')) || 0;
+                const info = selectedSize.siblings('.size-stock-info');
+                if (stock <= 0) {
+                    info.text('Out of stock').show();
+                } else if (quantity > stock) {
+                    info.text(`Only ${stock} item(s) available`).show();
+                } else {
+                    info.hide();
+                }
+            }
+        });
+
         // Add to Cart Button
-        // Add to Cart Button - Fixed Version
-        // Add to Cart Button - Fixed Version
         $('#addToCartBtn').on('click', function(e) {
             e.preventDefault();
 
@@ -1465,22 +1528,13 @@
             const selectedColor = $('.color-option.selected').data('color-name');
             const selectedMaterial = $('.material-option.selected').data('material');
 
-            // Parse quantity as integer and ensure it's valid
             let quantity = parseInt($('#quantity').val());
-            console.log('Raw quantity value:', $('#quantity').val());
-            console.log('Parsed quantity:', quantity);
+            if (isNaN(quantity) || quantity < 1) quantity = 1;
 
-            if (isNaN(quantity) || quantity < 1) {
-                quantity = 1;
-                console.log('Invalid quantity detected, defaulting to 1');
-            }
-
-            // Check if there are size or color options for this product
             const hasSize = $('.size-option').length > 0;
             const hasColor = $('.color-option').length > 0;
             const hasMaterial = $('.material-option').length > 0;
 
-            // If the product has size options, check if size is selected
             if (hasSize && !selectedSize) {
                 toastr.warning('Please select a size before adding to cart', '', {
                     positionClass: 'toast-top-right',
@@ -1489,7 +1543,6 @@
                 return;
             }
 
-            // If the product has color options, check if color is selected
             if (hasColor && !selectedColor) {
                 toastr.warning('Please select a color before adding to cart', '', {
                     positionClass: 'toast-top-right',
@@ -1498,21 +1551,10 @@
                 return;
             }
 
-            // Proceed to add product to cart
             if (isAuth === 'true') {
-                // Add button animation
                 const btn = $(this);
                 btn.prop('disabled', true);
                 btn.html('<i class="bx bx-loader-alt bx-spin"></i> Adding...');
-
-                // Debug: Log the data being sent
-                console.log('Sending cart data:', {
-                    product_id: productId,
-                    size: selectedSize || null,
-                    color: selectedColor || null,
-                    material: selectedMaterial || null,
-                    quantity: quantity
-                });
 
                 $.ajax({
                     url: "{{ route('cart.add') }}",
@@ -1526,35 +1568,22 @@
                         quantity: quantity
                     },
                     success: function(response) {
-                        // Debug: Log server response
-                        console.log('Server response:', response);
-
-                        // Update cart count
                         $.get("{{ route('cart.count') }}", function(data) {
                             $('#cart-count').text(data.cart_count);
                         });
-
-                        // Reset button
                         btn.prop('disabled', false);
                         btn.html('<i class="bx bx-cart-add"></i> Add to Cart');
-
-                        // Show success message
                         toastr.success('Item added to your cart!', '', {
                             positionClass: 'toast-top-right',
                             timeOut: 2500
                         });
-
                         setTimeout(function() {
                             location.reload();
                         }, 1000);
                     },
                     error: function(xhr) {
-                        console.log('Error response:', xhr.responseText);
-
-                        // Reset button
                         btn.prop('disabled', false);
                         btn.html('<i class="bx bx-cart-add"></i> Add to Cart');
-
                         toastr.error('Something went wrong. Please try again.', '', {
                             positionClass: 'toast-top-right',
                             timeOut: 2500
@@ -1580,12 +1609,10 @@
             const selectedMaterial = $('.material-option.selected').data('material-name');
             const quantity = $('#quantity').val() || 1;
 
-            // Check if there are size or color options for this product
             const hasSize = $('.size-option').length > 0;
             const hasColor = $('.color-option').length > 0;
             const hasMaterial = $('.material-option').length > 0;
 
-            // If the product has size options, check if size is selected
             if (hasSize && !selectedSize) {
                 toastr.warning('Please select a size before proceeding', '', {
                     positionClass: 'toast-top-right',
@@ -1594,7 +1621,6 @@
                 return;
             }
 
-            // If the product has color options, check if color is selected
             if (hasColor && !selectedColor) {
                 toastr.warning('Please select a color before proceeding', '', {
                     positionClass: 'toast-top-right',
@@ -1603,9 +1629,7 @@
                 return;
             }
 
-            // Proceed to checkout
             if (isAuth === 'true') {
-                // Add button animation
                 const btn = $(this);
                 btn.prop('disabled', true);
                 btn.html('<i class="bx bx-loader-alt bx-spin"></i> Processing...');
@@ -1622,16 +1646,11 @@
                         quantity: quantity
                     },
                     success: function(response) {
-                        console.log("Response from server:", response);
                         window.location.href = response.redirect_url;
                     },
                     error: function(xhr) {
-                        console.log("Error response:", xhr.responseText);
-
-                        // Reset button
                         btn.prop('disabled', false);
                         btn.html('<i class="bx bx-purchase-tag"></i> Buy Now');
-
                         toastr.error('Something went wrong. Please try again.', '', {
                             positionClass: 'toast-top-right',
                             timeOut: 2500
@@ -1650,18 +1669,17 @@
         $('.rating-count').on('click', function(e) {
             e.preventDefault();
 
-            // Activate the reviews tab
             $('.tabs li a').removeClass('active');
             $('.tabs-item').removeClass('active');
             $('a[href="#reviews-tab"]').addClass('active');
             $('#reviews-tab').addClass('active');
 
-            // Scroll to reviews section
             $('html, body').animate({
                 scrollTop: $('.products-review-form').offset().top - 100
             }, 500);
         });
     });
 </script>
+
 
 @endsection
