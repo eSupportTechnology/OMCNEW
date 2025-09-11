@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use GuzzleHttp\Client;
-
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductController extends Controller
 {
@@ -66,28 +66,32 @@ class ProductController extends Controller
         // Get categories for the filter
         $categories = Category::all();
 
-        $query = Products::with('images', 'specialOffer', 'Sale');
+        // Base query with relationships
+        $query = Products::with(['images', 'specialOffer', 'Sale'])
+            ->withAvg(['reviews' => function ($q) {
+                $q->where('status', 'published');
+            }], 'rating')
+            ->withCount(['reviews as rating_count' => function ($q) {
+                $q->where('status', 'published');
+            }]);
 
         // Apply category filter
-        if ($request->has('category') && !empty($request->input('category'))) {
-            $category = $request->input('category');
-            $query->where('product_category', $category);
+        if ($request->filled('category')) {
+            $query->where('product_category', $request->input('category'));
         }
 
         // Apply subcategory filter
-        if ($request->has('subcategory') && !empty($request->input('subcategory'))) {
-            $subcategory = $request->input('subcategory');
-            $query->where('subcategory', $subcategory);
+        if ($request->filled('subcategory')) {
+            $query->where('subcategory', $request->input('subcategory'));
         }
 
         // Apply subsubcategory filter
-        if ($request->has('subsubcategory') && !empty($request->input('subsubcategory'))) {
-            $subsubcategory = $request->input('subsubcategory');
-            $query->where('sub_subcategory', $subsubcategory);
+        if ($request->filled('subsubcategory')) {
+            $query->where('sub_subcategory', $request->input('subsubcategory'));
         }
 
         // Apply color filter
-        if ($request->has('color') && !empty($request->input('color'))) {
+        if ($request->filled('color')) {
             $color = $request->input('color');
             $query->whereHas('variations', function ($q) use ($color) {
                 $q->where('type', 'Color')->where('value', $color)->where('quantity', '>', 0);
@@ -95,167 +99,125 @@ class ProductController extends Controller
         }
 
         // Apply size filter
-        if ($request->has('size') && !empty($request->input('size'))) {
+        if ($request->filled('size')) {
             $size = $request->input('size');
             $query->whereHas('variations', function ($q) use ($size) {
                 $q->where('type', 'Size')->where('value', $size)->where('quantity', '>', 0);
             });
         }
 
-
-
-
         // Apply price range filter
-        if ($request->has('min_price') && $request->has('max_price')) {
+        if ($request->filled('min_price') && $request->filled('max_price')) {
             $minPrice = $request->input('min_price');
             $maxPrice = $request->input('max_price');
 
-            if (!empty($minPrice) && !empty($maxPrice)) {
-                $query->where(function ($q) use ($minPrice, $maxPrice) {
-                    $q->where(function ($subQ) use ($minPrice, $maxPrice) {
-                        // Check normal price when no active sale or special offer
-                        $subQ->whereBetween('normal_price', [$minPrice, $maxPrice])
-                            ->whereDoesntHave('sale', function ($saleQ) {
-                                $saleQ->where('status', 'active');
-                            })
-                            ->whereDoesntHave('specialOffer', function ($offerQ) {
-                                $offerQ->where('status', 'active');
-                            });
+            $query->where(function ($q) use ($minPrice, $maxPrice) {
+                $q->where(function ($subQ) use ($minPrice, $maxPrice) {
+                    $subQ->whereBetween('normal_price', [$minPrice, $maxPrice])
+                        ->whereDoesntHave('sale', fn($sq) => $sq->where('status', 'active'))
+                        ->whereDoesntHave('specialOffer', fn($sq) => $sq->where('status', 'active'));
+                })
+                    ->orWhere(function ($subQ) use ($minPrice, $maxPrice) {
+                        $subQ->whereHas('sale', fn($sq) => $sq->where('status', 'active')->whereBetween('sale_price', [$minPrice, $maxPrice]));
                     })
-                        ->orWhere(function ($subQ) use ($minPrice, $maxPrice) {
-                            // Check sale price when sale is active
-                            $subQ->whereHas('sale', function ($saleQ) use ($minPrice, $maxPrice) {
-                                $saleQ->where('status', 'active')
-                                    ->whereBetween('sale_price', [$minPrice, $maxPrice]);
-                            });
-                        })
-                        ->orWhere(function ($subQ) use ($minPrice, $maxPrice) {
-                            // Check special offer price when special offer is active
-                            $subQ->whereHas('specialOffer', function ($offerQ) use ($minPrice, $maxPrice) {
-                                $offerQ->where('status', 'active')
-                                    ->whereBetween('offer_price', [$minPrice, $maxPrice]);
-                            });
-                        });
-                });
-            }
+                    ->orWhere(function ($subQ) use ($minPrice, $maxPrice) {
+                        $subQ->whereHas('specialOffer', fn($sq) => $sq->where('status', 'active')->whereBetween('offer_price', [$minPrice, $maxPrice]));
+                    });
+            });
         }
 
         // Apply sorting
-        if ($request->has('sort') && !empty($request->input('sort'))) {
-            $sort = $request->input('sort');
+        $sort = $request->input('sort', 'newest');
 
-            switch ($sort) {
-                case 'price_low_high':
-                    $query->leftJoin('sales', function ($join) {
-                        $join->on('products.product_id', '=', 'sales.product_id')
-                            ->where('sales.status', '=', 'active');
+        switch ($sort) {
+            case 'price_low_high':
+                $query->leftJoin('sales', function ($join) {
+                    $join->on('products.product_id', '=', 'sales.product_id')
+                        ->where('sales.status', 'active');
+                })
+                    ->leftJoin('special_offers', function ($join) {
+                        $join->on('products.product_id', '=', 'special_offers.product_id')
+                            ->where('special_offers.status', 'active');
                     })
-                        ->leftJoin('special_offers', function ($join) {
-                            $join->on('products.product_id', '=', 'special_offers.product_id')
-                                ->where('special_offers.status', '=', 'active');
-                        })
-                        ->orderByRaw('
+                    ->orderByRaw('
                     CASE
                         WHEN sales.status = "active" THEN sales.sale_price
                         WHEN special_offers.status = "active" THEN special_offers.offer_price
                         ELSE products.normal_price
                     END ASC
                 ')
-                        ->select('products.*');
-                    break;
+                    ->select('products.*');
+                break;
 
-                case 'price_high_low':
-                    $query->leftJoin('sales', function ($join) {
-                        $join->on('products.product_id', '=', 'sales.product_id')
-                            ->where('sales.status', '=', 'active');
+            case 'price_high_low':
+                $query->leftJoin('sales', function ($join) {
+                    $join->on('products.product_id', '=', 'sales.product_id')
+                        ->where('sales.status', 'active');
+                })
+                    ->leftJoin('special_offers', function ($join) {
+                        $join->on('products.product_id', '=', 'special_offers.product_id')
+                            ->where('special_offers.status', 'active');
                     })
-                        ->leftJoin('special_offers', function ($join) {
-                            $join->on('products.product_id', '=', 'special_offers.product_id')
-                                ->where('special_offers.status', '=', 'active');
-                        })
-                        ->orderByRaw('
+                    ->orderByRaw('
                     CASE
                         WHEN sales.status = "active" THEN sales.sale_price
                         WHEN special_offers.status = "active" THEN special_offers.offer_price
                         ELSE products.normal_price
                     END DESC
                 ')
-                        ->select('products.*');
-                    break;
+                    ->select('products.*');
+                break;
 
-                case 'name_a_z':
-                    $query->orderBy('product_name', 'asc');
-                    break;
+            case 'name_a_z':
+                $query->orderBy('product_name', 'asc');
+                break;
 
-                case 'name_z_a':
-                    $query->orderBy('product_name', 'desc');
-                    break;
+            case 'name_z_a':
+                $query->orderBy('product_name', 'desc');
+                break;
 
-                case 'newest':
-                    $query->orderBy('created_at', 'desc');
-                    break;
+            case 'newest':
+                $query->orderBy('created_at', 'desc');
+                break;
 
-                case 'oldest':
-                    $query->orderBy('created_at', 'asc');
-                    break;
+            case 'oldest':
+                $query->orderBy('created_at', 'asc');
+                break;
 
-                case 'rating_high_low':
-                    $query->leftJoin('reviews', function ($join) {
-                        $join->on('products.product_id', '=', 'reviews.product_id')
-                            ->where('reviews.status', '=', 'published');
-                    })
-                        ->groupBy('products.product_id')
-                        ->orderByRaw('AVG(reviews.rating) DESC NULLS LAST')
-                        ->select('products.*');
-                    break;
+            case 'rating_high_low':
+                $query->orderByDesc('reviews_avg_rating');
+                break;
 
-                default:
-                    $query->orderBy('created_at', 'desc');
-                    break;
-            }
-        } else {
-            $query->orderBy('created_at', 'desc');
+            default:
+                $query->orderBy('created_at', 'desc');
+                break;
         }
 
-        // Paginate the results and preserve query parameters
-        $products = $query->paginate($perPage)->through(function ($product) {
-            $product->average_rating = $product->reviews()->where('status', 'published')->avg('rating') ?? 0;
-            $product->rating_count = $product->reviews()->where('status', 'published')->count();
+        // Paginate results
+        $products = $query->paginate($perPage)->appends($request->query());
 
-            return $product;
-        });
-
-        // Append query parameters to pagination links
-        $products->appends($request->query());
-
-        // Get available filter options based on current filters
+        // Get available filter options
         $sizes = $this->getAvailableSizes($request);
         $colors = $this->getAvailableColors($request);
-
         $priceRange = $this->getPriceRange($request);
-
-        // Get active filters for display
         $activeFilters = $this->getActiveFilters($request);
 
+        // Get review details for a specific product if needed
         $product_id = $request->input('product_id');
-        $reviews = Review::with('media')->where('product_id', $product_id)
+        $reviews = Review::with('media')
+            ->where('product_id', $product_id)
             ->where('status', 'published')
             ->get();
 
         $averageRating = $reviews->avg('rating');
         $totalReviews = $reviews->count();
-
-        $ratingsCount = Review::with('media')
-            ->where('product_id', $product_id)
-            ->where('status', 'published')
-            ->get();
+        $ratingsCount = $reviews;
 
         return view('frontend.all_items', compact(
             'products',
             'categories',
             'sizes',
             'colors',
-
             'priceRange',
             'activeFilters',
             'averageRating',
@@ -551,37 +513,37 @@ class ProductController extends Controller
 
 
 
-   public function edit($id)
-{
-    $product = Products::findOrFail($id);
-    $categories = Category::all();
+    public function edit($id)
+    {
+        $product = Products::findOrFail($id);
+        $categories = Category::all();
 
-    $selectedCategoryId = Category::where('parent_category', $product->product_category)->value('id');
-    $selectedSubcategoryId = Subcategory::where('subcategory', $product->subcategory)->value('id');
-    $subcategories = $selectedCategoryId
-        ? Subcategory::where('category_id', $selectedCategoryId)->get()
-        : collect();
-    $subSubcategories = $selectedSubcategoryId
-        ? SubSubcategory::where('subcategory_id', $selectedSubcategoryId)->get()
-        : collect();
+        $selectedCategoryId = Category::where('parent_category', $product->product_category)->value('id');
+        $selectedSubcategoryId = Subcategory::where('subcategory', $product->subcategory)->value('id');
+        $subcategories = $selectedCategoryId
+            ? Subcategory::where('category_id', $selectedCategoryId)->get()
+            : collect();
+        $subSubcategories = $selectedSubcategoryId
+            ? SubSubcategory::where('subcategory_id', $selectedSubcategoryId)->get()
+            : collect();
 
-    $variations = Variation::where('product_id', $product->id)->get(); // fixed
-    $shippingCharges = ShippingCharge::where('product_id', $product->id)->get(); // fixed
+        $variations = Variation::where('product_id', $product->id)->get(); // fixed
+        $shippingCharges = ShippingCharge::where('product_id', $product->id)->get(); // fixed
 
-    $brands = Brand::all();
+        $brands = Brand::all();
 
-    return view('admin_dashboard.edit_products', compact(
-        'product',
-        'categories',
-        'subcategories',
-        'subSubcategories',
-        'selectedCategoryId',
-        'selectedSubcategoryId',
-        'variations',
-        'brands',
-        'shippingCharges'
-    ));
-}
+        return view('admin_dashboard.edit_products', compact(
+            'product',
+            'categories',
+            'subcategories',
+            'subSubcategories',
+            'selectedCategoryId',
+            'selectedSubcategoryId',
+            'variations',
+            'brands',
+            'shippingCharges'
+        ));
+    }
 
 
 
@@ -627,10 +589,10 @@ class ProductController extends Controller
             'variation.*.quantity' => 'nullable|numeric|min:0',
             'tags' => 'nullable|string',
             'brand_id' => 'nullable',
-             'shipping_charges' => 'nullable|array',
-        'shipping_charges.*.min_quantity' => 'required|numeric|min:0',
-        'shipping_charges.*.max_quantity' => 'required|numeric|min:0',
-        'shipping_charges.*.charge' => 'required|numeric|min:0',
+            'shipping_charges' => 'nullable|array',
+            'shipping_charges.*.min_quantity' => 'required|numeric|min:0',
+            'shipping_charges.*.max_quantity' => 'required|numeric|min:0',
+            'shipping_charges.*.charge' => 'required|numeric|min:0',
         ]);
 
         $request->merge([
@@ -748,18 +710,18 @@ class ProductController extends Controller
                 }
             }
         }
-$product->shippingCharges()->delete();
+        $product->shippingCharges()->delete();
 
-    // Insert new shipping charges if present
-    if ($request->has('shipping_charges')) {
-        foreach ($request->input('shipping_charges') as $chargeData) {
-            $product->shippingCharges()->create([
-                'min_quantity' => $chargeData['min_quantity'],
-                'max_quantity' => $chargeData['max_quantity'],
-                'charge' => $chargeData['charge'],
-            ]);
+        // Insert new shipping charges if present
+        if ($request->has('shipping_charges')) {
+            foreach ($request->input('shipping_charges') as $chargeData) {
+                $product->shippingCharges()->create([
+                    'min_quantity' => $chargeData['min_quantity'],
+                    'max_quantity' => $chargeData['max_quantity'],
+                    'charge' => $chargeData['charge'],
+                ]);
+            }
         }
-    }
 
         $variationsToDelete = array_diff($existingVariationIds, $submittedVariationIds);
         Variation::whereIn('id', $variationsToDelete)->delete();
@@ -929,16 +891,22 @@ $product->shippingCharges()->delete();
     }
 
 
-
     public function showSearchResults(Request $request)
     {
         $query = $request->get('query', '');
-        $products = [];
 
         if (!empty($query)) {
             $searchTerms = explode(' ', $query);
 
-            $products = Products::with(['Sale', 'specialOffer', 'images', 'category', 'category.subcategories', 'category.subcategories.subSubcategories', 'reviews'])
+            $products = Products::with([
+                'Sale',
+                'specialOffer',
+                'images',
+                'category',
+                'category.subcategories',
+                'category.subcategories.subSubcategories',
+                'reviews'
+            ])
                 ->where(function ($q) use ($searchTerms) {
                     foreach ($searchTerms as $term) {
                         $q->where(function ($subQ) use ($term) {
@@ -960,11 +928,16 @@ $product->shippingCharges()->delete();
                 ->select('id', 'product_name', 'subcategory', 'product_id', 'normal_price')
                 ->paginate(10)
                 ->through(function ($product) {
-                    $product->average_rating = $product->reviews()->where('status', 'published')->avg('rating');
+                    $product->average_rating = $product->reviews()->where('status', 'published')->avg('rating') ?? 0;
                     $product->rating_count = $product->reviews()->where('status', 'published')->count();
-                        $product->published_reviews = $product->reviews->where('status', 'published');
+                    $product->published_reviews = $product->reviews->where('status', 'published');
                     return $product;
                 });
+        } else {
+            $products = new LengthAwarePaginator([], 0, 10, 1, [
+                'path' => $request->url(),
+                'query' => $request->query(),
+            ]);
         }
 
         return view('frontend.search_results', compact('products', 'query'));
