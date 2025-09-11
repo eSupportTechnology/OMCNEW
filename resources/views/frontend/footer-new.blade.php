@@ -101,7 +101,7 @@
                         <div class="accordion-body">
                             <ul>
                                 <li class="footer-nav"><a href="/about">About Us</a></li>
-                                {{--  <li class="footer-nav"><a href="#">Careers</a></li>  --}}
+                                {{-- <li class="footer-nav"><a href="#">Careers</a></li>  --}}
                                 <li class="footer-nav"><a href="/contact">Contact Us</a></li>
 
                             </ul>
@@ -273,10 +273,10 @@
         <div class="cart-logo">
             {{-- <img src="{{ asset('frontend/newstyle/assets/images/logo.png') }}"> --}}
             @if ($siteLogo && $siteLogo->image_path)
-                <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}" alt="Site Logo"
-                    style="width: 180px;">
+            <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}" alt="Site Logo"
+                style="width: 180px;">
             @else
-                <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.png') }}" style="width: 180px;">
+            <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.png') }}" style="width: 180px;">
             @endif
         </div>
         <h4>My Cart</h4>
@@ -286,7 +286,7 @@
                     <div class="toatal-div-main">
                         <div class="sub-total-label">Cart Subtotal</div>
                         <div class="pro-amount">
-                            <span id= "cart-count-4">0</span> Items Added
+                            <span id="cart-count-4">0</span> Items Added
                         </div>
                     </div>
                     <div class="sub-total" id="cart-subtotal-1">Rs. 0</div>
@@ -330,7 +330,8 @@
         flex-wrap: wrap;
         padding: 20px 0;
         margin-bottom: 0;
-        background-color: #2B96C5; /* Keeping the original blue color */
+        background-color: #2B96C5;
+        /* Keeping the original blue color */
     }
 
     .footer-box {
@@ -360,13 +361,16 @@
 
     /* Main footer content area */
     .footer-padding {
-        padding: 40px 0 0;  /* Remove bottom padding */
-        margin-bottom: 0;   /* Ensure no margin at bottom */
+        padding: 40px 0 0;
+        /* Remove bottom padding */
+        margin-bottom: 0;
+        /* Ensure no margin at bottom */
     }
 
     /* Company info section - FIXED */
     .address-info {
-        display: block; /* Changed from flex to block to fix alignment */
+        display: block;
+        /* Changed from flex to block to fix alignment */
     }
 
     /* Direct logo styling fix */
@@ -520,15 +524,16 @@
                 <div class="address-info">
                     <!-- Simplified logo structure -->
                     @if ($siteLogo && $siteLogo->image_path)
-                        <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}" alt="Site Logo">
+                    <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}" alt="Site Logo">
                     @else
-                        <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.webp') }}" alt="Site Logo">
+                    <img src="{{ asset('frontend/newstyle/assets/images/buyabans-logo.webp') }}" alt="Site Logo">
                     @endif
 
                     <div class="hotline">
                         <p>HOTLINE</p>
-                        <a class="tel-no" href="#">+94 75 833 7141</a>
+                        <a class="tel-no" href="tel:+94758337141">+94 75 833 7141</a>
                     </div>
+
                     <div class="social-media">
                         <ul>
                             <li><a href="#" target="_blank"><i class="fab fa-facebook" style="color:#2B96C5; font-size: 22px;"></i></a></li>
@@ -550,7 +555,7 @@
                             <p class="footer-title">About</p>
                             <ul>
                                 <li class="footer-link"><a href="{{ route('about') }}">About Us</a></li>
-                                {{--  <li class="footer-link"><a href="#">Careers</a></li>  --}}
+                                {{-- <li class="footer-link"><a href="#">Careers</a></li>  --}}
                                 <li class="footer-link"><a href="{{ route('contac') }}">Contact Us</a></li>
                             </ul>
                         </div>
