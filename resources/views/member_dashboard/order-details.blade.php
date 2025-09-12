@@ -60,32 +60,25 @@
                         <li class="step0 {{ in_array($order->status, ['Shipped', 'Delivered']) ? 'active' : '' }}" id="step3"></li>
                         <li class="step0 {{ $order->status === 'Delivered' ? 'active' : '' }}" id="step4"></li>
                     </ul>
-                    <div class="d-flex justify-content-between">
-                        <div class="d-lg-flex align-items-center">
-                            <i class="fas fa-check-circle me-lg-2 mb-lg-0"></i>
-                            <div>
-                                <p class="mb-0">Order Confirmed</p>
-                            </div>
+                    <div class="d-flex justify-content-between text-center">
+                        <div class="flex-grow-1">
+                            <i class="fas fa-check-circle d-block mb-2"></i>
+                            <p class="mb-0">Order Confirmed</p>
                         </div>
-                        <div class="d-lg-flex align-items-center">
-                            <i class="fas fa-clipboard-list me-lg-2 mb-lg-0"></i>
-                            <div>
-                                <p class="mb-0">Order Processed</p>
-                            </div>
+                        <div class="flex-grow-1">
+                            <i class="fas fa-clipboard-list d-block mb-2"></i>
+                            <p class="mb-0">Order Processed</p>
                         </div>
-                        <div class="d-lg-flex align-items-center">
-                            <i class="fas fa-shipping-fast me-lg-2 mb-lg-0"></i>
-                            <div>
-                                <p class="mb-0">Order Shipped</p>
-                            </div>
+                        <div class="flex-grow-1">
+                            <i class="fas fa-shipping-fast d-block mb-2"></i>
+                            <p class="mb-0">Order Shipped</p>
                         </div>
-                        <div class="d-lg-flex align-items-center">
-                            <i class="fas fa-home me-lg-2 mb-lg-0"></i>
-                            <div>
-                                <p class="mb-0">Order Delivered</p>
-                            </div>
+                        <div class="flex-grow-1">
+                            <i class="fas fa-home d-block mb-2"></i>
+                            <p class="mb-0">Order Delivered</p>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
