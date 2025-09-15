@@ -1,4 +1,29 @@
 <style>
+    .back-btn-corner {
+        position: fixed;
+        top: 100px;
+        left: 20px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #f0f0f0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s, transform 0.2s;
+        z-index: 9999;
+    }
+
+    .back-btn-corner:hover {
+        background-color: #e0e0e0;
+        transform: scale(1.1);
+        /* subtle hover effect */
+    }
+
+
     .search-container {
         position: relative;
     }
@@ -66,8 +91,8 @@
                                     <a href="#" class="mobile-menu-toggle new-mobile-toggle"
                                         onclick="if (!window.__cfRLUnblockHandlers) return false; openMenuMobi()"
                                         data-cf-modified-a071cb3ff60724c4b8f55cf9-="">
-                                        {{--  <img class="mobi-menu-icon"
-                                         src="{{ asset('frontend/newstyle/assets/images/menuLOGO-mbo.png') }}">  --}}
+                                        {{-- <img class="mobi-menu-icon"
+                                         src="{{ asset('frontend/newstyle/assets/images/menuLOGO-mbo.png') }}"> --}}
                                         <i class="ph ph-list mobile-menu-icon mobi-menu-icon"
                                             style="color: #2b96c5; font-size: 24px;"></i>
                                     </a>
@@ -75,15 +100,15 @@
 
                                 <div class="mobi-logo">
                                     @if ($siteLogo && $siteLogo->image_path)
-                                        <a href="{{ url('/') }}">
-                                            <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}"
-                                                alt="Site Logo" class="img-fluid" style="max-height: 60px;">
-                                        </a>
+                                    <a href="{{ url('/') }}">
+                                        <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}"
+                                            alt="Site Logo" class="img-fluid" style="max-height: 60px;">
+                                    </a>
                                     @else
-                                        <a href="/">
-                                            <img src="{{ asset('frontend/newstyle/assets/images/buyabanslogo-new.png') }}"
-                                                alt="logo" />
-                                        </a>
+                                    <a href="/">
+                                        <img src="{{ asset('frontend/newstyle/assets/images/buyabanslogo-new.png') }}"
+                                            alt="logo" />
+                                    </a>
                                     @endif
                                 </div>
                             </div>
@@ -95,19 +120,19 @@
                                     <!-- Account Icon -->
                                     <div class="mobile-icon-item">
                                         @auth
-                                            <div class="loged-user">
-                                                <div class="log-user-img">
-                                                    <a href="{{ route('dashboard') }}">
-                                                        <img src="https://buyabans.com/themes/buyabans/assets/images/icon/dummy-user.png"
-                                                            alt="User" class="mobile-account-icon">
-                                                    </a>
-                                                </div>
+                                        <div class="loged-user">
+                                            <div class="log-user-img">
+                                                <a href="{{ route('dashboard') }}">
+                                                    <img src="https://buyabans.com/themes/buyabans/assets/images/icon/dummy-user.png"
+                                                        alt="User" class="mobile-account-icon">
+                                                </a>
                                             </div>
+                                        </div>
                                         @else
-                                            <a href="{{ route('login') }}" class="mobile-account-link">
-                                                <img src="{{ asset('frontend/newstyle/assets/images/account-icon.png') }}"
-                                                    alt="Account" class="mobile-account-icon">
-                                            </a>
+                                        <a href="{{ route('login') }}" class="mobile-account-link">
+                                            <img src="{{ asset('frontend/newstyle/assets/images/account-icon.png') }}"
+                                                alt="Account" class="mobile-account-icon">
+                                        </a>
                                         @endauth
                                     </div>
 
@@ -126,8 +151,8 @@
                                     <!-- Search Icon -->
                                     <div class="mobile-icon-item">
                                         <button class="mobile-search-btn ">
-                                            {{--  <img src="{{ asset('frontend/newstyle/assets/images/icon/mobi-search.png') }}"
-                                             alt="Search" class="mobile-search-icon"  >  --}}
+                                            {{-- <img src="{{ asset('frontend/newstyle/assets/images/icon/mobi-search.png') }}"
+                                            alt="Search" class="mobile-search-icon" > --}}
                                             <i class="ph ph-magnifying-glass mobile-search-icon"
                                                 style="color: #2b96c5; font-size: 24px;"></i>
 
@@ -374,14 +399,14 @@
                             <div class="destop-main-header">
                                 <div class="des-logo">
                                     @if ($siteLogo && $siteLogo->image_path)
-                                        <a href="{{ url('/') }}">
-                                            <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}"
-                                                alt="Site Logo" class="img-fluid">
-                                        </a>
+                                    <a href="{{ url('/') }}">
+                                        <img src="{{ asset('storage/logo_images/' . $siteLogo->image_path) }}"
+                                            alt="Site Logo" class="img-fluid">
+                                    </a>
                                     @else
-                                        <a href="/"><img
-                                                src="{{ asset('frontend/newstyle/assets/images/buyabanslogo-new.png') }}">
-                                        </a>
+                                    <a href="/"><img
+                                            src="{{ asset('frontend/newstyle/assets/images/buyabanslogo-new.png') }}">
+                                    </a>
                                     @endif
 
                                 </div>
@@ -454,7 +479,7 @@
 
                                             <a href="javascript:void(0)" class="d-flex">
 
-                                                {{--  <cart-item-count></cart-item-count>  --}}
+                                                {{-- <cart-item-count></cart-item-count>  --}}
                                                 <div class="dt-icon-div">
                                                     <span id="cart-count-3"
                                                         class="w-16 h-16 text-xs text-white flex-center rounded-circle bg-main-two-600 position-absolute top-n6 ">
@@ -490,70 +515,70 @@
                                             <div class="profile-dropdown">
                                                 @auth
 
-                                                    <div class="auth-container">
-                                                        <div class="loged-user d-inline-flex">
-                                                            <div class="log-user-img"><img
-                                                                    src="https://buyabans.com/themes/buyabans/assets/images/icon/dummy-user.png">
+                                                <div class="auth-container">
+                                                    <div class="loged-user d-inline-flex">
+                                                        <div class="log-user-img"><img
+                                                                src="https://buyabans.com/themes/buyabans/assets/images/icon/dummy-user.png">
+                                                        </div>
+                                                        <div class="log-user-data dropdown">
+                                                            <div class="user-name">Hi!
+                                                                {{ auth()->user()->name }}
                                                             </div>
-                                                            <div class="log-user-data dropdown">
-                                                                <div class="user-name">Hi!
-                                                                    {{ auth()->user()->name }}
-                                                                </div>
-                                                                <div class="dropdown-box">
+                                                            <div class="dropdown-box">
 
-                                                                    <ul class="log-popup-links">
-                                                                        <li>
-                                                                            <a href="{{ route('dashboard') }}">
-                                                                                <img
-                                                                                    src="https://buyabans.com/themes/buyabans/assets/images/icon/mini-profile/user.png">My
-                                                                                Account
-                                                                            </a>
-                                                                        </li>
+                                                                <ul class="log-popup-links">
+                                                                    <li>
+                                                                        <a href="{{ route('dashboard') }}">
+                                                                            <img
+                                                                                src="https://buyabans.com/themes/buyabans/assets/images/icon/mini-profile/user.png">My
+                                                                            Account
+                                                                        </a>
+                                                                    </li>
 
-                                                                        <li>
-                                                                            <a>
-                                                                                <img
-                                                                                    src="https://buyabans.com/themes/buyabans/assets/images/icon/mini-profile/turn-off.png">
-                                                                                <form method="POST"
-                                                                                    action="{{ route('logout') }}">
+                                                                    <li>
+                                                                        <a>
+                                                                            <img
+                                                                                src="https://buyabans.com/themes/buyabans/assets/images/icon/mini-profile/turn-off.png">
+                                                                            <form method="POST"
+                                                                                action="{{ route('logout') }}">
 
 
-                                                                                    @csrf
-                                                                                    <button type="submit"
-                                                                                        class="dropdown-item w-100">Logout</button>
-                                                                                </form>
-                                                                            </a>
-                                                                        </li>
+                                                                                @csrf
+                                                                                <button type="submit"
+                                                                                    class="dropdown-item w-100">Logout</button>
+                                                                            </form>
+                                                                        </a>
+                                                                    </li>
 
 
 
-                                                                    </ul>
-                                                                </div>
+                                                                </ul>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                @else
-                                                    <!-- Default Profile Icon and Links for Guests -->
-                                                    <div class="sign-up d-inline-flex">
-                                                        <div>
-                                                            <a href="{{ route('login') }}" class="d-flex">
-                                                                <div class="dt-icon-div"><img
-                                                                        src=" {{ asset('frontend/newstyle/assets/images/account-icon.png') }} ">
-                                                                </div>
-                                                                <div>Login</div>
-                                                            </a>
-                                                        </div>
-
-                                                        <div class="boder-right"></div>
-
-                                                        <div>
-                                                            <a class="sign-up-link"
-                                                                href="{{ route('signup') }}"><span>Sign
-                                                                    Up</span></a>
-                                                        </div>
-                                                    </div>
-
                                                 </div>
+                                                @else
+                                                <!-- Default Profile Icon and Links for Guests -->
+                                                <div class="sign-up d-inline-flex">
+                                                    <div>
+                                                        <a href="{{ route('login') }}" class="d-flex">
+                                                            <div class="dt-icon-div"><img
+                                                                    src=" {{ asset('frontend/newstyle/assets/images/account-icon.png') }} ">
+                                                            </div>
+                                                            <div>Login</div>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="boder-right"></div>
+
+                                                    <div>
+                                                        <a class="sign-up-link"
+                                                            href="{{ route('signup') }}"><span>Sign
+                                                                Up</span></a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
 
 
                                             @endauth
@@ -610,6 +635,10 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Back Button in Page Corner -->
+                        <div class="back-btn-corner" onclick="history.back()" title="Go Back">
+                            <i class="fas fa-arrow-left"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -618,10 +647,6 @@
         <!--    category begin -->
 
         <style>
-
-
-
-
             .category-list {
                 display: flex;
                 align-items: center;
@@ -822,127 +847,127 @@
                         @foreach ($categories as $category)
                             <li class="category-item">
                                 <a href="/all-items?category={{ urlencode($category->parent_category) }}"
-                                    class="category-link {{ request('category') == $category->parent_category ? 'active' : '' }}">
-                                    @if ($category->parent_category == 'Electronics')
-                                    @elseif($category->parent_category == 'Fashion')
+        class="category-link {{ request('category') == $category->parent_category ? 'active' : '' }}">
+        @if ($category->parent_category == 'Electronics')
+        @elseif($category->parent_category == 'Fashion')
 
-                                    @elseif($category->parent_category == 'Home & Garden')
+        @elseif($category->parent_category == 'Home & Garden')
 
-                                    @elseif($category->parent_category == 'Sports')
-                                    @endif
-                                    {{ $category->parent_category }}
+        @elseif($category->parent_category == 'Sports')
+        @endif
+        {{ $category->parent_category }}
 
-                                    @if ($category->is_featured)
-                                        <span class="category-badge">HOT</span>
-                                    @endif
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div> --}}
+        @if ($category->is_featured)
+        <span class="category-badge">HOT</span>
+        @endif
+        </a>
+        </li>
+        @endforeach
+        </ul>
+    </div>
+    </div>
+    </div> --}}
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const categoryList = document.getElementById('categoryList');
-                const leftIndicator = document.querySelector('.scroll-indicator.left');
-                const rightIndicator = document.querySelector('.scroll-indicator.right');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryList = document.getElementById('categoryList');
+            const leftIndicator = document.querySelector('.scroll-indicator.left');
+            const rightIndicator = document.querySelector('.scroll-indicator.right');
 
-                function checkScroll() {
-                    const scrollLeft = categoryList.scrollLeft;
-                    const scrollWidth = categoryList.scrollWidth;
-                    const clientWidth = categoryList.clientWidth;
+            function checkScroll() {
+                const scrollLeft = categoryList.scrollLeft;
+                const scrollWidth = categoryList.scrollWidth;
+                const clientWidth = categoryList.clientWidth;
 
-                    if (scrollLeft > 0) {
-                        leftIndicator.classList.add('visible');
-                    } else {
-                        leftIndicator.classList.remove('visible');
-                    }
-
-                    if (scrollLeft < scrollWidth - clientWidth - 1) {
-                        rightIndicator.classList.add('visible');
-                    } else {
-                        rightIndicator.classList.remove('visible');
-                    }
-                }
-
-                checkScroll();
-
-                categoryList.addEventListener('scroll', checkScroll);
-
-                window.addEventListener('resize', checkScroll);
-            });
-
-            function scrollCategories(direction) {
-                const categoryList = document.getElementById('categoryList');
-                const scrollAmount = 200;
-
-                if (direction === 'left') {
-                    categoryList.scrollBy({
-                        left: -scrollAmount,
-                        behavior: 'smooth'
-                    });
+                if (scrollLeft > 0) {
+                    leftIndicator.classList.add('visible');
                 } else {
-                    categoryList.scrollBy({
-                        left: scrollAmount,
-                        behavior: 'smooth'
-                    });
+                    leftIndicator.classList.remove('visible');
+                }
+
+                if (scrollLeft < scrollWidth - clientWidth - 1) {
+                    rightIndicator.classList.add('visible');
+                } else {
+                    rightIndicator.classList.remove('visible');
                 }
             }
 
+            checkScroll();
 
-            document.addEventListener('DOMContentLoaded', function() {
-                const currentPath = window.location.pathname;
-                const currentParams = new URLSearchParams(window.location.search);
-                const currentCategory = currentParams.get('category');
+            categoryList.addEventListener('scroll', checkScroll);
 
-                if (currentCategory) {
-                    document.querySelectorAll('.category-link').forEach(link => {
-                        const linkParams = new URLSearchParams(link.search);
-                        if (linkParams.get('category') === currentCategory) {
-                            link.classList.add('active');
-                        }
-                    });
-                }
-            });
-        </script>
+            window.addEventListener('resize', checkScroll);
+        });
 
-        <button class="category-sidebar-toggle" onclick="toggleSidebar()">
-            <i class="fa fa-bars"></i> Categories
-        </button>
+        function scrollCategories(direction) {
+            const categoryList = document.getElementById('categoryList');
+            const scrollAmount = 200;
 
-        <div class="category-sidebar" id="categorySidebar">
-            <div style="padding: 20px; background: #f8f9fa; border-bottom: 1px solid #e0e0e0;">
-                <h4 style="margin: 0; font-size: 18px;">Shop Categories</h4>
-            </div>
-            <ul class="category-sidebar-list">
-                @foreach ($categories as $category)
-                    <li class="category-sidebar-item">
-                        <a href="/all-items?category={{ urlencode($category->parent_category) }}"
-                            class="category-sidebar-link">
-                            <i class="fa fa-angle-right"></i>
-                            {{ $category->parent_category }}
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
+            if (direction === 'left') {
+                categoryList.scrollBy({
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
+            } else {
+                categoryList.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const currentParams = new URLSearchParams(window.location.search);
+            const currentCategory = currentParams.get('category');
+
+            if (currentCategory) {
+                document.querySelectorAll('.category-link').forEach(link => {
+                    const linkParams = new URLSearchParams(link.search);
+                    if (linkParams.get('category') === currentCategory) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    </script>
+
+    <button class="category-sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fa fa-bars"></i> Categories
+    </button>
+
+    <div class="category-sidebar" id="categorySidebar">
+        <div style="padding: 20px; background: #f8f9fa; border-bottom: 1px solid #e0e0e0;">
+            <h4 style="margin: 0; font-size: 18px;">Shop Categories</h4>
         </div>
+        <ul class="category-sidebar-list">
+            @foreach ($categories as $category)
+            <li class="category-sidebar-item">
+                <a href="/all-items?category={{ urlencode($category->parent_category) }}"
+                    class="category-sidebar-link">
+                    <i class="fa fa-angle-right"></i>
+                    {{ $category->parent_category }}
+                </a>
+            </li>
+            @endforeach
+        </ul>
+    </div>
 
-        <script>
-            function toggleSidebar() {
-                const sidebar = document.getElementById('categorySidebar');
-                sidebar.classList.toggle('open');
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('categorySidebar');
+            sidebar.classList.toggle('open');
+        }
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('categorySidebar');
+            const toggle = document.querySelector('.category-sidebar-toggle');
+
+            if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                sidebar.classList.remove('open');
             }
-            document.addEventListener('click', function(e) {
-                const sidebar = document.getElementById('categorySidebar');
-                const toggle = document.querySelector('.category-sidebar-toggle');
-
-                if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
-                    sidebar.classList.remove('open');
-                }
-            });
-        </script>
+        });
+    </script>
     </div>
     </div>
 
@@ -1093,40 +1118,40 @@
                     <ul class=" list-unstyled">
 
                         @foreach ($categories as $category)
-                            <li class="position-relative">
+                        <li class="position-relative">
 
-                                <!-- Main Category and Toggle -->
-                                <div class="d-flex justify-content-between align-items-center ">
-                                    <a href="/all-items?category={{ urlencode($category->parent_category) }}"
-                                        class="text-dark text-decoration-none fw-semibold" style="line-height: 1.6;">
-                                        {{ $category->parent_category }}
-                                    </a>
+                            <!-- Main Category and Toggle -->
+                            <div class="d-flex justify-content-between align-items-center ">
+                                <a href="/all-items?category={{ urlencode($category->parent_category) }}"
+                                    class="text-dark text-decoration-none fw-semibold" style="line-height: 1.6;">
+                                    {{ $category->parent_category }}
+                                </a>
 
-                                    @if ($category->subcategories->isNotEmpty())
-                                        <span class="toggle-btn" onclick="toggleDropdown(this)"
-                                            style="cursor: pointer;">
-                                            <i class="fa fa-chevron-down text-muted"></i>
-                                        </span>
-                                    @endif
-                                </div>
-
-                                <!-- Subcategory List -->
                                 @if ($category->subcategories->isNotEmpty())
-                                    <ul
-                                        class="dropdown subcategory-dropdown bg-light border mt-1 rounded shadow-sm d-none">
-                                        @foreach ($category->subcategories as $subcategory)
-                                            <li>
-                                                <a href="/all-items?subcategory={{ urlencode($subcategory->subcategory) }}"
-                                                    class="d-block px-4 py-2 text-dark text-decoration-none"
-                                                    style="line-height: 1.6;">
-                                                    {{ $subcategory->subcategory }}
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                <span class="toggle-btn" onclick="toggleDropdown(this)"
+                                    style="cursor: pointer;">
+                                    <i class="fa fa-chevron-down text-muted"></i>
+                                </span>
                                 @endif
+                            </div>
 
-                            </li>
+                            <!-- Subcategory List -->
+                            @if ($category->subcategories->isNotEmpty())
+                            <ul
+                                class="dropdown subcategory-dropdown bg-light border mt-1 rounded shadow-sm d-none">
+                                @foreach ($category->subcategories as $subcategory)
+                                <li>
+                                    <a href="/all-items?subcategory={{ urlencode($subcategory->subcategory) }}"
+                                        class="d-block px-4 py-2 text-dark text-decoration-none"
+                                        style="line-height: 1.6;">
+                                        {{ $subcategory->subcategory }}
+                                    </a>
+                                </li>
+                                @endforeach
+                            </ul>
+                            @endif
+
+                        </li>
                         @endforeach
 
                     </ul>
@@ -1484,7 +1509,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const searchInputDesktop = document.querySelector(
-            '.top-search-suggestion-desk'); // give desktop input a unique class
+                '.top-search-suggestion-desk'); // give desktop input a unique class
             const suggestionBox = document.getElementById('suggestions-box-display');
             const productCon = suggestionBox?.querySelector('.left-suggestion-main-con');
             const categoryCon = suggestionBox?.querySelector('.right-suggestion-main-con ul');
