@@ -1107,7 +1107,10 @@
                             @foreach ($product->variations->where('type', 'Material') as $material)
                             @if ($material->quantity > 0)
                             <li>
-                                <a href="javascript:void(0)" class="size-option" data-material="{{ $material->value }}" style="white-space: nowrap;">
+                                <a href="javascript:void(0)"
+                                    class="material-option"
+                                    data-material="{{ $material->value }}"
+                                    style="white-space: nowrap;">
                                     {{ $material->value }}
                                 </a>
                             </li>
@@ -1116,6 +1119,7 @@
                         </ul>
                     </div>
                     @endif
+
 
 
 

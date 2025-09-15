@@ -927,17 +927,15 @@ class ProductController extends Controller
                 })
                 ->select('id', 'product_name', 'subcategory', 'product_id', 'normal_price')
                 ->paginate(10)
+                ->withQueryString()
                 ->through(function ($product) {
-                    $product->average_rating = $product->reviews()->where('status', 'published')->avg('rating') ?? 0;
+                    $product->average_rating = $product->reviews()->where('status', 'published')->avg('rating');
                     $product->rating_count = $product->reviews()->where('status', 'published')->count();
                     $product->published_reviews = $product->reviews->where('status', 'published');
                     return $product;
                 });
         } else {
-            $products = new LengthAwarePaginator([], 0, 10, 1, [
-                'path' => $request->url(),
-                'query' => $request->query(),
-            ]);
+            $products = new LengthAwarePaginator([], 0, 10);
         }
 
         return view('frontend.search_results', compact('products', 'query'));
