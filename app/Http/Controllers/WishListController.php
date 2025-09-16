@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Helpers\WishlistHelper;
 use App\Models\Products;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -14,7 +16,7 @@ class WishListController extends Controller
             $userId = auth()->id();
             // Fetch the wishlist items for the logged-in user
             $wishlistItems = Wishlist::where('user_id', $userId)
-                ->with('product')  
+                ->with('product')
                 ->get();
         } else {
             // If the user is not logged in, display an empty collection
@@ -32,15 +34,15 @@ class WishListController extends Controller
         return view('frontend.master', compact('wishlistItems', 'wishlistCount'));
     }
 
-    
+
     public function toggleWishlist(Request $request)
     {
         if (Auth::check()) {
             $userId = Auth::id();
             $productId = $request->input('product_id');
-            
+
             $wishlistItem = Wishlist::where('user_id', $userId)->where('product_id', $productId)->first();
-            
+
             if ($wishlistItem) {
                 $wishlistItem->delete();
                 return response()->json(['message' => 'Product removed from wishlist']);
@@ -49,30 +51,29 @@ class WishListController extends Controller
                 return response()->json(['message' => 'Product added to wishlist']);
             }
         }
-    
+
         return response()->json(['error' => 'You must be logged in to add to wishlist']);
     }
-    
-    
-    
-    
+
+
+
+
     public function checkMultipleWishlist(Request $request)
     {
         $productIds = $request->input('product_ids');
         $userId = Auth::id();
-    
+
         if ($userId) {
             // Fetch products in the wishlist for the current user
             $wishlistProducts = Wishlist::where('user_id', $userId)
-                                         ->whereIn('product_id', $productIds)
-                                         ->pluck('product_id');
+                ->whereIn('product_id', $productIds)
+                ->pluck('product_id');
             return response()->json(['wishlist' => $wishlistProducts]);
         }
-    
-        return response()->json(['wishlist' => []]);
 
+        return response()->json(['wishlist' => []]);
     }
-    
+
     public function remove($id)
     {
         if (auth()->check()) {
@@ -88,13 +89,25 @@ class WishListController extends Controller
                 session()->put('wishlist', $wishlist);
             }
         }
-    
+
         return redirect()->back()->with('message', 'Item removed from wishlist');
     }
 
-    public function getWishlistCount(){
-        
-    } 
-    
-  
+    public function getWishlistCount()
+    {
+        if (Auth::check()) {
+            $wishlistCount = Wishlist::where('user_id', Auth::id())->count();
+        } else {
+            $wishlist = session()->get('wishlist', []);
+            $wishlistCount = count($wishlist);
+        }
+
+        return response()->json(['wishlist_count' => $wishlistCount]);
+    }
+
+    public function getMiniWishlist()
+    {
+        $miniWishlist = WishlistHelper::getMiniWishlistData();
+        return view('frontend.partials.mini-wishlist', compact('miniWishlist'));
+    }
 }

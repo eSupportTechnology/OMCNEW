@@ -513,6 +513,7 @@ Route::get('/product-description/{product_id?}', [ProductController::class, 'sho
 Route::get('/best-seller', [SpecialOffersController::class, 'bestSellers'])->name('best-seller');
 Route::get('/special-offers', [SpecialOffersController::class, 'showProductsWithSpecialOffers'])->name('special-offers');
 
+Route::get('/mini-wishlist', [WishListController::class, 'getMiniWishlist'])->name('mini.wishlist');
 Route::get('/wishlist', [WishListController::class, 'showWishlist'])->name('wishlist');
 Route::delete('/wishlist/{id}', [WishListController::class, 'remove'])->name('wishlist.remove');
 Route::get('/wishlist/count', [WishListController::class, 'getWishlistCount'])->name('wishlist.count');

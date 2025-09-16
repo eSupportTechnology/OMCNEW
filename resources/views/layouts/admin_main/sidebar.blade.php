@@ -32,8 +32,38 @@
         background-color: #f8f9fa;
         box-shadow: none;
     }
-</style>
 
+    .back-btn-fixed {
+        position: fixed;
+        top: 70px;
+        left: 15px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: none;
+        transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+        z-index: 1100;
+    }
+
+    .back-btn-fixed i {
+        color: #000;
+    }
+
+    .back-btn-fixed:hover {
+        background-color: #e0e0e0;
+        transform: scale(1.1);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+</style>
+<div class="back-btn-fixed" onclick="history.back()" title="Go Back">
+    <i class="fas fa-arrow-left"></i>
+</div>
 <nav id="sidebarMenu" class="collapse navbar-collapse d-lg-block sidebar collapse bg-white">
     <div class="position-sticky">
         <div class="list-group list-group-flush mx-2 mt-4">

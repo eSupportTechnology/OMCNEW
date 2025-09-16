@@ -474,8 +474,8 @@
 
 
                                 <div class="header-right-con">
-                                    <div class="top-right-nav">
-                                        <div class="des-cart pos-relative cart-popup ">
+                                    <div class="top-right-nav d-flex align-items-center">
+                                        <div class="des-cart pos-relative cart-popup me-3">
 
                                             <a href="javascript:void(0)" class="d-flex">
 
@@ -494,6 +494,21 @@
                                         </div>
 
 
+                                        <div class="des-wishlist pos-relative wishlist-popup">
+
+                                            <a href="javascript:void(0)" class="d-flex align-items-center">
+
+                                                <div class="dt-icon-div">
+                                                    <span id="wishlist-count"
+                                                        class="w-16 h-16 text-xs text-white flex-center rounded-circle bg-main-two-600 position-absolute top-n6 ">
+                                                        {{ $wishlistCount ?? 0 }}
+
+                                                    </span>
+                                                    <img src="{{ asset('frontend/newstyle/assets/images/wishlist-icon-color.png') }}" class="wishlist-img">
+                                                </div>
+                                                <span class="span-wishlist ms-1">Wishlist</span>
+                                            </a>
+                                        </div>
 
                                         <script>
                                             $(".cart-popup").click(function() {
@@ -503,6 +518,16 @@
                                             $(".close-minicart, .mini-cart-overlay").click(function() {
                                                 $('.mini-cart').addClass('d-none');
                                                 $('.mini-cart').removeClass('d-block');
+                                            });
+
+                                            // Open wishlist popup
+                                            $(".wishlist-popup").click(function() {
+                                                $('.mini-wishlist').removeClass('d-none').addClass('d-block');
+                                            });
+
+                                            // Close wishlist popup
+                                            $(".close-miniwishlist, .mini-wishlist-overlay").click(function() {
+                                                $('.mini-wishlist').addClass('d-none').removeClass('d-block');
                                             });
                                         </script>
 
@@ -1262,6 +1287,35 @@
             updateCartCount();
         });
     </script>
+    <script>
+        // Open wishlist
+        $(".wishlist-popup").click(function() {
+            $('.mini-wishlist').removeClass('d-none').addClass('d-block');
+        });
+
+        // Close wishlist
+        $(".close-miniwishlist, .mini-wishlist-overlay").click(function() {
+            $('.mini-wishlist').addClass('d-none').removeClass('d-block');
+        });
+
+        // Update Wishlist Count dynamically
+        function updateWishlistCount() {
+            fetch("{{ route('wishlist.count') }}")
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Wishlist count data:', data);
+                    if (document.getElementById('wishlist-count')) {
+                        document.getElementById('wishlist-count').textContent = data.wishlist_count;
+                    }
+                })
+                .catch(error => console.error('Error fetching wishlist count:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateWishlistCount();
+        });
+    </script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
