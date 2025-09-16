@@ -37,5 +37,9 @@ class AppServiceProvider extends ServiceProvider
         View::composer('frontend.partials.mini-cart', function ($view) {
             $view->with('miniCart', CartHelper::getMiniCartData());
         });
+
+        View::composer('frontend.partials.mini-wishlist', function ($view) {
+            $view->with('miniWishlist', \App\Helpers\WishlistHelper::getMiniWishlistData());
+        });
     }
 }

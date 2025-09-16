@@ -15,6 +15,41 @@
         padding: 0;
         line-height: 1.4;
     }
+
+    .mini-wishlist {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 360px;
+        height: 100%;
+        background: #fff;
+        z-index: 9999;
+        overflow-y: auto;
+        display: none;
+        box-shadow: -3px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .mini-wishlist .mini-wishlist-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: calc(100% - 360px);
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 9998;
+    }
+
+    .mini-wishlist .close-miniwishlist {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .mini-wishlist .cart-white {
+        padding: 20px;
+    }
 </style>
 
 <div class="mobile-footer-con">
@@ -305,6 +340,20 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Wishlist popup -->
+<div class="mini-wishlist d-none">
+    <div class="mini-wishlist-overlay"></div>
+    <div class="cart-white">
+        <div class="close-miniwishlist"><i class="fa-solid fa-xmark"></i></div>
+        <div class="cart-logo">
+            <h4>My Wishlist</h4>
+        </div>
+        <div id="mini-wishlist-data">
+            @include('frontend.partials.mini-wishlist')
         </div>
     </div>
 </div>
@@ -738,6 +787,15 @@
     $(".close-minicart, .mini-cart-overlay").click(function() {
         $('.mini-cart').addClass('d-none');
         $('.mini-cart').removeClass('d-block');
+    });
+    // Open wishlist
+    $(".wishlist-popup").click(function() {
+        $('.mini-wishlist').removeClass('d-none').addClass('d-block');
+    });
+
+    // Close wishlist
+    $(".close-miniwishlist, .mini-wishlist-overlay").click(function() {
+        $('.mini-wishlist').addClass('d-none').removeClass('d-block');
     });
 </script>
 
