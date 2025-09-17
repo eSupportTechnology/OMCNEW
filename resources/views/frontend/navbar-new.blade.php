@@ -148,6 +148,15 @@
                                         </a>
                                     </div>
 
+                                    <div class="mobile-icon-item mobile-wishlist wishlist-popup">
+                                        <a href="javascript:void(0)" class="mobile-wishlist-link">
+                                            <div class="mobile-cart-wrapper">
+                                                <i class="ph ph-heart mobile-cart-icon" style="color:#2b96c5"></i>
+                                                <span class="mobile-cart-count" id="wishlist-count-mobile">{{ $wishlistCount ?? 0 }}</span>
+                                            </div>
+                                        </a>
+                                    </div>
+
                                     <!-- Search Icon -->
                                     <div class="mobile-icon-item">
                                         <button class="mobile-search-btn ">
@@ -610,53 +619,6 @@
                                         </div>
 
                                     </div>
-
-
-
-                                    <!-- <div class="site-converters">
-                                <div> <img class="flag"
-                                        src="frontend/newstyle/assets/images/latest-icon/currency-new.png">
-                                </div>
-                                <div class="dropdown">
-                                    <div class="txt-lan">
-                                        EN/
-                                    </div>
-                                    <div class="txt-currency">LKR
-                                        <i class="fa-solid fa-chevron-down"></i>
-                                    </div>
-                                    <div class="dropdown-box">
-                                        <div class="form-group">
-                                            <label>Language</label>
-                                            <select name="username" id="username" required="required" onchange="if (!window.__cfRLUnblockHandlers) return false; window.location.href = this.value" class="form-select" data-cf-modified-a071cb3ff60724c4b8f55cf9-=""> -->
-                                    <!-- <option>EN (English)</option>
-                                            <option>SN (Sinhala)</option>
-                                            <option>TM (Tamil)</option> -->
-
-                                    <!-- <option value="?locale=en"
-                                                        selected>
-                                                        English</option>
-
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Currency</label>
-                                            <select name="username" class="currency form-select"
-                                                required="required" > -->
-
-
-                                    <!-- <option>LKR</option>
-                                             <option>USD</option> -->
-
-                                    <!-- <option value="?currency=USD"
-                                                            >
-                                                            USD</option>
-                                                                                                                                                                                                                            <option value="?currency=LKR"
-                                                            selected>
-                                                            LKR</option>
-                                                                                                                                                        </select>
-                                        </div> -->
-                                    <!-- <button class="btn btn-site-default w-100">Select</button> -->
-                                    <!-- </div> -->
                                 </div>
                             </div>
                         </div>
@@ -995,24 +957,7 @@
     </script>
     </div>
     </div>
-
-
-
-
-
     <!-- mobile header end -->
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
