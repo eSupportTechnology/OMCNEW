@@ -384,6 +384,12 @@
     .shadow-hover:hover {
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     }
+
+    .product-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 </style>
 <main style="margin-top: 58px">
     <div class="container pt-4 px-4">
@@ -439,8 +445,7 @@
                             <div class="row">
                                 @foreach($hotDeals as $product)
                                 <div class="col-md-3 mb-7">
-                                    <div class="deal-items position-relative p-3 border rounded">
-
+                                    <div class="deal-items position-relative p-3 border rounded d-flex flex-column h-100">
                                         <!-- Checkbox -->
                                         <input type="checkbox" class="select-item-checkbox" data-product-id="{{ $product->product_id }}" style="position: absolute; left: 12px; top: 12px;">
 
@@ -451,15 +456,12 @@
                                         <img src="{{ asset('storage/default-image.png') }}" alt="Default Image" class="img-fluid mb-2">
                                         @endif
 
-                                        <p>{{ $product->product_name }}</p>
-                                        <div class="price mb-2">Rs.{{ $product->affiliate_price }}</div>
-
+                                        <p class="product-title mb-1">{{ $product->product_name }}</p>
+                                        <div class="price mb-1">Rs.{{ $product->affiliate_price }}</div>
                                         @php
                                         $commissionPrice = $product->total_price - $product->affiliate_price;
                                         @endphp
-                                        <div class="commission mb-2">
-                                            Est. Commission Rs. {{ $commissionPrice }} | {{ $product->commission_percentage }}%
-                                        </div>
+                                        <div class="commission mb-2">Est. Commission Rs. {{ $commissionPrice }} | {{ $product->commission_percentage }}%</div>
 
                                         <!-- Color Options -->
                                         @if ($product->variations->where('type', 'Color')->isNotEmpty())
@@ -469,7 +471,7 @@
                                                 @foreach ($product->variations->where('type', 'Color') as $color)
                                                 @if ($color->quantity > 0)
                                                 <button class="color-option btn border rounded-circle"
-                                                    style="width: 24px; height: 24px; background-color: '{{ $color->hex_value }}';"
+                                                    style="width: 24px; height: 24px; background-color: {{ $color->hex_value }};"
                                                     data-color="{{ $color->hex_value }}"
                                                     data-color-name="{{ $color->value }}"
                                                     data-product-id="{{ $product->product_id }}"
@@ -505,17 +507,19 @@
                                         <input type="hidden" class="selected-color" id="color-{{ $product->product_id }}">
                                         <input type="hidden" class="selected-size" id="size-{{ $product->product_id }}">
 
-                                        <!-- Action Buttons -->
-                                        <a href="#" class="btn btn-primary btn_promote w-100 mb-2"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#promoteModal-{{ $product->product_id }}">
-                                            Promote Now
-                                        </a>
+                                        <!-- Buttons -->
+                                        <div class="mt-auto">
+                                            <a href="#" class="btn btn-primary btn_promote w-100 mb-2"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#promoteModal-{{ $product->product_id }}">
+                                                Promote Now
+                                            </a>
 
-                                        <button class="btn btn-success btn_add_to_cart_affiliate w-100"
-                                            data-product-id="{{ $product->product_id }}">
-                                            Buy Now
-                                        </button>
+                                            <button class="btn btn-success btn_add_to_cart_affiliate w-100"
+                                                data-product-id="{{ $product->product_id }}">
+                                                Buy Now
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 

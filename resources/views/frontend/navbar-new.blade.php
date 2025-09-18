@@ -515,7 +515,7 @@
                                                     </span>
                                                     <img src="{{ asset('frontend/newstyle/assets/images/wishlist-icon-color.png') }}" class="wishlist-img">
                                                 </div>
-                                                <span class="span-wishlist ms-1">Wishlist</span>
+                                                <span class="span-wishlist">Wishlist</span>
                                             </a>
                                         </div>
 
