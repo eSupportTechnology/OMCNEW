@@ -255,6 +255,7 @@ use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\ReturnProductController;
 use App\Http\Controllers\ReturnRequestController;
+use App\Http\Controllers\ReturnRequestStatusController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShippingChargeController;
 use App\Http\Controllers\SocialController;
@@ -540,6 +541,10 @@ Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallba
 Route::get('auth/facebook', [SocialController::class, 'redirectToFacebook'])->name('facebook.login');
 Route::get('auth/facebook/callback', [SocialController::class, 'handleFacebookCallback'])->name('facebook.callback');
 
+Route::prefix('admin')->group(function () {
+    Route::get('return_requests', [ReturnRequestStatusController::class, 'index'])->name('return_requests.index');
+    Route::post('return_requests/{id}/update-status', [ReturnRequestStatusController::class, 'updateStatus'])->name('return_requests.updateStatus');
+    Route::delete('return_requests/{id}', [ReturnRequestStatusController::class, 'destroy'])->name('return_requests.destroy');
+});
 Route::get('return-product', [ReturnRequestController::class, 'create'])->name('return-product');
 Route::post('return-product', [ReturnRequestController::class, 'store'])->name('return-product.store');
-
