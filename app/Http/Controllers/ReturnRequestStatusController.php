@@ -45,14 +45,4 @@ class ReturnRequestStatusController extends Controller
         $returnRequest->delete();
         return back()->with('success', 'Return request deleted successfully');
     }
-    public function create()
-    {
-        $userId = Auth::id();
-
-        $orders = CustomerOrder::where('user_id', $userId)
-            ->where('status', 'Delivered')
-            ->get();
-
-        return view('frontend.ReturnProduct', compact('orders'));
-    }
 }

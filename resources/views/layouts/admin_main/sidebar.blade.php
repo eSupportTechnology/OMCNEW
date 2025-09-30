@@ -133,7 +133,8 @@
             <a href="{{ route('return_requests.index') }}"
                 class="list-group-item list-group-item-action py-2 {{ request()->routeIs('return_requests.index') ? 'active' : '' }}"
                 data-mdb-ripple-init>
-                <i class="fas fa-shopping-cart text-muted"></i><span class="text-muted">Return Products</span>
+                <i class="fas fa-undo text-muted"></i>
+                <span class="text-muted">Return Products</span>
             </a>
 
             <a href="{{ route('manage_reviews') }}"
