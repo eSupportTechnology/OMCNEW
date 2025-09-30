@@ -10,14 +10,17 @@ class CreateReturnRequestsTable extends Migration
     {
         Schema::create('return_requests', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('user_id');
-            $table->string('reason')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+            $table->foreignId('order_id')->constrained('customer_order')->onDelete('cascade');
+
+            $table->string('billing_last_name');
+            $table->string('email');
+            $table->text('reason')->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
 
-            $table->foreign('order_id')->references('id')->on('customer_order')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unique(['user_id', 'order_id']);
         });
     }
 

@@ -543,6 +543,7 @@
                     <div class="tab-pane fade  show active " id="v-pills-five" role="tabpanel"
                         aria-labelledby="v-pills-five-tab">
                         <h3 class="title-terms">Return Products Request</h3>
+                        @auth
                         @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
@@ -569,7 +570,18 @@
                                 <p class="order-title">Order Information</p>
                                 <div class="form-group col-sm-6">
                                     <label class="fs-14">Order ID<span class="req">*</span></label>
-                                    <input type="text" class="form-control" name="order_code" required>
+                                    @if($orders->count() > 0)
+                                    <select class="form-control" name="order_id" required>
+                                        <option value="">-- Select Your Order --</option>
+                                        @foreach($orders as $order)
+                                        <option value="{{ $order->id }}">
+                                            {{ $order->order_code }} - {{ $order->created_at->format('d M Y') }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @else
+                                    <p class="text-danger">You have no delivered orders to return.</p>
+                                    @endif
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label class="fs-14">Billing Last Name <span class="req">*</span></label>
@@ -577,7 +589,7 @@
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <label class="fs-14">Email<span class="req">*</span></label>
-                                    <input type="email" class="form-control" name="email" required>
+                                    <input type="email" class="form-control" name="email" value="{{ auth()->user()->email }}" readonly>
                                 </div>
                                 <div class="form-group col-sm-12">
                                     <label class="fs-14">Reason for return</label>
@@ -585,12 +597,9 @@
                                 </div>
                                 <div class="form-group col-sm-12">
                                     <div class="tacbox terms-conditions-container">
-                                        <input id="t_and_c_agree" type="checkbox" name="t_and_c_agree" required="required"
-                                            data-parsley-error-message="Please agree to Terms &amp; Conditions."
-                                            data-parsley-errors-container="#t_and_c_error_container"
-                                            data-parsley-multiple="t_and_c_agree"> <label for="checkbox" class="fs-14">I
-                                            agree
-                                            to <a href="terms-and-conditions.html">Terms &amp;
+                                        <input id="t_and_c_agree" type="checkbox" name="t_and_c_agree" required>
+                                        <label for="checkbox" class="fs-14">I agree
+                                            to <a href="{{ route('terms-condition') }}">Terms and
                                                 Conditions</a></label>
                                     </div>
                                 </div>
@@ -599,6 +608,9 @@
                                 </div>
                             </div>
                         </form>
+                        @else
+                        <p class="alert alert-warning">You must <a href="{{ route('login') }}">login</a> to make a return request.</p>
+                        @endauth
                     </div>
 
                 </div>
