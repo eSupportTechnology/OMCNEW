@@ -115,38 +115,37 @@
         }
 
     }
+
     /* Default size for large screens */
-.dashboard-nav .nav-link {
-    font-size: 1rem; /* ~16px */
-    padding: 0.75rem 1rem;
-}
-
-/* Medium screens (tablets) */
-@media (max-width: 1200px) {
     .dashboard-nav .nav-link {
-        font-size: 0.95rem;
-        padding: 0.65rem 0.9rem;
+        font-size: 1rem;
+        /* ~16px */
+        padding: 0.75rem 1rem;
     }
-}
 
-/* Small screens (phones) */
-@media (max-width: 991px) {
-    .dashboard-nav .nav-link {
-        font-size: 0.9rem;
-        padding: 0.6rem 0.85rem;
+    /* Medium screens (tablets) */
+    @media (max-width: 1200px) {
+        .dashboard-nav .nav-link {
+            font-size: 0.95rem;
+            padding: 0.65rem 0.9rem;
+        }
     }
-}
 
-/* Extra small screens (very small phones) */
-@media (max-width: 576px) {
-    .dashboard-nav .nav-link {
-        font-size: 0.85rem;
-        padding: 0.5rem 0.75rem;
+    /* Small screens (phones) */
+    @media (max-width: 991px) {
+        .dashboard-nav .nav-link {
+            font-size: 0.9rem;
+            padding: 0.6rem 0.85rem;
+        }
     }
-}
 
-
-
+    /* Extra small screens (very small phones) */
+    @media (max-width: 576px) {
+        .dashboard-nav .nav-link {
+            font-size: 0.85rem;
+            padding: 0.5rem 0.75rem;
+        }
+    }
 </style>
 
 <!-- Start Page Title -->
@@ -199,11 +198,14 @@
                         <a class="nav-link {{ request()->routeIs('change-password') ? 'active' : '' }}" href="{{ route('change-password') }}">Password</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('returns') ? 'active' : '' }}" href="{{ route('returns') }}">Returns</a>
+                        <a class="nav-link {{ request()->routeIs('returns.index') ? 'active' : '' }}"
+                            href="{{ route('returns.index') }}">
+                            Returns
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-danger" href="{{ route('logout') }}"
-                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             Log Out
                         </a>
                     </li>
@@ -227,7 +229,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <script>
     // Toggle sidebar visibility on mobile
-    document.getElementById('toggleSidebar').addEventListener('click', function () {
+    document.getElementById('toggleSidebar').addEventListener('click', function() {
         const sidebar = document.getElementById('dashboardSidebar').querySelector('.dashboard-sidebar');
         sidebar.classList.toggle('collapsed');
     });

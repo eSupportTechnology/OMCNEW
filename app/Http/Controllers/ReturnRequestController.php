@@ -74,4 +74,15 @@ class ReturnRequestController extends Controller
 
         return back()->with('success', 'Return request submitted successfully!');
     }
+    public function myReturns()
+    {
+        $userId = Auth::id();
+
+        $returns = ReturnRequest::with([
+            'order.items.product.images'
+        ])->where('user_id', Auth::id())->latest()->get();
+
+
+        return view('member_dashboard.returns', compact('returns'));
+    }
 }
