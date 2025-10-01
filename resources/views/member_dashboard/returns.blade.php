@@ -1,10 +1,9 @@
 @extends('member_dashboard.user_sidebar')
 
-
 @section('dashboard-content')
 
 <style>
-   .returns-container {
+    .returns-container {
         background-color: #f4f6f8;
         padding: 20px;
         border-radius: 8px;
@@ -56,12 +55,14 @@
         align-items: center;
         gap: 15px;
         margin-bottom: 20px;
-        flex-wrap: wrap; /* Ensure wrapping on smaller screens */
+        flex-wrap: wrap;
+        /* Ensure wrapping on smaller screens */
     }
 
     .review-product img {
         width: 100%;
-        max-width: 70px; /* Ensure responsive image size */
+        max-width: 70px;
+        /* Ensure responsive image size */
         height: auto;
     }
 
@@ -76,7 +77,8 @@
 
     .refund-status {
         margin-left: 20px;
-        flex-shrink: 0; /* Prevent refund status from shrinking */
+        flex-shrink: 0;
+        /* Prevent refund status from shrinking */
     }
 
     .refund-approved {
@@ -90,7 +92,8 @@
     /* Responsive adjustments */
     @media (max-width: 768px) {
         .return-header {
-            flex-direction: column; /* Stack elements vertically on smaller screens */
+            flex-direction: column;
+            /* Stack elements vertically on smaller screens */
             align-items: flex-start;
         }
 
@@ -100,75 +103,108 @@
         }
 
         .review-product {
-            flex-direction: column; /* Stack product details vertically on smaller screens */
+            flex-direction: column;
+            /* Stack product details vertically on smaller screens */
             align-items: flex-start;
         }
 
         .refund-status {
             margin-left: 0;
-            margin-top: 10px; /* Add space between product details and refund status on small screens */
+            margin-top: 10px;
+            /* Add space between product details and refund status on small screens */
         }
     }
 
     @media (max-width: 480px) {
         .review-product img {
-            max-width: 50px; /* Make the image smaller on very small screens */
+            max-width: 50px;
+            /* Make the image smaller on very small screens */
         }
 
         .review-product-info {
-            font-size: 12px; /* Adjust text size for smaller screens */
+            font-size: 12px;
+            /* Adjust text size for smaller screens */
         }
 
         .refund-approved {
-            font-size: 11px; /* Adjust refund status font size for smaller screens */
+            font-size: 11px;
+            /* Adjust refund status font size for smaller screens */
         }
     }
 </style>
-
 <div class="returns-container">
     <h2>My Returns</h2>
 
+    @forelse($returns as $return)
     <div class="return-item">
         <div class="return-header">
             <div class="return-info">
-                <p>Returned on <span id="return-date"></span> <span class="return-location">Return to OMC</span></p>
-                <p>Order <a href="#" class="order-link">#209958310692054</a></p>
+                <p>
+                    Returned on {{ $return->created_at->format('Y-m-d H:i:s') }}
+                    <span class="return-location">Return to OMC</span>
+                </p>
+                <p>
+                    Order
+                    <a href="#" class="order-link">#{{ $return->order->order_code ?? 'N/A' }}</a>
+                </p>
             </div>
             <div class="more-details">
-                <a href="{{ route('returns.details') }}" class="more-details-link">MORE DETAILS</a>
+                <a href="{{ route('returns.details', $return->id) }}" class="more-details-link">MORE DETAILS</a>
             </div>
         </div>
 
+        @foreach($return->order->items as $item)
         <div class="review-product">
             <div class="col-md-1 d-flex align-items-center">
                 <div style="margin-right: 15px;">
-                    <a href="#"><img src="\assets\images\d (1).png" alt="Product Image"></a>
+                    <a href="#">
+                        @if($item->product && $item->product->images->first())
+                        <img src="{{ asset('storage/' . $item->product->images->first()->image_path) }}" alt="Product Image">
+                        @else
+                        <img src="/assets/images/no-image.png" alt="No Image">
+                        @endif
+
+                    </a>
                 </div>
             </div>
 
             <div class="col-md-3 d-flex flex-column justify-content-center review-product-info">
-                <span>Sara Off Red Strape Dress</span>
+                <span>{{ $item->product->product_name ?? 'Product' }}</span>
                 <div>
-                    <span class="me-2">Color: <span>Yellow</span></span> |
-                    <span class="me-2 ms-2">Size: <span>M</span></span> |
-                    <span class="ms-2">Qty: <span>1</span></span>
+                    <span class="me-2">Color: <span>{{ $item->color ?? '-' }}</span></span> |
+                    <span class="me-2 ms-2">Size: <span>{{ $item->size ?? '-' }}</span></span> |
+                    <span class="ms-2">Qty: <span>{{ $item->quantity ?? '-' }}</span></span>
                 </div>
-                <h6 class="mt-2" style="font-size: 13px;font-weight: bold;">Rs 3400</h6>
+                <h6 class="mt-2" style="font-size: 13px;font-weight: bold;">
+                    Rs {{ $item->cost ?? '0' }}
+                </h6>
             </div>
 
             <div class="refund-status">
+                @if($return->status === 'approved')
                 <span class="refund-approved">Your refund has been approved</span>
+                @elseif($return->status === 'pending')
+                <span class="refund-approved" style="background:#fff3cd; color:#856404;">Pending Review</span>
+                @else
+                <span class="refund-approved" style="background:#f8d7da; color:#721c24;">Rejected</span>
+                @endif
             </div>
         </div>
+        @endforeach
     </div>
+    @empty
+    <p>You have no return requests yet.</p>
+    @endforelse
 </div>
+
+
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const today = new Date();
-    const formatted = today.toISOString().split('T')[0]; // YYYY-MM-DD
-    const time = today.toTimeString().split(' ')[0];     // HH:MM:SS
-    document.getElementById("return-date").textContent = `${formatted} ${time}`;
-});
+    document.addEventListener("DOMContentLoaded", function() {
+        const today = new Date();
+        const formatted = today.toISOString().split('T')[0]; // YYYY-MM-DD
+        const time = today.toTimeString().split(' ')[0]; // HH:MM:SS
+        document.getElementById("return-date").textContent = `${formatted} ${time}`;
+    });
 </script>
 
 @endsection

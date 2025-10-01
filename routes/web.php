@@ -548,3 +548,4 @@ Route::prefix('admin')->group(function () {
 });
 Route::get('return-product', [ReturnRequestController::class, 'create'])->name('return-product');
 Route::post('return-product', [ReturnRequestController::class, 'store'])->name('return-product.store');
+Route::get('/my-returns', [ReturnRequestController::class, 'myReturns'])->name('returns.index');
