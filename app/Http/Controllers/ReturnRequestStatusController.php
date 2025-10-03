@@ -18,20 +18,16 @@ class ReturnRequestStatusController extends Controller
 
     public function updateStatus(Request $request, $id)
     {
+        $returnRequest = ReturnRequest::findOrFail($id);
+
         $request->validate([
-            'status' => 'required|in:pending,approved,rejected',
+            'status' => 'required|string',
         ]);
-
-        $returnRequest = ReturnRequest::find($id);
-
-        if (!$returnRequest) {
-            return response()->json(['success' => false, 'message' => 'Return request not found']);
-        }
 
         $returnRequest->status = $request->status;
         $returnRequest->save();
 
-        return response()->json(['success' => true, 'message' => 'Status updated successfully']);
+        return response()->json(['success' => true, 'status' => $request->status]);
     }
 
     public function destroy($id)

@@ -12,6 +12,7 @@ class ReturnRequest extends Model
     protected $fillable = [
         'order_id',
         'user_id',
+        'ra_code',
         'billing_last_name',
         'email',
         'reason',

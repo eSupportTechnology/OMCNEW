@@ -13,7 +13,7 @@ class CreateReturnRequestsTable extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
 
             $table->foreignId('order_id')->constrained('customer_order')->onDelete('cascade');
-
+            $table->string('ra_code')->unique();
             $table->string('billing_last_name');
             $table->string('email');
             $table->text('reason')->nullable();
