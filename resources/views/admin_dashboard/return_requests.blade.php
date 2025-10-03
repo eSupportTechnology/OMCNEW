@@ -14,7 +14,13 @@
     }
 
     .dropdown-menu {
-        min-width: 100px;
+        min-width: 150px;
+        position: absolute !important;
+        z-index: 9999 !important;
+    }
+
+    .table-responsive {
+        overflow: visible !important;
     }
 </style>
 
@@ -54,12 +60,16 @@
                         <td>{{ $request->email }}</td>
                         <td>
                             <span class="badge 
-                                    @if($request->status == 'pending') bg-warning 
-                                    @elseif($request->status == 'approved') bg-success 
-                                    @elseif($request->status == 'rejected') bg-danger 
-                                    @endif"
+                                @if($request->status == 'pending') bg-warning 
+                                @elseif($request->status == 'pickup') bg-info 
+                                @elseif($request->status == 'in_transit') bg-primary 
+                                @elseif($request->status == 'received') bg-secondary 
+                                @elseif($request->status == 'processing') bg-dark 
+                                @elseif($request->status == 'approved') bg-success 
+                                @elseif($request->status == 'rejected') bg-danger 
+                                @endif"
                                 id="status-{{ $request->id }}">
-                                {{ ucfirst($request->status) }}
+                                {{ ucfirst(str_replace('_', ' ', $request->status)) }}
                             </span>
                         </td>
                         <td>
@@ -67,20 +77,23 @@
                                 <button class="btn btn-sm btn-light" type="button" data-bs-toggle="dropdown">
                                     <i class="fas fa-ellipsis-v"></i>
                                 </button>
-                                <ul class="dropdown-menu">
-                                    @if($request->status == 'pending')
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#" onclick="updateStatus({{ $request->id }}, 'pending')">Pending</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="updateStatus({{ $request->id }}, 'pickup')">Pickup</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="updateStatus({{ $request->id }}, 'in_transit')">In Transit</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="updateStatus({{ $request->id }}, 'received')">Package Received</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="updateStatus({{ $request->id }}, 'processing')">Refund Processing</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="updateStatus({{ $request->id }}, 'approved')">Refund Approved</a></li>
+                                    <li><a class="dropdown-item text-danger" href="#" onclick="updateStatus({{ $request->id }}, 'rejected')">Rejected</a></li>
+
                                     <li>
-                                        <a class="dropdown-item" href="#" onclick="updateStatus({{ $request->id }}, 'approved')">Approve</a>
+                                        <hr class="dropdown-divider">
                                     </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#" onclick="updateStatus({{ $request->id }}, 'rejected')">Reject</a>
-                                    </li>
-                                    @endif
                                     <li>
                                         <form id="delete-form-{{ $request->id }}" action="{{ route('return_requests.destroy', $request->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <a class="dropdown-item" style="cursor:pointer;" onclick="confirmDelete('delete-form-{{ $request->id }}')">Delete</a>
+                                            <a class="dropdown-item text-danger" style="cursor:pointer;" onclick="confirmDelete('delete-form-{{ $request->id }}')">Delete</a>
                                         </form>
                                     </li>
                                 </ul>
@@ -98,7 +111,7 @@
     let csrfToken = '{{ csrf_token() }}';
 
     function updateStatus(requestId, status) {
-        if (!confirm(`Are you sure you want to mark this request as ${status}?`)) return;
+        if (!confirm(`Are you sure you want to mark this request as "${status.replace('_',' ')}"?`)) return;
 
         fetch(`/admin/return_requests/${requestId}/update-status`, {
                 method: 'POST',
@@ -114,9 +127,34 @@
             .then(data => {
                 if (data.success) {
                     const statusBadge = document.getElementById(`status-${requestId}`);
-                    statusBadge.textContent = status.charAt(0).toUpperCase() + status.slice(1);
-                    statusBadge.className = 'badge ' +
-                        (status == 'pending' ? 'bg-warning' : (status == 'approved' ? 'bg-success' : 'bg-danger'));
+                    statusBadge.textContent = status.charAt(0).toUpperCase() + status.slice(1).replace('_', ' ');
+
+                    // update badge color dynamically
+                    let badgeClass = 'badge ';
+                    switch (status) {
+                        case 'pending':
+                            badgeClass += 'bg-warning';
+                            break;
+                        case 'pickup':
+                            badgeClass += 'bg-info';
+                            break;
+                        case 'in_transit':
+                            badgeClass += 'bg-primary';
+                            break;
+                        case 'received':
+                            badgeClass += 'bg-secondary';
+                            break;
+                        case 'processing':
+                            badgeClass += 'bg-dark';
+                            break;
+                        case 'approved':
+                            badgeClass += 'bg-success';
+                            break;
+                        case 'rejected':
+                            badgeClass += 'bg-danger';
+                            break;
+                    }
+                    statusBadge.className = badgeClass;
                 } else {
                     alert('Error updating status: ' + data.message);
                 }

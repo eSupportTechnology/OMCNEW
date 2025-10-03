@@ -1,6 +1,5 @@
 @extends('member_dashboard.user_sidebar')
 
-
 @section('dashboard-content')
 <style>
     .details-container {
@@ -73,17 +72,15 @@
     .progress-container {
         max-width: 600px;
         margin: 0 auto;
-        padding: 0 15px; /* Add padding for responsiveness */
+        padding: 0 15px;
         gap: 10px;
-
     }
 
     .progressbar {
         display: flex;
         justify-content: space-between;
         position: relative;
-        margin-bottom: 40px;
-        margin-top: 40px;
+        margin: 40px 0;
     }
 
     .progressbar::before {
@@ -123,33 +120,15 @@
     .progress-step::before {
         content: attr(data-title);
         position: absolute;
-        top: 35px; /* Position the text below the bar */
-        width: 120px; /* Adjust width for text */
+        top: 35px;
+        width: 120px;
         text-align: center;
         font-size: 9px;
         color: #333;
     }
 
-    /* Active steps */
     .progress-step-active {
         background-color: green;
-    }
-
-    /* Button styles */
-    .btn2 {
-        background-color: green;
-        border: none;
-        padding: 7px 12px;
-        color: white;
-        cursor: pointer;
-        border-radius: 5px;
-        margin: 5px;
-    }
-
-    .btn2:disabled {
-        background-color: #ddd;
-        cursor: not-allowed;
-        color: #333333
     }
 
     @media screen and (max-width: 600px) {
@@ -159,37 +138,34 @@
         }
 
         .details-container {
-            flex-direction: column; /* Stack elements on smaller screens */
+            flex-direction: column;
         }
 
         .buttons {
-            flex-direction: column; /* Stack buttons vertically */
+            flex-direction: column;
         }
     }
 
     .notification {
         background-color: #f0f0f0;
         padding: 20px;
-        margin-bottom: 20px;
-        border-left: 4px solid #cccccc;
+        margin: 15px auto;
+        border-left: 4px solid #ccc;
         border-radius: 5px;
         width: 80%;
-        margin: 0 auto;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Apply a light shadow to the notification */
-        gap: 10px;
-        margin-top: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
     .notification p {
         font-size: 11px;
-        color: #333333;
+        color: #333;
     }
+
     .review-product {
         display: flex;
         align-items: center;
         gap: 15px;
-        margin-bottom: 15px;
-        margin-top: 15px;
+        margin: 15px 0;
     }
 
     .review-product-info {
@@ -200,62 +176,61 @@
 <h4 class="py-2 px-2">Return Details</h4>
 <div class="details-container" id="print-section">
     <div class="return-info">
-        <p>Returned on <span id="return-date"></span></p>
-        <p>Order <a href="#">#209958310692054</a></p>
-        <p>RA Code: <span>RN502430864292054</span></p>
+        <p>Returned on {{ $return->created_at->format('Y-m-d H:i:s') }}</p>
+        <p>Order <a href="#">#{{ $return->order->order_code ?? 'N/A' }}</a></p>
+        <p>RA Code: <span>{{ $return->ra_code ?? 'N/A' }}</span></p>
     </div>
     <div class="buttons">
         <button class="print-btn" onclick="printPage()">PRINT</button>
         <button class="download-btn" onclick="downloadPDF()">DOWNLOAD</button>
     </div>
     <div class="refund-info">
-        <p>Refund via Points</p>
+        <p>Refund via {{ ucfirst($return->refund_method ?? 'Points') }}</p>
     </div>
 </div>
 
+{{-- PROGRESS BAR --}}
 <div class="progress-container">
     <div class="progressbar">
         <div class="progress" id="progress"></div>
-        <div class="progress-step" data-title="1. We have received your return request"></div>
+        <div class="progress-step" data-title="1. Request Received"></div>
         <div class="progress-step" data-title="2. Pending Pick Up"></div>
-        <div class="progress-step" data-title="3. Your return package is on its way to our logistics facility"></div>
-        <div class="progress-step" data-title="4. Return Package Received"></div>
-        <div class="progress-step" data-title="5. Refund processing"></div>
-        <div class="progress-step" data-title="6. Your refund has been approved"></div>
-    </div>
-    <div class="buttons">
-        <button class="btn2" style="padding: 7px 12px; margin: 5px;" id="prev">Previous</button>
-        <button class="btn2" style="padding: 7px 12px; margin: 5px;" id="next">Next</button>
+        <div class="progress-step" data-title="3. In Transit"></div>
+        <div class="progress-step" data-title="4. Package Received"></div>
+        <div class="progress-step" data-title="5. Refund Processing"></div>
+        <div class="progress-step" data-title="6. Refund Approved"></div>
     </div>
 </div>
+
 <div class="notification">
-    <p style="font-size: 12px; color: #888; display: inline-block; margin-right: 10px;">
-        <strong>2024-09-27 17:02:55</strong>
-    </p>
-    <span style="font-size: 12px; color: #333; display: inline-block;">
-        The courier will contact you to arrange pick-up for the item within 5-7 working days from the date of return requested. Please pack the return product(s) securely and stick the return shipping label or write the tracking number and order number on the outer side of the package.
+    <p><strong>{{ $return->created_at->format('Y-m-d H:i:s') }}</strong></p>
+    <span>
+        The courier will contact you to arrange pick-up within 5-7 working days.
+        Please pack the return securely.
     </span>
 </div>
 
-
+@foreach($return->order->items as $item)
 <div class="review-product">
-    <div class="col-md-1 d-flex align-items-center">
-        <div style="margin-right: 15px;">
-            <a href="#"><img src="\assets\images\d (1).png" alt="Product Image" width="50" height="auto"></a>
-        </div>
+    <div style="margin-right: 15px;">
+        @if($item->product && $item->product->images->first())
+        <img src="{{ asset('storage/' . $item->product->images->first()->image_path) }}" width="50" alt="Product">
+        @else
+        <img src="/assets/images/no-image.png" width="50" alt="No Image">
+        @endif
     </div>
-
-    <div class="col-md-3 d-flex flex-column justify-content-center" style="font-size: 13px;">
-        <span style="font-weight: 600;">Sara Off Red Strape Dress</span>
+    <div class="review-product-info">
+        <span style="font-weight: 600;">{{ $item->product->product_name ?? 'Product' }}</span>
         <div>
-            <span class="me-2">Color: <span style="font-weight: 600;">Yellow</span></span> |
-            <span class="me-2 ms-2">Size: <span style="font-weight: 600;">M</span></span> |
-            <span class="ms-2">Qty: <span style="font-weight: 600;">1</span></span>
+            <span>Color: {{ $item->color ?? '-' }}</span> |
+            <span>Size: {{ $item->size ?? '-' }}</span> |
+            <span>Qty: {{ $item->quantity ?? '-' }}</span>
         </div>
-        <h6 class="mt-2" style="font-size: 13px;font-weight: bold;">Rs 3400</h6>
+        <h6>Rs {{ $item->cost ?? 0 }}</h6>
     </div>
-    <p style="font-size:13px;"><strong style="margin-left: 60px;">Reason:</strong> Item does not match description or picture</p>
+    <p><strong>Reason:</strong> {{ $return->reason ?? '-' }}</p>
 </div>
+@endforeach
 
 <script>
     // Print function
@@ -267,75 +242,55 @@
         document.body.innerHTML = originalContents;
     }
 
-    // Progress bar functionality
+    // Progress bar status mapping
+    const status = "{{ $return->status }}";
+    let stepIndex = 1;
+
+    switch (status) {
+        case "pending":
+            stepIndex = 1;
+            break;
+        case "pickup":
+            stepIndex = 2;
+            break;
+        case "in_transit":
+            stepIndex = 3;
+            break;
+        case "received":
+            stepIndex = 4;
+            break;
+        case "processing":
+            stepIndex = 5;
+            break;
+        case "approved":
+            stepIndex = 6;
+            break;
+        default:
+            stepIndex = 1;
+    }
+
     const progress = document.getElementById('progress');
-    const prevBtn = document.getElementById('prev');
-    const nextBtn = document.getElementById('next');
     const steps = document.querySelectorAll('.progress-step');
 
-    let currentStep = 1;
-
-    nextBtn.addEventListener('click', () => {
-        currentStep++;
-        if (currentStep > steps.length) {
-            currentStep = steps.length;
+    steps.forEach((step, idx) => {
+        if (idx < stepIndex) {
+            step.classList.add('progress-step-active');
         }
-        updateProgress();
     });
-
-    prevBtn.addEventListener('click', () => {
-        currentStep--;
-        if (currentStep < 1) {
-            currentStep = 1;
-        }
-        updateProgress();
-    });
-
-    function updateProgress() {
-        steps.forEach((step, idx) => {
-            if (idx < currentStep) {
-                step.classList.add('progress-step-active');
-            } else {
-                step.classList.remove('progress-step-active');
-            }
-        });
-
-        const progressActive = document.querySelectorAll('.progress-step-active');
-        progress.style.width = ((progressActive.length - 1) / (steps.length - 1)) * 100 + '%';
-
-        prevBtn.disabled = currentStep === 1;
-        nextBtn.disabled = currentStep === steps.length;
-    }
-
-    updateProgress();
+    progress.style.width = ((stepIndex - 1) / (steps.length - 1)) * 100 + '%';
 </script>
+
 <!-- Include jsPDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 <script>
-    window.addEventListener("DOMContentLoaded", () => {
-        const now = new Date();
-        const date = now.toISOString().split("T")[0];      // YYYY-MM-DD
-        const time = now.toTimeString().split(" ")[0];     // HH:MM:SS
-        document.getElementById("return-date").textContent = `${date} ${time}`;
-    });
-
     async function downloadPDF() {
-        const { jsPDF } = window.jspdf;
+        const {
+            jsPDF
+        } = window.jspdf;
         const doc = new jsPDF();
-
-        const dateSpan = document.getElementById("return-date");
-        const dateText = dateSpan ? dateSpan.textContent.trim() : "(no date)";
-        const locationText = document.querySelector(".return-location")?.textContent.trim() ?? "";
-
-        const fullText = `Returned on ${dateText} ${locationText}`;
-
-        console.log("PDF Content:", fullText); // Optional: debug
-
+        const fullText = document.getElementById("print-section").innerText;
         doc.text(fullText, 20, 30);
-        doc.save("generated.pdf");
+        doc.save("return-details.pdf");
     }
 </script>
-
-
 @endsection

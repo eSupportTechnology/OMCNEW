@@ -85,4 +85,11 @@ class ReturnRequestController extends Controller
 
         return view('member_dashboard.returns', compact('returns'));
     }
+
+    public function show($id)
+    {
+        $return = ReturnRequest::with(['order.items.product.images'])->findOrFail($id);
+
+        return view('member_dashboard.returns-details', compact('return'));
+    }
 }
