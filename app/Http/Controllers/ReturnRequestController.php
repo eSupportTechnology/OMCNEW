@@ -37,7 +37,6 @@ class ReturnRequestController extends Controller
             'reason' => 'nullable|string|max:500',
         ]);
 
-
         $userId = Auth::id();
 
         $order = CustomerOrder::where('id', $request->order_id)
@@ -58,7 +57,11 @@ class ReturnRequestController extends Controller
         }
 
         try {
+            $lastId = ReturnRequest::max('id') + 1;
+            $raCode = 'RA-' . now()->format('Ymd') . '-' . str_pad($lastId, 4, '0', STR_PAD_LEFT);
+
             ReturnRequest::create([
+                'ra_code' => $raCode,
                 'order_id' => $order->id,
                 'user_id' => $order->user_id,
                 'billing_last_name' => $request->billing_last_name,
@@ -74,6 +77,7 @@ class ReturnRequestController extends Controller
 
         return back()->with('success', 'Return request submitted successfully!');
     }
+
     public function myReturns()
     {
         $userId = Auth::id();

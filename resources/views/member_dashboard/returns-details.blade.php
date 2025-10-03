@@ -174,73 +174,111 @@
 </style>
 
 <h4 class="py-2 px-2">Return Details</h4>
-<div class="details-container" id="print-section">
-    <div class="return-info">
-        <p>Returned on {{ $return->created_at->format('Y-m-d H:i:s') }}</p>
-        <p>Order <a href="#">#{{ $return->order->order_code ?? 'N/A' }}</a></p>
-        <p>RA Code: <span>{{ $return->ra_code ?? 'N/A' }}</span></p>
-    </div>
-    <div class="buttons">
-        <button class="print-btn" onclick="printPage()">PRINT</button>
-        <button class="download-btn" onclick="downloadPDF()">DOWNLOAD</button>
-    </div>
-    <div class="refund-info">
-        <p>Refund via {{ ucfirst($return->refund_method ?? 'Points') }}</p>
-    </div>
-</div>
 
-{{-- PROGRESS BAR --}}
-<div class="progress-container">
-    <div class="progressbar">
-        <div class="progress" id="progress"></div>
-        <div class="progress-step" data-title="1. Request Received"></div>
-        <div class="progress-step" data-title="2. Pending Pick Up"></div>
-        <div class="progress-step" data-title="3. In Transit"></div>
-        <div class="progress-step" data-title="4. Package Received"></div>
-        <div class="progress-step" data-title="5. Refund Processing"></div>
-        <div class="progress-step" data-title="6. Refund Approved"></div>
-    </div>
-</div>
-
-<div class="notification">
-    <p><strong>{{ $return->created_at->format('Y-m-d H:i:s') }}</strong></p>
-    <span>
-        The courier will contact you to arrange pick-up within 5-7 working days.
-        Please pack the return securely.
-    </span>
-</div>
-
-@foreach($return->order->items as $item)
-<div class="review-product">
-    <div style="margin-right: 15px;">
-        @if($item->product && $item->product->images->first())
-        <img src="{{ asset('storage/' . $item->product->images->first()->image_path) }}" width="50" alt="Product">
-        @else
-        <img src="/assets/images/no-image.png" width="50" alt="No Image">
-        @endif
-    </div>
-    <div class="review-product-info">
-        <span style="font-weight: 600;">{{ $item->product->product_name ?? 'Product' }}</span>
-        <div>
-            <span>Color: {{ $item->color ?? '-' }}</span> |
-            <span>Size: {{ $item->size ?? '-' }}</span> |
-            <span>Qty: {{ $item->quantity ?? '-' }}</span>
+<div id="print-section">
+    <div class="details-container">
+        <div class="return-info">
+            <p>Returned on {{ $return->created_at->format('Y-m-d H:i:s') }}</p>
+            <p>Order <a href="#">#{{ $return->order->order_code ?? 'N/A' }}</a></p>
+            <p>RA Code: <span>{{ $return->ra_code ?? 'N/A' }}</span></p>
         </div>
-        <h6>Rs {{ $item->cost ?? 0 }}</h6>
+        <div class="refund-info">
+            <p>Refund via {{ ucfirst($return->refund_method ?? 'Points') }}</p>
+        </div>
     </div>
-    <p><strong>Reason:</strong> {{ $return->reason ?? '-' }}</p>
-</div>
-@endforeach
 
+    {{-- Progress Bar --}}
+    <div class="progress-container">
+        <div class="progressbar">
+            <div class="progress" id="progress"></div>
+            <div class="progress-step" data-title="1. Request Received"></div>
+            <div class="progress-step" data-title="2. Pending Pick Up"></div>
+            <div class="progress-step" data-title="3. In Transit"></div>
+            <div class="progress-step" data-title="4. Package Received"></div>
+            <div class="progress-step" data-title="5. Refund Processing"></div>
+            <div class="progress-step" data-title="6. Refund Approved"></div>
+        </div>
+    </div>
+
+    <div class="notification">
+        <p><strong>{{ $return->created_at->format('Y-m-d H:i:s') }}</strong></p>
+        <span>
+            The courier will contact you to arrange pick-up within 5-7 working days.
+            Please pack the return securely.
+        </span>
+    </div>
+
+    {{-- Products --}}
+    @foreach($return->order->items as $item)
+    <div class="review-product">
+        <div style="margin-right: 15px;">
+            @if($item->product && $item->product->images->first())
+            <img src="{{ asset('storage/' . $item->product->images->first()->image_path) }}" width="50" alt="Product">
+            @else
+            <img src="/assets/images/no-image.png" width="50" alt="No Image">
+            @endif
+        </div>
+        <div class="review-product-info">
+            <span style="font-weight: 600;">{{ $item->product->product_name ?? 'Product' }}</span>
+            <div>
+                <span>Color: {{ $item->color ?? '-' }}</span> |
+                <span>Size: {{ $item->size ?? '-' }}</span> |
+                <span>Qty: {{ $item->quantity ?? '-' }}</span>
+            </div>
+            <h6>Rs {{ $item->cost ?? 0 }}</h6>
+        </div>
+        <p><strong>Reason:</strong> {{ $return->reason ?? '-' }}</p>
+    </div>
+    @endforeach
+</div>
+
+<div class="buttons" style="margin: 10px 0; display: flex; gap: 10px; justify-content: flex-end;">
+    <button class="print-btn" onclick="printPage()">PRINT</button>
+    <button class="download-btn" onclick="downloadPDF()">DOWNLOAD</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
     // Print function
     function printPage() {
-        var printContents = document.getElementById('print-section').innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
+        const printContents = document.getElementById('print-section').innerHTML;
+        const printWindow = window.open('', '', 'height=600,width=800');
+        printWindow.document.write('<html><head><title>Return Details</title>');
+        printWindow.document.write('<style>body { font-family: Arial, sans-serif; padding: 20px; } .return-info p { margin: 5px 0; } </style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(printContents);
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
     }
+
+    async function downloadPDF() {
+        const {
+            jsPDF
+        } = window.jspdf;
+        const doc = new jsPDF('p', 'pt', 'a4');
+
+        // Select the content to print
+        const element = document.getElementById("print-section");
+
+        // Render the HTML to PDF
+        await doc.html(element, {
+            callback: function(doc) {
+                doc.save("return-details.pdf"); // <-- Auto download
+            },
+            x: 10,
+            y: 10,
+            html2canvas: {
+                scale: 0.5, // adjust scale for large content
+                useCORS: true // allow images to load
+            },
+            margin: [20, 20, 20, 20],
+            autoPaging: 'text'
+        });
+    }
+
 
     // Progress bar status mapping
     const status = "{{ $return->status }}";
@@ -287,10 +325,20 @@
         const {
             jsPDF
         } = window.jspdf;
-        const doc = new jsPDF();
-        const fullText = document.getElementById("print-section").innerText;
-        doc.text(fullText, 20, 30);
-        doc.save("return-details.pdf");
+        const doc = new jsPDF('p', 'pt', 'a4');
+
+        await doc.html(document.getElementById("print-section"), {
+            callback: function(doc) {
+                doc.save("return-details.pdf");
+            },
+            margin: [20, 20, 20, 20],
+            autoPaging: 'text',
+            x: 10,
+            y: 10,
+            html2canvas: {
+                scale: 0.5
+            }
+        });
     }
 </script>
 @endsection
