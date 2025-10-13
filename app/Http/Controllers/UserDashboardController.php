@@ -20,8 +20,10 @@ use Illuminate\Support\Facades\Log;
 class UserDashboardController extends Controller
 {
 
-    public function myOrders()
+    public function myOrders(Request$request)
     {
+        $tab = $request->query('tab', 'all-orders');
+         
         $orders = CustomerOrder::with(['items.product'])
             ->where('user_id', auth()->id())
             ->orderBy('created_at', 'desc')
@@ -41,7 +43,8 @@ class UserDashboardController extends Controller
             'inProgressOrders',
             'shippedOrders',
             'deliveredOrders',
-            'cancelledOrders'
+            'cancelledOrders',
+            'tab'
         ));
     }
 

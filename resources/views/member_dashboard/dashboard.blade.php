@@ -25,21 +25,21 @@
         <div class="bg-white rounded-xl shadow-sm p-4 md:p-6 mb-6">
             <h3 class="text-lg md:text-xl font-semibold text-blue-600 border-b border-blue-100 pb-3 mb-4">My Orders</h3>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div class="flex flex-col items-center p-3 hover:bg-gray-50 rounded-lg transition">
+                <a href="{{ route('myorders',['tab' => 'confirmed']) }}" class="flex flex-col items-center p-3 hover:bg-gray-50 rounded-lg transition">
                     <img src="https://icons.veryicon.com/png/128/miscellaneous/document-format/reviewed-5.png"
                         alt="Confirmed" class="w-40 h-40 mb-2">
                     <span class="text-xs md:text-sm text-center">Confirmed</span>
-                </div>
-                <div class="flex flex-col items-center p-3 hover:bg-gray-50 rounded-lg transition">
+                </a>
+                <a href="{{ route('myorders',['tab' => 'to_be_shipped']) }}" class="flex flex-col items-center p-3 hover:bg-gray-50 rounded-lg transition">
                     <img src="https://icons.veryicon.com/png/128/miscellaneous/cb/to-be-shipped-25.png" alt="To be shipped"
                         class="w-40 h-40 mb-2">
                     <span class="text-xs md:text-sm text-center">To be shipped</span>
-                </div>
-                <div class="flex flex-col items-center p-3 hover:bg-gray-50 rounded-lg transition">
+                </a>
+                <a href="{{ route('myorders',['tab' => 'shipped']) }}" class="flex flex-col items-center p-3 hover:bg-gray-50 rounded-lg transition">
                     <img src="https://icons.veryicon.com/png/128/miscellaneous/bigmk_app_icon/in-transit.png" alt="Shipped"
                         class="w-40 h-40 mb-2">
                     <span class="text-xs md:text-sm text-center">Shipped</span>
-                </div>
+                </a>
                 <a href="{{ route('myreviews') }}"
                     class="flex flex-col items-center p-3 hover:bg-gray-50 rounded-lg transition">
                     <img src="https://icons.veryicon.com/png/o/application/collaborative-software-foundation-icon/comment-235.png"
