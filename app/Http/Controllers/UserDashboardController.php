@@ -33,9 +33,11 @@ class UserDashboardController extends Controller
         $inProgressOrders = $orders->filter(function ($order) {
             return $order->status === 'In Progress' || $order->status === 'Paid';
         });
+        
         $shippedOrders = $orders->where('status', 'Shipped');
         $deliveredOrders = $orders->where('status', 'Delivered');
         $cancelledOrders = $orders->where('status', 'Cancelled');
+        $confirmedOrders = $orders->where('status', 'Confirmed');
 
         return view('member_dashboard.myorders', compact(
             'orders',
@@ -44,7 +46,8 @@ class UserDashboardController extends Controller
             'shippedOrders',
             'deliveredOrders',
             'cancelledOrders',
-            'tab'
+            'tab',
+            'confirmedOrders'
         ));
     }
 
