@@ -31,7 +31,8 @@
     <button class="tab-button mb-1 {{ $tab == 'all-orders' ? 'active': '' }}" data-target="all-orders">All Orders</button>
     <button class="tab-button mb-1 {{ $tab == 'to_be_shipped' ? 'active' : '' }}" data-target="in-progress-orders">In Progress</button>
     <button class="tab-button mb-1 {{ $tab == 'shipped' ? 'active' : '' }}" data-target="shipped-orders">Shipped</button>
-    <button class="tab-button mb-1 {{ $tab == 'confirmed' ? 'active' : '' }}" data-target="delivered-orders">Delivered</button>
+    <button class="tab-button" data-target="delivered-orders">Delivered</button>
+    <button class="tab-button mb-1 {{ $tab == 'confirmed' ? 'active' : '' }}" data-target="delivered-orders">Confirmed</button>
 </div>
 
     <div class="order-filter ms-auto mb-3">
