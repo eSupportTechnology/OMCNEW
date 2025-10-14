@@ -20,9 +20,8 @@ use Illuminate\Support\Facades\Log;
 class UserDashboardController extends Controller
 {
 
-    public function myOrders(Request$request)
+    public function myOrders()
     {
-        $tab = $request->query('tab', 'all-orders');
          
         $orders = CustomerOrder::with(['items.product'])
             ->where('user_id', auth()->id())
@@ -37,7 +36,6 @@ class UserDashboardController extends Controller
         $shippedOrders = $orders->where('status', 'Shipped');
         $deliveredOrders = $orders->where('status', 'Delivered');
         $cancelledOrders = $orders->where('status', 'Cancelled');
-        $confirmedOrders = $orders->where('status', 'Confirmed');
 
         return view('member_dashboard.myorders', compact(
             'orders',
@@ -46,8 +44,6 @@ class UserDashboardController extends Controller
             'shippedOrders',
             'deliveredOrders',
             'cancelledOrders',
-            'tab',
-            'confirmedOrders'
         ));
     }
 
