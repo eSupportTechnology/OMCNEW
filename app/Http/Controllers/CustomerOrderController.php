@@ -108,9 +108,10 @@ class CustomerOrderController extends Controller
             'discount' => 0,
             'user_id' => Auth::id(),
             'status' => 'Confirmed',
-            'tracking_id' => session('tracking_id') ?? null, // safe for live
+            'tracking_id' => session('tracking_id'),
 
         ];
+Log::info('Tracking ID in session: ' . session('tracking_id'));
 
         $order = CustomerOrder::create($orderData);
 
@@ -220,9 +221,10 @@ class CustomerOrderController extends Controller
                 'discount' => 0,
                 'user_id' => Auth::id(),
                 'status' => 'Confirmed',
-                'tracking_id' => session('tracking_id') ?? null, // safe for live
+                'tracking_id' => session('tracking_id'),
 
             ];
+Log::info('Tracking ID in session: ' . session('tracking_id'));
 
             // Create the order
             $order = CustomerOrder::create($orderData);
