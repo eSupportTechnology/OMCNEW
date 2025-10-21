@@ -26,49 +26,49 @@ class PaymentController extends Controller
 {
 
     public function payment($order_code)
-{
-    if (!Auth::check()) {
-        return redirect()->route('login');
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+
+        $customerOrder = CustomerOrder::where('order_code', $order_code)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if (!$customerOrder) {
+            return redirect()->route('home');
+        }
+
+        // Fetch order items with product sale/offer info
+        $cart = $customerOrder->items()->with(['product.sale', 'product.specialOffer'])->get();
+
+        // Calculate subtotal (sum of cost * quantity)
+        $subtotal = $cart->sum(function ($item) {
+            return $item->cost * $item->quantity;
+        });
+
+        // Calculate total quantity of all items
+        $totalQuantity = $cart->sum('quantity');
+
+        $deliveryFee = $this->calculateTotalDeliveryFee($cart);
+
+        // Total = subtotal + delivery
+        $total = $subtotal + $deliveryFee;
+
+        // ✅ Update the order with calculated values
+        $customerOrder->update([
+            'total_cost'   => $total,
+            'delivery_fee' => $deliveryFee,
+        ]);
+
+        return view('frontend.payment', compact(
+            'customerOrder',
+            'order_code',
+            'subtotal',
+            'deliveryFee',
+            'total'
+        ));
     }
-
-    $customerOrder = CustomerOrder::where('order_code', $order_code)
-        ->where('user_id', Auth::id())
-        ->first();
-
-    if (!$customerOrder) {
-        return redirect()->route('home');
-    }
-
-    // Fetch order items with product sale/offer info
-    $cart = $customerOrder->items()->with(['product.sale', 'product.specialOffer'])->get();
-
-    // Calculate subtotal (sum of cost * quantity)
-    $subtotal = $cart->sum(function ($item) {
-        return $item->cost * $item->quantity;
-    });
-
-    // Calculate total quantity of all items
-    $totalQuantity = $cart->sum('quantity');
-
-    $deliveryFee = $this->calculateTotalDeliveryFee($cart);
-
-    // Total = subtotal + delivery
-    $total = $subtotal + $deliveryFee;
-
-    // ✅ Update the order with calculated values
-    $customerOrder->update([
-        'total_cost'   => $total,
-        'delivery_fee' => $deliveryFee,
-    ]);
-
-    return view('frontend.payment', compact(
-        'customerOrder',
-        'order_code',
-        'subtotal',
-        'deliveryFee',
-        'total'
-    ));
-}
 
 
 
@@ -215,8 +215,6 @@ class PaymentController extends Controller
         }
     }
 
-
-
     public function getOrderDetails($order_code)
     {
 
@@ -345,12 +343,20 @@ class PaymentController extends Controller
                 $order->update(['payment_status' => 'Paid']);
                 Log::info('Order marked as Paid', ['order_code' => $order->order_code]);
 
+                $tracking_id = session('tracking_id');
+                foreach ($order->items as $item) {
+                    app('App\Http\Controllers\CustomerOrderController')->trackReferral(
+                        $tracking_id,
+                        $item->product_id,
+                        $item->quantity
+                    );
+                }
+
                 // ✅ Send SMS to vendor
                 try {
                     $smsService = new DialogSMSService();
-                    $vendorMobile = env('SMS_PHONE_NUMBER'); // Change this to your vendor's actual mobile number
+                    $vendorMobile = env('SMS_PHONE_NUMBER');
                     $message = "New Card Order Received:\nOrder Code: {$order->order_code}\nTotal: Rs. {$order->total}";
-
                     $smsService->sendSMS($vendorMobile, $message);
                 } catch (\Exception $e) {
                     Log::error('Failed to send SMS to vendor: ' . $e->getMessage());
@@ -395,7 +401,6 @@ class PaymentController extends Controller
             if ($shippingCharge) {
                 $productDeliveryFee = $shippingCharge->charge;
                 $totalDeliveryFee += $productDeliveryFee;
-
             } else {
                 Log::warning("No matching shipping charge found for Product ID: {$productId}, Quantity: {$quantity}");
             }

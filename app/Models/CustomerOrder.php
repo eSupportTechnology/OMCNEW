@@ -30,7 +30,8 @@ class CustomerOrder extends Model
         'payment_status',
         'discount',
         'transaction_id',
-        'delivery_fee'
+        'delivery_fee',
+        'tracking_id',
     ];
 
 
@@ -48,6 +49,4 @@ class CustomerOrder extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
-
 }

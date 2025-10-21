@@ -37,22 +37,22 @@
         width: 28%;
     }
 
-    .table th, .table td {
+    .table th,
+    .table td {
         vertical-align: middle;
     }
-
-</style>  
+</style>
 
 <main style="margin-top: 58px">
     <div class="container px-5 py-5">
         @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
         @endif
 
         <div class="d-flex justify-content-between align-items-center mb-5">
-            <div class="me-auto"> 
+            <div class="me-auto">
                 <h3 class="mb-1">Order Details</h3>
                 <h5 class="mb-1 mt-2">Order #{{ $order->order_code }}</h5>
                 <span class="status {{ strtolower(str_replace(' ', '-', $order->status)) }} fw-bold" style="font-size: 13px;">
@@ -60,22 +60,46 @@
                 </span>
             </div>
             <div style="width: 20%;">
-                <div>Update Order Status</div>
                 <div class="card-body">
-                    <form action="{{ route('update_order_status', $order->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <div class="mb-3">
-                            <select id="orderStatus" name="status" class="form-select" required>
-                                <option value="In Progress" {{ $order->status == 'In Progress' ? 'selected' : '' }}>In Progress</option>
-                                <option value="Shipped" {{ $order->status == 'Shipped' ? 'selected' : '' }}>Shipped</option>
-                                <option value="Delivered" {{ $order->status == 'Delivered' ? 'selected' : '' }}>Delivered</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary p-2">Update</button>
-                    </form>
+                    <!-- Update Order Status -->
+                    <div class="mb-4">
+                        <div>Update Order Status</div>
+                        <form action="{{ route('update_order_status', $order->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="mb-2">
+                                <select id="orderStatus" name="status" class="form-select" required>
+                                    <option value="In Progress" {{ $order->status == 'In Progress' ? 'selected' : '' }}>In Progress</option>
+                                    <option value="Shipped" {{ $order->status == 'Shipped' ? 'selected' : '' }}>Shipped</option>
+                                    <option value="Delivered" {{ $order->status == 'Delivered' ? 'selected' : '' }}>Delivered</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary p-2 w-100">Update</button>
+                        </form>
+                    </div>
+
+                    @if ($order->payment_status !== 'Paid')
+                    <div>
+                        <div>Update Payment Status</div>
+                        <form action="{{ route('update_payment_status', $order->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="mb-2">
+                                <select id="paymentStatus" name="payment_status" class="form-select" required>
+                                    <option value="Paid" {{ strtolower($order->payment_status) == 'paid' ? 'selected' : '' }}>Paid</option>
+                                    <option value="Not Paid" {{ strtolower($order->payment_status) == 'not paid' ? 'selected' : '' }}>Not Paid</option>
+                                    <option value="Pending" {{ strtolower($order->payment_status) == 'pending' ? 'selected' : '' }}>Pending</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-success p-2 w-100">Update</button>
+                        </form>
+                    </div>
+                    @endif
+
                 </div>
             </div>
+
+
         </div>
 
 
@@ -119,7 +143,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Product ID</th>
-                                    <th scope="col">Image</th> 
+                                    <th scope="col">Image</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Color</th>
                                     <th scope="col">Size</th>
@@ -137,9 +161,9 @@
                                     <td>{{ $item->quantity }}</td>
                                     <td>
                                         @if($item->color)
-                                            <span style="display: inline-block; width: 20px; height: 20px; background-color: {{ $item->color }}; border: 1px solid #e8ebec; border-radius: 50%;"></span>
+                                        <span style="display: inline-block; width: 20px; height: 20px; background-color: {{ $item->color }}; border: 1px solid #e8ebec; border-radius: 50%;"></span>
                                         @else
-                                            -
+                                        -
                                         @endif
                                     </td>
                                     <td>
@@ -167,9 +191,9 @@
         </div>
 
 
-    
 
-        
+
+
     </div>
 </main>
 @endsection
