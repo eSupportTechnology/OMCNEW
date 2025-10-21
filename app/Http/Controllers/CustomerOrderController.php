@@ -108,6 +108,8 @@ class CustomerOrderController extends Controller
             'discount' => 0,
             'user_id' => Auth::id(),
             'status' => 'Confirmed',
+            'tracking_id' => session('tracking_id'),
+
         ];
 
         $order = CustomerOrder::create($orderData);
@@ -115,7 +117,7 @@ class CustomerOrderController extends Controller
         foreach ($cartArray as $item) {
 
             $tracking_id = session('tracking_id'); // Retrieve the tracking ID from session
-            $this->trackReferral($tracking_id, $item['product_id'], $item['quantity']);
+            // $this->trackReferral($tracking_id, $item['product_id'], $item['quantity']);
 
             CustomerOrderItems::create([
                 'order_code' => $orderCode,
@@ -218,6 +220,8 @@ class CustomerOrderController extends Controller
                 'discount' => 0,
                 'user_id' => Auth::id(),
                 'status' => 'Confirmed',
+                'tracking_id' => session('tracking_id'),
+
             ];
 
             // Create the order
@@ -273,7 +277,7 @@ class CustomerOrderController extends Controller
                     'available_quantity' => $colorVariation->quantity
                 ]);
             }
-            $this->trackReferral(session('tracking_id'), $product->product_id, $quantity);
+            // $this->trackReferral(session('tracking_id'), $product->product_id, $quantity);
             // Redirect to payment
             return redirect()->route('payment', ['order_code' => $orderCode]);
         } catch (\Exception $e) {
@@ -285,6 +289,35 @@ class CustomerOrderController extends Controller
 
             // Redirect with error message
             return redirect()->back()->with('error', 'An error occurred while processing your order. Please try again.');
+        }
+    }
+
+    public function updatePaymentStatus(Request $request, $id)
+    {
+        $order = CustomerOrder::findOrFail($id);
+        $previousStatus = $order->payment_status;
+
+        $order->payment_status = $request->payment_status;
+        $order->save();
+
+        if ($previousStatus !== 'Paid' && $order->payment_status === 'Paid') {
+            app(\App\Http\Controllers\CustomerOrderController::class)->processAffiliateCommissions($order);
+        }
+
+        return redirect()->back()->with('success', 'Payment status updated successfully!');
+    }
+
+
+    private function processAffiliateCommissions(CustomerOrder $order)
+    {
+        if (!$order->tracking_id) {
+            return;
+        }
+
+        $orderItems = CustomerOrderItems::where('order_code', $order->order_code)->get();
+
+        foreach ($orderItems as $item) {
+            $this->trackReferral($order->tracking_id, $item->product_id, $item->quantity);
         }
     }
 }

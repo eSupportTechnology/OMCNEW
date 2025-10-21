@@ -370,6 +370,7 @@ Route::post('/set-order-code', [OrderController::class, 'setOrderCode'])->name('
 Route::delete('/admin/orders/{id}', [OrderController::class, 'destroy'])->name('orders.destroy');
 
 Route::put('/admin/orders/{id}/status', [OrderController::class, 'updateOrderStatus'])->name('update_order_status');
+Route::put('/admin/orders/{id}/update-payment-status', [CustomerOrderController::class, 'updatePaymentStatus'])->name('update_payment_status');
 
 Route::get('/admin/customers', [CustomerController::class, 'show_customers'])->name('customers');
 Route::get('/admin/customer-details/{user_id}', [CustomerController::class, 'showCustomerDetails'])->name('customer-details');
