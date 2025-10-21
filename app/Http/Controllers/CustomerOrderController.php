@@ -108,7 +108,7 @@ class CustomerOrderController extends Controller
             'discount' => 0,
             'user_id' => Auth::id(),
             'status' => 'Confirmed',
-            'tracking_id' => session('tracking_id'),
+            // 'tracking_id' => session('tracking_id'),
 
         ];
 
@@ -117,7 +117,7 @@ class CustomerOrderController extends Controller
         foreach ($cartArray as $item) {
 
             $tracking_id = session('tracking_id'); // Retrieve the tracking ID from session
-            // $this->trackReferral($tracking_id, $item['product_id'], $item['quantity']);
+            $this->trackReferral($tracking_id, $item['product_id'], $item['quantity']);
 
             CustomerOrderItems::create([
                 'order_code' => $orderCode,
@@ -220,7 +220,7 @@ class CustomerOrderController extends Controller
                 'discount' => 0,
                 'user_id' => Auth::id(),
                 'status' => 'Confirmed',
-                'tracking_id' => session('tracking_id'),
+                // 'tracking_id' => session('tracking_id'),
 
             ];
 
@@ -277,7 +277,7 @@ class CustomerOrderController extends Controller
                     'available_quantity' => $colorVariation->quantity
                 ]);
             }
-            // $this->trackReferral(session('tracking_id'), $product->product_id, $quantity);
+            $this->trackReferral(session('tracking_id'), $product->product_id, $quantity);
             // Redirect to payment
             return redirect()->route('payment', ['order_code' => $orderCode]);
         } catch (\Exception $e) {
