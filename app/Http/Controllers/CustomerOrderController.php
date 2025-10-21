@@ -111,7 +111,7 @@ class CustomerOrderController extends Controller
             'tracking_id' => session('tracking_id'),
 
         ];
-Log::info('Tracking ID in session: ' . session('tracking_id'));
+        Log::info('Tracking ID in session: ' . session('tracking_id'));
 
         $order = CustomerOrder::create($orderData);
 
@@ -224,7 +224,7 @@ Log::info('Tracking ID in session: ' . session('tracking_id'));
                 'tracking_id' => session('tracking_id'),
 
             ];
-Log::info('Tracking ID in session: ' . session('tracking_id'));
+            Log::info('Tracking ID in session: ' . session('tracking_id'));
 
             // Create the order
             $order = CustomerOrder::create($orderData);
