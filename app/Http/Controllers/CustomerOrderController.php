@@ -108,11 +108,9 @@ class CustomerOrderController extends Controller
             'discount' => 0,
             'user_id' => Auth::id(),
             'status' => 'Confirmed',
-            'tracking_id' => session('tracking_id'),
+            'tracking_id' => $request->input('tracking_id') ?? session('tracking_id'),
 
         ];
-        Log::info('Tracking ID in session: ' . session('tracking_id'));
-
         $order = CustomerOrder::create($orderData);
 
         foreach ($cartArray as $item) {
@@ -221,11 +219,9 @@ class CustomerOrderController extends Controller
                 'discount' => 0,
                 'user_id' => Auth::id(),
                 'status' => 'Confirmed',
-                'tracking_id' => session('tracking_id'),
+                'tracking_id' => $request->input('tracking_id') ?? session('tracking_id'),
 
             ];
-            Log::info('Tracking ID in session: ' . session('tracking_id'));
-
             // Create the order
             $order = CustomerOrder::create($orderData);
 
