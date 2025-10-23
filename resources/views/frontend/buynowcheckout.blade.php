@@ -151,7 +151,7 @@
                                 </div>
 
 
-                                <button type="submit" class="default-btn w-100">Proceed to Pay</button>
+                                <button type="submit" class="default-btn w-100">Proceed to Pay test</button>
                             </div>
                         </div>
                     </div>

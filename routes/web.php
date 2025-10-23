@@ -553,13 +553,18 @@ Route::get('/my-returns', [ReturnRequestController::class, 'myReturns'])->name('
 Route::get('/returns/{id}/details', [ReturnRequestController::class, 'show'])->name('returns.details');
 
 
+
 Route::get('/check-logs', function () {
-    $path = storage_path('logs/laravel.log');
-    if (!File::exists($path)) {
-        return 'No log file found.';
+    $logFiles = File::files(storage_path('logs'));
+
+    if (empty($logFiles)) {
+        return 'No log files found.';
     }
 
-    $logs = File::get($path);
-    // Show last 2000 characters only to avoid huge file
-    return nl2br(e(substr($logs, -2000)));
+    // Sort by modified time (newest first)
+    usort($logFiles, fn($a, $b) => $b->getMTime() <=> $a->getMTime());
+    $latestLog = $logFiles[0]->getPathname();
+
+    $logs = File::get($latestLog);
+    return nl2br(e(substr($logs, -4000)));
 });
