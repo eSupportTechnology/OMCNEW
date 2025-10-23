@@ -260,7 +260,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShippingChargeController;
 use App\Http\Controllers\SocialController;
 use App\Http\Middleware\AdminAuth;
-
+use Illuminate\Support\Facades\File;
 
 Route::get('/admin/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminLoginController::class, 'login'])->name('admin.login.post');
@@ -551,3 +551,15 @@ Route::get('return-product', [ReturnRequestController::class, 'create'])->name('
 Route::post('return-product', [ReturnRequestController::class, 'store'])->name('return-product.store');
 Route::get('/my-returns', [ReturnRequestController::class, 'myReturns'])->name('returns.index');
 Route::get('/returns/{id}/details', [ReturnRequestController::class, 'show'])->name('returns.details');
+
+
+Route::get('/check-logs', function () {
+    $path = storage_path('logs/laravel.log');
+    if (!File::exists($path)) {
+        return 'No log file found.';
+    }
+
+    $logs = File::get($path);
+    // Show last 2000 characters only to avoid huge file
+    return nl2br(e(substr($logs, -2000)));
+});
