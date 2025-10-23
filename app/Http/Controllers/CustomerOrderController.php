@@ -109,7 +109,7 @@ class CustomerOrderController extends Controller
             'discount' => 0,
             'user_id' => Auth::id(),
             'status' => 'Confirmed',
-            'tracking_id' => $request->input('tracking_id') ?? session('tracking_id') ?? null,
+            'tracking_id' => session('tracking_id'),
 
         ];
         $order = CustomerOrder::create($orderData);
@@ -222,7 +222,7 @@ class CustomerOrderController extends Controller
                 'discount' => 0,
                 'user_id' => Auth::id(),
                 'status' => 'Confirmed',
-                'tracking_id' => $request->input('tracking_id') ?? session('tracking_id') ?? null,
+            'tracking_id' => session('tracking_id'),
 
             ];
             // Create the order
