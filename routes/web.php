@@ -551,20 +551,3 @@ Route::get('return-product', [ReturnRequestController::class, 'create'])->name('
 Route::post('return-product', [ReturnRequestController::class, 'store'])->name('return-product.store');
 Route::get('/my-returns', [ReturnRequestController::class, 'myReturns'])->name('returns.index');
 Route::get('/returns/{id}/details', [ReturnRequestController::class, 'show'])->name('returns.details');
-
-
-
-Route::get('/check-logs', function () {
-    $logFiles = File::files(storage_path('logs'));
-
-    if (empty($logFiles)) {
-        return 'No log files found.';
-    }
-
-    // Sort by modified time (newest first)
-    usort($logFiles, fn($a, $b) => $b->getMTime() <=> $a->getMTime());
-    $latestLog = $logFiles[0]->getPathname();
-
-    $logs = File::get($latestLog);
-    return nl2br(e(substr($logs, -4000)));
-});
