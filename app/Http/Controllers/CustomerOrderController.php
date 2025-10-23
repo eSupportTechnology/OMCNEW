@@ -62,6 +62,7 @@ class CustomerOrderController extends Controller
             'postal_code' => 'required|string|max:10',
             'company_name' => 'nullable|string|max:255',
             'apartment' => 'nullable|string|max:255',
+            'tracking_id' => 'nullable|string|max:255',
         ]);
 
         $cart = Auth::check() ? CartItem::where('user_id', Auth::id())->with('product')->get() : collect(session('cart', []));
@@ -183,6 +184,8 @@ class CustomerOrderController extends Controller
                 'size' => 'nullable|string|max:255',
                 'color' => 'nullable|string|max:255',
                 'quantity' => 'required|integer|min:1',
+                'tracking_id' => 'nullable|string|max:255',
+
             ]);
 
             // Find the product
