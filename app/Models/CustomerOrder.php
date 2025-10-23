@@ -31,7 +31,7 @@ class CustomerOrder extends Model
         'discount',
         'transaction_id',
         'delivery_fee',
-        'tracking_id',
+        // 'tracking_id',
     ];
 
 

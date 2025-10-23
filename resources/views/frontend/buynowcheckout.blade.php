@@ -23,9 +23,9 @@
                 <input type="hidden" name="product_id" value="{{ $productData['product_id'] }}">
 
                 <!-- Hidden fields for size, color, and quantity -->
-@if(session()->has('tracking_id'))
+<!-- @if(session()->has('tracking_id'))
     <input type="hidden" name="tracking_id" value="{{ session('tracking_id') }}">
-@endif
+@endif -->
 
                 <input type="hidden" name="size" id="size" value="{{ old('size', $productData['size'] ?? '') }}">
                 <input type="hidden" name="color" id="color" value="{{ old('color', $productData['color'] ?? '') }}">

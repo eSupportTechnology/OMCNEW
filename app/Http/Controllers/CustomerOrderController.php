@@ -11,6 +11,7 @@ use App\Models\CustomerOrderItems;
 use App\Models\RaffleTicket;
 use App\Models\AffiliateReferral;
 use App\Models\CartItem;
+use App\Models\OrderAffiliate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -108,10 +109,19 @@ class CustomerOrderController extends Controller
             'discount' => 0,
             'user_id' => Auth::id(),
             'status' => 'Confirmed',
-            'tracking_id' => $request->input('tracking_id') ?? session('tracking_id') ?? null,
 
         ];
         $order = CustomerOrder::create($orderData);
+
+        $tracking_id = $request->input('tracking_id') ?? session('tracking_id') ?? null;
+
+        if ($tracking_id) {
+            // Store in separate table
+            OrderAffiliate::create([
+                'order_code' => $orderCode,
+                'tracking_id' => $tracking_id
+            ]);
+        }
 
         foreach ($cartArray as $item) {
 
@@ -219,11 +229,18 @@ class CustomerOrderController extends Controller
                 'discount' => 0,
                 'user_id' => Auth::id(),
                 'status' => 'Confirmed',
-                'tracking_id' => $request->input('tracking_id') ?? session('tracking_id') ?? null,
 
             ];
             // Create the order
             $order = CustomerOrder::create($orderData);
+
+            $tracking_id = $request->tracking_id ?? session('tracking_id') ?? null;
+            if ($tracking_id) {
+                OrderAffiliate::create([
+                    'order_code' => $orderCode,
+                    'tracking_id' => $tracking_id
+                ]);
+            }
 
             // Insert the order item into the order items table
             CustomerOrderItems::create([
@@ -299,23 +316,15 @@ class CustomerOrderController extends Controller
         $order->save();
 
         if ($previousStatus !== 'Paid' && $order->payment_status === 'Paid') {
-            app(\App\Http\Controllers\CustomerOrderController::class)->processAffiliateCommissions($order);
+            $affiliate = OrderAffiliate::where('order_code', $order->order_code)->first();
+            if ($affiliate) {
+                $orderItems = CustomerOrderItems::where('order_code', $order->order_code)->get();
+                foreach ($orderItems as $item) {
+                    $this->trackReferral($affiliate->tracking_id, $item->product_id, $item->quantity);
+                }
+            }
         }
 
         return redirect()->back()->with('success', 'Payment status updated successfully!');
-    }
-
-
-    private function processAffiliateCommissions(CustomerOrder $order)
-    {
-        if (!$order->tracking_id) {
-            return;
-        }
-
-        $orderItems = CustomerOrderItems::where('order_code', $order->order_code)->get();
-
-        foreach ($orderItems as $item) {
-            $this->trackReferral($order->tracking_id, $item->product_id, $item->quantity);
-        }
     }
 }
