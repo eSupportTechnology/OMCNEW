@@ -23,8 +23,9 @@
                 <input type="hidden" name="product_id" value="{{ $productData['product_id'] }}">
 
                 <!-- Hidden fields for size, color, and quantity -->
-                     <!-- <input type="hidden" name="tracking_id" value="{{ session('tracking_id') }}"> -->
-
+  @if(session('tracking_id'))
+        <input type="hidden" name="tracking_id" value="{{ session('tracking_id') }}">
+    @endif
                 <input type="hidden" name="size" id="size" value="{{ old('size', $productData['size'] ?? '') }}">
                 <input type="hidden" name="color" id="color" value="{{ old('color', $productData['color'] ?? '') }}">
                 <input type="hidden" name="quantity" id="quantity"
@@ -150,7 +151,7 @@
                                 </div>
 
 
-                                <button type="submit" class="default-btn w-100">Proceed to Pay test</button>
+                                <button type="submit" class="default-btn w-100">Proceed to Pay</button>
                             </div>
                         </div>
                     </div>

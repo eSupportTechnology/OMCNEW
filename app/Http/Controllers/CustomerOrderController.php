@@ -108,9 +108,15 @@ class CustomerOrderController extends Controller
             'discount' => 0,
             'user_id' => Auth::id(),
             'status' => 'Confirmed',
-            'tracking_id' => $request->input('tracking_id') ?? null
+            'tracking_id' => $request->filled('tracking_id') ? $request->input('tracking_id') : null
 
         ];
+        Log::info('Tracking ID on submit store:', ['tracking_id' => $request->input('tracking_id'), 'session' => session('tracking_id')]);
+        Log::info('BuyNow form submitted store', [
+            'tracking_id_from_request' => $request->input('tracking_id'),
+            'tracking_id_from_session' => session('tracking_id'),
+        ]);
+
         $order = CustomerOrder::create($orderData);
 
         foreach ($cartArray as $item) {
@@ -219,9 +225,15 @@ class CustomerOrderController extends Controller
                 'discount' => 0,
                 'user_id' => Auth::id(),
                 'status' => 'Confirmed',
-                'tracking_id' => $request->input('tracking_id') ?? null
+                'tracking_id' => $request->filled('tracking_id') ? $request->input('tracking_id') : null
 
             ];
+            Log::info('Tracking ID on submit buynowstore:', ['tracking_id' => $request->input('tracking_id'), 'session' => session('tracking_id')]);
+            Log::info('BuyNow form submitted buynowstore', [
+                'tracking_id_from_request' => $request->input('tracking_id'),
+                'tracking_id_from_session' => session('tracking_id'),
+            ]);
+
             // Create the order
             $order = CustomerOrder::create($orderData);
 
