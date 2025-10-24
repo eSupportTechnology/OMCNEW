@@ -222,7 +222,7 @@ class CustomerOrderController extends Controller
                 'discount' => 0,
                 'user_id' => Auth::id(),
                 'status' => 'Confirmed',
-            'tracking_id' => session('tracking_id'),
+                'tracking_id' => session('tracking_id'),
 
             ];
             // Create the order
