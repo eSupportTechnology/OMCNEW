@@ -21,6 +21,7 @@ class ReturnRequestController extends Controller
 
         $orders = CustomerOrder::where('user_id', $userId)
             ->where('status', 'Delivered')
+            ->where('payment_status', 'Paid')
             ->get();
 
         return view('frontend.ReturnProduct', compact('orders'));
@@ -32,20 +33,23 @@ class ReturnRequestController extends Controller
 
         $request->validate([
             'order_id' => 'required|exists:customer_order,id',
-            'billing_last_name' => 'required',
-            'email' => 'required|email',
+            'billing_last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
             'reason' => 'nullable|string|max:500',
         ]);
 
         $userId = Auth::id();
 
         $order = CustomerOrder::where('id', $request->order_id)
-            ->where('user_id', Auth::id())
+            ->where('user_id', $userId)
             ->where('status', 'Delivered')
+            ->where('payment_status', 'Paid')
             ->first();
 
         if (!$order) {
-            return back()->withErrors(['order_code' => 'Invalid order ID or this order does not belong to you, or it is not delivered yet.']);
+            return back()->withErrors([
+                'order_code' => 'Invalid order ID, this order does not belong to you, it is not delivered, or payment is not completed.'
+            ]);
         }
 
         $existingRequest = ReturnRequest::where('user_id', $userId)
@@ -63,13 +67,14 @@ class ReturnRequestController extends Controller
             ReturnRequest::create([
                 'ra_code' => $raCode,
                 'order_id' => $order->id,
-                'user_id' => $order->user_id,
+                'user_id' => $userId,
                 'billing_last_name' => $request->billing_last_name,
                 'email' => $request->email,
                 'reason' => $request->reason ?? 'No reason provided',
                 'status' => 'pending',
             ]);
-            Log::info('Return request inserted successfully');
+
+            Log::info('Return request inserted successfully for order ID: ' . $order->id);
         } catch (\Exception $e) {
             Log::error('Return request failed: ' . $e->getMessage());
             return back()->with('error', 'Something went wrong while submitting the request.');
@@ -84,8 +89,7 @@ class ReturnRequestController extends Controller
 
         $returns = ReturnRequest::with([
             'order.items.product.images'
-        ])->where('user_id', Auth::id())->latest()->get();
-
+        ])->where('user_id', $userId)->latest()->get();
 
         return view('member_dashboard.returns', compact('returns'));
     }
