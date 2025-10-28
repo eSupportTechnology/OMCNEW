@@ -41,10 +41,11 @@
                     <tr>
                         <th>#</th>
                         <th>Order ID</th>
-                        <th>User</th>
+                        <!-- <th>User</th> -->
                         <th>Name</th>
                         <th>Reason</th>
                         <th>Email</th>
+                        <th>Payment Status</th>
                         <th>Status</th>
                         <th>Action</th>
                     </tr>
@@ -53,11 +54,20 @@
                     @foreach($returnRequests as $request)
                     <tr id="request-row-{{ $request->id }}">
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $request->order_id }}</td>
-                        <td>{{ $request->user->name ?? 'N/A' }}</td>
+                        <td>{{ $request->order->order_code ?? 'N/A' }}</td>
+                        <!-- <td>{{ $request->user->name ?? 'N/A' }}</td> -->
                         <td>{{ $request->billing_last_name }}</td>
                         <td>{{ $request->reason }}</td>
                         <td>{{ $request->email }}</td>
+                        <td>
+                            <span class="badge 
+                @if($request->order->payment_status == 'Paid') bg-success
+                @elseif($request->order->payment_status == 'Refunded') bg-primary
+                @else bg-secondary
+                @endif">
+                                {{ $request->order->payment_status ?? 'N/A' }}
+                            </span>
+                        </td>
                         <td>
                             <span class="badge 
                                 @if($request->status == 'pending') bg-warning 
@@ -78,6 +88,7 @@
                                     <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
+                                    @if($request->status != 'approved' && $request->status != 'rejected')
                                     <li><a class="dropdown-item" href="#" onclick="updateStatus({{ $request->id }}, 'pending')">Pending</a></li>
                                     <li><a class="dropdown-item" href="#" onclick="updateStatus({{ $request->id }}, 'pickup')">Pickup</a></li>
                                     <li><a class="dropdown-item" href="#" onclick="updateStatus({{ $request->id }}, 'in_transit')">In Transit</a></li>
@@ -85,6 +96,9 @@
                                     <li><a class="dropdown-item" href="#" onclick="updateStatus({{ $request->id }}, 'processing')">Refund Processing</a></li>
                                     <li><a class="dropdown-item" href="#" onclick="updateStatus({{ $request->id }}, 'approved')">Refund Approved</a></li>
                                     <li><a class="dropdown-item text-danger" href="#" onclick="updateStatus({{ $request->id }}, 'rejected')">Rejected</a></li>
+                                    @elseif($request->status == 'rejected')
+                                    <li><a class="dropdown-item" href="#" onclick="updateStatus({{ $request->id }}, 'approved')">Refund Approved</a></li>
+                                    @endif
 
                                     <li>
                                         <hr class="dropdown-divider">
@@ -99,6 +113,7 @@
                                 </ul>
                             </div>
                         </td>
+
                     </tr>
                     @endforeach
                 </tbody>

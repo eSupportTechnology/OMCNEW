@@ -13,7 +13,7 @@ class ReturnRequestStatusController extends Controller
 {
     public function index()
     {
-        $returnRequests = ReturnRequest::with('user')->get();
+        $returnRequests = ReturnRequest::with(['user', 'order'])->get();
         return view('admin_dashboard.return_requests', compact('returnRequests'));
     }
 
