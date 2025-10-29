@@ -64,6 +64,16 @@
                                         </label>
                                     </div>
                                 </div>
+                                <div class="mb-3">
+                                    @if (Route::has('signup'))
+                                    <p class="mt-3">
+                                        Don’t have an account?
+                                        <a href="{{ route('signup') }}" class="text-decoration-none">
+                                            Sign Up
+                                        </a>
+                                    </p>
+                                    @endif
+                                </div>
 
                                 <div class="mb-3">
                                     @if (Route::has('password.request'))
