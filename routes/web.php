@@ -553,4 +553,3 @@ Route::get('return-product', [ReturnRequestController::class, 'create'])->name('
 Route::post('return-product', [ReturnRequestController::class, 'store'])->name('return-product.store');
 Route::get('/my-returns', [ReturnRequestController::class, 'myReturns'])->name('returns.index');
 Route::get('/returns/{id}/details', [ReturnRequestController::class, 'show'])->name('returns.details');
-Route::view('/data-deletion', 'data-deletion')->name('data.deletion');
