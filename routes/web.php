@@ -146,10 +146,12 @@ Route::get('/affiliate/dashboard/payment/bank_acc', function () {
 });
 
 
-// Auth::routes();
-
-
-
+// // Auth::routes();
+// Route::get('/test-payment-info', function () {
+//     $request = new \Illuminate\Http\Request();
+//     $request->replace(['status_message' => 'success', 'additional_data' => 'OMCORD_1761637039',]);
+//     return app(App\Http\Controllers\PaymentController::class)->getPaymentInfo($request);
+// });
 
 Route::get('/payment/{order_code}', [PaymentController::class, 'payment'])->name('payment');
 
@@ -551,3 +553,4 @@ Route::get('return-product', [ReturnRequestController::class, 'create'])->name('
 Route::post('return-product', [ReturnRequestController::class, 'store'])->name('return-product.store');
 Route::get('/my-returns', [ReturnRequestController::class, 'myReturns'])->name('returns.index');
 Route::get('/returns/{id}/details', [ReturnRequestController::class, 'show'])->name('returns.details');
+Route::view('/data-deletion', 'data-deletion')->name('data.deletion');
