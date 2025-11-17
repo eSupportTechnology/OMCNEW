@@ -10,6 +10,17 @@
                 <div class="product-title"><?php echo e(Str::limit($item['name'], 10)); ?></div>
                 <div class="product-title">Qty: <?php echo e($item['quantity']); ?></div>
                 <div class="product-title">Rs. <?php echo e($item['subtotal']); ?></div>
+                <div class="product-title btn-delete-item remove">
+                    <form action="<?php echo e(route('cart.remove', $item['product_id'])); ?>" method="POST"
+                        style="display: inline;">
+                        <?php echo csrf_field(); ?>
+                        <?php echo method_field('DELETE'); ?>
+                        <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer;">
+                            <i class="fa fa-trash" style="color: red;"></i>
+                        </button>
+                    </form>
+                </div>
+
             </div>
         </div>
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>

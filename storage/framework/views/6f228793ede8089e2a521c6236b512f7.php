@@ -15,6 +15,41 @@
         padding: 0;
         line-height: 1.4;
     }
+
+    .mini-wishlist {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 360px;
+        height: 100%;
+        background: #fff;
+        z-index: 9999;
+        overflow-y: auto;
+        display: none;
+        box-shadow: -3px 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .mini-wishlist .mini-wishlist-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: calc(100% - 360px);
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 9998;
+    }
+
+    .mini-wishlist .close-miniwishlist {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .mini-wishlist .cart-white {
+        padding: 20px;
+    }
 </style>
 
 <div class="mobile-footer-con">
@@ -101,7 +136,7 @@
                         <div class="accordion-body">
                             <ul>
                                 <li class="footer-nav"><a href="/about">About Us</a></li>
-                                <li class="footer-nav"><a href="#">Careers</a></li>
+                                
                                 <li class="footer-nav"><a href="/contact">Contact Us</a></li>
 
                             </ul>
@@ -119,7 +154,7 @@
                         data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-
+                                
 
                                 <li class="footer-nav"><a href="<?php echo e(route('faq')); ?>">Frequently Asked Questions</a>
                                 </li>
@@ -144,7 +179,7 @@
                         aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
                             <ul>
-
+                                
 
                                 <li class="footer-nav"><a href="<?php echo e(route('PrivacyPolicy')); ?> ">Privacy Policy</a>
                                 </li>
@@ -265,12 +300,12 @@
     <div class="cart-white">
         <div class="close-minicart"><i class="fa-solid fa-xmark"></i></div>
         <div class="cart-logo">
-
+            
             <?php if($siteLogo && $siteLogo->image_path): ?>
-                <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>" alt="Site Logo"
-                    style="width: 180px;">
+            <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>" alt="Site Logo"
+                style="width: 180px;">
             <?php else: ?>
-                <img src="<?php echo e(asset('frontend/newstyle/assets/images/buyabans-logo.png')); ?>" style="width: 180px;">
+            <img src="<?php echo e(asset('frontend/newstyle/assets/images/buyabans-logo.png')); ?>" style="width: 180px;">
             <?php endif; ?>
         </div>
         <h4>My Cart</h4>
@@ -280,7 +315,7 @@
                     <div class="toatal-div-main">
                         <div class="sub-total-label">Cart Subtotal</div>
                         <div class="pro-amount">
-                            <span id= "cart-count-4">0</span> Items Added
+                            <span id="cart-count-4">0</span> Items Added
                         </div>
                     </div>
                     <div class="sub-total" id="cart-subtotal-1">Rs. 0</div>
@@ -289,16 +324,30 @@
                 <div class="cart-added">
                     <p class="cart-include">Cart Include</p>
 
-
-                    <?php echo $__env->make('frontend.partials.mini-cart', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
+                    
+                    <?php echo $__env->make('frontend.partials.mini-cart', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
+                    
 
 
                     <div>
-                        <a href="<?php echo e(route('cart')); ?>" class="btn btn-site-default w-100 mt-4">View Cart</a>
+                        <a href="<?php echo e(route('cart')); ?>" class="btn btn-primary w-100 mt-4">View Cart</a>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- Wishlist popup -->
+<div class="mini-wishlist d-none">
+    <div class="mini-wishlist-overlay"></div>
+    <div class="cart-white">
+        <div class="close-miniwishlist"><i class="fa-solid fa-xmark"></i></div>
+        <div class="cart-logo">
+            <h4>My Wishlist</h4>
+        </div>
+        <div id="mini-wishlist-data">
+            <?php echo $__env->make('frontend.partials.mini-wishlist', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
         </div>
     </div>
 </div>
@@ -324,7 +373,8 @@
         flex-wrap: wrap;
         padding: 20px 0;
         margin-bottom: 0;
-        background-color: #2B96C5; /* Keeping the original blue color */
+        background-color: #2B96C5;
+        /* Keeping the original blue color */
     }
 
     .footer-box {
@@ -354,13 +404,16 @@
 
     /* Main footer content area */
     .footer-padding {
-        padding: 40px 0 0;  /* Remove bottom padding */
-        margin-bottom: 0;   /* Ensure no margin at bottom */
+        padding: 40px 0 0;
+        /* Remove bottom padding */
+        margin-bottom: 0;
+        /* Ensure no margin at bottom */
     }
 
     /* Company info section - FIXED */
     .address-info {
-        display: block; /* Changed from flex to block to fix alignment */
+        display: block;
+        /* Changed from flex to block to fix alignment */
     }
 
     /* Direct logo styling fix */
@@ -514,15 +567,16 @@
                 <div class="address-info">
                     <!-- Simplified logo structure -->
                     <?php if($siteLogo && $siteLogo->image_path): ?>
-                        <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>" alt="Site Logo">
+                    <img src="<?php echo e(asset('storage/logo_images/' . $siteLogo->image_path)); ?>" alt="Site Logo">
                     <?php else: ?>
-                        <img src="<?php echo e(asset('frontend/newstyle/assets/images/buyabans-logo.webp')); ?>" alt="Site Logo">
+                    <img src="<?php echo e(asset('frontend/newstyle/assets/images/buyabans-logo.webp')); ?>" alt="Site Logo">
                     <?php endif; ?>
 
                     <div class="hotline">
                         <p>HOTLINE</p>
-                        <a class="tel-no" href="#">+94 75 833 7141</a>
+                        <a class="tel-no" href="tel:+94758337141">+94 75 833 7141</a>
                     </div>
+
                     <div class="social-media">
                         <ul>
                             <li><a href="#" target="_blank"><i class="fab fa-facebook" style="color:#2B96C5; font-size: 22px;"></i></a></li>
@@ -544,7 +598,7 @@
                             <p class="footer-title">About</p>
                             <ul>
                                 <li class="footer-link"><a href="<?php echo e(route('about')); ?>">About Us</a></li>
-                                <li class="footer-link"><a href="#">Careers</a></li>
+                                
                                 <li class="footer-link"><a href="<?php echo e(route('contac')); ?>">Contact Us</a></li>
                             </ul>
                         </div>
@@ -579,10 +633,9 @@
                         <div class="footer-links-set">
                             <p class="footer-title">Quick Links</p>
                             <ul>
-                                <li class="footer-link"><a href="#">Brands</a></li>
-                                <li class="footer-link"><a href="#">Warranty Information</a></li>
-                                <li class="footer-link"><a href="#">Return Products</a></li>
-                                <li class="footer-link"><a href="<?php echo e(route('aff_home')); ?>">Affiliate Login</a></li>
+                                <li class="footer-link"><a href="<?php echo e(route('all-items')); ?>">Brands</a></li>
+                                <li class="footer-link"><a href="<?php echo e(route('warranty')); ?>">Warranty Information</a></li>
+                                <li class="footer-link"><a href="<?php echo e(route('return-product')); ?>">Return Products</a></li>
                             </ul>
                         </div>
                     </div>
@@ -729,6 +782,15 @@
         $('.mini-cart').addClass('d-none');
         $('.mini-cart').removeClass('d-block');
     });
+    // Open wishlist
+    $(".wishlist-popup").click(function() {
+        $('.mini-wishlist').removeClass('d-none').addClass('d-block');
+    });
+
+    // Close wishlist
+    $(".close-miniwishlist, .mini-wishlist-overlay").click(function() {
+        $('.mini-wishlist').addClass('d-none').removeClass('d-block');
+    });
 </script>
 
 
@@ -759,5 +821,4 @@
 
 
 
-</html>
-<?php /**PATH C:\xampp\htdocs\OMCNEW\resources\views/frontend/footer-new.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\xampp\htdocs\OMCNEW\resources\views/frontend/footer-new.blade.php ENDPATH**/ ?>
