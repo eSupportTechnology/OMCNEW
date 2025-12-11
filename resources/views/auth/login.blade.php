@@ -82,9 +82,9 @@
 
                                 <!-- Social Media Buttons -->
                                 <div class="mb-3">
-                                    <a class="btn btn-secondary w-100 mb-3" href="{{ route('facebook.login') }}" role="button">
+                                    <!-- <a class="btn btn-secondary w-100 mb-3" href="{{ route('facebook.login') }}" role="button">
                                         <i class="fab fa-facebook-f"></i> Facebook
-                                    </a>
+                                    </a> -->
 
                                     <a class="btn btn-danger w-100" href="{{ route('google.login') }}" role="button">
                                         <i class="fab fa-google"></i> Google
